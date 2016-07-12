@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style media="screen">
+    svg {
+      border: solid 1px red;
+    }
+  </style>
+</head>
+<body>
+
+  <script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+  <script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
+  <script type="text/javascript">
+  var
+    width = 800,
+    height = 800;
+  var projection = d3.geo.mercator()
+    .scale(2000)
+    .translate([width * 2.5, height * 0.2]);
+  var path = d3.geo.path()
+    .projection(projection);
+  var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  d3.json("br.json", function(error, br) {
+    if (error) return console.error(error);
+
+    var municipios = topojson.feature(br, br.objects.municipios);
+
+    svg.selectAll(".municipio")
+      .data(municipios.features)
+      .enter().append("path")
+        .attr("class", function(d) {
+          return "municipio " + d.id; })
+        .attr("d", path)
+        .style('fill', 'red');
+  });
+
+  d3.json("sab.json", function(error, br) {
+  if (error) return console.error(error);
+  console.log(br);
+
+  var municipios = topojson.feature(br, br.objects.municipios_sab);
+  var color_scale = d3.scale.linear().domain([0, municipios.features.length]).range(['#DEEBF7', '#08306B']);
+
+  svg.selectAll(".municipio")
+    .data(municipios.features)
+    .enter().append("path")
+      .attr("class", function(d) {
+        return "municipio " + d.id; })
+      .attr("d", path)
+      .style('fill', function(d, k) {
+        return color_scale(k); });
+  });
+  </script>
+</body>
+</html>
