@@ -29,32 +29,35 @@
   d3.json("br.json", function(error, br) {
     if (error) return console.error(error);
 
-    var municipios = topojson.feature(br, br.objects.municipios);
+    var municipios = topojson.feature(br, br.objects.br);
 
-    svg.selectAll(".municipio")
+    svg.selectAll(".municipio_br")
       .data(municipios.features)
-      .enter().append("path")
+      .enter()
+        .append("path")
         .attr("class", function(d) {
-          return "municipio " + d.id; })
+          return "municipio_br" + d.id; })
         .attr("d", path)
-        .style('fill', 'red');
+        .style('opacity', '0.2')
+        .style('fill', '#08306B')
+        .style('stroke', '#08306B');
   });
 
   d3.json("sab.json", function(error, br) {
-  if (error) return console.error(error);
-  console.log(br);
+    if (error) return console.error(error);
 
-  var municipios = topojson.feature(br, br.objects.municipios_sab);
-  var color_scale = d3.scale.linear().domain([0, municipios.features.length]).range(['#DEEBF7', '#08306B']);
+    var municipios = topojson.feature(br, br.objects.municipios_sab);
+    var color_scale = d3.scale.linear().domain([0, municipios.features.length]).range(['#DEEBF7', '#08306B']);
 
-  svg.selectAll(".municipio")
-    .data(municipios.features)
-    .enter().append("path")
-      .attr("class", function(d) {
-        return "municipio " + d.id; })
-      .attr("d", path)
-      .style('fill', function(d, k) {
-        return color_scale(k); });
+    svg.selectAll(".municipio_sab")
+      .data(municipios.features)
+      .enter()
+        .append("path")
+        .attr("class", function(d) {
+          return "municipio_sab" + d.id; })
+        .attr("d", path)
+        .style('fill', function(d, k) {
+          return color_scale(k); });
   });
   </script>
 </body>
