@@ -45,7 +45,6 @@
 
   d3.json("sab.json", function(error, br) {
     if (error) return console.error(error);
-
     var municipios = topojson.feature(br, br.objects.municipios_sab);
     var color_scale = d3.scale.linear().domain([0, municipios.features.length]).range(['#DEEBF7', '#08306B']);
 
@@ -56,8 +55,29 @@
         .attr("class", function(d) {
           return "municipio_sab" + d.id; })
         .attr("d", path)
-        .style('fill', function(d, k) {
-          return color_scale(k); });
+        // .style('fill', function(d, k) {
+        //   return color_scale(k); });
+        .style('opacity', '0.2')
+        .style('fill', '#8c4545')
+        .style('stroke', '#8c4545');
+  });
+
+  d3.json("reservatorios.json", function(error, r) {
+    if (error) return console.error(error);
+    var reservatorio = topojson.feature(r, r.objects.reservatorios_geojson);
+    // var color_scale = d3.scale.linear().domain([0, reservatorio.features.length]).range(['#DEEBF7', '#08306B']);
+    console.log(r);
+    svg.selectAll(".reservatorio")
+      .data(reservatorio.features)
+      .enter()
+        .append("path")
+        // .translate(10, 10)
+        .attr('id', function(d) {
+          return d.id; })
+        .attr("class", function(d) {
+          return "reservatorio" + d.id; })
+        .attr("d", path)
+        .style('fill', '#08306B');
   });
   </script>
 </body>
