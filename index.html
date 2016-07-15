@@ -26,13 +26,13 @@
     .attr("width", width)
     .attr("height", height);
 
-  d3.json("br.json", function(error, br) {
+  d3.json("http://localhost:5003/regioes_brasil_topoJSON", function(error, br) {
     if (error) return console.error(error);
 
-    var municipios = topojson.feature(br, br.objects.br);
+    var regioes = topojson.feature(br, br.objects.br);
 
     svg.selectAll(".municipio_br")
-      .data(municipios.features)
+      .data(regioes.features)
       .enter()
         .append("path")
         .attr("class", function(d) {
@@ -43,7 +43,7 @@
         .style('stroke', '#08306B');
   });
 
-  d3.json("sab.json", function(error, br) {
+  d3.json("http://localhost:5003/cidades_sab", function(error, br) {
     if (error) return console.error(error);
     var municipios = topojson.feature(br, br.objects.municipios_sab);
     var color_scale = d3.scale.linear().domain([0, municipios.features.length]).range(['#DEEBF7', '#08306B']);
@@ -62,7 +62,7 @@
         .style('stroke', '#8c4545');
   });
 
-  d3.json("reservatorios.json", function(error, r) {
+  d3.json("http://localhost:5003/reservatorios_sab", function(error, r) {
     if (error) return console.error(error);
     var reservatorio = topojson.feature(r, r.objects.reservatorios_geojson);
     // var color_scale = d3.scale.linear().domain([0, reservatorio.features.length]).range(['#DEEBF7', '#08306B']);
@@ -77,7 +77,9 @@
         .attr("class", function(d) {
           return "reservatorio" + d.id; })
         .attr("d", path)
-        .style('fill', '#08306B');
+        .style('fill', '#08306B')
+        .attr("width", 10)
+        .attr("height", 10);;
   });
   </script>
 </body>
