@@ -1,4 +1,13 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+@import "_customVariables";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "bootstrapOverwrite";
+
+#map {
+}
+.map-overlay {
+  fill: none;
+  pointer-events: all;
+}

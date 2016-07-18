@@ -1,0 +1,18 @@
+.navbar {
+  position: relative;
+  min-height: $navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+  margin: 0;
+  border: none;
+
+  // Prevent floats from breaking the navbar
+  @include clearfix;
+
+  @media (min-width: $grid-float-breakpoint) {
+    border-radius: 0;
+  }
+}
+
+.navbar-default {
+  background-color: opacify($navbar-default-bg, 0.1);
+  border-color: $navbar-default-border;
+}
