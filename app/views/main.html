@@ -47,6 +47,39 @@ d3.json("http://localhost:5003/limites_sab", function(error, br) {
       .style('stroke', '#8c4545');
 });
 
+var tooltip = d3.select("body")
+  .append("div")
+  .style("position", "absolute")
+  .style("z-index", "10")
+  .style("visibility", "hidden");
+
+var text = ''
+
+var mouseOnEvent = function(d) {
+  d3.json("http://localhost:5003/info_reservatorios/" + d.id, function(error, r) {
+        tooltip.text("Reservatorio: " + r["Reservatório_ANA_JU"]["0"]["Bacia"] + "\n" + "Estado: " + r["Reservatório_ANA_JU"]["0"]["Estado"] + 
+          "\n" + "Capacidade: " + r["Reservatório_ANA_JU"]["0"]["Cap (hm3)"]).style("visibility", "visible");
+        console.log(r["Reservatório_ANA_JU"]);
+      });
+      var destaque = d3.select(this);
+      // transition to increase size/opacity of bubble
+      destaque.transition()
+            .duration(800).style("opacity", 1);
+};
+
+var mouseMoveEvent = function() {
+  tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+};
+
+var mouseOffEvent = function(d) {
+  var destaque = d3.select(this);
+          // transition to increase size/opacity of bubble
+          destaque.transition()
+                .duration(800).style("opacity", 0.3);
+
+          tooltip.style("visibility", "hidden");
+};
+
 d3.json("http://localhost:5003/reservatorios_sab", function(error, r) {
   if (error) return console.error(error);
   var reservatorio = topojson.feature(r, r.objects.reservatorios_geojson);
@@ -61,6 +94,10 @@ d3.json("http://localhost:5003/reservatorios_sab", function(error, r) {
         return "reservatorio" + d.id; })
       .attr("d", path)
       .style('fill', '#08306B')
+      .style("opacity", 0.3)
+        .on("mouseover", mouseOnEvent)
+        .on("mousemove", mouseMoveEvent)
+        .on("mouseout", mouseOffEvent)
       .attr("width", 10)
       .attr("height", 10);;
 });
