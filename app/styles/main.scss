@@ -1,4 +1,22 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+@import "_customVariables";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "bootstrapOverwrite";
+
+#map {
+}
+.map-overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.map-tooltip {
+  position: absolute;
+  z-index: 10;
+  visibility: hidden;
+  background-color: #fff;
+  padding: $padding-base-vertical $padding-base-horizontal;
+  border-radius: $border-radius-base;
+}
