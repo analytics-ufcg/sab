@@ -40,10 +40,10 @@ d3.json("http://localhost:5003/estados_brasil", function(error, br) {
     .style('stroke', '#bdc3c7');
 });
 
-d3.json("http://localhost:5003/limites_sab", function(error, br) {
+d3.json("http://localhost:5003/div_estadual_sab", function(error, br) {
   if (error) return console.error(error);
 
-  var limites = topojson.feature(br, br.objects.limite_sab);
+  var limites = topojson.feature(br, br.objects.div_estadual);
 
   features.append("path")
     .datum(limites)
@@ -60,7 +60,8 @@ var tooltip = d3.select("body")
 var mouseOnEvent = function(d) {
   d3.json("http://localhost:5003/info_reservatorios/" + d.id, function(error, r) {
         tooltip.html(
-          "<strong>Reservatorio:</strong> " + r["Reservatório_ANA_JU"]["0"]["Bacia"] + "<br>" +
+          "<strong>Bacia:</strong> " + r["Reservatório_ANA_JU"]["0"]["Bacia"] + "<br>" +
+          "<strong>Reservatorio:</strong> " + r["Reservatório_ANA_JU"]["0"]["Reserv"] + "<br>" +
           "<strong>Estado:</strong> " + r["Reservatório_ANA_JU"]["0"]["Estado"] + "<br>" +
           "<strong>Capacidade:</strong> " + r["Reservatório_ANA_JU"]["0"]["Cap (hm3)"]).style("visibility", "visible");
       });
@@ -71,7 +72,7 @@ var mouseOnEvent = function(d) {
 };
 
 var mouseMoveEvent = function() {
-  tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+  tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
 };
 
 var mouseOffEvent = function(d) {
@@ -98,8 +99,6 @@ d3.json("http://localhost:5003/reservatorios_sab", function(error, r) {
     .attr("d", path)
     .style('fill', '#3498db')
     .style("opacity", 0.3)
-    .attr("width", 10)
-    .attr("height", 10)
     .on("mouseover", mouseOnEvent)
     .on("mousemove", mouseMoveEvent)
     .on("mouseout", mouseOffEvent);
