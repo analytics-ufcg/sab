@@ -48,7 +48,8 @@ d3.json("http://localhost:5003/estados_brasil", function(error, br) {
     .attr("class", "brasil")
     .attr("d", path)
     .style('fill', 'rgba(236, 240, 241, 0.4)')
-    .style('stroke', '#bdc3c7');
+    .style('stroke', '#bdc3c7')
+    .style('stroke-width', .5);
 });
 
 d3.json("http://localhost:5003/div_estadual_sab", function(error, br) {
@@ -61,8 +62,8 @@ d3.json("http://localhost:5003/div_estadual_sab", function(error, br) {
     .attr("class", "sab")
     .attr("d", path)
     .style('fill', 'rgba(243, 156, 18, 0.4)')
-    .style('stroke', '#f39c12');
-
+    .style('stroke', '#f39c12')
+    .style('stroke-width', .5);
 });
 
 var tooltip = d3.select("body")
