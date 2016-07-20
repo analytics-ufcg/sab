@@ -1,17 +1,15 @@
-'use strict';
+(function() {
+  'use strict';
 
-/**
- * @ngdoc function
- * @name sabApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the sabApp
- */
-angular.module('sabApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  angular.module('sabApp')
+    .controller('MainCtrl', MainCtrl);
+
+  MainCtrl.$inject = ['Reservatorio'];
+
+  function MainCtrl(Reservatorio) {
+    var vm = this;
+    vm.reservatorios = [];
+
+    vm.reservatorios = Reservatorio.query();
+  }
+})();

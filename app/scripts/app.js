@@ -1,21 +1,31 @@
-'use strict';
+(function() {
+  'use strict';
 
-/**
- * @ngdoc overview
- * @name sabApp
- * @description
- * # sabApp
- *
- * Main module of the application.
- */
-angular
-  .module('sabApp', ['ui.router'])
+  /**
+   * @ngdoc overview
+   * @name sabApp
+   * @description
+   * # sabApp
+   *
+   * Main module of the application.
+   */
+  angular
+    .module('sabApp', ['ngResource', 'ui.router', 'ui.bootstrap'])
+    .constant('RESTAPI', {
+      url: 'http://localhost:5003'
+    })
+    .config(routeConfig);
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+  function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('home', {
       url: "/",
-      templateUrl: "views/main.html"
+      templateUrl: "views/main.html",
+      controller: "MainCtrl",
+      controllerAs: "main"
     });
     $urlRouterProvider.otherwise('/');
-  });
+  }
+})();

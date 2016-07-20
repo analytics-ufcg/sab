@@ -1,15 +1,25 @@
 <section class="map-container">
-  <div id="map">
-
+  <div class="map-info">
+    <div class="input-group">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pesquisar..."
+        ng-model="reservatorioSelecionado"
+        uib-typeahead="reservatorio as (reservatorio.Reserv + ' (' + reservatorio.Municipio + ' - ' + reservatorio.Estado + ')') for reservatorio in main.reservatorios | filter:$viewValue"
+        typeahead-min-length="3">
+    </div>
   </div>
+  <div id="map"></div>
 </section>
 <script type="text/javascript">
 var
   width = 800,
-  height = 800;
+  height = 400;
 var projection = d3.geo.mercator()
-  .scale(2000)
-  .translate([width * 2.5, height * 0.0]);
+  .scale(1000)
+  .translate([width * 1.6, height * 0.05]);
 var path = d3.geo.path()
   .projection(projection);
 var zoom = d3.behavior.zoom()
@@ -19,10 +29,11 @@ var zoom = d3.behavior.zoom()
     .on("zoom", zoomed);
 var svg = d3.select("#map")
   .append("svg")
-  .attr("version", "1.1")
-  .attr("viewBox", "0 0 "+width+" "+height)
-  .attr("width", "100%")
-  .attr("height", height)
+  .attr({
+    "version": "1.1",
+    "viewBox": "0 0 "+width+" "+height,
+    "width": "100%",
+    "class": "map-svg"})
   .call(zoom);
 
 var features = svg.append("g");
