@@ -5,6 +5,11 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 @import "bootstrapCustom";
 
+$map-info-margin-vertical: 20px;
+$map-info-margin-horizontal: 20px;
+$map-info-padding-vertical: 10px;
+$map-info-padding-horizontal: 10px;
+
 #map {
   float: left;
   position: relative;
@@ -38,6 +43,20 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   position: absolute;
   z-index: 10;
   width: 320px;
+  margin: $map-info-margin-vertical $map-info-margin-horizontal;
   padding: $padding-large-vertical $padding-large-horizontal;
   text-align: left;
+}
+
+.map-description {
+  margin: $map-info-margin-vertical 0;
+  padding: $map-info-padding-vertical $map-info-padding-horizontal;
+  background-color: #fff;
+  border-radius: $border-radius-base;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.map-item-title {
+  font-size: 1.5em;
+  padding: 0 0 $padding-large-vertical 0;
 }

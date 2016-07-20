@@ -18,6 +18,7 @@
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 
+  /*jshint latedef: nofunc */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('home', {
