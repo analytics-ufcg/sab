@@ -8,7 +8,7 @@
 
   /*jshint latedef: nofunc */
   function reservatorio(RESTAPI, $resource) {
-    var factory = $resource(RESTAPI.url+'/info_reservatorios');
+    var factory = $resource(RESTAPI.url+'/reservatorios/info');
     return factory;
   }
 })();
