@@ -9,16 +9,15 @@
     /*jshint latedef: nofunc */
     function sabMapa($window) {
       return {
-        template: '<div></div>',
+        template: '',
         restrict: 'E',
         scope: {
-          reservatorios: '='
+          onSelectReservatorio: '&'
         },
-        link: function postLink(scope, element, attrs) {
+        link: function postLink(scope, element) {
           var
             d3 = $window.d3,
             topojson = $window.topojson,
-            reservatorios = scope.reservatorios,
             width = 800,
             height = 400;
           var projection = d3.geo.mercator()
@@ -47,31 +46,14 @@
             .attr("class", "map-tooltip");
 
           var mouseOnEvent = function(d) {
-            d3.json("http://localhost:5003/reservatorios/" + d.id + "/info", function(error, r) {
-
-                  tooltip.html(
-                    "<strong>Bacia:</strong> " + r.Bacia + "<br>" +
-                    "<strong>Reservatorio:</strong> " + r.Reserv + "<br>" +
-                    "<strong>Estado:</strong> " + r.Estado + "<br>" +
-                    "<strong>Capacidade:</strong> " + r['Cap(hm3)']).style("visibility", "visible");
-                });
-                var destaque = d3.select(this);
-                // transition to increase size/opacity of bubble
-                destaque.transition()
-                      .duration(800).style("opacity", 1);
-          };
-
-          var mouseMoveEvent = function() {
-            tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+            scope.onSelectReservatorio()(d.id);
+            var destaque = d3.select(this);
+            destaque.transition().duration(200).style("opacity", 1);
           };
 
           var mouseOffEvent = function() {
             var destaque = d3.select(this);
-                    // transition to increase size/opacity of bubble
-                    destaque.transition()
-                          .duration(800).style("opacity", 0.5);
-
-                    tooltip.style("visibility", "hidden");
+            destaque.transition().duration(200).style("opacity", 0.5);
           };
 
           var scaleCircle = function(d) {
@@ -130,7 +112,6 @@
                   return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1];})
               .attr("r", scaleCircle)
               .on("mouseover", mouseOnEvent)
-              .on("mousemove", mouseMoveEvent)
               .on("mouseout", mouseOffEvent);
           }
 
