@@ -8,18 +8,19 @@
         placeholder="Pesquisar..."
         ng-model="reservatorioSelecionado"
         uib-typeahead="reservatorio as (reservatorio.Reserv + ' (' + reservatorio.Municipio + ' - ' + reservatorio.Estado + ')') for reservatorio in main.reservatorios | filter:$viewValue"
-        typeahead-min-length="3">
+        typeahead-min-length="3"
+        typeahead-on-select="main.setReservatorio(reservatorioSelecionado)">
     </div>
-    <div class="map-description" ng-show="reservatorioSelecionado.Reserv">
-      <div class="map-item-title">{{reservatorioSelecionado.Reserv}}</div>
-      <div class="map-item-row"><strong>Capacidade</strong> {{reservatorioSelecionado['Cap(hm3)']}}hm³</div>
-      <div class="map-item-row"><strong>Bacia</strong> {{reservatorioSelecionado.Bacia}}</div>
-      <div class="map-item-row"><strong>Localidade</strong> {{reservatorioSelecionado.Municipio + ' - ' + reservatorioSelecionado.Estado}}</div>
-      <div class="map-item-row"><strong>Tipo</strong> {{reservatorioSelecionado.Tipo}}</div>
-      <div class="map-item-row" ng-show="reservatorioSelecionado.Finalidade"><strong>Finalidade</strong> {{reservatorioSelecionado.Finalidade}}</div>
+    <div class="map-description" ng-show="main.reservatorioSelecionado.Reserv">
+      <div class="map-item-title">{{main.reservatorioSelecionado.Reserv}}</div>
+      <div class="map-item-row"><strong>Capacidade</strong> {{main.reservatorioSelecionado['Cap(hm3)']}}hm³</div>
+      <div class="map-item-row"><strong>Bacia</strong> {{main.reservatorioSelecionado.Bacia}}</div>
+      <div class="map-item-row"><strong>Localidade</strong> {{main.reservatorioSelecionado.Municipio + ' - ' + main.reservatorioSelecionado.Estado}}</div>
+      <div class="map-item-row"><strong>Tipo</strong> {{main.reservatorioSelecionado.Tipo}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.Finalidade"><strong>Finalidade</strong> {{main.reservatorioSelecionado.Finalidade}}</div>
     </div>
   </div>
   <div id="map">
-    <sab-mapa reservatorios="main.reservatorios"></sab-mapa>
+    <sab-mapa on-select-reservatorio="main.setReservatorioByID"></sab-mapa>
   </div>
 </section>
