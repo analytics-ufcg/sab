@@ -60,3 +60,20 @@ $map-info-padding-horizontal: 10px;
   font-size: 1.5em;
   padding: 0 0 $padding-large-vertical 0;
 }
+
+.svg-br {
+  fill: rgba(236, 240, 241, 0.4);
+  stroke: #bdc3c7;
+  stroke-width: 0.5;
+}
+
+.svg-sab {
+  fill: rgba(243, 156, 18, 0.4);
+  stroke: #f39c12;
+  stroke-width: 0.5;
+}
+
+.svg-reservatorio {
+  fill: #3498db;
+  opacity: 0.5;
+}

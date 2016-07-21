@@ -40,20 +40,18 @@
               "class": "map-svg"})
             .call(zoom);
 
-          var features = svg.append("g");
+          var features = svg.append("g").attr("id", "g-mapa");
 
           d3.json("http://localhost:5003/estados/br", function(error, br) {
             if (error) { return console.error(error); }
 
             var regioes = topojson.feature(br, br.objects.estado_sab);
 
-            features.append("path")
+            features.append("g").attr("id", "g-br")
+              .append("path")
               .datum(regioes)
-              .attr("class", "brasil")
-              .attr("d", path)
-              .style('fill', 'rgba(236, 240, 241, 0.4)')
-              .style('stroke', '#bdc3c7')
-              .style('stroke-width', 0.5);
+              .attr("class", "svg-br")
+              .attr("d", path);
           });
 
           d3.json("http://localhost:5003/estados/sab", function(error, br) {
@@ -61,13 +59,11 @@
 
             var limites = topojson.feature(br, br.objects.div_estadual);
 
-            features.append("path")
+            features.append("g").attr("id", "g-sab")
+              .append("path")
               .datum(limites)
-              .attr("class", "sab")
-              .attr("d", path)
-              .style('fill', 'rgba(243, 156, 18, 0.4)')
-              .style('stroke', '#f39c12')
-              .style('stroke-width', 0.5);
+              .attr("class", "svg-sab")
+              .attr("d", path);
           });
 
           var tooltip = d3.select("body")
@@ -123,22 +119,21 @@
 
             var reservatorio = topojson.feature(r, r.objects.reservatorios_geojson);
 
-             features.selectAll(".reservatorio")
-                .data(reservatorio.features)
-                .enter()
-                .append("circle")
-                .attr('id', function(d) { return d.id; })
-                .attr("class", "reservatorio")
-                .attr("cx", function(d) {
-                    return projection([d.geometry.coordinates[0] , d.geometry.coordinates[1]])[0];})
-                .attr("cy", function(d) {
-                    return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1];})
-                .attr("r", scaleCircle)
-                .style("fill", "#3498db")
-                .style("opacity", 0.5)
-                .on("mouseover", mouseOnEvent)
-                .on("mousemove", mouseMoveEvent)
-                .on("mouseout", mouseOffEvent);
+            features.append("g").attr("id", "g-reservatorios")
+              .selectAll(".reservatorio")
+              .data(reservatorio.features)
+              .enter()
+              .append("circle")
+              .attr('id', function(d) { return d.id; })
+              .attr("class", "svg-reservatorio")
+              .attr("cx", function(d) {
+                  return projection([d.geometry.coordinates[0] , d.geometry.coordinates[1]])[0];})
+              .attr("cy", function(d) {
+                  return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1];})
+              .attr("r", scaleCircle)
+              .on("mouseover", mouseOnEvent)
+              .on("mousemove", mouseMoveEvent)
+              .on("mouseout", mouseOffEvent);
           });
 
           function zoomed() {
