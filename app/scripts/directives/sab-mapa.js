@@ -42,30 +42,6 @@
 
           var features = svg.append("g").attr("id", "g-mapa");
 
-          d3.json("http://localhost:5003/estados/br", function(error, br) {
-            if (error) { return console.error(error); }
-
-            var regioes = topojson.feature(br, br.objects.estado_sab);
-
-            features.append("g").attr("id", "g-br")
-              .append("path")
-              .datum(regioes)
-              .attr("class", "svg-br")
-              .attr("d", path);
-          });
-
-          d3.json("http://localhost:5003/estados/sab", function(error, br) {
-            if (error) { return console.error(error); }
-
-            var limites = topojson.feature(br, br.objects.div_estadual);
-
-            features.append("g").attr("id", "g-sab")
-              .append("path")
-              .datum(limites)
-              .attr("class", "svg-sab")
-              .attr("d", path);
-          });
-
           var tooltip = d3.select("body")
             .append("div")
             .attr("class", "map-tooltip");
@@ -114,10 +90,32 @@
               }
             };
 
-          d3.json("http://localhost:5003/reservatorios", function(error, r) {
-            if (error) { return console.error(error); }
+          function zoomed() {
+            features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+          }
 
-            var reservatorio = topojson.feature(r, r.objects.reservatorios_geojson);
+          function mapaBrasil(br){
+            var brasil = topojson.feature(br, br.objects.estado_sab);
+
+            features.append("g").attr("id", "g-br")
+              .append("path")
+              .datum(brasil)
+              .attr("class", "svg-br")
+              .attr("d", path);            
+          }
+
+          function mapaSemiArido(sab){
+            var semiarido = topojson.feature(sab, sab.objects.div_estadual);
+
+            features.append("g").attr("id", "g-sab")
+              .append("path")
+              .datum(semiarido)
+              .attr("class", "svg-sab")
+              .attr("d", path);     
+          }
+
+          function mapaReservatorios(reserv){
+            var reservatorio = topojson.feature(reserv, reserv.objects.reservatorios_geojson);
 
             features.append("g").attr("id", "g-reservatorios")
               .selectAll(".reservatorio")
@@ -134,10 +132,24 @@
               .on("mouseover", mouseOnEvent)
               .on("mousemove", mouseMoveEvent)
               .on("mouseout", mouseOffEvent);
-          });
+          }
 
-          function zoomed() {
-            features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+          d3.queue()
+            .defer(d3.json, 'http://localhost:5003/estados/br')
+            .defer(d3.json, 'http://localhost:5003/estados/sab')
+            .defer(d3.json, 'http://localhost:5003/reservatorios')
+            .await(desenhaMapa);
+
+          function desenhaMapa(error, br, sab, reserv) {
+            if (error) { return console.error(error); }
+
+            mapaBrasil(br);
+
+            mapaSemiArido(sab);
+            
+            mapaReservatorios(reserv);
+            
           }
         }
       };
