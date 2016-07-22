@@ -23,7 +23,11 @@
     }
 
     function setReservatorioByID(id) {
-      vm.reservatorioSelecionado = Reservatorio.get({id: id});
+      for (var i = 0; i < vm.reservatorios.length; i++) {
+        if(vm.reservatorios[i].CodigoANA === id){
+          setReservatorio(vm.reservatorios[i]);
+        }
+      }
     }
   }
 })();

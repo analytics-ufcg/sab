@@ -47,6 +47,7 @@
 
           var mouseOnEvent = function(d) {
             scope.onSelectReservatorio()(d.id);
+            scope.$apply();
             var destaque = d3.select(this);
             destaque.transition().duration(200).style("opacity", 1);
           };
@@ -58,17 +59,17 @@
 
           var scaleCircle = function(d) {
               if (d.properties.capacidade <= 10) {
-                return (1);
+                return (0.5);
               } else if ((d.properties.capacidade > 10) && (d.properties.capacidade <= 100)) {
-                return (1.5);
+                return (1.0);
               } else if ((d.properties.capacidade > 100) && (d.properties.capacidade <= 250)) {
-                return (2);
+                return (1.5);
               } else if ((d.properties.capacidade > 250) && (d.properties.capacidade <= 500)) {
-                return (3);
+                return (2);
               } else if ((d.properties.capacidade > 500) && (d.properties.capacidade <= 750)) {
-                return (4);
+                return (3);
               } else if (d.properties.capacidade > 750) {
-                return (5);
+                return (4);
               }
             };
 
