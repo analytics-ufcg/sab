@@ -20,6 +20,7 @@ $map-info-padding-horizontal: 10px;
   height: -webkit-calc(100vh - (#{$navbar-height} + 5px));
   height:    -moz-calc(100vh - (#{$navbar-height} + 5px));
   height:         calc(100vh - (#{$navbar-height} + 5px));
+  background-color: #242426;
 }
 
 .map-overlay {
@@ -62,18 +63,30 @@ $map-info-padding-horizontal: 10px;
 }
 
 .svg-br {
-  fill: rgba(236, 240, 241, 0.4);
-  stroke: #bdc3c7;
+  fill: rgba(#0E0E0E, 1);
+  stroke: #292929;
   stroke-width: 0.5;
+  background-color: #0E0E0E;
 }
 
 .svg-sab {
-  fill: rgba(243, 156, 18, 0.4);
-  stroke: #f39c12;
+  fill: rgba(#7f31bd, 0.2);
+  stroke: #7f31bd;
   stroke-width: 0.5;
 }
 
 .svg-reservatorio {
-  fill: #3498db;
+  fill: #5531bd;
   opacity: 0.5;
+  transition: all 0.5s;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.svg-reservatorio-highlight {
+    fill: #bd319e;
+    opacity: 1;
+  }
+
 }

@@ -12,7 +12,8 @@
         template: '',
         restrict: 'E',
         scope: {
-          onSelectReservatorio: '&'
+          onSelectReservatorio: '&',
+          reservatorioSelecionado: '='
         },
         link: function postLink(scope, element) {
           var
@@ -29,32 +30,27 @@
               .translate([0, 0])
               .scale(1)
               .scaleExtent([1, 8])
-              .on("zoom", zoomed);
+              .on('zoom', zoomed);
           var svg = d3.select(element[0])
-            .append("svg")
+            .append('svg')
             .attr({
-              "version": "1.1",
-              "viewBox": "0 0 "+width+" "+height,
-              "width": "100%",
-              "class": "map-svg"})
+              'version': '1.1',
+              'viewBox': '0 0 '+width+' '+height,
+              'width': '100%',
+              'class': 'map-svg'})
             .call(zoom);
 
-          var features = svg.append("g").attr("id", "g-mapa");
+          var features = svg.append('g').attr('id', 'g-mapa');
 
-          var tooltip = d3.select("body")
-            .append("div")
-            .attr("class", "map-tooltip");
+          scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
+            var r = newValue.CodigoANA;
+            d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
+            d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
+          });
 
           var mouseOnEvent = function(d) {
             scope.onSelectReservatorio()(d.id);
             scope.$apply();
-            var destaque = d3.select(this);
-            destaque.transition().duration(200).style("opacity", 1);
-          };
-
-          var mouseOffEvent = function() {
-            var destaque = d3.select(this);
-            destaque.transition().duration(200).style("opacity", 0.5);
           };
 
           var scaleCircle = function(d) {
@@ -74,46 +70,45 @@
             };
 
           function zoomed() {
-            features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+            features.attr('transform', 'translate(' + d3.event.translate + ')scale(' + d3.event.scale + ')');
           }
 
           function mapaBrasil(br){
             var brasil = topojson.feature(br, br.objects.estado_sab);
 
-            features.append("g").attr("id", "g-br")
-              .append("path")
+            features.append('g').attr('id', 'g-br')
+              .append('path')
               .datum(brasil)
-              .attr("class", "svg-br")
-              .attr("d", path);            
+              .attr('class', 'svg-br')
+              .attr('d', path);
           }
 
           function mapaSemiArido(sab){
             var semiarido = topojson.feature(sab, sab.objects.div_estadual);
 
-            features.append("g").attr("id", "g-sab")
-              .append("path")
+            features.append('g').attr('id', 'g-sab')
+              .append('path')
               .datum(semiarido)
-              .attr("class", "svg-sab")
-              .attr("d", path);     
+              .attr('class', 'svg-sab')
+              .attr('d', path);
           }
 
           function mapaReservatorios(reserv){
             var reservatorio = topojson.feature(reserv, reserv.objects.reservatorios_geojson);
 
-            features.append("g").attr("id", "g-reservatorios")
-              .selectAll(".reservatorio")
+            features.append('g').attr('id', 'g-reservatorios')
+              .selectAll('.reservatorio')
               .data(reservatorio.features)
               .enter()
-              .append("circle")
-              .attr('id', function(d) { return d.id; })
-              .attr("class", "svg-reservatorio")
-              .attr("cx", function(d) {
+              .append('circle')
+              .attr('id', function(d) { return "r"+d.id; })
+              .attr('class', 'svg-reservatorio')
+              .attr('cx', function(d) {
                   return projection([d.geometry.coordinates[0] , d.geometry.coordinates[1]])[0];})
-              .attr("cy", function(d) {
+              .attr('cy', function(d) {
                   return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1];})
-              .attr("r", scaleCircle)
-              .on("mouseover", mouseOnEvent)
-              .on("mouseout", mouseOffEvent);
+              .attr('r', scaleCircle)
+              .on('mouseover', mouseOnEvent);
           }
 
 
@@ -125,13 +120,9 @@
 
           function desenhaMapa(error, br, sab, reserv) {
             if (error) { return console.error(error); }
-
             mapaBrasil(br);
-
             mapaSemiArido(sab);
-            
             mapaReservatorios(reserv);
-            
           }
         }
       };
