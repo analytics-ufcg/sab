@@ -45,7 +45,11 @@
           scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
             var r = newValue.CodigoANA;
             d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
-            d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
+            var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
+            // console.log(point);
+            // var x = (800 - point.attr('cx'))* 1.6;
+            // var y = (400 - point.attr('cy'))* 0.05;
+            // d3.select("#g-mapa").transition().duration(300).ease("linear").attr("transform", "translate("+x+","+y+")");
           });
 
           var mouseOnEvent = function(d) {

@@ -16,3 +16,49 @@
   background-color: opacify($navbar-default-bg, 0.1);
   border-color: $navbar-default-border;
 }
+
+.form-control {
+  box-shadow: none;
+  &:focus {
+    border-color: $input-border;
+    box-shadow: none;
+  }
+}
+
+// Text input groups
+// -------------------------
+.input-group-addon {
+  padding: $padding-base-vertical $padding-base-horizontal $padding-base-vertical $padding-base-horizontal * 2;
+  font-size: $font-size-base;
+  font-weight: normal;
+  line-height: 1;
+  color: $input-color;
+  text-align: center;
+  background-color: $input-bg;
+  border: 1px solid $input-group-addon-border-color;
+  border-radius: $input-border-radius;
+
+  // Sizing
+  &.input-sm {
+    padding: $padding-small-vertical $padding-small-horizontal;
+    font-size: $font-size-small;
+    border-radius: $input-border-radius-small;
+  }
+  &.input-lg {
+    padding: $padding-large-vertical $padding-large-horizontal;
+    font-size: $font-size-large;
+    border-radius: $input-border-radius-large;
+  }
+
+  // Nuke default margins from checkboxes and radios to vertically center within.
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-top: 0;
+  }
+}
+
+.input-group {
+  > input[type="text"] {
+    border-left: 0;
+  }
+}
