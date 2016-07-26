@@ -43,7 +43,7 @@ $map-info-padding-horizontal: 10px;
   float: left;
   position: absolute;
   z-index: 10;
-  width: 320px;
+  width: 580px;
   margin: $map-info-margin-vertical $map-info-margin-horizontal;
   padding: $padding-large-vertical $padding-large-horizontal;
   text-align: left;
@@ -88,4 +88,30 @@ $map-info-padding-horizontal: 10px;
     opacity: 1;
   }
 
+}
+
+.time-graph-path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.time-graph-tooltip {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    padding: $padding-xs-vertical $padding-xs-horizontal;
+    background: $brand-primary;
+    border: 0px;
+    border-radius: $border-radius-base;
+    pointer-events: none;
+    color: #fff;
 }
