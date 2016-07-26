@@ -20,7 +20,7 @@ $map-info-padding-horizontal: 10px;
   height: -webkit-calc(100vh - (#{$navbar-height} + 5px));
   height:    -moz-calc(100vh - (#{$navbar-height} + 5px));
   height:         calc(100vh - (#{$navbar-height} + 5px));
-  background-color: #fff;
+  background-color: #292929;
 }
 
 .map-overlay {
@@ -63,19 +63,19 @@ $map-info-padding-horizontal: 10px;
 }
 
 .svg-br {
-  fill: rgba(#dfdbdb, 0.2);
-  stroke: #dfdbdb;
+  fill: rgba(#0e0e0e, 0.2);
+  stroke: #0e0e0e;
   stroke-width: 0.5;
 }
 
 .svg-sab {
-  fill: rgba(#db962d, 0.2);
-  stroke: #db962d;
+  fill: rgba(#7f31db, 0.2);
+  stroke: #7f31db;
   stroke-width: 0.5;
 }
 
 .svg-reservatorio {
-  fill: #317ebd;
+  fill: #5531bd;
   opacity: 0.5;
   transition: all 0.5s;
 
@@ -84,14 +84,14 @@ $map-info-padding-horizontal: 10px;
   }
 
   &.svg-reservatorio-highlight {
-    fill: #3431bd;
+    fill: #db319e;
     opacity: 1;
   }
 
 }
 
 .time-graph-path {
-  stroke: steelblue;
+  stroke: $brand-primary;
   stroke-width: 2;
   fill: none;
 }
@@ -102,6 +102,10 @@ $map-info-padding-horizontal: 10px;
     stroke: grey;
     stroke-width: 1;
     shape-rendering: crispEdges;
+}
+
+.time-graph-dot {
+  fill: $brand-primary;
 }
 
 .time-graph-tooltip {

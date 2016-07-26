@@ -26,17 +26,20 @@
 
             var formatTime = d3.time.format("%d/%m/%Y");
 
-
             // Set the ranges
             var x = d3.time.scale().range([0, width]);
             var y = d3.scale.linear().range([height, 0]);
 
             // Define the axes
-            var xAxis = d3.svg.axis().scale(x)
-                .orient("bottom").ticks(5);
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .ticks(5);
 
-            var yAxis = d3.svg.axis().scale(y)
-                .orient("left").ticks(5);
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(2);
 
             // Define the line
             var valueline = d3.svg.line()
@@ -50,8 +53,10 @@
             // Adds the svg canvas
             var svg = d3.select(element[0])
                 .append("svg")
-                    .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top + margin.bottom)
+                .attr({
+                  'version': '1.1',
+                  'viewBox': '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom),
+                  'width': '100%'})
                 .append("g")
                     .attr("transform",
                           "translate(" + margin.left + "," + margin.top + ")");
@@ -95,20 +100,12 @@
                 // Add the Y Axis
                 svg.append("g")
                     .attr("class", "y axis")
-                    .call(yAxis)
-                    .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".71em")
-                    .style("text-anchor", "end")
-                    .text("Volume (%)");
+                    .call(yAxis);
 
 
                 // append the circle at the intersection
                 focus.append("circle")
-                    .attr("class", "y")
-                    .style("fill", "none")
-                    .style("stroke", "red")
+                    .attr("class", "time-graph-dot y")
                     .attr("r", 4);
 
                 // append the rectangle to capture mouse
