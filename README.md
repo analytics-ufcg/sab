@@ -9,12 +9,12 @@
 ```
 sudo apt-get install nodejs
 sudo apt-get install npm
-# O comando abaixo só é necessário para sistemas Ubuntu ou quando o comando node não é encontrado
+# O comando abaixo só é necessário quando o comando <node> não é encontrado
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 sudo apt-get install ruby-full
-gem update --system
-gem install compass
+sudo gem update --system
+sudo gem install compass
 ```
 
 Também é necessário o **grunt-cli** e **bower** instalados no ambiente:
