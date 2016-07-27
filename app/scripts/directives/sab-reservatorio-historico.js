@@ -67,16 +67,10 @@
                 .style("display", "none");
 
             // Get the data
-            d3.csv("http://localhost:9000/scripts/boqueirao.csv", function(error, data) {
+            d3.json("http://localhost:5003/reservatorios/12085/monitoramento", function(error, data) {
                   data.forEach(function(d) {
                     d.date = parseDate(d.DataInformacao);
-                    var volP = d.VolumePercentual;
-                        volP = volP.replace(",", ".");
-                        volP = volP.replace("%", "");
-                    d.close = +volP;
-            /*        var vol = d.Volume;
-                    vol = vol.replace(",", ".");
-                    d.close = +vol;*/
+                    d.close = +d.VolumePercentual;
                   });
 
                 data.sort(function(a, b) {
