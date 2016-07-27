@@ -8,6 +8,7 @@
 
 ```
 sudo apt-get install nodejs
+sudo apt-get install npm
 # O comando abaixo só é necessário para sistemas Ubuntu ou quando o comando node não é encontrado
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 
