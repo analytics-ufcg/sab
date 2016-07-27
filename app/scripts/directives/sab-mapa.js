@@ -43,7 +43,7 @@
           var features = svg.append('g').attr('id', 'g-mapa');
 
           scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
-            var r = newValue.CodigoANA;
+            var r = newValue.GEOCODIGO;
             d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
             var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
             // console.log(point);
@@ -53,22 +53,22 @@
           });
 
           var mouseOnEvent = function(d) {
-            scope.onSelectReservatorio()(d.id);
+            scope.onSelectReservatorio()(d.properties.GEOCODIGO);
             scope.$apply();
           };
 
           var scaleCircle = function(d) {
-              if (d.properties.capacidade <= 10) {
+              if (d.properties.CAP_HM3 <= 10) {
                 return (0.5);
-              } else if ((d.properties.capacidade > 10) && (d.properties.capacidade <= 100)) {
+              } else if ((d.properties.CAP_HM3 > 10) && (d.properties.CAP_HM3 <= 100)) {
                 return (1.0);
-              } else if ((d.properties.capacidade > 100) && (d.properties.capacidade <= 250)) {
+              } else if ((d.properties.CAP_HM3 > 100) && (d.properties.CAP_HM3 <= 250)) {
                 return (1.5);
-              } else if ((d.properties.capacidade > 250) && (d.properties.capacidade <= 500)) {
+              } else if ((d.properties.CAP_HM3 > 250) && (d.properties.CAP_HM3 <= 500)) {
                 return (2);
-              } else if ((d.properties.capacidade > 500) && (d.properties.capacidade <= 750)) {
+              } else if ((d.properties.CAP_HM3 > 500) && (d.properties.CAP_HM3 <= 750)) {
                 return (3);
-              } else if (d.properties.capacidade > 750) {
+              } else if (d.properties.CAP_HM3 > 750) {
                 return (4);
               }
             };
@@ -78,7 +78,7 @@
           }
 
           function mapaBrasil(br){
-            var brasil = topojson.feature(br, br.objects.estado_sab);
+            var brasil = topojson.feature(br, br.objects.estados_brasil);
 
             features.append('g').attr('id', 'g-br')
               .append('path')
@@ -98,14 +98,14 @@
           }
 
           function mapaReservatorios(reserv){
-            var reservatorio = topojson.feature(reserv, reserv.objects.reservatorios_geojson);
+            var reservatorio = topojson.feature(reserv, reserv.objects.reservatorios);
 
             features.append('g').attr('id', 'g-reservatorios')
               .selectAll('.reservatorio')
               .data(reservatorio.features)
               .enter()
               .append('circle')
-              .attr('id', function(d) { return "r"+d.id; })
+              .attr('id', function(d) { return "r"+d.properties.GEOCODIGO; })
               .attr('class', 'svg-reservatorio')
               .attr('cx', function(d) {
                   return projection([d.geometry.coordinates[0] , d.geometry.coordinates[1]])[0];})

@@ -7,17 +7,19 @@
         class="form-control"
         placeholder="Pesquisar..."
         ng-model="reservatorioSelecionado"
-        uib-typeahead="reservatorio as (reservatorio.Reserv + ' (' + reservatorio.Municipio + ' - ' + reservatorio.Estado + ')') for reservatorio in main.reservatorios | filter:$viewValue"
+        uib-typeahead="reservatorio as (reservatorio.RESERVAT + ' (' + reservatorio.MUNICIPIO + ' - ' + reservatorio.ESTADO + ')') for reservatorio in main.reservatorios | filter:$viewValue"
         typeahead-min-length="3"
         typeahead-on-select="main.setReservatorio(reservatorioSelecionado)">
     </div>
-    <div class="map-description" ng-show="main.reservatorioSelecionado.Reserv">
-      <div class="map-item-title">{{main.reservatorioSelecionado.Reserv}}</div>
-      <div class="map-item-row"><strong>Capacidade</strong> {{main.reservatorioSelecionado['Cap(hm3)']}}hm³</div>
-      <div class="map-item-row"><strong>Bacia</strong> {{main.reservatorioSelecionado.Bacia}}</div>
-      <div class="map-item-row"><strong>Localidade</strong> {{main.reservatorioSelecionado.Municipio + ' - ' + main.reservatorioSelecionado.Estado}}</div>
-      <div class="map-item-row"><strong>Tipo</strong> {{main.reservatorioSelecionado.Tipo}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.Finalidade"><strong>Finalidade</strong> {{main.reservatorioSelecionado.Finalidade}}</div>
+    <div class="map-description" ng-show="main.reservatorioSelecionado.RESERVAT">
+      <div class="map-item-title">{{main.reservatorioSelecionado.RESERVAT}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.NOME"><strong>Nome</strong> {{main.reservatorioSelecionado.NOME}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.CAP_HM3"><strong>Capacidade</strong> {{main.reservatorioSelecionado.CAP_HM3}}hm³</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.BACIA"><strong>Bacia</strong> {{main.reservatorioSelecionado.BACIA}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.MUNICIPIO"><strong>Localidade</strong> {{main.reservatorioSelecionado.MUNICIPIO + ' - ' + main.reservatorioSelecionado.ESTADO}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.TIPO_RESER"><strong>Tipo</strong> {{main.reservatorioSelecionado.TIPO_RESER}}</div>
+      <div class="map-item-row" ng-show="main.reservatorioSelecionado.AREA_M2"><strong>Área</strong> {{main.reservatorioSelecionado.AREA_M2}}m²</div>
+<!--       <div class="map-item-row" ng-show="main.reservatorioSelecionado.Finalidade"><strong>Finalidade</strong> {{main.reservatorioSelecionado.Finalidade}}</div> -->
     </div>
   </div>
   <div id="map">

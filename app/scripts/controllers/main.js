@@ -11,7 +11,7 @@
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
-      Reserv: ""
+      RESERVAT: ""
     };
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
@@ -24,7 +24,7 @@
 
     function setReservatorioByID(id) {
       for (var i = 0; i < vm.reservatorios.length; i++) {
-        if(vm.reservatorios[i].CodigoANA === id){
+        if(vm.reservatorios[i].GEOCODIGO === id){
           setReservatorio(vm.reservatorios[i]);
         }
       }
