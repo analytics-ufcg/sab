@@ -24,7 +24,7 @@
 
     function setReservatorioByID(id) {
       for (var i = 0; i < vm.reservatorios.length; i++) {
-        if(vm.reservatorios[i].GEOCODIGO === id){
+        if(parseInt(vm.reservatorios[i].GEOCODIGO) === id){
           setReservatorio(vm.reservatorios[i]);
         }
       }
