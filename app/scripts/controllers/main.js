@@ -10,13 +10,11 @@
   function MainCtrl(Reservatorio) {
     var vm = this;
     vm.reservatorios = [];
-    vm.reservatorioSelecionado = {
-      RESERVAT: ""
-    };
+    vm.reservatorioSelecionado = {};
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
 
-    vm.reservatorios = Reservatorio.query();
+    vm.reservatorios = Reservatorio.info.query();
 
     function setReservatorio(reservatorio) {
       vm.reservatorioSelecionado = reservatorio;
@@ -24,8 +22,9 @@
 
     function setReservatorioByID(id) {
       for (var i = 0; i < vm.reservatorios.length; i++) {
-        if(parseInt(vm.reservatorios[i].GEOCODIGO) === id){
+        if (parseInt(vm.reservatorios[i].GEOCODIGO) === id) {
           setReservatorio(vm.reservatorios[i]);
+          break;
         }
       }
     }
