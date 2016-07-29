@@ -112,7 +112,8 @@
               .attr('cy', function(d) {
                   return projection([d.geometry.coordinates[0], d.geometry.coordinates[1]])[1];})
               .attr('r', scaleCircle)
-              .on('mouseover', mouseOnEvent);
+              .on('mouseover', mouseOnEvent)
+              .on('click', mouseOnEvent);
           }
 
 

@@ -43,10 +43,16 @@ $map-info-padding-horizontal: 10px;
   float: left;
   position: absolute;
   z-index: 10;
-  width: 580px;
-  margin: $map-info-margin-vertical $map-info-margin-horizontal;
   padding: $padding-large-vertical $padding-large-horizontal;
   text-align: left;
+
+  @media (min-width: $screen-sm-min) {
+    width: 100%;
+  }
+  @media (min-width: $screen-md-min) {
+    width: 580px;
+    margin: $map-info-margin-vertical $map-info-margin-horizontal;
+  }
 }
 
 .map-description {

@@ -78,8 +78,8 @@
                 });
                 // Scale the range of the data
                 x.domain(d3.extent(data, function(d) { return d.date; }));
-                y.domain([0, d3.max(data, function(d) { return d.close; })]);
-                // y.domain([0, 100]);
+                // y.domain([0, d3.max(data, function(d) { return d.close; })]);
+                y.domain([0, 100]);
                 // Add the valueline path.
                 lineSvg.append("path")
                     .attr("class", "time-graph-path line")
