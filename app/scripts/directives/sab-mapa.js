@@ -53,11 +53,11 @@
           });
 
           var mouseOnEvent = function(d) {
-            scope.onSelectReservatorio()(d.properties.GEOCODIGO);
+            scope.onSelectReservatorio()(d.properties.ID);
             scope.$apply();
           };
 
-          var scaleCircle = function(d) {
+          var scaleCircle = function(d) {/*
               if (d.properties.CAP_HM3 <= 10) {
                 return (0.5);
               } else if ((d.properties.CAP_HM3 > 10) && (d.properties.CAP_HM3 <= 100)) {
@@ -70,7 +70,8 @@
                 return (3);
               } else if (d.properties.CAP_HM3 > 750) {
                 return (4);
-              }
+              }*/
+              return(2);
             };
 
           function zoomed() {
@@ -105,7 +106,7 @@
               .data(reservatorio.features)
               .enter()
               .append('circle')
-              .attr('id', function(d) { return "r"+d.properties.GEOCODIGO; })
+              .attr('id', function(d) { return "r"+d.properties.ID; })
               .attr('class', 'svg-reservatorio')
               .attr('cx', function(d) {
                   return projection([d.geometry.coordinates[0] , d.geometry.coordinates[1]])[0];})
