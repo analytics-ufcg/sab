@@ -11,8 +11,8 @@ describe('Service: reservatorio', function () {
     reservatorio = _reservatorio_;
   }));
 
-  it('should do something', function () {
-    expect(!!reservatorio).toBe(true);
-  });
+  // it('should do something', function () {
+  //   expect(!!reservatorio).toBe(true);
+  // });
 
 });

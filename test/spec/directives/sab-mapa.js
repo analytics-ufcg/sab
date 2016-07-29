@@ -12,9 +12,8 @@ describe('Directive: sabMapa', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<sab-mapa></sab-mapa>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the sabMapa directive');
+  it('deve ter um elemento svg', inject(function ($compile) {
+    var element = angular.element('<svg></svg>');
+    expect(element).toBeDefined();
   }));
 });
