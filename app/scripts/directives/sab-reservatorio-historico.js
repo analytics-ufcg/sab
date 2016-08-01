@@ -51,7 +51,8 @@
 
             // Define the div for the tooltip
             var div = d3.select(element[0]).append("div")
-                .attr("class", "time-graph-tooltip");
+                .attr("class", "time-graph-tooltip")
+                .style("display", "none");
 
             // Adds the svg canvas
             var svg = d3.select(element[0])
@@ -67,14 +68,26 @@
             var lineSvg = svg.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
-
+            var xAxisSvg = svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")");
+            var yAxisSvg = svg.append("g")
+                .attr("class", "y axis");
             var focus = svg.append("g")
                 .style("display", "none");
+            focus.append("circle")
+                .attr("class", "time-graph-dot y")
+                .attr("r", 4);
+            var rectMouse = svg.append("rect")
+                .attr("width", width)
+                .attr("height", height)
+                .style("fill", "none")
+                .style("pointer-events", "all");
 
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
-              if (typeof scope.monitoramento != undefined) {
-                if (scope.monitoramento.length) {
-                  draw(scope.monitoramento);
+              if (typeof newValue != 'undefined') {
+                if (newValue.length) {
+                  draw(newValue);
                 }
               }
             });
@@ -100,28 +113,17 @@
               lineSvg.attr("d", valueline(data));
 
               // Add the X Axis
-              svg.append("g")
-                  .attr("class", "x axis")
-                  .attr("transform", "translate(0," + height + ")")
-                  .call(xAxis);
+              xAxisSvg.call(xAxis);
 
               // Add the Y Axis
-              svg.append("g")
-                  .attr("class", "y axis")
-                  .call(yAxis);
+              yAxisSvg.call(yAxis);
 
 
               // append the circle at the intersection
-              focus.append("circle")
-                  .attr("class", "time-graph-dot y")
-                  .attr("r", 4);
+
 
               // append the rectangle to capture mouse
-              svg.append("rect")
-                  .attr("width", width)
-                  .attr("height", height)
-                  .style("fill", "none")
-                  .style("pointer-events", "all")
+              rectMouse
                   .on("mouseover", function() { focus.style("display", null); })
                   .on("mouseout", mouseout)
                   .on("mousemove", mousemove);
