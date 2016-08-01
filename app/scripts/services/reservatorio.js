@@ -8,13 +8,10 @@
 
   /*jshint latedef: nofunc */
   function reservatorio(RESTAPI, $resource) {
-    var
-      info = $resource(RESTAPI.url+'/reservatorios/:id/info'),
-      monitoramento = $resource(RESTAPI.url+'/reservatorios/12172/monitoramento'),
-      factory = {
-        info: info,
-        monitoramento: monitoramento
-      }
+    var factory = {
+      info: $resource(RESTAPI.url+'/reservatorios/:id/info'),
+      monitoramento: $resource(RESTAPI.url+'/reservatorios/:id/monitoramento', null, {query: {isArray: false}})
+    }
     return factory;
   }
 })();

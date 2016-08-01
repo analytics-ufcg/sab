@@ -11,6 +11,9 @@
       return {
         template: '',
         restrict: 'E',
+        scope: {
+          monitoramento: '='
+        },
         link: function postLink(scope, element) {
           var
             d3 = $window.d3;
@@ -61,83 +64,94 @@
                     .attr("transform",
                           "translate(" + margin.left + "," + margin.top + ")");
 
-            var lineSvg = svg.append("g");
+            var lineSvg = svg.append("g")
+              .append("path")
+              .attr("class", "time-graph-path line");
 
             var focus = svg.append("g")
                 .style("display", "none");
 
-            // Get the data
-            d3.json("http://localhost:5003/reservatorios/12085/monitoramento", function(error, data) {
-                  data.forEach(function(d) {
-                    d.date = parseDate(d.DataInformacao);
-                    d.close = +d.VolumePercentual;
-                  });
-
-                data.sort(function(a, b) {
-                    return a.date - b.date;
-                });
-                // Scale the range of the data
-                x.domain(d3.extent(data, function(d) { return d.date; }));
-                // y.domain([0, d3.max(data, function(d) { return d.close; })]);
-                y.domain([0, 100]);
-                // Add the valueline path.
-                lineSvg.append("path")
-                    .attr("class", "time-graph-path line")
-                    .attr("d", valueline(data));
-
-                // Add the X Axis
-                svg.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", "translate(0," + height + ")")
-                    .call(xAxis);
-
-                // Add the Y Axis
-                svg.append("g")
-                    .attr("class", "y axis")
-                    .call(yAxis);
-
-
-                // append the circle at the intersection
-                focus.append("circle")
-                    .attr("class", "time-graph-dot y")
-                    .attr("r", 4);
-
-                // append the rectangle to capture mouse
-                svg.append("rect")
-                    .attr("width", width)
-                    .attr("height", height)
-                    .style("fill", "none")
-                    .style("pointer-events", "all")
-                    .on("mouseover", function() { focus.style("display", null); })
-                    .on("mouseout", mouseout)
-                    .on("mousemove", mousemove);
-
-                function mousemove() {
-              		var x0 = x.invert(d3.mouse(this)[0]),
-              		    i = bisectDate(data, x0, 1),
-              		    d0 = data[i - 1],
-              		    d1 = data[i],
-              		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-              		focus.select("circle.y")
-              		    .attr("transform",
-              		          "translate(" + x(d.date) + "," +
-              		                         y(d.close) + ")");
-
-                          div.style("display", "block");
-
-                          var volume = Number(d.Volume.replace(",", "."));
-                          div .html(Number((d.close).toFixed(2)) + "%" + "<br/>"  + Number((volume).toFixed(2)) + "hm³" + "<br/>" + formatTime(d.date))
-                              .style("left", (x(d.date) + 80) + "px")
-                              .style("top", (y(d.close) + 160) + "px");
-              	}
-
-                function mouseout() {
-                  focus.style("display", "none");
-                  div.style("display", "none");
+            scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
+              if (typeof scope.monitoramento != undefined) {
+                if (scope.monitoramento.length) {
+                  draw(scope.monitoramento);
                 }
-
+              }
             });
+
+            // Get the data
+            var draw = function(data) {
+              data.forEach(function(d) {
+                d.date = parseDate(d.DataInformacao);
+                d.close = +d.VolumePercentual;
+              });
+
+              data.sort(function(a, b) {
+                  return a.date - b.date;
+              });
+              // Scale the range of the data
+              var max = d3.max(data, function(d) { return d.close; });
+              if (max < 100) {
+                max = 100;
+              }
+              x.domain(d3.extent(data, function(d) { return d.date; }));
+              y.domain([0, max]);
+              // Add the valueline path.
+              lineSvg.attr("d", valueline(data));
+
+              // Add the X Axis
+              svg.append("g")
+                  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(xAxis);
+
+              // Add the Y Axis
+              svg.append("g")
+                  .attr("class", "y axis")
+                  .call(yAxis);
+
+
+              // append the circle at the intersection
+              focus.append("circle")
+                  .attr("class", "time-graph-dot y")
+                  .attr("r", 4);
+
+              // append the rectangle to capture mouse
+              svg.append("rect")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("fill", "none")
+                  .style("pointer-events", "all")
+                  .on("mouseover", function() { focus.style("display", null); })
+                  .on("mouseout", mouseout)
+                  .on("mousemove", mousemove);
+
+              function mousemove() {
+            		var x0 = x.invert(d3.mouse(this)[0]),
+            		    i = bisectDate(data, x0, 1),
+            		    d0 = data[i - 1],
+            		    d1 = data[i],
+            		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+            		focus.select("circle.y")
+            		    .attr("transform",
+            		          "translate(" + x(d.date) + "," +
+            		                         y(d.close) + ")");
+
+                        div.style("display", "block");
+
+                        var volume = Number(d.Volume.replace(",", "."));
+                        div .html(Number((d.close).toFixed(2)) + "%" + "<br/>"  + Number((volume).toFixed(2)) + "hm³" + "<br/>" + formatTime(d.date))
+                            .style("left", (x(d.date) + 80) + "px")
+                            .style("top", (y(d.close) + 160) + "px");
+            	}
+
+              function mouseout() {
+                focus.style("display", "none");
+                div.style("display", "none");
+              }
+
+          }
         }
       }
     }

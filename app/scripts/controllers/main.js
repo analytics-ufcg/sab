@@ -10,7 +10,10 @@
   function MainCtrl(Reservatorio) {
     var vm = this;
     vm.reservatorios = [];
-    vm.reservatorioSelecionado = {};
+    vm.reservatorioSelecionado = {
+      nome: "",
+      volumes: []
+    };
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
 
@@ -18,6 +21,9 @@
 
     function setReservatorio(reservatorio) {
       vm.reservatorioSelecionado = reservatorio;
+      var data = Reservatorio.monitoramento.query({id: reservatorio.GEOCODIGO}, function() {
+        vm.reservatorioSelecionado.volumes = data.volumes;
+      });
     }
 
     function setReservatorioByID(id) {

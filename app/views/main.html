@@ -20,7 +20,7 @@
       <div class="map-item-row" ng-show="main.reservatorioSelecionado.TIPO_RESER"><strong>Tipo</strong> {{main.reservatorioSelecionado.TIPO_RESER}}</div>
       <div class="map-item-row" ng-show="main.reservatorioSelecionado.AREA_M2"><strong>Área</strong> {{main.reservatorioSelecionado.AREA_M2}}m²</div>
 
-      <sab-reservatorio-historico></sab-reservatorio-historico>
+      <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
     </div>
   </div>
   <div id="map">
