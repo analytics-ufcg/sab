@@ -111,16 +111,10 @@
               y.domain([0, max]);
               // Add the valueline path.
               lineSvg.attr("d", valueline(data));
-
               // Add the X Axis
               xAxisSvg.call(xAxis);
-
               // Add the Y Axis
               yAxisSvg.call(yAxis);
-
-
-              // append the circle at the intersection
-
 
               // append the rectangle to capture mouse
               rectMouse
