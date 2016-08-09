@@ -12,7 +12,7 @@
   angular
     .module('sabApp', ['ngResource', 'ui.router', 'ui.bootstrap'])
     .constant('RESTAPI', {
-      url: 'http://localhost:5003'
+      url: 'http://localhost:5003/api'
     })
     .config(routeConfig);
 

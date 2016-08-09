@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .directive('sabMapa', sabMapa);
 
-    sabMapa.$inject = ['$window'];
+    sabMapa.$inject = ['$window','RESTAPI'];
 
     /*jshint latedef: nofunc */
-    function sabMapa($window) {
+    function sabMapa($window, RESTAPI) {
       return {
         template: '',
         restrict: 'E',
@@ -122,9 +122,9 @@
           }
 
           d3.queue()
-            .defer(d3.json, 'http://localhost:5003/estados/br')
-            .defer(d3.json, 'http://localhost:5003/estados/sab')
-            .defer(d3.json, 'http://localhost:5003/reservatorios')
+            .defer(d3.json, RESTAPI.url + '/estados/br')
+            .defer(d3.json, RESTAPI.url + '/estados/sab')
+            .defer(d3.json, RESTAPI.url + '/reservatorios')
             .await(desenhaMapa);
 
           function desenhaMapa(error, br, sab, reserv) {
