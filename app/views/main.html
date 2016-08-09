@@ -13,12 +13,19 @@
     </div>
     <div class="map-description" ng-show="main.reservatorioSelecionado.RESERVAT">
       <div class="map-item-title">{{main.reservatorioSelecionado.RESERVAT}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.NOME"><strong>Nome</strong> {{main.reservatorioSelecionado.NOME}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.CAP_HM3"><strong>Capacidade</strong> {{main.reservatorioSelecionado.CAP_HM3}}hm³</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.BACIA"><strong>Bacia</strong> {{main.reservatorioSelecionado.BACIA}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.MUNICIPIO"><strong>Localidade</strong> {{main.reservatorioSelecionado.MUNICIPIO + ' - ' + main.reservatorioSelecionado.ESTADO}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.TIPO_RESER"><strong>Tipo</strong> {{main.reservatorioSelecionado.TIPO_RESER}}</div>
-      <div class="map-item-row" ng-show="main.reservatorioSelecionado.AREA_M2"><strong>Área</strong> {{main.reservatorioSelecionado.AREA_M2}}m²</div>
+      <div class="row">
+        <div class="col-xs-4 col-sm-8">
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.NOME"><strong>Nome</strong> {{main.reservatorioSelecionado.NOME}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.CAP_HM3"><strong>Capacidade</strong> {{main.reservatorioSelecionado.CAP_HM3}}hm³</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.BACIA"><strong>Bacia</strong> {{main.reservatorioSelecionado.BACIA}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.MUNICIPIO"><strong>Localidade</strong> {{main.reservatorioSelecionado.MUNICIPIO + ' - ' + main.reservatorioSelecionado.ESTADO}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.TIPO_RESER"><strong>Tipo</strong> {{main.reservatorioSelecionado.TIPO_RESER}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.AREA_M2"><strong>Área</strong> {{main.reservatorioSelecionado.AREA_M2}}m²</div>
+        </div>
+        <div class="col-xs-8 col-sm-4">
+          <sab-volume volume="98.8"></sab-volume>
+        </div>
+      </div>
 
       <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
     </div>
