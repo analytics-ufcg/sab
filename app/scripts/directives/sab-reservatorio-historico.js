@@ -86,9 +86,7 @@
 
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
               if (typeof newValue != 'undefined') {
-                if (newValue.length) {
-                  draw(newValue);
-                }
+                draw(newValue);
               }
             });
 
