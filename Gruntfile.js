@@ -8,7 +8,15 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+  var api;
+  var env = grunt.option('env');
+  if(env== "prod"){
+    api = require('./bower.json').production
+  } else {
+    api = require('./bower.json').development
+  }
 
+  grunt.loadNpmTasks('grunt-string-replace');
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -17,6 +25,7 @@ module.exports = function (grunt) {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn'
+
   });
 
   // Configurable paths for the application
@@ -456,10 +465,25 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+
+    'string-replace': {
+      dist: {
+        files: {
+          'dist/scripts/': 'dist/scripts/*.js'
+        },
+        options: {
+          replacements: [{
+            pattern: /http:\/\/localhost:5003\/api/ig,
+            replacement: api
+          }]
+        }
+      }
     }
   });
 
-
+  
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -504,7 +528,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'string-replace'
   ]);
 
   grunt.registerTask('default', [
@@ -513,4 +538,8 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('teste', [
+    'string-replace']);
+
 };
