@@ -25,5 +25,7 @@
         "dist/js/bootstrap.js"
       ]
     }
-  }
+  },
+  "development" : "http://localhost:5003/api",
+  "production" : "http://web.cloud.lsd.ufcg.edu.br:42160/api"
 }
