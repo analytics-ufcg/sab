@@ -13,8 +13,7 @@
         restrict: 'E',
         scope: {
           onSelectReservatorio: '&',
-          reservatorioSelecionado: '=',
-          infoReservatorios: '='
+          reservatorioSelecionado: '='
         },
         link: function postLink(scope, element) {
           var
@@ -44,7 +43,7 @@
           var features = svg.append('g').attr('id', 'g-mapa');
 
           scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
-            var r = newValue.GEOCODIGO;
+            var r = newValue.id;
             d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
             var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
             // console.log(point);
@@ -59,24 +58,21 @@
           };
 
           var scaleCircle = function(d) {
-                for (var i = 0; i < scope.infoReservatorios.length; i++) {
-                  if(parseInt(d.properties.ID) === parseInt(scope.infoReservatorios[i].GEOCODIGO)){
-                    if (scope.infoReservatorios[i].CAP_HM3 <= 10) {
-                      return (0.5);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 10) && (scope.infoReservatorios[i].CAP_HM3 <= 100)) {
-                      return (1.0);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 100) && (scope.infoReservatorios[i].CAP_HM3 <= 250)) {
-                      return (1.5);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 250) && (scope.infoReservatorios[i].CAP_HM3 <= 500)) {
-                      return (2);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 500) && (scope.infoReservatorios[i].CAP_HM3 <= 750)) {
-                      return (3);
-                    } else if (scope.infoReservatorios[i].CAP_HM3 > 750) {
-                      return (4);
-                    }
-                  }
+                if (d.properties.CAPACIDADE <= 10) {
+                  return (0.5);
+                } else if ((d.properties.CAPACIDADE > 10) && (d.properties.CAPACIDADE <= 100)) {
+                  return (1.0);
+                } else if ((d.properties.CAPACIDADE > 100) && (d.properties.CAPACIDADE <= 250)) {
+                  return (1.5);
+                } else if ((d.properties.CAPACIDADE > 250) && (d.properties.CAPACIDADE <= 500)) {
+                  return (2);
+                } else if ((d.properties.CAPACIDADE > 500) && (d.properties.CAPACIDADE <= 750)) {
+                  return (3);
+                } else if (d.properties.CAPACIDADE > 750) {
+                  return (4);
+                } else{
+                  return(10);
                 }
-                //return(2);
             };
 
           function zoomed() {

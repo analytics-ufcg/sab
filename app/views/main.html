@@ -7,23 +7,25 @@
         class="form-control"
         placeholder="Pesquisar..."
         ng-model="reservatorioSelecionado"
-        uib-typeahead="reservatorio as (reservatorio.NOME + ' (' + reservatorio.MUNICIPIO + ' - ' + reservatorio.ESTADO + ')') for reservatorio in main.reservatorios | filter:$viewValue"
+        uib-typeahead="reservatorio as (reservatorio.nome + ' (' + reservatorio.municipio + ' - ' + reservatorio.estado + ')') for reservatorio in main.reservatorios | filter:$viewValue"
         typeahead-min-length="3"
         typeahead-on-select="main.setReservatorio(reservatorioSelecionado)">
     </div>
-    <div class="map-description" ng-show="main.reservatorioSelecionado.RESERVAT">
-      <div class="map-item-title">{{main.reservatorioSelecionado.RESERVAT}}</div>
+    <div class="map-description" ng-show="main.reservatorioSelecionado.reservat">
+      <div class="map-item-title">{{main.reservatorioSelecionado.reservat}}</div>
       <div class="row">
         <div class="col-xs-4 col-sm-8">
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.NOME"><strong>Nome</strong> {{main.reservatorioSelecionado.NOME}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.CAP_HM3"><strong>Capacidade</strong> {{main.reservatorioSelecionado.CAP_HM3}}hm³</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.BACIA"><strong>Bacia</strong> {{main.reservatorioSelecionado.BACIA}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.MUNICIPIO"><strong>Localidade</strong> {{main.reservatorioSelecionado.MUNICIPIO + ' - ' + main.reservatorioSelecionado.ESTADO}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.TIPO_RESER"><strong>Tipo</strong> {{main.reservatorioSelecionado.TIPO_RESER}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.AREA_M2"><strong>Área</strong> {{main.reservatorioSelecionado.AREA_M2}}m²</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong> {{main.reservatorioSelecionado.capacidade}}hm³</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong> {{main.reservatorioSelecionado.volume}}hm³</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.area"><strong>Área</strong> {{main.reservatorioSelecionado.area}}m²</div>
+
         </div>
         <div class="col-xs-8 col-sm-4">
-          <sab-volume volume="52.1" verificado-em="31/01/2016"></sab-volume>
+          <sab-volume volume="main.reservatorioSelecionado.volume_percentual" verificado-em="main.reservatorioSelecionado.data_informacao" ng-show="main.reservatorioSelecionado.volumes.length"></sab-volume>
         </div>
       </div>
 
@@ -32,6 +34,6 @@
     </div>
   </div>
   <div id="map">
-    <sab-mapa on-select-reservatorio="main.setReservatorioByID" reservatorio-selecionado="main.reservatorioSelecionado" info-reservatorios="main.reservatorios"></sab-mapa>
+    <sab-mapa on-select-reservatorio="main.setReservatorioByID" reservatorio-selecionado="main.reservatorioSelecionado"></sab-mapa>
   </div>
 </section>
