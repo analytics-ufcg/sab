@@ -21,14 +21,14 @@
 
     function setReservatorio(reservatorio) {
       vm.reservatorioSelecionado = reservatorio;
-      var data = Reservatorio.monitoramento.query({id: reservatorio.GEOCODIGO}, function() {
+      var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
       });
     }
 
     function setReservatorioByID(id) {
       for (var i = 0; i < vm.reservatorios.length; i++) {
-        if (parseInt(vm.reservatorios[i].GEOCODIGO) === id) {
+        if (parseInt(vm.reservatorios[i].id) === id) {
           setReservatorio(vm.reservatorios[i]);
           break;
         }

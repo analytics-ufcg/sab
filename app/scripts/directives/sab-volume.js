@@ -12,8 +12,8 @@
         template: '',
         restrict: 'E',
         scope: {
-          volume: '@',
-          verificadoEm: '@'
+          volume: '=',
+          verificadoEm: '='
         },
         link: function postLink(scope, element) {
           var
@@ -44,6 +44,9 @@
               textColor: "#045681", // The color of the value text when the wave does not overlap it.
               waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
             };
+
+
+
           function loadLiquidFillGauge(elementId, value, dateText, config) {
             var gauge = d3.select(element[0])
               .append("svg")
@@ -299,7 +302,21 @@
 
             return new GaugeUpdater();
           }
-          var gauge = loadLiquidFillGauge("volumeAtual", scope.volume, scope.verificadoEm, config);
+
+          scope.$watch(function(scope) { return scope.volume }, function(newValue, oldValue) {
+            /*var r = newValue.id;
+            d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
+            var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
+*/
+            if( typeof newValue != 'undefined' ){
+                var gauge = loadLiquidFillGauge("volumeAtual", scope.volume, scope.verificadoEm, config);
+            }
+
+            // console.log(point);
+            // var x = (800 - point.attr('cx'))* 1.6;
+            // var y = (400 - point.attr('cy'))* 0.05;
+            // d3.select("#g-mapa").transition().duration(300).ease("linear").attr("transform", "translate("+x+","+y+")");
+          });
         }
       }
     }

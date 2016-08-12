@@ -44,7 +44,7 @@
           var features = svg.append('g').attr('id', 'g-mapa');
 
           scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
-            var r = newValue.GEOCODIGO;
+            var r = newValue.id;
             d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
             var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
             // console.log(point);
@@ -60,19 +60,22 @@
 
           var scaleCircle = function(d) {
                 for (var i = 0; i < scope.infoReservatorios.length; i++) {
-                  if(parseInt(d.properties.ID) === parseInt(scope.infoReservatorios[i].GEOCODIGO)){
-                    if (scope.infoReservatorios[i].CAP_HM3 <= 10) {
+                  if(parseInt(d.properties.ID) === parseInt(scope.infoReservatorios[i].id)){
+                  console.log(scope.infoReservatorios[i]);
+                    if (scope.infoReservatorios[i].capacidade <= 10) {
                       return (0.5);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 10) && (scope.infoReservatorios[i].CAP_HM3 <= 100)) {
+                    } else if ((scope.infoReservatorios[i].capacidade > 10) && (scope.infoReservatorios[i].capacidade <= 100)) {
                       return (1.0);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 100) && (scope.infoReservatorios[i].CAP_HM3 <= 250)) {
+                    } else if ((scope.infoReservatorios[i].capacidade > 100) && (scope.infoReservatorios[i].capacidade <= 250)) {
                       return (1.5);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 250) && (scope.infoReservatorios[i].CAP_HM3 <= 500)) {
+                    } else if ((scope.infoReservatorios[i].capacidade > 250) && (scope.infoReservatorios[i].capacidade <= 500)) {
                       return (2);
-                    } else if ((scope.infoReservatorios[i].CAP_HM3 > 500) && (scope.infoReservatorios[i].CAP_HM3 <= 750)) {
+                    } else if ((scope.infoReservatorios[i].capacidade > 500) && (scope.infoReservatorios[i].capacidade <= 750)) {
                       return (3);
-                    } else if (scope.infoReservatorios[i].CAP_HM3 > 750) {
+                    } else if (scope.infoReservatorios[i].capacidade > 750) {
                       return (4);
+                    } else{
+                      return(10);
                     }
                   }
                 }
