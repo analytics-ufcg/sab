@@ -36,4 +36,12 @@ Para rodar o preview da aplicação, use o comando `grunt serve`.
 
 ## Deployment
 
-Use `grunt build` para gerar a versão de produção na pasta **dist**.
+O 'grunt build' tem um parâmetro para definir o environment.
+
+Use `grunt build` para gerar a versão de development na pasta **dist**.
+
+Para o deployment com a url de produção:
+
+```
+grunt build --env=prod
+```
