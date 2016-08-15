@@ -46,8 +46,8 @@
             };
 
 
-
-          function loadLiquidFillGauge(elementId, value, dateText, config) {
+            var value = 0;
+            var elementId = "volumeAtual";
             var gauge = d3.select(element[0])
               .append("svg")
               .attr({
@@ -141,20 +141,8 @@
                 .attr('transform','translate('+radius+','+radius+')');
 
             // Text where the wave does not overlap.
-            var text1 = gaugeGroup.append("text")
-                .text(textRounder(textStartValue) + percentText)
-                .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "middle")
-                .attr("font-size", textPixels + "px")
-                .style("fill", config.textColor)
-                .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')');
-            var date1 = gaugeGroup.append("text")
-                .text(dateText)
-                .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "middle")
-                .attr("font-size", textSmallPixels + "px")
-                .style("fill", config.textColor)
-                .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
+            var text1 = gaugeGroup.append("text");
+            var date1 = gaugeGroup.append("text");
 
             // The clipping wave area.
             var clipArea = d3.svg.area()
@@ -179,20 +167,8 @@
                 .style("fill", config.waveColor);
 
             // Text where the wave does overlap.
-            var text2 = fillCircleGroup.append("text")
-                .text(textRounder(textStartValue) + percentText)
-                .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "middle")
-                .attr("font-size", textPixels + "px")
-                .style("fill", config.waveTextColor)
-                .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')');
-            var date2 = fillCircleGroup.append("text")
-                .text(dateText)
-                .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "middle")
-                .attr("font-size", textSmallPixels + "px")
-                .style("fill", config.waveTextColor)
-                .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
+            var text2 = fillCircleGroup.append("text");
+            var date2 = fillCircleGroup.append("text");
 
             // Make the value count up.
             if(config.valueCountUp){
@@ -235,87 +211,101 @@
                     });
             }
 
-            function GaugeUpdater(){
-                this.update = function(value){
-                    var newFinalValue = parseFloat(value).toFixed(2);
-                    var textRounderUpdater = function(value){ return Math.round(value); };
-                    if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
-                        textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
-                    }
-                    if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
-                        textRounderUpdater = function(value){ return parseFloat(value).toFixed(2); };
-                    }
-
-                    var textTween = function(){
-                        var i = d3.interpolate(this.textContent, parseFloat(value).toFixed(2));
-                        return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; }
-                    };
-
-                    text1.transition()
-                        .duration(config.waveRiseTime)
-                        .tween("text", textTween);
-                    text2.transition()
-                        .duration(config.waveRiseTime)
-                        .tween("text", textTween);
-
-                    var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
-                    var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
-                    var waveRiseScale = d3.scale.linear()
-                        // The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
-                        // such that the it will overlap the fill circle at all when at 0%, and will totally cover the fill
-                        // circle at 100%.
-                        .range([(fillCircleMargin+fillCircleRadius*2+waveHeight),(fillCircleMargin-waveHeight)])
-                        .domain([0,1]);
-                    var newHeight = waveRiseScale(fillPercent);
-                    var waveScaleX = d3.scale.linear().range([0,waveClipWidth]).domain([0,1]);
-                    var waveScaleY = d3.scale.linear().range([0,waveHeight]).domain([0,1]);
-                    var newClipArea;
-                    if(config.waveHeightScaling){
-                        newClipArea = d3.svg.area()
-                            .x(function(d) { return waveScaleX(d.x); } )
-                            .y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
-                            .y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
-                    } else {
-                        newClipArea = clipArea;
-                    }
-
-                    var newWavePosition = config.waveAnimate?waveAnimateScale(1):0;
-                    wave.transition()
-                        .duration(0)
-                        .transition()
-                        .duration(config.waveAnimate?(config.waveAnimateTime * (1-wave.attr('T'))):(config.waveRiseTime))
-                        .ease('linear')
-                        .attr('d', newClipArea)
-                        .attr('transform','translate('+newWavePosition+',0)')
-                        .attr('T','1')
-                        .each("end", function(){
-                            if(config.waveAnimate){
-                                wave.attr('transform','translate('+waveAnimateScale(0)+',0)');
-                                animateWave(config.waveAnimateTime);
-                            }
-                        });
-                    waveGroup.transition()
-                        .duration(config.waveRiseTime)
-                        .attr('transform','translate('+waveGroupXPosition+','+newHeight+')')
+            function GaugeUpdater(value, dateText){
+                var newFinalValue = parseFloat(value).toFixed(2);
+                var textRounderUpdater = function(value){ return Math.round(value); };
+                if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+                    textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
                 }
-            }
+                if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+                    textRounderUpdater = function(value){ return parseFloat(value).toFixed(2); };
+                }
 
-            return new GaugeUpdater();
-          }
+                var textTween = function(){
+                    var i = d3.interpolate(this.textContent, parseFloat(value).toFixed(2));
+                    return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; }
+                };
+
+                var textFinalValue = parseFloat(value).toFixed(2);
+                var textStartValue = config.valueCountUp?config.minValue:textFinalValue;
+
+                text1.text(textRounder(textStartValue) + percentText)
+                    .attr("class", "liquidFillGaugeText")
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", textPixels + "px")
+                    .style("fill", config.textColor)
+                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')')
+                    .transition()
+                    .duration(config.waveRiseTime)
+                    .tween("text", textTween);
+                date1.text(dateText)
+                    .attr("class", "liquidFillGaugeText")
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", textSmallPixels + "px")
+                    .style("fill", config.textColor)
+                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
+                text2.text(textRounder(textStartValue) + percentText)
+                    .attr("class", "liquidFillGaugeText")
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", textPixels + "px")
+                    .style("fill", config.waveTextColor)
+                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition)+')')
+                    .transition()
+                    .duration(config.waveRiseTime)
+                    .tween("text", textTween);
+
+                date2.text(dateText)
+                    .attr("class", "liquidFillGaugeText")
+                    .attr("text-anchor", "middle")
+                    .attr("font-size", textSmallPixels + "px")
+                    .style("fill", config.waveTextColor)
+                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
+
+                var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
+                var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
+                var waveRiseScale = d3.scale.linear()
+                    // The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
+                    // such that the it will overlap the fill circle at all when at 0%, and will totally cover the fill
+                    // circle at 100%.
+                    .range([(fillCircleMargin+fillCircleRadius*2+waveHeight),(fillCircleMargin-waveHeight)])
+                    .domain([0,1]);
+                var newHeight = waveRiseScale(fillPercent);
+                var waveScaleX = d3.scale.linear().range([0,waveClipWidth]).domain([0,1]);
+                var waveScaleY = d3.scale.linear().range([0,waveHeight]).domain([0,1]);
+                var newClipArea;
+                if(config.waveHeightScaling){
+                    newClipArea = d3.svg.area()
+                        .x(function(d) { return waveScaleX(d.x); } )
+                        .y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
+                        .y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
+                } else {
+                    newClipArea = clipArea;
+                }
+
+                var newWavePosition = config.waveAnimate?waveAnimateScale(1):0;
+                wave.transition()
+                    .duration(0)
+                    .transition()
+                    .duration(config.waveAnimate?(config.waveAnimateTime * (1-wave.attr('T'))):(config.waveRiseTime))
+                    .ease('linear')
+                    .attr('d', newClipArea)
+                    .attr('transform','translate('+newWavePosition+',0)')
+                    .attr('T','1')
+                    .each("end", function(){
+                        if(config.waveAnimate){
+                            wave.attr('transform','translate('+waveAnimateScale(0)+',0)');
+                            animateWave(config.waveAnimateTime);
+                        }
+                    });
+                waveGroup.transition()
+                    .duration(config.waveRiseTime)
+                    .attr('transform','translate('+waveGroupXPosition+','+newHeight+')')
+            }
 
           scope.$watch(function(scope) { return scope.volume }, function(newValue, oldValue) {
-            /*var r = newValue.id;
-            d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
-            var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
-*/
             if( typeof newValue != 'undefined' ){
-                var gauge = loadLiquidFillGauge("volumeAtual", scope.volume, scope.verificadoEm, config);
+                var gauge = GaugeUpdater(scope.volume, scope.verificadoEm);
             }
-
-            // console.log(point);
-            // var x = (800 - point.attr('cx'))* 1.6;
-            // var y = (400 - point.attr('cy'))* 0.05;
-            // d3.select("#g-mapa").transition().duration(300).ease("linear").attr("transform", "translate("+x+","+y+")");
           });
         }
       }
