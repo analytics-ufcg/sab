@@ -38,10 +38,40 @@ Para rodar o preview da aplicação, use o comando `grunt serve`.
 
 O 'grunt build' tem um parâmetro para definir o environment.
 
-Use `grunt build` para gerar a versão de development na pasta **dist**.
+Use `grunt build` para gerar a versão de produção na pasta **dist**.
 
-Para o deployment com a url de produção:
+Para subir a aplicação para o servidor final, configure o arquivo `secret.json` na raiz do projeto e execute:
 
 ```
 grunt build --env=prod
+grunt ssh_deploy:prod
+```
+
+É possível desfazer o deployment retornando para a versão anterior do projeto:
+
+```
+grunt ssh_rollback:prod
+```
+
+## Arquivo secret.json
+
+Exemplo do arquivo `secret.json` que deve conter as credenciais de acesso ao servidor de produção:
+
+```
+{
+  "development": {
+    "host": "http://localhost",
+    "username": "meuusuario",
+    "password": "MiNhaSeNhA",
+    "port": "22",
+    "deploy_path": "/var/www/html/"
+  },
+  "production": {
+    "host": "10.x.x.xxx",
+    "username": "systemusername",
+    "password": "userpassword",
+    "port": "22",
+    "deploy_path": "/var/www/"
+  }
+}
 ```
