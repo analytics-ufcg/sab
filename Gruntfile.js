@@ -24,8 +24,8 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
-
+    cdnify: 'grunt-google-cdn',
+    deploy: 'grunt-ssh-deploy'
   });
 
   // Configurable paths for the application
@@ -39,6 +39,37 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    // Load credentials
+    secret: grunt.file.readJSON('secret.json'),
+
+    environments: {
+      options: {
+        local_path: 'dist',
+        current_symlink: 'site'
+      },
+      dev: {
+          options: {
+              host: '<%= secret.development.host %>',
+              username: '<%= secret.development.username %>',
+              privateKey: require('fs').readFileSync("/home/jeffersonrpn/.ssh/cloud.key"),
+              port: '<%= secret.development.port %>',
+              deploy_path: '<%= secret.development.deploy_path %>',
+              debug: true,
+              releases_to_keep: '3'
+          }
+      },
+      prod: {
+          options: {
+              host: '<%= secret.production.host %>',
+              username: '<%= secret.production.username %>',
+              password: '<%= secret.production.password %>',
+              port: '<%= secret.production.port %>',
+              deploy_path: '<%= secret.production.deploy_path %>',
+              releases_to_keep: '5'
+          }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -483,7 +514,7 @@ module.exports = function (grunt) {
     }
   });
 
-  
+
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
