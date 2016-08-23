@@ -52,7 +52,7 @@ module.exports = function (grunt) {
           options: {
               host: '<%= secret.development.host %>',
               username: '<%= secret.development.username %>',
-              privateKey: require('fs').readFileSync("/home/jeffersonrpn/.ssh/cloud.key"),
+              password: '<%= secret.production.password %>',
               port: '<%= secret.development.port %>',
               deploy_path: '<%= secret.development.deploy_path %>',
               debug: true,
