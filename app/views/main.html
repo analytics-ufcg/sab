@@ -29,8 +29,13 @@
         </div>
       </div>
 
-      <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes" ng-show="main.reservatorioSelecionado.volumes.length"></sab-reservatorio-historico>
+      <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes" ng-show="main.reservatorioSelecionado.volumes.length"
+      slider="main.slider"></sab-reservatorio-historico>
       <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
+      <rzslider rz-slider-model="main.slider.minValue"
+                rz-slider-high="main.slider.maxValue"
+                rz-slider-options="main.slider.options"
+                ng-show="main.reservatorioSelecionado.volumes.length"></rzslider>
     </div>
   </div>
   <div id="map">

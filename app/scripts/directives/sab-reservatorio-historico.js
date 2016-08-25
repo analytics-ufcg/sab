@@ -12,7 +12,8 @@
         template: '',
         restrict: 'E',
         scope: {
-          monitoramento: '='
+          monitoramento: '=',
+          slider: '='
         },
         link: function postLink(scope, element) {
           var
@@ -87,6 +88,33 @@
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
               if (typeof newValue != 'undefined') {
                 draw(newValue);
+              }
+            });
+
+            scope.$watch(function(scope) { return scope.slider.maxValue }, function(newValue, oldValue) {
+              var monitoramentoOriginal = scope.monitoramento;
+              var monitoramentoNovo = [];
+              if (typeof monitoramentoOriginal != 'undefined') {
+                monitoramentoOriginal.forEach(function(d) {
+                  if (newValue >= parseDate(d.DataInformacao).getFullYear() && scope.slider.minValue <= parseDate(d.DataInformacao).getFullYear()){
+                    monitoramentoNovo.push(d);                  
+                  }
+
+                });
+                draw(monitoramentoNovo);
+              }
+            });
+
+            scope.$watch(function(scope) { return scope.slider.minValue }, function(newValue, oldValue) {
+              var monitoramentoOriginal = scope.monitoramento;
+              var monitoramentoNovo = [];
+              if (typeof monitoramentoOriginal != 'undefined') {
+                monitoramentoOriginal.forEach(function(d) {
+                  if (newValue <= parseDate(d.DataInformacao).getFullYear() && scope.slider.maxValue >= parseDate(d.DataInformacao).getFullYear()){
+                    monitoramentoNovo.push(d);                  
+                  }
+                });
+                draw(monitoramentoNovo);
               }
             });
 
