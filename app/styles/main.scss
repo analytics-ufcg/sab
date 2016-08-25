@@ -131,3 +131,16 @@ $map-info-padding-horizontal: 10px;
   font-size: 2em;
   text-align: center;
 }
+
+
+.rzslider .rz-pointer {
+  background-color: #337ab7 !important;
+}
+
+.rzslider .rz-bar.rz-selection{
+    background: #178BCA !important;
+}
+
+.rzslider .rz-ticks .rz-tick.rz-selected {
+    background: #178BCA !important;
+}
