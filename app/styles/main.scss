@@ -144,3 +144,7 @@ $map-info-padding-horizontal: 10px;
 .rzslider .rz-ticks .rz-tick.rz-selected {
     background: #178BCA !important;
 }
+
+.rzslider .rz-pointer.rz-active:after {
+  background-color: #A4DBF8 !important;
+}
