@@ -12,22 +12,45 @@
         typeahead-min-length="3"
         typeahead-on-select="main.setReservatorio(reservatorioSelecionado)">
     </div>
+
     <div class="map-description" ng-show="main.reservatorioSelecionado.reservat">
-      <div class="map-item-title">{{main.reservatorioSelecionado.reservat}}</div>
-      <div class="row">
-        <div class="col-xs-4 col-sm-8">
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong> {{main.reservatorioSelecionado.capacidade}}hm³</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong> {{main.reservatorioSelecionado.volume}}hm³</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
-          <div class="map-item-row" ng-show="main.reservatorioSelecionado.area"><strong>Área</strong> {{main.reservatorioSelecionado.area}}m²</div>
+
+      <h2 class="map-item-title">{{main.reservatorioSelecionado.reservat}}</h2>
+      <div class="row row-sm">
+
+        <div class="col-xs-8 col-sm-4 col-sm">
+          <div>
+            <sab-volume volume="main.reservatorioSelecionado.volume_percentual"></sab-volume>
+          </div>
+
+          <div class="row row-sm">
+            <div class="col-xs-6 col-sm text-right">
+              <div class="map-item-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
+            </div>
+            <div class="col-xs-6 col-sm">
+              {{main.reservatorioSelecionado.capacidade}} hm³
+            </div>
+            <div class="col-xs-6 col-sm text-right">
+              <div class="map-item-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
+            </div>
+            <div class="col-xs-6 col-sm">
+              {{main.reservatorioSelecionado.volume}} hm³
+            </div>
+            <div class="col-xs-12 col-sm text-center" ng-show="main.reservatorioSelecionado.data_informacao">
+              <small>Medido em {{main.reservatorioSelecionado.data_informacao}}</small>
+            </div>
+          </div>
 
         </div>
-        <div class="col-xs-8 col-sm-4">
-          <sab-volume volume="main.reservatorioSelecionado.volume_percentual" verificado-em="main.reservatorioSelecionado.data_informacao" ng-show="main.reservatorioSelecionado.volumes.length"></sab-volume>
+
+        <div class="col-xs-4 col-sm-8 col-sm">
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
+          <div class="map-item-row" ng-show="main.reservatorioSelecionado.area > 0"><strong>Área</strong> {{main.reservatorioSelecionado.area}} m²</div>
         </div>
+
       </div>
 
       <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
@@ -44,6 +67,7 @@
       <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
 
     </div>
+
   </div>
   <div id="map">
     <sab-mapa on-select-reservatorio="main.setReservatorioByID" reservatorio-selecionado="main.reservatorioSelecionado"></sab-mapa>

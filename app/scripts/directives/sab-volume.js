@@ -12,15 +12,14 @@
         template: '',
         restrict: 'E',
         scope: {
-          volume: '=',
-          verificadoEm: '='
+          volume: '='
         },
         link: function postLink(scope, element) {
           var
             d3 = $window.d3,
             config = {
               width: 100,
-              height: 100,
+              height: 50,
               minValue: 0, // The gauge minimum value.
               maxValue: 100, // The gauge maximum value.
               circleThickness: 0.05, // The outer circle thickness as a percentage of it's radius.
@@ -53,7 +52,7 @@
               .attr({
                 'version': '1.1',
                 'viewBox': '0 0 '+config.width+' '+config.height,
-                'width': '90%'});
+                'width': '100%'});
             var radius = Math.min(parseInt(config.width), parseInt(config.height))/2;
             var locationX = parseInt(config.width)/2 - radius;
             var locationY = parseInt(config.height)/2 - radius;
@@ -70,7 +69,7 @@
                     .domain([0,100]);
             }
 
-            var textPixels = (config.textSize*radius/2);
+            var textPixels = (config.textSize*radius/1.5);
             var textSmallPixels = (config.textSmallSize*radius/2);
             var textFinalValue = parseFloat(value).toFixed(2);
             var textStartValue = config.valueCountUp?config.minValue:textFinalValue;
@@ -211,7 +210,7 @@
                     });
             }
 
-            function GaugeUpdater(value, dateText){
+            function GaugeUpdater(value) {
                 var newFinalValue = parseFloat(value).toFixed(2);
                 var textRounderUpdater = function(value){ return Math.round(value); };
                 if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
@@ -238,12 +237,6 @@
                     .transition()
                     .duration(config.waveRiseTime)
                     .tween("text", textTween);
-                date1.text(dateText)
-                    .attr("class", "liquidFillGaugeText")
-                    .attr("text-anchor", "middle")
-                    .attr("font-size", textSmallPixels + "px")
-                    .style("fill", config.textColor)
-                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
                 text2.text(textRounder(textStartValue) + percentText)
                     .attr("class", "liquidFillGaugeText")
                     .attr("text-anchor", "middle")
@@ -253,13 +246,6 @@
                     .transition()
                     .duration(config.waveRiseTime)
                     .tween("text", textTween);
-
-                date2.text(dateText)
-                    .attr("class", "liquidFillGaugeText")
-                    .attr("text-anchor", "middle")
-                    .attr("font-size", textSmallPixels + "px")
-                    .style("fill", config.waveTextColor)
-                    .attr('transform','translate('+radius+','+textRiseScaleY(config.textVertPosition-config.lineHeight)+')');
 
                 var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
                 var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
@@ -304,7 +290,7 @@
 
           scope.$watch(function(scope) { return scope.volume }, function(newValue, oldValue) {
             if( typeof newValue != 'undefined' ){
-                var gauge = GaugeUpdater(scope.volume, scope.verificadoEm);
+                var gauge = GaugeUpdater(scope.volume);
             }
           });
         }
