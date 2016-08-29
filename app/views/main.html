@@ -1,4 +1,5 @@
 <section class="map-container">
+
   <div class="map-info">
     <div class="input-group">
       <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
@@ -29,13 +30,19 @@
         </div>
       </div>
 
-      <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes" ng-show="main.reservatorioSelecionado.volumes.length"
-      slider="main.slider"></sab-reservatorio-historico>
+      <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
+
+        <sab-reservatorio-historico
+          monitoramento="main.reservatorioSelecionado.volumes"
+          slider="main.slider">
+          </sab-reservatorio-historico>
+
+        <rzslider rz-slider-model="main.slider.minValue"
+                  rz-slider-high="main.slider.maxValue"
+                  rz-slider-options="main.slider.options"></rzslider>
+      </div>
       <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
-      <rzslider rz-slider-model="main.slider.minValue"
-                rz-slider-high="main.slider.maxValue"
-                rz-slider-options="main.slider.options"
-                ng-show="main.reservatorioSelecionado.volumes.length"></rzslider>
+
     </div>
   </div>
   <div id="map">

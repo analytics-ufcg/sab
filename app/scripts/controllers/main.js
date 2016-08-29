@@ -34,10 +34,10 @@
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
 
-        vm.slider.maxValue=data.anos.ano_info_max;
-        vm.slider.minValue=data.anos.ano_info_min;
-        vm.slider.options.floor=data.anos.ano_info_min;
-        vm.slider.options.ceil=data.anos.ano_info_max;
+        vm.slider.maxValue = data.anos.ano_info_max;
+        vm.slider.minValue = data.anos.ano_info_min;
+        vm.slider.options.floor = data.anos.ano_info_min;
+        vm.slider.options.ceil = data.anos.ano_info_max;
       });
     }
 
