@@ -14,8 +14,11 @@
       nome: "",
       volumes: []
     };
+    vm.selectedTab = 0;
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
+    vm.isSelectedTab = isSelectedTab;
+    vm.setSelectedTab = setSelectedTab;
 
     vm.reservatorios = Reservatorio.info.query();
 
@@ -49,5 +52,14 @@
         }
       }
     }
+
+    function isSelectedTab(tab) {
+      return vm.selectedTab === tab;
+    }
+
+    function setSelectedTab(tab) {
+      vm.selectedTab = tab;
+    }
+
   }
 })();

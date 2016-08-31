@@ -7,8 +7,12 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
-$map-info-padding-vertical: 10px;
-$map-info-padding-horizontal: 10px;
+$card-padding-vertical: 20px;
+$card-padding-horizontal: 20px;
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
 
 #map {
   float: left;
@@ -36,38 +40,69 @@ $map-info-padding-horizontal: 10px;
   padding: $padding-base-vertical $padding-base-horizontal;
   border-radius: $border-radius-base;
 }
-.map-container {
-}
 
 .map-info {
   float: left;
   position: absolute;
   z-index: 10;
-  padding: $padding-large-vertical $padding-large-horizontal;
   text-align: left;
 
-  @media (min-width: $screen-sm-min) {
+  @media (max-width: $screen-sm-min) {
+    bottom: 0;
+
+    > .input-group {
+      padding: $padding-large-vertical $padding-large-horizontal;
+    }
+  }
+  @media (min-width: $screen-xs-min) {
     width: 100%;
   }
   @media (min-width: $screen-md-min) {
     width: 680px;
+    padding: $padding-large-vertical $padding-large-horizontal;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
 }
 
-.map-description {
-  margin: $map-info-margin-vertical 0;
-  padding: $map-info-padding-vertical $map-info-padding-horizontal;
-  background-color: #fff;
-  border-radius: $border-radius-base;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+.info-card {
+
+  @media (max-width: $screen-sm-min) {
+    margin-top: $map-info-margin-vertical;
+  }
+
+  @media (min-width: $screen-md-min) {
+    margin: $map-info-margin-vertical 0;
+    border-radius: $border-radius-base;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
 }
 
-.map-item-title {
+.info-card-header {
+  padding: $card-padding-vertical $card-padding-horizontal;
+  background-color: $gray-lighter;
+
+  @media (min-width: $screen-md-min) {
+    border-top-left-radius: $border-radius-base;
+    border-top-right-radius: $border-radius-base;
+  }
+}
+
+.info-card-title {
   margin: 0;
-  margin-bottom: $map-info-padding-vertical;
   padding: 0;
   font-size: 1.5em;
+}
+
+.info-card-body {
+  padding: $card-padding-vertical $card-padding-horizontal;
+  background-color: #fff;
+}
+
+.info-card-footer {
+  border-bottom-left-radius: $border-radius-base;
+  border-bottom-right-radius: $border-radius-base;
+  background-color: #fff;
 }
 
 .svg-br {
@@ -157,4 +192,14 @@ $map-info-padding-horizontal: 10px;
 .col-sm {
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.row-nopadding {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-nopadding {
+  padding-left: 0;
+  padding-right: 0;
 }
