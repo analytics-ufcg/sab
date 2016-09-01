@@ -92,17 +92,30 @@ body {
   margin: 0;
   padding: 0;
   font-size: 1.5em;
+
+  @media (max-width: $screen-sm-min) {
+    font-size: 1em;
+  }
 }
 
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
+
+  @media (min-width: $screen-md-min) {
+    height: 350px;
+  }
+
 }
 
 .info-card-footer {
   border-bottom-left-radius: $border-radius-base;
   border-bottom-right-radius: $border-radius-base;
   background-color: #fff;
+}
+
+.info-card-showhide-btn {
+  float: right;
 }
 
 .svg-br {
@@ -182,6 +195,12 @@ body {
 
 .rzslider .rz-pointer.rz-active:after {
   background-color: lighten($brand-primary, 5%) !important;
+}
+
+.rzslider .rz-ticks .rz-tick .rz-tick-value {
+  @media (max-width: $screen-sm-min) {
+    font-size: 9px;
+  }
 }
 
 .row-sm {

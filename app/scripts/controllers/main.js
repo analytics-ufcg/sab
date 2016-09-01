@@ -15,10 +15,12 @@
       volumes: []
     };
     vm.selectedTab = 0;
+    vm.showInfo = true;
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
     vm.setSelectedTab = setSelectedTab;
+    vm.toggleInfo = toggleInfo;
 
     vm.reservatorios = Reservatorio.info.query();
 
@@ -59,6 +61,10 @@
 
     function setSelectedTab(tab) {
       vm.selectedTab = tab;
+    }
+
+    function toggleInfo() {
+      vm.showInfo = !vm.showInfo;
     }
 
   }

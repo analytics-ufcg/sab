@@ -81,6 +81,7 @@
       line-height: $line-height-base;
       border-top: 2px solid transparent;
       border-radius: 0;
+      color: $text-color;
       &:hover {
         border-top-color: $nav-tabs-link-hover-border-color $nav-tabs-link-hover-border-color $nav-tabs-border-color;
       }
