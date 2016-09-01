@@ -34,13 +34,13 @@
                   <div class="map-item-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
                 </div>
                 <div class="col-xs-6 col-sm">
-                  {{main.reservatorioSelecionado.capacidade}} hm³
+                  <span ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade}} hm³</span>
                 </div>
                 <div class="col-xs-6 col-sm text-right">
                   <div class="map-item-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
                 </div>
                 <div class="col-xs-6 col-sm">
-                  {{main.reservatorioSelecionado.volume}} hm³
+                  <span ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume}} hm³</span>
                 </div>
                 <div class="col-xs-12 col-sm text-center" ng-show="main.reservatorioSelecionado.data_informacao">
                   <small>Medido em {{main.reservatorioSelecionado.data_informacao}}</small>
@@ -71,14 +71,10 @@
       </div>
 
       <div class="info-card-footer">
-        <div class="row row-nopadding">
-          <div class="col-xs-6 col-nopadding">
-            <button class="btn btn-block" ng-class="{'btn-primary': main.isSelectedTab(0)}" ng-click="main.setSelectedTab(0)">Info</button>
-          </div>
-          <div class="col-xs-6 col-nopadding">
-            <button class="btn btn-block" ng-class="{'btn-primary': main.isSelectedTab(1)}" ng-click="main.setSelectedTab(1)">Histórico</button>
-          </div>
-        </div>
+        <ul class="nav nav-tabs nav-justified">
+          <li role="presentation" ng-class="{'active': main.isSelectedTab(0)}"><a href="#" ng-click="main.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
+          <li role="presentation" ng-class="{'active': main.isSelectedTab(1)}"><a href="#" ng-click="main.setSelectedTab(1)"><span class="glyphicon glyphicon-stats"></span> Histórico</a></li>
+        </ul>
       </div>
     </div>
 
