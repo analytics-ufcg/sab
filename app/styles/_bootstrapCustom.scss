@@ -237,3 +237,10 @@
   // Remove the top rounded corners here since there is a hard edge above the menu
   @include border-top-radius(0);
 }
+
+.dropdown-menu {
+  @media (max-width: $screen-sm-min) {
+    max-width: 320px;
+    overflow: hidden;
+  }
+}

@@ -8,7 +8,7 @@
         class="form-control"
         placeholder="Pesquisar..."
         ng-model="reservatorioSelecionado"
-        uib-typeahead="reservatorio as (reservatorio.nome + ' (' + reservatorio.municipio + ' - ' + reservatorio.estado + ')') for reservatorio in main.reservatorios | filter:$viewValue"
+        uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in main.reservatorios | filter:$viewValue"
         typeahead-min-length="3"
         typeahead-on-select="main.setReservatorio(reservatorioSelecionado)">
     </div>
