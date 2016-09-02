@@ -99,6 +99,7 @@ body {
 }
 
 .info-card-body {
+  height: 220px;
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
 
@@ -117,6 +118,45 @@ body {
 .info-card-showhide-btn {
   float: right;
 }
+
+.info-card-row {
+  color: $text-color;
+
+  @media (min-width: $screen-sm-min) {
+    font-size: 1.1em;
+  }
+
+  > strong {
+    color: $gray-light;
+    font-weight: normal;
+  }
+
+  &.info-card-row-small {
+    color: $gray-light;
+    font-size: 0.7em;
+
+    @media (min-width: $screen-sm-min) {
+      font-size: 0.9em;
+    }
+  }
+
+  &.info-card-lg {
+    font-size: 1.2em;
+    padding-top: $card-padding-vertical/2;
+    padding-bottom: $card-padding-vertical/2;
+
+    > p {
+      color: $brand-primary;
+    }
+  }
+
+}
+
+.info-card-divider {
+  margin-top: $card-padding-vertical*2;
+  border: none;
+}
+
 
 .svg-br {
   fill: rgba(236, 240, 241, 0.4);
