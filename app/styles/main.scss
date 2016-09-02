@@ -196,9 +196,16 @@ body {
 }
 
 .time-graph-path {
-  stroke: $brand-primary;
-  stroke-width: 2;
-  fill: none;
+
+  &.line {
+    stroke: $brand-primary;
+    fill: none;
+    stroke-width: 2;
+  }
+  &.area {
+    fill: $brand-primary;
+    fill-opacity: 0.5;
+  }
 }
 
 .axis path,

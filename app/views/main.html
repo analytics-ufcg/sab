@@ -39,7 +39,7 @@
 
           <div class="info-card-tab" ng-if="main.isSelectedTab(1)">
             <hr class="info-card-divider hidden-xs">
-            <div class="row row-sm">
+            <div class="row row-sm" ng-show="main.reservatorioSelecionado.volumes.length">
               <div class="col-xs-6 col-xs-offset-3 col-sm-5 col-sm-offset-0 col-sm" ng-show="main.reservatorioSelecionado.volume_percentual">
                   <sab-volume volume="main.reservatorioSelecionado.volume_percentual"></sab-volume>
               </div>
@@ -53,6 +53,7 @@
                   <div class="col-xs-7">
                     <div class="info-card-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
                     <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume}} hm³</div>
+                    <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes"></sab-volume-recente>
                     <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume">Medido em {{main.reservatorioSelecionado.data_informacao}}</div>
                   </div>
                 </div>
