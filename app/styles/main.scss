@@ -49,16 +49,11 @@ body {
 
   @media (max-width: $screen-sm-min) {
     bottom: 0;
-
-    > .input-group {
-      padding: $padding-large-vertical $padding-large-horizontal;
-    }
-  }
-  @media (min-width: $screen-xs-min) {
     width: 100%;
   }
   @media (min-width: $screen-md-min) {
     width: 680px;
+    top: 22px;
     padding: $padding-large-vertical $padding-large-horizontal;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
@@ -157,6 +152,20 @@ body {
   border: none;
 }
 
+.search-bar {
+  float: left;
+  position: absolute;
+  z-index: 11;
+  margin: $map-info-margin-vertical $map-info-margin-horizontal;
+
+  @media (min-width: $screen-xs-min) {
+    width: 100%;
+  }
+  @media (min-width: $screen-md-min) {
+    width: 680px;
+    padding: 0 $padding-large-horizontal;
+  }
+}
 
 .svg-br {
   fill: rgba(236, 240, 241, 0.4);
