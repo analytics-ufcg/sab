@@ -91,30 +91,42 @@
                   return a.date - b.date;
               });
 
-              if (data.length >= 100) {
-                var minData = data.slice(data.length-100, data.length);
-              } else {
-                var minData = data;
+              var endDate = data[data.length-1].date;
+              var startDate = new Date(endDate);
+              startDate = new Date(startDate.setMonth(startDate.getMonth() - 6));
+              var minData = [];
+              for (var i = data.length-1; i >= 0; i--) {
+                if (data[i].date >= startDate) {
+                  minData.push(data[i]);
+                }
               }
+
+              minData.sort(function(a, b) {
+                  return a.date - b.date;
+              });
 
               // Scale the range of the data
               var min = d3.min(minData, function(d) { return d.close; });
               var max = d3.max(minData, function(d) { return d.close; });
               x.domain(d3.extent(minData, function(d) { return d.date; }));
               y.domain([min, max]);
+              // Derive a linear regression
+              var regression = ss.linearRegression(minData.map(function(d) {
+                return [+d.date, d.close];
+              }));
 
               // Add the valueline path.
               lineSvg
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
-                  "stroke": color(minData)
+                  "stroke": color(regression.m)
                 })
                 .attr("d", valueline(minData));
               areaSvg
                 .style({
                   "fill-opacity": "0.1",
-                  "fill": color(minData)
+                  "fill": color(regression.m)
                 })
                 .attr("d", valuearea(minData));
 
@@ -123,32 +135,26 @@
                .attr('cy', y(minData[minData.length-1].close))
                .attr('r', 1.5)
                .style({
-                 "fill": color(minData)
+                 "fill": color(regression.m)
                });
 
                triangule
                 .style({
-                  "fill": color(minData)
+                  "fill": color(regression.m)
                 })
-                .attr("transform", rotate(minData));
+                .attr("transform", rotate(regression.m));
 
-            function color(data) {
-              var ultimo = minData[minData.length-1].close;
-              var penultimo = minData[minData.length-2].close;
-              if (ultimo >= penultimo) {
-                return "#2ecc71"; // Vermelho
-              } else {
-                return "#e74c3c"; // Verde
+            function color(slope) {
+              if (slope >= 0) {
+                return "#2ecc71";
               }
+              return "#e74c3c";
             }
-            function rotate(data) {
-              var ultimo = minData[minData.length-1].close;
-              var penultimo = minData[minData.length-2].close;
-              if (ultimo >= penultimo) {
+            function rotate(slope) {
+              if (slope >= 0) {
                 return "translate("+(width-(statusWidth/2))+", "+((height/2)+(statusHeight/2))+"), rotate(-180 5 0)";
-              } else {
-                return "translate("+(width-(statusWidth/2))+", "+((height/2)-(statusHeight/2))+")";
               }
+              return "translate("+(width-(statusWidth/2))+", "+((height/2)-(statusHeight/2))+")";
             }
 
           }
