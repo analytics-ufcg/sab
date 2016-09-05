@@ -30,6 +30,7 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/d3-queue/d3-queue.js',
       'bower_components/angularjs-slider/dist/rzslider.js',
+      'bower_components/simple-statistics/dist/simple-statistics.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

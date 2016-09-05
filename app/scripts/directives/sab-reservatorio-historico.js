@@ -69,6 +69,10 @@
             var lineSvg = svg.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
+            var regressionlineSvg = svg.append("g")
+              .append("path")
+              .attr("class", "time-graph-path line")
+              .style("stroke", "red");
             var xAxisSvg = svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")");
@@ -97,7 +101,7 @@
               if (typeof monitoramentoOriginal != 'undefined') {
                 monitoramentoOriginal.forEach(function(d) {
                   if (newValue >= parseDate(d.DataInformacao).getFullYear() && scope.slider.minValue <= parseDate(d.DataInformacao).getFullYear()){
-                    monitoramentoNovo.push(d);                  
+                    monitoramentoNovo.push(d);
                   }
 
                 });
@@ -111,7 +115,7 @@
               if (typeof monitoramentoOriginal != 'undefined') {
                 monitoramentoOriginal.forEach(function(d) {
                   if (newValue <= parseDate(d.DataInformacao).getFullYear() && scope.slider.maxValue >= parseDate(d.DataInformacao).getFullYear()){
-                    monitoramentoNovo.push(d);                  
+                    monitoramentoNovo.push(d);
                   }
                 });
                 draw(monitoramentoNovo);
@@ -135,8 +139,23 @@
               }
               x.domain(d3.extent(data, function(d) { return d.date; }));
               y.domain([0, max]);
+              // Derive a linear regression
+              var regression = ss.linearRegression(data.map(function(d) {
+                return [+d.date, d.close];
+              }));
+              var lin = ss.linearRegressionLine(regression);
+              // Create a line based on the beginning and endpoints of the range
+              var lindata = x.domain().map(function(x) {
+                return {
+                  date: new Date(x),
+                  close: lin(+x)
+                };
+              });
+
               // Add the valueline path.
               lineSvg.attr("d", valueline(data));
+              // Add the regressionline path.
+              regressionlineSvg.attr("d", valueline(lindata));
               // Add the X Axis
               xAxisSvg.call(xAxis);
               // Add the Y Axis
