@@ -34,7 +34,7 @@
             <div class="info-card-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
             <div class="info-card-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
             <div class="info-card-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.area > 0"><strong>Área</strong> {{main.reservatorioSelecionado.area}} m²</div>
+            <div class="info-card-row" ng-show="main.reservatorioSelecionado.area > 0"><strong>Área</strong> {{main.reservatorioSelecionado.area | sabArea}}</div>
           </div>
 
           <div class="info-card-tab" ng-if="main.isSelectedTab(1)">
@@ -48,11 +48,11 @@
                 <div class="row">
                   <div class="col-xs-5">
                     <div class="info-card-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
-                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade}} hm³</div>
+                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade | sabVolume}}</div>
                   </div>
                   <div class="col-xs-7">
                     <div class="info-card-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
-                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume}} hm³</div>
+                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume | sabVolume}}</div>
                     <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes"></sab-volume-recente>
                     <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume">Medido em {{main.reservatorioSelecionado.data_informacao}}</div>
                   </div>
