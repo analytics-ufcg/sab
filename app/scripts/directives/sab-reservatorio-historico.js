@@ -137,6 +137,7 @@
               var max = d3.max(data, function(d) { return d.close; });
               if (max < 100) { max = 100;}
               var extent = d3.extent(data, function(d) { return d.date; });
+              var months = diffMouths(extent);
 
               x.domain(extent);
               y.domain([0, max]);
@@ -144,7 +145,7 @@
               var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
-                .ticks(d3.time.month, getTimeScaleTicksInterval(extent))
+                .ticks(getTimeScaleTicksUnit(months), getTimeScaleTicksInterval(months))
                 .tickFormat(customTimeFormat);
 
               // Add the valueline path.
@@ -187,14 +188,35 @@
                 div.style("display", "none");
               }
 
-            function getTimeScaleTicksInterval(extent) {
+            function diffMouths(extent) {
               var months;
                   months = (extent[1].getFullYear() - extent[0].getFullYear()) * 12;
                   months -= extent[0].getMonth() + 1;
                   months += extent[1].getMonth();
+              return months <= 0 ? 0 : months;
+            }
 
-              console.log(months);
-              return (months < 24) ? 1 : 12;
+            function getTimeScaleTicksUnit(mouths) {
+              if (months < 24) {
+                // Para menos de 2 anos, exibe todos os meses
+                return d3.time.month;
+              } else {
+                // Para mais de 10 anos, exibe a cada 2 anos
+                return d3.time.year;
+              };
+            }
+
+            function getTimeScaleTicksInterval(mouths) {
+              if (months < 24) {
+                // Para menos de 2 anos, exibe todos os meses
+                return 1;
+              } else if (months >= 24 && months < 120) {
+                // Para ate 10 anos, exibe anualmente
+                return 1;
+              } else {
+                // Para mais de 10 anos, exibe a cada 2 anos
+                return 2;
+              };
             }
 
           }
