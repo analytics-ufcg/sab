@@ -30,15 +30,16 @@
 
             var formatTime = d3.time.format("%d/%m/%Y");
 
+            var customTimeFormat = d3.time.format.multi([
+              ["%m", function(d) { return d.getMonth(); }],
+              ["%Y", function() { return true; }]
+            ]);
+
             // Set the ranges
             var x = d3.time.scale().range([0, width]);
             var y = d3.scale.linear().range([height, 0]);
 
             // Define the axes
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .ticks(5);
 
             var yAxis = d3.svg.axis()
                 .scale(y)
@@ -61,7 +62,8 @@
                 .attr({
                   'version': '1.1',
                   'viewBox': '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom),
-                  'width': '100%'})
+                  'width': '100%',
+                  'class': 'time-graph'})
                 .append("g")
                     .attr("transform",
                           "translate(" + margin.left + "," + margin.top + ")");
@@ -122,21 +124,29 @@
 
             // Get the data
             var draw = function(data) {
+
               data.forEach(function(d) {
                 d.date = parseDate(d.DataInformacao);
                 d.close = +d.VolumePercentual;
               });
-
               data.sort(function(a, b) {
                   return a.date - b.date;
               });
+
               // Scale the range of the data
               var max = d3.max(data, function(d) { return d.close; });
-              if (max < 100) {
-                max = 100;
-              }
-              x.domain(d3.extent(data, function(d) { return d.date; }));
+              if (max < 100) { max = 100;}
+              var extent = d3.extent(data, function(d) { return d.date; });
+
+              x.domain(extent);
               y.domain([0, max]);
+
+              var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .ticks(d3.time.month, getTimeScaleTicksInterval(extent))
+                .tickFormat(customTimeFormat);
+
               // Add the valueline path.
               lineSvg.attr("d", valueline(data));
               // Add the X Axis
@@ -176,6 +186,16 @@
                 focus.style("display", "none");
                 div.style("display", "none");
               }
+
+            function getTimeScaleTicksInterval(extent) {
+              var months;
+                  months = (extent[1].getFullYear() - extent[0].getFullYear()) * 12;
+                  months -= extent[0].getMonth() + 1;
+                  months += extent[1].getMonth();
+
+              console.log(months);
+              return (months < 24) ? 1 : 12;
+            }
 
           }
         }
