@@ -206,6 +206,13 @@ body {
     fill: $brand-primary;
     fill-opacity: 0.5;
   }
+  &.limit-line {
+    stroke: $gray-light;
+    fill: none;
+    stroke-width: 1;
+    opacity: 0.5;
+    stroke-dasharray: 10,5;
+  }
 }
 
 .axis path,

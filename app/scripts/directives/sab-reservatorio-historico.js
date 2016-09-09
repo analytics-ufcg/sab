@@ -74,6 +74,8 @@
                 .attr("transform", "translate(0," + height + ")");
             var yAxisSvg = svg.append("g")
                 .attr("class", "y axis");
+            var line100PercSVG = svg.append("line")
+              .attr("class", "time-graph-path limit-line");
             var focus = svg.append("g")
                 .style("display", "none");
             focus.append("circle")
@@ -141,6 +143,8 @@
               xAxisSvg.call(xAxis);
               // Add the Y Axis
               yAxisSvg.call(yAxis);
+              // Add 100% line
+              line100PercSVG.attr({"x1": 0, "y1": y(100), "x2": width, "y2": y(100)});
 
               // append the rectangle to capture mouse
               rectMouse
