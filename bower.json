@@ -12,7 +12,7 @@
     "angular-bootstrap": "^2.0.0",
     "d3-queue": "^3.0.1",
     "angularjs-slider": "^5.4.3",
-    "simple-statistics": "https://npmcdn.com/simple-statistics@2.1.0/bower.zip"
+    "simple-statistics": "https://unpkg.com/simple-statistics@2.1.0/bower.zip"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
