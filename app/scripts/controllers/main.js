@@ -14,7 +14,7 @@
       nome: "",
       volumes: []
     };
-    vm.selectedTab = 0;
+    vm.selectedTab = 2;
     vm.showInfo = true;
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;

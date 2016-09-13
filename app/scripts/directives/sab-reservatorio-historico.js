@@ -12,17 +12,18 @@
         template: '',
         restrict: 'E',
         scope: {
-          monitoramento: '=',
-          slider: '='
+          monitoramento: '='
         },
         link: function postLink(scope, element) {
           var
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 30, right: 20, bottom: 30, left: 50},
+            var margin = {top: 5, right: 5, bottom: 80, left: 25},
+                margin2 = {top: 200, right: 5, bottom: 20, left: 25},
                 width = 500 - margin.left - margin.right,
-                height = 200 - margin.top - margin.bottom;
+                height = 250 - margin.top - margin.bottom,
+                height2 = 250 - margin2.top - margin2.bottom;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse,
@@ -37,19 +38,22 @@
 
             // Set the ranges
             var x = d3.time.scale().range([0, width]);
+            var x2 = d3.time.scale().range([0, width]);
             var y = d3.scale.linear().range([height, 0]);
+            var y2 = d3.scale.linear().range([height2, 0]);
 
             // Define the axes
-
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient("left")
-                .ticks(2);
+            var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
+            var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
+            var yAxis2 = d3.svg.axis().scale(y2).orient("left").ticks(2);
 
             // Define the line
             var valueline = d3.svg.line()
                 .x(function(d) { return x(d.date); })
                 .y(function(d) { return y(d.close); });
+            var valueline2 = d3.svg.line()
+                .x(function(d) { return x2(d.date); })
+                .y(function(d) { return y2(d.close); });
 
             // Define the div for the tooltip
             var div = d3.select(element[0]).append("div")
@@ -63,62 +67,49 @@
                   'version': '1.1',
                   'viewBox': '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom),
                   'width': '100%',
-                  'class': 'time-graph'})
-                .append("g")
-                    .attr("transform",
-                          "translate(" + margin.left + "," + margin.top + ")");
+                  'class': 'time-graph'});
 
-            var lineSvg = svg.append("g")
+            var focus = svg.append("g")
+              .attr("class", "focus")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var lineSvg = focus.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
-            var xAxisSvg = svg.append("g")
+            var xAxisSvg = focus.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")");
-            var yAxisSvg = svg.append("g")
+            var yAxisSvg = focus.append("g")
                 .attr("class", "y axis");
-            var line100PercSVG = svg.append("line")
+            var line100PercSVG = focus.append("line")
               .attr("class", "time-graph-path limit-line");
-            var focus = svg.append("g")
+
+            var selectedValue = focus.append("g")
                 .style("display", "none");
-            focus.append("circle")
+            selectedValue.append("circle")
                 .attr("class", "time-graph-dot y")
                 .attr("r", 4);
-            var rectMouse = svg.append("rect")
+            var rectMouse = focus.append("rect")
                 .attr("width", width)
                 .attr("height", height)
                 .style("fill", "none")
                 .style("pointer-events", "all");
 
+            var context = svg.append("g")
+              .attr("class", "context")
+              .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+            var line2Svg = context.append("g")
+              .append("path")
+              .attr("class", "time-graph-path line");
+            var xAxis2Svg = context.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height2 + ")");
+            var yAxis2Svg = context.append("g")
+                .attr("class", "y axis");
+
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
               if (typeof newValue != 'undefined') {
                 draw(newValue);
-              }
-            });
-
-            scope.$watch(function(scope) { return scope.slider.maxValue }, function(newValue, oldValue) {
-              var monitoramentoOriginal = scope.monitoramento;
-              var monitoramentoNovo = [];
-              if (typeof monitoramentoOriginal != 'undefined') {
-                monitoramentoOriginal.forEach(function(d) {
-                  if (newValue >= parseDate(d.DataInformacao).getFullYear() && scope.slider.minValue <= parseDate(d.DataInformacao).getFullYear()){
-                    monitoramentoNovo.push(d);
-                  }
-
-                });
-                draw(monitoramentoNovo);
-              }
-            });
-
-            scope.$watch(function(scope) { return scope.slider.minValue }, function(newValue, oldValue) {
-              var monitoramentoOriginal = scope.monitoramento;
-              var monitoramentoNovo = [];
-              if (typeof monitoramentoOriginal != 'undefined') {
-                monitoramentoOriginal.forEach(function(d) {
-                  if (newValue <= parseDate(d.DataInformacao).getFullYear() && scope.slider.maxValue >= parseDate(d.DataInformacao).getFullYear()){
-                    monitoramentoNovo.push(d);
-                  }
-                });
-                draw(monitoramentoNovo);
               }
             });
 
@@ -141,6 +132,8 @@
 
               x.domain(extent);
               y.domain([0, max]);
+              x2.domain(extent);
+              y2.domain([0, max]);
 
               var xAxis = d3.svg.axis()
                 .scale(x)
@@ -150,16 +143,19 @@
 
               // Add the valueline path.
               lineSvg.attr("d", valueline(data));
+              line2Svg.attr("d", valueline2(data));
               // Add the X Axis
               xAxisSvg.call(xAxis);
+              xAxis2Svg.call(xAxis2);
               // Add the Y Axis
               yAxisSvg.call(yAxis);
+              yAxis2Svg.call(yAxis2);
               // Add 100% line
               line100PercSVG.attr({"x1": 0, "y1": y(100), "x2": width, "y2": y(100)});
 
               // append the rectangle to capture mouse
               rectMouse
-                  .on("mouseover", function() { focus.style("display", null); })
+                  .on("mouseover", function() { selectedValue.style("display", null); })
                   .on("mouseout", mouseout)
                   .on("mousemove", mousemove);
 
@@ -170,7 +166,7 @@
             		    d1 = data[i],
             		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
 
-            		focus.select("circle.y")
+            		selectedValue.select("circle.y")
             		    .attr("transform",
             		          "translate(" + x(d.date) + "," +
             		                         y(d.close) + ")");
@@ -184,7 +180,7 @@
             	}
 
               function mouseout() {
-                focus.style("display", "none");
+                selectedValue.style("display", "none");
                 div.style("display", "none");
               }
 
