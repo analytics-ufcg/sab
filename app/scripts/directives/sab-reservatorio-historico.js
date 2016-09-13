@@ -47,6 +47,8 @@
             var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
             var yAxis2 = d3.svg.axis().scale(y2).orient("left").ticks(2);
 
+            var brush = d3.svg.brush().x(x2);
+
             // Define the line
             var valueline = d3.svg.line()
                 .x(function(d) { return x(d.date); })
@@ -104,8 +106,13 @@
             var xAxis2Svg = context.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height2 + ")");
-            var yAxis2Svg = context.append("g")
-                .attr("class", "y axis");
+
+            context.append("g")
+              .attr("class", "x brush")
+              .call(brush)
+            .selectAll("rect")
+              .attr("y", -6)
+              .attr("height", height2 + 7);
 
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
               if (typeof newValue != 'undefined') {
@@ -138,7 +145,6 @@
               var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
-                .ticks(getTimeScaleTicksUnit(months), getTimeScaleTicksInterval(months))
                 .tickFormat(customTimeFormat);
 
               // Add the valueline path.
@@ -149,7 +155,6 @@
               xAxis2Svg.call(xAxis2);
               // Add the Y Axis
               yAxisSvg.call(yAxis);
-              yAxis2Svg.call(yAxis2);
               // Add 100% line
               line100PercSVG.attr({"x1": 0, "y1": y(100), "x2": width, "y2": y(100)});
 
@@ -158,6 +163,14 @@
                   .on("mouseover", function() { selectedValue.style("display", null); })
                   .on("mouseout", mouseout)
                   .on("mousemove", mousemove);
+
+              brush.on("brush", brushed);
+
+              function brushed() {
+                x.domain(brush.empty() ? x2.domain() : brush.extent());
+                xAxisSvg.call(xAxis);
+                lineSvg.attr("d", valueline(data));
+              }
 
               function mousemove() {
             		var x0 = x.invert(d3.mouse(this)[0]),

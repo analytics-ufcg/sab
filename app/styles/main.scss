@@ -218,6 +218,11 @@ body {
     stroke-dasharray: 10,5;
   }
 }
+.brush {
+  fill: $brand-primary;
+  fill-opacity: 0.125;
+  shape-rendering: crispEdges;
+}
 
 .axis path,
 .axis line {
