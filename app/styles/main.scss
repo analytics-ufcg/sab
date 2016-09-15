@@ -99,7 +99,7 @@ body {
   background-color: #fff;
 
   @media (min-width: $screen-md-min) {
-    height: 350px;
+    height: 360px;
   }
 
 }
@@ -223,6 +223,12 @@ body {
     opacity: 0.5;
     stroke-dasharray: 10,5;
   }
+  &.selected-value-line {
+    stroke: $brand-primary;
+    fill: none;
+    stroke-width: 2;
+    opacity: 1;
+  }
 }
 .brush {
   fill: $brand-primary;
@@ -239,7 +245,9 @@ body {
 }
 
 .time-graph-dot {
-  fill: $brand-primary;
+  fill: #fff;
+  stroke: $brand-primary;
+  stroke-width: 2;
 }
 
 .time-graph-tooltip {
@@ -252,6 +260,14 @@ body {
     border-radius: $border-radius-base;
     pointer-events: none;
     color: #fff;
+}
+
+.status-date {
+  float: left;
+}
+
+.status-volume {
+  float: right;
 }
 
 .mensagem-monitoramento {

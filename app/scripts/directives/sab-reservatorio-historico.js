@@ -22,6 +22,7 @@
             var margin = {top: 5, right: 5, bottom: 80, left: 25},
                 margin2 = {top: 200, right: 5, bottom: 20, left: 25},
                 width = 500 - margin.left - margin.right,
+                statusHeight = 25,
                 height = 250 - margin.top - margin.bottom,
                 height2 = 250 - margin2.top - margin2.bottom;
 
@@ -29,7 +30,23 @@
             var parseDate = d3.time.format("%d/%m/%Y").parse,
                 bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
+            var localized = d3.locale({
+              "decimal": ",",
+              "thousands": ".",
+              "grouping": [3],
+              "currency": ["R$", ""],
+              "dateTime": "%d/%m/%Y %H:%M:%S",
+              "date": "%d/%m/%Y",
+              "time": "%H:%M:%S",
+              "periods": ["AM", "PM"],
+              "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+              "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+              "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+              "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+            });
+
             var formatTime = d3.time.format("%d/%m/%Y");
+            var formatTimeLiteral = localized.timeFormat("%d de %B  de %Y");
 
             var customTimeFormat = d3.time.format.multi([
               ["%m", function(d) { return d.getMonth(); }],
@@ -70,6 +87,16 @@
                 .attr("class", "time-graph-tooltip")
                 .style("display", "none");
 
+            // Status
+            var statusRect = d3.select(element[0]).append("div")
+              .attr("class", "status")
+            var statusDate = statusRect.append("div")
+              .attr("class", "status-date")
+              .html("&nbsp;");
+            var statusVolume = statusRect.append("div")
+              .attr("class", "status-volume")
+              .html("&nbsp;");
+
             // Adds the svg canvas
             var svg = d3.select(element[0])
                 .append("svg")
@@ -79,10 +106,10 @@
                   'width': '100%',
                   'class': 'time-graph'});
 
+            // Focus: Gráfico principal
             var focus = svg.append("g")
               .attr("class", "focus")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
             var lineSvg = focus.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
@@ -96,10 +123,11 @@
                 .attr("class", "y axis");
             var line100PercSVG = focus.append("line")
               .attr("class", "time-graph-path limit-line");
-
             var selectedValue = focus.append("g")
                 .style("display", "none");
-            selectedValue.append("circle")
+            var selectedValueLine = selectedValue.append("line")
+            .attr("class", "time-graph-path selected-value-line");
+            var selectedValueCircle = selectedValue.append("circle")
                 .attr("class", "time-graph-dot y")
                 .attr("r", 4);
             var rectMouse = focus.append("rect")
@@ -107,7 +135,9 @@
                 .attr("height", height)
                 .style("fill", "none")
                 .style("pointer-events", "all");
+            // END Focus: Gráfico principal
 
+            // Context: Gráfico menor, para controlar o principal
             var context = svg.append("g")
               .attr("class", "context")
               .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
@@ -120,13 +150,13 @@
             var xAxis2Svg = context.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height2 + ")");
-
             context.append("g")
               .attr("class", "x brush")
               .call(brush)
             .selectAll("rect")
               .attr("y", -6)
               .attr("height", height2 + 7);
+            // END Context: Gráfico menor, para controlar o principal
 
             svg.append("defs").append("clipPath")
               .attr("id", "clip")
@@ -190,7 +220,7 @@
 
               // append the rectangle to capture mouse
               rectMouse
-                  .on("mouseover", function() { selectedValue.style("display", null); })
+                  .on("mouseover", mouseover)
                   .on("mouseout", mouseout)
                   .on("mousemove", mousemove);
 
@@ -206,29 +236,26 @@
                 areaSvg.attr("d", valuearea(data));
               }
 
+              function mouseover() {
+                statusRect.style("visibility", "visible");
+                selectedValue.style("display", null);
+              }
+
               function mousemove() {
-            		var x0 = x.invert(d3.mouse(this)[0]),
+                var x0 = x.invert(d3.mouse(this)[0]),
             		    i = bisectDate(data, x0, 1),
             		    d0 = data[i - 1],
             		    d1 = data[i],
             		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-            		selectedValue.select("circle.y")
-            		    .attr("transform",
-            		          "translate(" + x(d.date) + "," +
-            		                         y(d.close) + ")");
-
-                        div.style("display", "block");
-
-                        var volume = Number(d.Volume.replace(",", "."));
-                        div .html(Number((d.close).toFixed(2)) + "%" + "<br/>"  + Number((volume).toFixed(2)) + "hm³" + "<br/>" + formatTime(d.date))
-                            .style("left", (x(d.date) + 80) + "px")
-                            .style("top", (y(d.close) + 160) + "px");
+                statusDate.html(formatTimeLiteral(d.date));
+                statusVolume.html(Number((d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
+                selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
+                selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
             	}
 
               function mouseout() {
+                statusRect.style("visibility", "hidden");
                 selectedValue.style("display", "none");
-                div.style("display", "none");
               }
 
             function diffMouths(extent) {
