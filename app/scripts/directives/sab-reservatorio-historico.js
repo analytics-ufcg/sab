@@ -53,9 +53,17 @@
             var valueline = d3.svg.line()
                 .x(function(d) { return x(d.date); })
                 .y(function(d) { return y(d.close); });
+            var valuearea = d3.svg.area()
+                .x(function(d) { return x(d.date); })
+                .y0(height)
+                .y1(function(d) { return y(d.close); });
             var valueline2 = d3.svg.line()
                 .x(function(d) { return x2(d.date); })
                 .y(function(d) { return y2(d.close); });
+            var valuearea2 = d3.svg.area()
+                .x(function(d) { return x2(d.date); })
+                .y0(height2)
+                .y1(function(d) { return y2(d.close); });
 
             // Define the div for the tooltip
             var div = d3.select(element[0]).append("div")
@@ -78,6 +86,9 @@
             var lineSvg = focus.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
+            var areaSvg = focus.append("g")
+              .append("path")
+              .attr("class", "time-graph-path area");
             var xAxisSvg = focus.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")");
@@ -103,6 +114,9 @@
             var line2Svg = context.append("g")
               .append("path")
               .attr("class", "time-graph-path line");
+            var area2Svg = context.append("g")
+              .append("path")
+              .attr("class", "time-graph-path area");
             var xAxis2Svg = context.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height2 + ")");
@@ -149,7 +163,9 @@
 
               // Add the valueline path.
               lineSvg.attr("d", valueline(data));
+              areaSvg.attr("d", valuearea(data));
               line2Svg.attr("d", valueline2(data));
+              area2Svg.attr("d", valuearea2(data));
               // Add the X Axis
               xAxisSvg.call(xAxis);
               xAxis2Svg.call(xAxis2);
@@ -170,6 +186,7 @@
                 x.domain(brush.empty() ? x2.domain() : brush.extent());
                 xAxisSvg.call(xAxis);
                 lineSvg.attr("d", valueline(data));
+                areaSvg.attr("d", valuearea(data));
               }
 
               function mousemove() {
