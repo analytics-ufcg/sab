@@ -113,7 +113,7 @@
               .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
             var line2Svg = context.append("g")
               .append("path")
-              .attr("class", "time-graph-path line");
+              .attr("class", "time-graph-path line line-sm");
             var area2Svg = context.append("g")
               .append("path")
               .attr("class", "time-graph-path area");
@@ -127,6 +127,12 @@
             .selectAll("rect")
               .attr("y", -6)
               .attr("height", height2 + 7);
+
+            svg.append("defs").append("clipPath")
+              .attr("id", "clip")
+            .append("rect")
+              .attr("width", width)
+              .attr("height", height);
 
             scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
               if (typeof newValue != 'undefined') {
@@ -150,6 +156,14 @@
               if (max < 100) { max = 100;}
               var extent = d3.extent(data, function(d) { return d.date; });
               var months = diffMouths(extent);
+              if (months > 120) {
+                var endDate = data[data.length-1].date;
+                var startDate = new Date(endDate);
+                startDate = new Date(startDate.setMonth(startDate.getMonth() - 120));
+                var brushExtent = [startDate, endDate];
+              } else {
+                var brushExtent = extent;
+              }
 
               x.domain(extent);
               y.domain([0, max]);
@@ -181,6 +195,9 @@
                   .on("mousemove", mousemove);
 
               brush.on("brush", brushed);
+              brush.extent(brushExtent);
+              context.select('.brush').call(brush);
+              brushed();
 
               function brushed() {
                 x.domain(brush.empty() ? x2.domain() : brush.extent());

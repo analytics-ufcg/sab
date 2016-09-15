@@ -205,10 +205,16 @@ body {
     stroke: $brand-primary;
     fill: none;
     stroke-width: 2;
+    clip-path: url(#clip);
+
+    &.line-sm {
+      stroke-width: 1;
+    }
   }
   &.area {
     fill: $brand-primary;
     fill-opacity: 0.5;
+    clip-path: url(#clip);
   }
   &.limit-line {
     stroke: $gray-light;
