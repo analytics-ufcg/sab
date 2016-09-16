@@ -64,8 +64,6 @@
             var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
             var yAxis2 = d3.svg.axis().scale(y2).orient("left").ticks(2);
 
-            var brush = d3.svg.brush().x(x2);
-
             // Define the line
             var valueline = d3.svg.line()
                 .x(function(d) { return x(d.date); })
@@ -150,6 +148,25 @@
             var xAxis2Svg = context.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height2 + ")");
+            var brushHandlerLeft = context.append("g")
+                .attr("class", "brush-handler");
+            brushHandlerLeft.append("path")
+                .attr("d", "M12,12V6V1.4C12,0.6,11.4,0,10.6,0H1.4C0.6,0,0,0.6,0,1.4V6v6v4.6C0,17.4,0.6,18,1.4,18h9.3c0.8,0,1.4-0.6,1.4-1.4V12z");
+            var brush = brushHandlerLeft.append("g");
+            brush.append("path")
+              .attr("d", "M3.6,14.2V3.8C3.6,3.4,4,3,4.4,3h0c0.4,0,0.8,0.4,0.8,0.8v10.4c0,0.4-0.4,0.8-0.8,0.8h0 C4,15,3.6,14.6,3.6,14.2z")
+            brush.append("path")
+              .attr("d", "M6.8,14.2V3.8C6.8,3.4,7.2,3,7.6,3h0C8,3,8.4,3.4,8.4,3.8v10.4C8.4,14.6,8,15,7.6,15h0 C7.2,15,6.8,14.6,6.8,14.2z");
+            var brushHandlerRight = context.append("g")
+                .attr("class", "brush-handler");
+            brushHandlerRight.append("path")
+                .attr("d", "M12,12V6V1.4C12,0.6,11.4,0,10.6,0H1.4C0.6,0,0,0.6,0,1.4V6v6v4.6C0,17.4,0.6,18,1.4,18h9.3c0.8,0,1.4-0.6,1.4-1.4V12z");
+            var brush = brushHandlerRight.append("g");
+            brush.append("path")
+              .attr("d", "M3.6,14.2V3.8C3.6,3.4,4,3,4.4,3h0c0.4,0,0.8,0.4,0.8,0.8v10.4c0,0.4-0.4,0.8-0.8,0.8h0 C4,15,3.6,14.6,3.6,14.2z")
+            brush.append("path")
+              .attr("d", "M6.8,14.2V3.8C6.8,3.4,7.2,3,7.6,3h0C8,3,8.4,3.4,8.4,3.8v10.4C8.4,14.6,8,15,7.6,15h0 C7.2,15,6.8,14.6,6.8,14.2z");
+            var brush = d3.svg.brush().x(x2);
             context.append("g")
               .attr("class", "x brush")
               .call(brush)
@@ -206,7 +223,7 @@
                 .tickFormat(customTimeFormat);
 
               // Add the valueline path.
-              lineSvg.attr("d", valueline(data));
+              // lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
               line2Svg.attr("d", valueline2(data));
               area2Svg.attr("d", valuearea2(data));
@@ -234,6 +251,15 @@
                 xAxisSvg.call(xAxis);
                 lineSvg.attr("d", valueline(data));
                 areaSvg.attr("d", valuearea(data));
+                if (brush.empty()) {
+                  brushHandlerLeft.style("display", "none");
+                  brushHandlerRight.style("display", "none");
+                } else {
+                  brushHandlerLeft.style("display", null);
+                  brushHandlerRight.style("display", null);
+                  brushHandlerLeft.attr("transform", "translate(" + (x2(brush.extent()[0]) - 5) + "," + ((height2/6)) + ")");
+                  brushHandlerRight.attr("transform", "translate(" + (x2(brush.extent()[1]) - 5) + "," + ((height2/6)) + ")");
+                }
               }
 
               function mouseover() {

@@ -230,9 +230,20 @@ body {
     opacity: 1;
   }
 }
+.brush-handler {
+  > path {
+    fill: $gray-lighter;
+    stroke: $gray-light;
+    stroke-width: 1;
+  }
+  > g > path {
+    fill: $gray-light;
+  }
+}
+
 .brush {
   fill: $brand-primary;
-  fill-opacity: 0.125;
+  fill-opacity: 0.15;
   shape-rendering: crispEdges;
 }
 
