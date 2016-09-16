@@ -199,6 +199,17 @@ body {
   font-size: 9px;
 }
 
+.axis-sm {
+  > path.domain {
+    visibility: hidden;
+  }
+  > g.tick {
+    > line {
+      visibility: hidden;
+    }
+  }
+}
+
 .time-graph-path {
 
   &.line {

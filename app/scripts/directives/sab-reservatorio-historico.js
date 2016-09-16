@@ -49,8 +49,8 @@
             var formatTimeLiteral = localized.timeFormat("%d de %B  de %Y");
 
             var customTimeFormat = d3.time.format.multi([
-              ["%m", function(d) { return d.getMonth(); }],
-              ["%Y", function() { return true; }]
+              ["%b", function(d) { return d.getMonth(); }],
+              ["%b", function() { return true; }]
             ]);
 
             // Set the ranges
@@ -60,6 +60,8 @@
             var y2 = d3.scale.linear().range([height2, 0]);
 
             // Define the axes
+            var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.year).tickFormat(localized.timeFormat('%b'));
+            var xAxisAux = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.year);
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
             var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
             var yAxis2 = d3.svg.axis().scale(y2).orient("left").ticks(2);
@@ -117,6 +119,9 @@
             var xAxisSvg = focus.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")");
+            var xAxisAuxSvg = focus.append("g")
+                .attr("class", "x axis axis-sm")
+                .attr("transform", "translate(0," + (height + 10) + ")");
             var yAxisSvg = focus.append("g")
                 .attr("class", "y axis");
             var line100PercSVG = focus.append("line")
@@ -217,11 +222,6 @@
               x2.domain(extent);
               y2.domain([0, max]);
 
-              var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .tickFormat(customTimeFormat);
-
               // Add the valueline path.
               // lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
@@ -229,6 +229,7 @@
               area2Svg.attr("d", valuearea2(data));
               // Add the X Axis
               xAxisSvg.call(xAxis);
+              xAxisAuxSvg.call(xAxisAux);
               xAxis2Svg.call(xAxis2);
               // Add the Y Axis
               yAxisSvg.call(yAxis);
@@ -247,19 +248,21 @@
               brushed();
 
               function brushed() {
-                x.domain(brush.empty() ? x2.domain() : brush.extent());
-                xAxisSvg.call(xAxis);
-                lineSvg.attr("d", valueline(data));
-                areaSvg.attr("d", valuearea(data));
                 if (brush.empty()) {
+                  x.domain(x2.domain());
                   brushHandlerLeft.style("display", "none");
                   brushHandlerRight.style("display", "none");
                 } else {
+                  x.domain(brush.extent());
                   brushHandlerLeft.style("display", null);
                   brushHandlerRight.style("display", null);
                   brushHandlerLeft.attr("transform", "translate(" + (x2(brush.extent()[0]) - 5) + "," + ((height2/6)) + ")");
                   brushHandlerRight.attr("transform", "translate(" + (x2(brush.extent()[1]) - 5) + "," + ((height2/6)) + ")");
                 }
+                xAxisSvg.call(xAxis);
+                xAxisAuxSvg.call(xAxisAux);
+                lineSvg.attr("d", valueline(data));
+                areaSvg.attr("d", valuearea(data));
               }
 
               function mouseover() {
