@@ -29,7 +29,6 @@ module.exports = function(config) {
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/d3-queue/d3-queue.js',
-      'bower_components/angularjs-slider/dist/rzslider.js',
       'bower_components/simple-statistics/dist/simple-statistics.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
