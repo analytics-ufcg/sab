@@ -60,8 +60,8 @@
             var y2 = d3.scale.linear().range([height2, 0]);
 
             // Define the axes
-            var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.year).tickFormat(localized.timeFormat('%b'));
-            var xAxisAux = d3.svg.axis().scale(x).orient("bottom").ticks(d3.time.year);
+            var xAxis = d3.svg.axis().scale(x).orient("bottom");
+            var xAxisAux = d3.svg.axis().scale(x).orient("bottom");
             var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
             var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
             var yAxis2 = d3.svg.axis().scale(y2).orient("left").ticks(2);
@@ -247,6 +247,22 @@
               context.select('.brush').call(brush);
               brushed();
 
+              function xaxisTicks(months) {
+                if (months <= 4) {
+                  return localized.timeFormat('%d');
+                } else if (months > 4) {
+                  return localized.timeFormat('%b');
+                }
+              }
+
+              function xaxisAuxTicks(months) {
+                if (months <= 4) {
+                  return localized.timeFormat('%b');
+                } else if (months > 4) {
+                  return localized.timeFormat('%Y');
+                }
+              }
+
               function brushed() {
                 if (brush.empty()) {
                   x.domain(x2.domain());
@@ -254,6 +270,9 @@
                   brushHandlerRight.style("display", "none");
                 } else {
                   x.domain(brush.extent());
+                  var m = diffMouths(brush.extent());
+                  xAxis.tickFormat(xaxisTicks(m));
+                  xAxisAux.tickFormat(xaxisAuxTicks(m));
                   brushHandlerLeft.style("display", null);
                   brushHandlerRight.style("display", null);
                   brushHandlerLeft.attr("transform", "translate(" + (x2(brush.extent()[0]) - 5) + "," + ((height2/6)) + ")");
@@ -293,29 +312,6 @@
                   months -= extent[0].getMonth() + 1;
                   months += extent[1].getMonth();
               return months <= 0 ? 0 : months;
-            }
-
-            function getTimeScaleTicksUnit(mouths) {
-              if (months < 24) {
-                // Para menos de 2 anos, exibe todos os meses
-                return d3.time.month;
-              } else {
-                // Para mais de 10 anos, exibe a cada 2 anos
-                return d3.time.year;
-              };
-            }
-
-            function getTimeScaleTicksInterval(mouths) {
-              if (months < 24) {
-                // Para menos de 2 anos, exibe todos os meses
-                return 1;
-              } else if (months >= 24 && months < 120) {
-                // Para ate 10 anos, exibe anualmente
-                return 1;
-              } else {
-                // Para mais de 10 anos, exibe a cada 2 anos
-                return 2;
-              };
             }
 
           }
