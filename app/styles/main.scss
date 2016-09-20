@@ -99,7 +99,7 @@ body {
   background-color: #fff;
 
   @media (min-width: $screen-md-min) {
-    height: 350px;
+    height: 360px;
   }
 
 }
@@ -199,16 +199,33 @@ body {
   font-size: 9px;
 }
 
+.axis-sm {
+  > path.domain {
+    visibility: hidden;
+  }
+  > g.tick {
+    > line {
+      visibility: hidden;
+    }
+  }
+}
+
 .time-graph-path {
 
   &.line {
     stroke: $brand-primary;
     fill: none;
     stroke-width: 2;
+    clip-path: url(#clip);
+
+    &.line-sm {
+      stroke-width: 1;
+    }
   }
   &.area {
     fill: $brand-primary;
     fill-opacity: 0.5;
+    clip-path: url(#clip);
   }
   &.limit-line {
     stroke: $gray-light;
@@ -217,6 +234,28 @@ body {
     opacity: 0.5;
     stroke-dasharray: 10,5;
   }
+  &.selected-value-line {
+    stroke: $brand-primary;
+    fill: none;
+    stroke-width: 2;
+    opacity: 1;
+  }
+}
+.brush-handler {
+  > path {
+    fill: $gray-lighter;
+    stroke: $gray-light;
+    stroke-width: 1;
+  }
+  > g > path {
+    fill: $gray-light;
+  }
+}
+
+.brush {
+  fill: $brand-primary;
+  fill-opacity: 0.15;
+  shape-rendering: crispEdges;
 }
 
 .axis path,
@@ -228,7 +267,9 @@ body {
 }
 
 .time-graph-dot {
-  fill: $brand-primary;
+  fill: #fff;
+  stroke: $brand-primary;
+  stroke-width: 2;
 }
 
 .time-graph-tooltip {
@@ -241,6 +282,14 @@ body {
     border-radius: $border-radius-base;
     pointer-events: none;
     color: #fff;
+}
+
+.status-date {
+  float: left;
+}
+
+.status-volume {
+  float: right;
 }
 
 .mensagem-monitoramento {

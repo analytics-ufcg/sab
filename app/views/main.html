@@ -64,12 +64,7 @@
 
           <div class="info-card-tab" ng-if="main.isSelectedTab(2)">
             <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
-              <sab-reservatorio-historico
-                  monitoramento="main.reservatorioSelecionado.volumes"
-                  slider="main.slider"></sab-reservatorio-historico>
-              <rzslider rz-slider-model="main.slider.minValue"
-                        rz-slider-high="main.slider.maxValue"
-                        rz-slider-options="main.slider.options"></rzslider>
+              <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
             </div>
             <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
           </div>
