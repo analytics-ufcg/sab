@@ -70,15 +70,12 @@
             }
 
             var textPixels = (config.textSize*radius/1.5);
-            var textSmallPixels = (config.textSmallSize*radius/2);
             var textFinalValue = parseFloat(value).toFixed(2);
-            var textStartValue = config.valueCountUp?config.minValue:textFinalValue;
             var percentText = config.displayPercent?"%":"";
             var circleThickness = config.circleThickness * radius;
             var circleFillGap = config.circleFillGap * radius;
             var fillCircleMargin = circleThickness + circleFillGap;
             var fillCircleRadius = radius - fillCircleMargin;
-            var outerCircleRadius = fillCircleRadius + fillCircleMargin;
             var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);
 
             var waveLength = fillCircleRadius*2/config.waveCount;
@@ -87,10 +84,10 @@
 
             // Rounding functions so that the correct number of decimal places is always displayed as the value counts up.
             var textRounder = function(value){ return Math.round(value); };
-            if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))){
+            if(parseFloat(textFinalValue) !== parseFloat(textRounder(textFinalValue))){
                 textRounder = function(value){ return parseFloat(value).toFixed(1); };
             }
-            if(parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))){
+            if(parseFloat(textFinalValue) !== parseFloat(textRounder(textFinalValue))){
                 textRounder = function(value){ return parseFloat(value).toFixed(2); };
             }
 
@@ -141,13 +138,12 @@
 
             // Text where the wave does not overlap.
             var text1 = gaugeGroup.append("text");
-            var date1 = gaugeGroup.append("text");
 
             // The clipping wave area.
             var clipArea = d3.svg.area()
                 .x(function(d) { return waveScaleX(d.x); } )
                 .y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
-                .y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
+                .y1(function() { return (fillCircleRadius*2 + waveHeight); } );
             var waveGroup = gaugeGroup.append("defs")
                 .append("clipPath")
                 .attr("id", "clipWave" + elementId);
@@ -167,13 +163,12 @@
 
             // Text where the wave does overlap.
             var text2 = fillCircleGroup.append("text");
-            var date2 = fillCircleGroup.append("text");
 
             // Make the value count up.
             if(config.valueCountUp){
                 var textTween = function(){
                     var i = d3.interpolate(this.textContent, textFinalValue);
-                    return function(t) { this.textContent = textRounder(i(t)) + percentText; }
+                    return function(t) { this.textContent = textRounder(i(t)) + percentText; };
                 };
                 text1.transition()
                     .duration(config.waveRiseTime)
@@ -195,7 +190,9 @@
                 waveGroup.attr('transform','translate('+waveGroupXPosition+','+waveRiseScale(fillPercent)+')');
             }
 
-            if(config.waveAnimate) animateWave();
+            if (config.waveAnimate) {
+              animateWave();
+            }
 
             function animateWave() {
                 wave.attr('transform','translate('+waveAnimateScale(wave.attr('T'))+',0)');
@@ -213,16 +210,16 @@
             function GaugeUpdater(value) {
                 var newFinalValue = parseFloat(value).toFixed(2);
                 var textRounderUpdater = function(value){ return Math.round(value); };
-                if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+                if(parseFloat(newFinalValue) !== parseFloat(textRounderUpdater(newFinalValue))){
                     textRounderUpdater = function(value){ return parseFloat(value).toFixed(1); };
                 }
-                if(parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))){
+                if(parseFloat(newFinalValue) !== parseFloat(textRounderUpdater(newFinalValue))){
                     textRounderUpdater = function(value){ return parseFloat(value).toFixed(2); };
                 }
 
                 var textTween = function(){
                     var i = d3.interpolate(this.textContent, parseFloat(value).toFixed(2));
-                    return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; }
+                    return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; };
                 };
 
                 var textFinalValue = parseFloat(value).toFixed(2);
@@ -263,7 +260,7 @@
                     newClipArea = d3.svg.area()
                         .x(function(d) { return waveScaleX(d.x); } )
                         .y0(function(d) { return waveScaleY(Math.sin(Math.PI*2*config.waveOffset*-1 + Math.PI*2*(1-config.waveCount) + d.y*2*Math.PI));} )
-                        .y1(function(d) { return (fillCircleRadius*2 + waveHeight); } );
+                        .y1(function() { return (fillCircleRadius*2 + waveHeight); } );
                 } else {
                     newClipArea = clipArea;
                 }
@@ -285,15 +282,15 @@
                     });
                 waveGroup.transition()
                     .duration(config.waveRiseTime)
-                    .attr('transform','translate('+waveGroupXPosition+','+newHeight+')')
+                    .attr('transform','translate('+waveGroupXPosition+','+newHeight+')');
             }
 
-          scope.$watch(function(scope) { return scope.volume }, function(newValue, oldValue) {
-            if( typeof newValue != 'undefined' ){
-                var gauge = GaugeUpdater(scope.volume);
+          scope.$watch(function(scope) { return scope.volume; }, function(newValue) {
+            if (typeof newValue !== 'undefined') {
+              new GaugeUpdater(scope.volume);
             }
           });
         }
-      }
+      };
     }
 })();

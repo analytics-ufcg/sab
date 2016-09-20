@@ -9,7 +9,7 @@
     /*jshint latedef: nofunc */
     function sabVolume() {
       return function (input) {
-        if (!input) return;
+        if (!input) {return;}
         var newInput = input.replace(".", ",");
         return newInput+" hm³";
       };

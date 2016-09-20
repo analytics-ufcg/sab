@@ -11,7 +11,7 @@
     var factory = {
       info: $resource(RESTAPI.url+'/reservatorios/:id/info'),
       monitoramento: $resource(RESTAPI.url+'/reservatorios/:id/monitoramento', null, {query: {isArray: false}})
-    }
+    };
     return factory;
   }
 })();

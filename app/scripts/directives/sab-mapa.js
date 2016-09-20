@@ -42,14 +42,10 @@
 
           var features = svg.append('g').attr('id', 'g-mapa');
 
-          scope.$watch(function(scope) { return scope.reservatorioSelecionado }, function(newValue, oldValue) {
+          scope.$watch(function(scope) { return scope.reservatorioSelecionado; }, function(newValue) {
             var r = newValue.id;
             d3.selectAll(".svg-reservatorio").attr("class", "svg-reservatorio");
-            var point = d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
-            // console.log(point);
-            // var x = (800 - point.attr('cx'))* 1.6;
-            // var y = (400 - point.attr('cy'))* 0.05;
-            // d3.select("#g-mapa").transition().duration(300).ease("linear").attr("transform", "translate("+x+","+y+")");
+            d3.select("#r"+r).attr("class", "svg-reservatorio svg-reservatorio-highlight");
           });
 
           var mouseOnEvent = function(d) {

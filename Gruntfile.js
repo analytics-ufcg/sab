@@ -10,10 +10,10 @@
 module.exports = function (grunt) {
   var api;
   var env = grunt.option('env');
-  if(env== "prod"){
-    api = require('./bower.json').production
+  if (env==="prod") {
+    api = require('./bower.json').production;
   } else {
-    api = require('./bower.json').development
+    api = require('./bower.json').development;
   }
 
   grunt.loadNpmTasks('grunt-string-replace');

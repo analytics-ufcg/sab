@@ -26,25 +26,11 @@
                 statusHeight = 5;
 
             // Parse the date / time
-            var parseDate = d3.time.format("%d/%m/%Y").parse,
-                bisectDate = d3.bisector(function(d) { return d.date; }).left;
-
-            var formatTime = d3.time.format("%d/%m/%Y");
+            var parseDate = d3.time.format("%d/%m/%Y").parse;
 
             // Set the ranges
             var x = d3.time.scale().range([0, width-statusWidth]);
             var y = d3.scale.linear().range([height, 0]);
-
-            // Define the axes
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .orient("bottom")
-                .ticks(5);
-
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .orient("left")
-                .ticks(2);
 
             // Define the line
             var valueline = d3.svg.line()
@@ -74,8 +60,8 @@
             var triangule = svg.append('polygon')
               .attr("points", "0,0 "+statusWidth+",0 "+statusHeight+","+statusHeight+"");
 
-            scope.$watch(function(scope) { return scope.monitoramento }, function(newValue, oldValue) {
-              if (typeof newValue != 'undefined') {
+            scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
+              if (typeof newValue !== 'undefined') {
                 draw(newValue);
               }
             });
@@ -157,8 +143,8 @@
               return "translate("+(width-(statusWidth/2))+", "+((height/2)-(statusHeight/2))+")";
             }
 
-          }
+          };
         }
-      }
+      };
     }
 })();
