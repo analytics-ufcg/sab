@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['Reservatorio'];
+  MainCtrl.$inject = ['Reservatorio', 'RESTAPI'];
 
   /*jshint latedef: nofunc */
-  function MainCtrl(Reservatorio) {
+  function MainCtrl(Reservatorio, RESTAPI) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -16,6 +16,27 @@
     };
     vm.selectedTab = 2;
     vm.showInfo = true;
+    vm.map = {
+      center: {
+        lat: -10.240929,
+        lon: -44.231820,
+        zoom: 5
+      },
+      semiarido: {
+        name: 'semiarido',
+        source: {
+            type: 'TopoJSON',
+            url: RESTAPI.url+'/estados/sab'
+        }
+      },
+      reservatorios: {
+        name: 'reservatorios',
+        source: {
+          type: 'TopoJSON',
+          url: RESTAPI.url+'/reservatorios'
+        }
+      }
+    };
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
@@ -65,6 +86,10 @@
 
     function toggleInfo() {
       vm.showInfo = !vm.showInfo;
+    }
+
+    function getReservStyle() {
+
     }
 
   }

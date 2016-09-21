@@ -1,88 +1,93 @@
 <section class="map-container">
 
-  <div class="search-bar">
-    <div class="input-group">
-      <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Pesquisar..."
-        ng-model="reservatorioSelecionado"
-        uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in main.reservatorios | filter:$viewValue"
-        typeahead-min-length="3"
-        typeahead-on-select="main.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';">
-    </div>
-  </div>
+  <div class="map-controls-wrapper">
 
-  <div class="map-info">
-
-    <div class="info-card" ng-show="main.reservatorioSelecionado.reservat">
-
-      <div class="info-card-header">
-        <a href="#" class="info-card-showhide-btn" ng-click="main.toggleInfo()">
-          <span class="glyphicon" ng-class="{'glyphicon-chevron-down': main.showInfo, 'glyphicon-chevron-up': !main.showInfo}"></span>
-        </a>
-        <h2 class="info-card-title">{{main.reservatorioSelecionado.reservat}}</h2>
+    <div class="search-bar">
+      <div class="input-group">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Pesquisar..."
+          ng-model="reservatorioSelecionado"
+          uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in main.reservatorios | filter:$viewValue"
+          typeahead-min-length="3"
+          typeahead-on-select="main.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';">
       </div>
+    </div>
 
-      <div  ng-if="main.showInfo">
+    <div class="map-info">
 
-        <div class="info-card-body">
+      <div class="info-card" ng-show="main.reservatorioSelecionado.reservat">
 
-          <div class="info-card-tab" ng-if="main.isSelectedTab(0)">
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
-            <div class="info-card-row" ng-show="main.reservatorioSelecionado.area > 0"><strong>Área</strong> {{main.reservatorioSelecionado.area | sabArea}}</div>
-          </div>
+        <div class="info-card-header">
+          <a href="#" class="info-card-showhide-btn" ng-click="main.toggleInfo()">
+            <span class="glyphicon" ng-class="{'glyphicon-chevron-down': main.showInfo, 'glyphicon-chevron-up': !main.showInfo}"></span>
+          </a>
+          <h2 class="info-card-title">{{main.reservatorioSelecionado.reservat}}</h2>
+        </div>
 
-          <div class="info-card-tab" ng-if="main.isSelectedTab(1)">
-            <hr class="info-card-divider hidden-xs">
-            <div class="row row-sm" ng-show="main.reservatorioSelecionado.volumes.length">
-              <div class="col-xs-6 col-xs-offset-3 col-sm-5 col-sm-offset-0 col-sm" ng-show="main.reservatorioSelecionado.volume_percentual">
-                  <sab-volume volume="main.reservatorioSelecionado.volume_percentual"></sab-volume>
-              </div>
-              <div class="col-xs-10 col-xs-offset-2 col-sm-7 col-sm-offset-0 col-sm">
+        <div  ng-if="main.showInfo">
 
-                <div class="row">
-                  <div class="col-xs-5">
-                    <div class="info-card-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
-                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade | sabVolume}}</div>
-                  </div>
-                  <div class="col-xs-7">
-                    <div class="info-card-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
-                    <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume | sabVolume}}</div>
-                    <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes"></sab-volume-recente>
-                    <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume">Medido em {{main.reservatorioSelecionado.data_informacao}}</div>
-                  </div>
+          <div class="info-card-body">
+
+            <div class="info-card-tab" ng-if="main.isSelectedTab(0)">
+              <div class="info-card-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
+              <div class="info-card-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
+              <div class="info-card-row" ng-show="main.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{main.reservatorioSelecionado.bacia}}</div>
+              <div class="info-card-row" ng-show="main.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{main.reservatorioSelecionado.tipo}}</div>
+              <div class="info-card-row" ng-show="main.reservatorioSelecionado.area > 0"><strong>Área</strong> {{main.reservatorioSelecionado.area | sabArea}}</div>
+            </div>
+
+            <div class="info-card-tab" ng-if="main.isSelectedTab(1)">
+              <hr class="info-card-divider hidden-xs">
+              <div class="row row-sm" ng-show="main.reservatorioSelecionado.volumes.length">
+                <div class="col-xs-6 col-xs-offset-3 col-sm-5 col-sm-offset-0 col-sm" ng-show="main.reservatorioSelecionado.volume_percentual">
+                    <sab-volume volume="main.reservatorioSelecionado.volume_percentual"></sab-volume>
                 </div>
+                <div class="col-xs-10 col-xs-offset-2 col-sm-7 col-sm-offset-0 col-sm">
 
+                  <div class="row">
+                    <div class="col-xs-5">
+                      <div class="info-card-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
+                      <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade | sabVolume}}</div>
+                    </div>
+                    <div class="col-xs-7">
+                      <div class="info-card-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
+                      <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume | sabVolume}}</div>
+                      <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes"></sab-volume-recente>
+                      <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume">Medido em {{main.reservatorioSelecionado.data_informacao}}</div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="info-card-tab" ng-if="main.isSelectedTab(2)">
-            <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
-              <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
+            <div class="info-card-tab" ng-if="main.isSelectedTab(2)">
+              <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
+                <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
+              </div>
+              <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
             </div>
-            <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
+          </div>
+
+          <div class="info-card-footer">
+            <ul class="nav nav-tabs nav-justified">
+              <li role="presentation" ng-class="{'active': main.isSelectedTab(0)}"><a href="#" ng-click="main.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
+              <li role="presentation" ng-class="{'active': main.isSelectedTab(1)}"><a href="#" ng-click="main.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span> Volume</a></li>
+              <li role="presentation" ng-class="{'active': main.isSelectedTab(2)}"><a href="#" ng-click="main.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span> Histórico</a></li>
+            </ul>
           </div>
         </div>
 
-        <div class="info-card-footer">
-          <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" ng-class="{'active': main.isSelectedTab(0)}"><a href="#" ng-click="main.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
-            <li role="presentation" ng-class="{'active': main.isSelectedTab(1)}"><a href="#" ng-click="main.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span> Volume</a></li>
-            <li role="presentation" ng-class="{'active': main.isSelectedTab(2)}"><a href="#" ng-click="main.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span> Histórico</a></li>
-          </ul>
-        </div>
       </div>
 
     </div>
 
   </div>
-  <div id="map">
-    <sab-mapa on-select-reservatorio="main.setReservatorioByID" reservatorio-selecionado="main.reservatorioSelecionado"></sab-mapa>
-  </div>
+  <openlayers id="map" ol-center="main.map.center">
+    <ol-layer ol-layer-properties="main.map.semiarido"></ol-layer>
+    <ol-layer ol-layer-properties="main.map.reservatorios"></ol-layer>
+  </openlayers>
 </section>
