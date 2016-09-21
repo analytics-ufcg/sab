@@ -20,7 +20,7 @@
       center: {
         lat: -10.240929,
         lon: -44.231820,
-        zoom: 5
+        zoom: 6
       },
       semiarido: {
         name: 'semiarido',
@@ -34,7 +34,8 @@
         source: {
           type: 'TopoJSON',
           url: RESTAPI.url+'/reservatorios'
-        }
+        },
+        style: reservStyle()
       }
     };
     vm.setReservatorio = setReservatorio;
@@ -88,9 +89,25 @@
       vm.showInfo = !vm.showInfo;
     }
 
-    function getReservStyle() {
-
+    function tamanhoReservatorio(feature) {
+      var log = Math.log(feature.get("CAPACIDADE"));
+      if (log <= 2) {
+        return 2;
+      } else {
+        return log;
+      }
     }
+
+    function reservStyle() {
+      return function(feature, resolution) {
+        return [new ol.style.Style({
+          image: new ol.style.Circle({
+            radius:tamanhoReservatorio(feature),
+            fill: new ol.style.Fill({ color: 'rgba(52, 152, 219, 0.6)'})
+          })
+        })];
+      };
+    };
 
   }
 })();

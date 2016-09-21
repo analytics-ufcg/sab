@@ -15,7 +15,7 @@ angular.module('sabApp')
           target: 'map',
           layers: [
             new ol.layer.Tile({
-              source: new ol.source.OSM()
+              source: new ol.source.OSM.Mapnik("Mapnik");
             })
           ],
           view: new ol.View({
