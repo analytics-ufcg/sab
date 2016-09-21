@@ -99,7 +99,7 @@
     }
 
     function reservStyle() {
-      return function(feature, resolution) {
+      return function(feature) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
             radius:tamanhoReservatorio(feature),
@@ -107,7 +107,7 @@
           })
         })];
       };
-    };
+    }
 
   }
 })();
