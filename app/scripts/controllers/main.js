@@ -24,25 +24,10 @@
 
     vm.reservatorios = Reservatorio.info.query();
 
-    vm.slider = {
-      minValue: 0,
-      maxValue: 0,
-      options: {
-        floor: 0,
-        ceil: 0,
-        showTicksValues: true
-      }
-    };
-
     function setReservatorio(reservatorio) {
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
-
-        vm.slider.maxValue = data.anos.ano_info_max;
-        vm.slider.minValue = data.anos.ano_info_min;
-        vm.slider.options.floor = data.anos.ano_info_min;
-        vm.slider.options.ceil = data.anos.ano_info_max;
       });
     }
 
