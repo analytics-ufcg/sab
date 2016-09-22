@@ -22,20 +22,37 @@
         lon: -44.231820,
         zoom: 6
       },
-      semiarido: {
-        name: 'semiarido',
-        source: {
+      layers: [
+        {
+          name: 'OpenCycleMap',
+          active: false,
+          source: {
+            type: 'OSM',
+            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
+            attribution: 'All maps &copy; <a href="http://www.opencyclemap.org/">OpenCycleMap</a>'
+          }
+        },
+        {
+          name: 'semiarido',
+          source: {
             type: 'TopoJSON',
             url: RESTAPI.url+'/estados/sab'
-        }
-      },
-      reservatorios: {
-        name: 'reservatorios',
-        source: {
-          type: 'TopoJSON',
-          url: RESTAPI.url+'/reservatorios'
+          },
+          style: semiaridoStyle()
         },
-        style: reservStyle()
+        {
+          name: 'reservatorios',
+          source: {
+            type: 'TopoJSON',
+            url: RESTAPI.url+'/reservatorios'
+          },
+          style: reservStyle()
+        }
+      ],
+      defaults: {
+          events: {
+              layers: [ 'mousemove', 'click' ]
+          }
       }
     };
     vm.setReservatorio = setReservatorio;
@@ -45,16 +62,6 @@
     vm.toggleInfo = toggleInfo;
 
     vm.reservatorios = Reservatorio.info.query();
-
-    vm.slider = {
-      minValue: 0,
-      maxValue: 0,
-      options: {
-        floor: 0,
-        ceil: 0,
-        showTicksValues: true
-      }
-    };
 
     function setReservatorio(reservatorio) {
       vm.reservatorioSelecionado = reservatorio;
@@ -107,6 +114,13 @@
           })
         })];
       };
+    }
+
+    function semiaridoStyle() {
+      return new ol.style.Style({
+        fill: new ol.style.Fill({color: "rgba(255, 255, 255, 0.3)"}),
+        stroke: new ol.style.Stroke({color: "rgba(230, 126, 34, 1)"})
+      });
     }
 
   }

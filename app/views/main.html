@@ -86,8 +86,7 @@
     </div>
 
   </div>
-  <openlayers id="map" ol-center="main.map.center">
-    <ol-layer ol-layer-properties="main.map.semiarido"></ol-layer>
-    <ol-layer ol-layer-properties="main.map.reservatorios"></ol-layer>
+  <openlayers id="map" ol-center="main.map.center" ol-defaults="main.map.defaults" custom-layers="true">
+    <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in main.map.layers"></ol-layer>
   </openlayers>
 </section>
