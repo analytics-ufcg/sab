@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['Reservatorio', 'RESTAPI'];
+  MainCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI'];
 
   /*jshint latedef: nofunc */
-  function MainCtrl(Reservatorio, RESTAPI) {
+  function MainCtrl($scope, Reservatorio, RESTAPI) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -67,11 +67,6 @@
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
-
-        vm.slider.maxValue = data.anos.ano_info_max;
-        vm.slider.minValue = data.anos.ano_info_min;
-        vm.slider.options.floor = data.anos.ano_info_min;
-        vm.slider.options.ceil = data.anos.ano_info_max;
       });
     }
 
@@ -122,6 +117,14 @@
         stroke: new ol.style.Stroke({color: "rgba(230, 126, 34, 1)"})
       });
     }
+
+    $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
+      $scope.$apply(function(scope) {
+          if(feature) {
+            vm.setReservatorioByID(feature.U.ID);
+          }
+      });
+    });
 
   }
 })();
