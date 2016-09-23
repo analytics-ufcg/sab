@@ -59,16 +59,20 @@
 
           // Define the line
           var valueline = d3.svg.line()
+              .defined(function(d) { return d.close; })
               .x(function(d) { return x(d.date); })
               .y(function(d) { return y(d.close); });
           var valuearea = d3.svg.area()
+              .defined(function(d) { return d.close; })
               .x(function(d) { return x(d.date); })
               .y0(height)
               .y1(function(d) { return y(d.close); });
           var valueline2 = d3.svg.line()
+              .defined(function(d) { return d.close; })
               .x(function(d) { return x2(d.date); })
               .y(function(d) { return y2(d.close); });
           var valuearea2 = d3.svg.area()
+              .defined(function(d) { return d.close; })
               .x(function(d) { return x2(d.date); })
               .y0(height2)
               .y1(function(d) { return y2(d.close); });
@@ -99,9 +103,17 @@
           var lineSvg = focus.append("g")
             .append("path")
             .attr("class", "time-graph-path line");
+          var lineInvalidosSvg = focus.append("g")
+            .append("path")
+            .attr("class", "time-graph-path line line-invalidos");
+
           var areaSvg = focus.append("g")
             .append("path")
             .attr("class", "time-graph-path area");
+          var areaInvalidoSvg = focus.append("g")
+            .append("path")
+            .attr("class", "time-graph-path area area-invalidos");
+
           var xAxisSvg = focus.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")");
@@ -178,12 +190,17 @@
             }
           });
 
+          var dataValidos = []
+
           // Get the data
           var draw = function(data) {
 
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
               d.close = +d.VolumePercentual;
+              if (d.close){
+                dataValidos.push(d);
+              }
             });
             data.sort(function(a, b) {
                 return a.date - b.date;
@@ -209,7 +226,7 @@
 
             // Add the valueline path.
             // lineSvg.attr("d", valueline(data));
-            areaSvg.attr("d", valuearea(data));
+            //areaSvg.attr("d", valuearea(data));
             line2Svg.attr("d", valueline2(data));
             area2Svg.attr("d", valuearea2(data));
             // Add the X Axis
@@ -265,8 +282,10 @@
               }
               xAxisSvg.call(xAxis);
               xAxisAuxSvg.call(xAxisAux);
+              lineInvalidosSvg.attr("d", valueline(dataValidos));
               lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
+              areaInvalidoSvg.attr("d", valuearea(dataValidos));
             }
 
             function mouseover() {
@@ -277,8 +296,8 @@
             function mousemove() {
               var x0 = x.invert(d3.mouse(this)[0]),
           		    i = bisectDate(data, x0, 1),
-          		    d0 = data[i - 1],
-          		    d1 = data[i],
+          		    d0 = data[i - 1].VolumePercentual == null ? data[i - 2] : data[i - 1],
+          		    d1 = data[i].VolumePercentual == null ? data[i+1] : data[i],
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
               statusVolume.html(Number((d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");

@@ -226,11 +226,20 @@ body {
     &.line-sm {
       stroke-width: 1;
     }
+    &.line-invalidos {
+      stroke-dasharray: 5,2;
+      stroke-width: 1;
+      stroke: rgba(230, 126, 34, 0.5);
+    }
   }
   &.area {
     fill: $brand-primary;
     fill-opacity: 0.5;
     clip-path: url(#clip);
+
+    &.area-invalidos {
+      fill: rgba(230, 126, 34, 0.5);
+    }
   }
   &.limit-line {
     stroke: $gray-light;
