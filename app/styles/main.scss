@@ -234,11 +234,12 @@ body {
   }
   &.area {
     fill: $brand-primary;
-    fill-opacity: 0.5;
+    fill-opacity: 0.6;
     clip-path: url(#clip);
 
     &.area-invalidos {
       fill: rgba(230, 126, 34, 0.5);
+      fill-opacity: 0.2;
     }
   }
   &.limit-line {
