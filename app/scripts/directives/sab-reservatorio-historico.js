@@ -142,12 +142,21 @@
           var context = svg.append("g")
             .attr("class", "context")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
           var line2Svg = context.append("g")
             .append("path")
             .attr("class", "time-graph-path line line-sm");
+          var line2InvalidosSvg = context.append("g")
+            .append("path")
+            .attr("class", "time-graph-path line line-sm line-invalidos");
+
           var area2Svg = context.append("g")
             .append("path")
             .attr("class", "time-graph-path area");
+          var area2InvalidoSvg = context.append("g")
+            .append("path")
+            .attr("class", "time-graph-path area area-invalidos");
+
           var xAxis2Svg = context.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height2 + ")");
@@ -227,7 +236,9 @@
             // lineSvg.attr("d", valueline(data));
             //areaSvg.attr("d", valuearea(data));
             line2Svg.attr("d", valueline2(data));
+            line2InvalidosSvg.attr("d", valueline2(dataValidos));
             area2Svg.attr("d", valuearea2(data));
+            area2InvalidoSvg.attr("d", valuearea2(dataValidos));
             // Add the X Axis
             xAxisSvg.call(xAxis);
             xAxisAuxSvg.call(xAxisAux);
