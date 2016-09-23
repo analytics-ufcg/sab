@@ -76,7 +76,7 @@
         for (var i = 0; i < vm.reservatoriosJson.informacoes.length; i++) {
           if(vm.reservatoriosJson.informacoes[i].properties.ID == reservatorio.id){
             lat = vm.reservatoriosJson.informacoes[i].properties.LATITUDE;
-            lon = vm.reservatoriosJson.informacoes[i].properties.LONGITUDE;
+            lon = vm.reservatoriosJson.informacoes[i].properties.LONGITUDE-0.5;
             zoom = 10;
             break;
           }
