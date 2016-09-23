@@ -117,9 +117,8 @@
                 return "#2ecc71";
               } else if (slope < 0){
                 return "#e74c3c";
-              } else{
-                return "#3498db";
               }
+              return "#3498db";
             }
 
             function rotate(slope) {
