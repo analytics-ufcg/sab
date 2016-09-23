@@ -190,10 +190,9 @@
             }
           });
 
-          var dataValidos = []
-
           // Get the data
           var draw = function(data) {
+            var dataValidos = [];
 
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
