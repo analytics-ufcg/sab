@@ -35,7 +35,7 @@
         {
           name: 'semiarido',
           source: {
-            type: 'TopoJSON',
+            type: 'GeoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
           style: semiaridoStyle()
@@ -43,7 +43,7 @@
         {
           name: 'reservatorios',
           source: {
-            type: 'TopoJSON',
+            type: 'GeoJSON',
             url: RESTAPI.url+'/reservatorios'
           },
           style: reservStyle()
@@ -63,7 +63,8 @@
 
     vm.reservatorios = Reservatorio.info.query();
 
-    function setReservatorio(reservatorio) {
+    function setReservatorio(reservatorio, lat, lon, zoom) {
+      setZoom(lat, lon, zoom);
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
@@ -71,10 +72,10 @@
       });
     }
 
-    function setReservatorioByID(id) {
+    function setReservatorioByID(id, lat, lon, zoom) {
       for (var i = 0; i < vm.reservatorios.length; i++) {
         if (parseInt(vm.reservatorios[i].id) === id) {
-          setReservatorio(vm.reservatorios[i]);
+          setReservatorio(vm.reservatorios[i], lat, lon, zoom);
           break;
         }
       }
@@ -122,10 +123,18 @@
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function(scope) {
           if(feature) {
-            vm.setReservatorioByID(feature.U.ID);
+            vm.setReservatorioByID(feature.get('ID'), feature.get('LATITUDE'), feature.get('LONGITUDE')-0.5, 10);
           }
       });
     });
+
+    function setZoom(lat, lon, zoom) {
+      if (lat && lon && zoom) {
+        vm.map.center.lat = lat;
+        vm.map.center.lon = lon;
+        vm.map.center.zoom = zoom;
+      }
+    };
 
   }
 })();
