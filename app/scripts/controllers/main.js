@@ -67,6 +67,7 @@
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
+        vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
       });
     }
 

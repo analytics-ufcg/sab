@@ -68,27 +68,10 @@
 
             // Get the data
             var draw = function(data) {
-              data.forEach(function(d) {
+              var minData = data.volumes;
+              minData.forEach(function(d) {
                 d.date = parseDate(d.DataInformacao);
                 d.close = +d.VolumePercentual;
-              });
-
-              data.sort(function(a, b) {
-                  return a.date - b.date;
-              });
-
-              var endDate = data[data.length-1].date;
-              var startDate = new Date(endDate);
-              startDate = new Date(startDate.setMonth(startDate.getMonth() - 6));
-              var minData = [];
-              for (var i = data.length-1; i >= 0; i--) {
-                if (data[i].date >= startDate) {
-                  minData.push(data[i]);
-                }
-              }
-
-              minData.sort(function(a, b) {
-                  return a.date - b.date;
               });
 
               // Scale the range of the data
@@ -97,22 +80,20 @@
               x.domain(d3.extent(minData, function(d) { return d.date; }));
               y.domain([min, max]);
               // Derive a linear regression
-              var regression = ss.linearRegression(minData.map(function(d) {
-                return [+d.date, d.close];
-              }));
+              var regression = data.coeficiente_regressao;
 
               // Add the valueline path.
               lineSvg
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
-                  "stroke": color(regression.m)
+                  "stroke": color(regression)
                 })
                 .attr("d", valueline(minData));
               areaSvg
                 .style({
                   "fill-opacity": "0.1",
-                  "fill": color(regression.m)
+                  "fill": color(regression)
                 })
                 .attr("d", valuearea(minData));
 
@@ -121,14 +102,14 @@
                .attr('cy', y(minData[minData.length-1].close))
                .attr('r', 1.5)
                .style({
-                 "fill": color(regression.m)
+                 "fill": color(regression)
                });
 
                triangule
                 .style({
-                  "fill": color(regression.m)
+                  "fill": color(regression)
                 })
-                .attr("transform", rotate(regression.m));
+                .attr("transform", rotate(regression));
 
             function color(slope) {
               if (slope >= 0) {
