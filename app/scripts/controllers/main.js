@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI', 'olData'];
+  MainCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI'];
 
   /*jshint latedef: nofunc */
-  function MainCtrl($scope, Reservatorio, RESTAPI, olData) {
+  function MainCtrl($scope, Reservatorio, RESTAPI) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
