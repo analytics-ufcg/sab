@@ -295,8 +295,29 @@
             function mousemove() {
               var x0 = x.invert(d3.mouse(this)[0]),
           		    i = bisectDate(data, x0, 1),
-          		    d0 = data[i - 1].VolumePercentual == null ? data[i - 2] : data[i - 1],
-          		    d1 = data[i].VolumePercentual == null ? data[i+1] : data[i],
+                  d0,d1,d;
+
+                  if(data[i - 1].VolumePercentual == null){
+                    for (var j = 1; j < data.length; j++) {
+                      if(data[i-j].VolumePercentual != null){
+                        d0 = data[i-j];
+                        break;
+                      }
+                    }
+                  }else{
+                    d0 = data[i-1];
+                  }
+
+                  if(data[i].VolumePercentual == null){
+                    for (var j = 0; j < data.length; j++) {
+                      if(data[i+j].VolumePercentual != null){
+                        d1 = data[i+j];
+                        break;
+                      }
+                    }
+                  }else{
+                    d1 = data[i];
+                  }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
               statusVolume.html(Number((d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
