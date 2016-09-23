@@ -57,7 +57,7 @@
             var lineSvg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
             var endCircle = svg.append('circle');
-            var triangule = svg.append('polygon')
+            var triangle = svg.append('polygon')
               .attr("points", "0,0 "+statusWidth+",0 "+statusHeight+","+statusHeight+"");
 
             scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
@@ -105,18 +105,23 @@
                  "fill": color(regression)
                });
 
-               triangule
+               triangle
                 .style({
-                  "fill": color(regression)
+                  "fill": color(regression),
+                  "visibility": regression == 0 ? "hidden" : "visible"
                 })
                 .attr("transform", rotate(regression));
 
             function color(slope) {
-              if (slope >= 0) {
+              if (slope > 0) {
                 return "#2ecc71";
+              } else if (slope < 0){
+                return "#e74c3c";
+              } else{
+                return "#3498db";
               }
-              return "#e74c3c";
             }
+
             function rotate(slope) {
               if (slope >= 0) {
                 return "translate("+(width-(statusWidth/2))+", "+((height/2)+(statusHeight/2))+"), rotate(-180 5 0)";
