@@ -25,7 +25,7 @@
       layers: [
         {
           name: 'OpenCycleMap',
-          active: true,
+          active: false,
           source: {
             type: 'OSM',
             url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
