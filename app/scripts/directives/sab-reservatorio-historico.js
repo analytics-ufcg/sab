@@ -142,12 +142,21 @@
           var context = svg.append("g")
             .attr("class", "context")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
           var line2Svg = context.append("g")
             .append("path")
             .attr("class", "time-graph-path line line-sm");
+          var line2InvalidosSvg = context.append("g")
+            .append("path")
+            .attr("class", "time-graph-path line line-sm line-invalidos");
+
           var area2Svg = context.append("g")
             .append("path")
             .attr("class", "time-graph-path area");
+          var area2InvalidoSvg = context.append("g")
+            .append("path")
+            .attr("class", "time-graph-path area area-invalidos");
+
           var xAxis2Svg = context.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + height2 + ")");
@@ -205,6 +214,15 @@
                 return a.date - b.date;
             });
 
+            focus.selectAll(".pontos")
+              .data(dataValidos)
+            .enter().append("circle")
+              .attr("class", "pontos")
+              .attr("r", 1)
+              .attr("cx", valueline.x())
+              .attr("cy", valueline.y());
+
+
             // Scale the range of the data
             var max = d3.max(data, function(d) { return d.close; });
             if (max < 100) { max = 100;}
@@ -227,7 +245,9 @@
             // lineSvg.attr("d", valueline(data));
             //areaSvg.attr("d", valuearea(data));
             line2Svg.attr("d", valueline2(data));
+            line2InvalidosSvg.attr("d", valueline2(dataValidos));
             area2Svg.attr("d", valuearea2(data));
+            area2InvalidoSvg.attr("d", valuearea2(dataValidos));
             // Add the X Axis
             xAxisSvg.call(xAxis);
             xAxisAuxSvg.call(xAxisAux);
@@ -285,6 +305,10 @@
               lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
+
+              focus.selectAll(".pontos")
+                .attr("cx", valueline.x())
+                .attr("cy", valueline.y());
             }
 
             function mouseover() {
@@ -295,8 +319,29 @@
             function mousemove() {
               var x0 = x.invert(d3.mouse(this)[0]),
           		    i = bisectDate(data, x0, 1),
-          		    d0 = data[i - 1].VolumePercentual == null ? data[i - 2] : data[i - 1],
-          		    d1 = data[i].VolumePercentual == null ? data[i+1] : data[i],
+                  d0,d1,d;
+
+                  if(data[i - 1].VolumePercentual == null){
+                    for (var j = 1; j < data.length; j++) {
+                      if(data[i-j].VolumePercentual != null){
+                        d0 = data[i-j];
+                        break;
+                      }
+                    }
+                  }else{
+                    d0 = data[i-1];
+                  }
+
+                  if(data[i].VolumePercentual == null){
+                    for (var j = 0; j < data.length; j++) {
+                      if(data[i+j].VolumePercentual != null){
+                        d1 = data[i+j];
+                        break;
+                      }
+                    }
+                  }else{
+                    d1 = data[i];
+                  }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
               statusVolume.html(Number((d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
