@@ -214,6 +214,15 @@
                 return a.date - b.date;
             });
 
+            focus.selectAll(".pontos")
+              .data(dataValidos)
+            .enter().append("circle")
+              .attr("class", "pontos")
+              .attr("r", 1)
+              .attr("cx", valueline.x())
+              .attr("cy", valueline.y());
+
+
             // Scale the range of the data
             var max = d3.max(data, function(d) { return d.close; });
             if (max < 100) { max = 100;}
@@ -296,6 +305,10 @@
               lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
+
+              focus.selectAll(".pontos")
+                .attr("cx", valueline.x())
+                .attr("cy", valueline.y());
             }
 
             function mouseover() {
