@@ -53,25 +53,10 @@ grunt ssh_deploy:prod
 grunt ssh_rollback:prod
 ```
 
-## Arquivo secret.json
+## Arquivo secret.json.example.
 
-Exemplo do arquivo `secret.json` que deve conter as credenciais de acesso ao servidor de produção:
+Renomeie o arquivo secret.json e edite-o com as credenciais de acesso ao servidor de produção.
 
 ```
-{
-  "development": {
-    "host": "http://localhost",
-    "username": "meuusuario",
-    "password": "MiNhaSeNhA",
-    "port": "22",
-    "deploy_path": "/var/www/html/"
-  },
-  "production": {
-    "host": "10.x.x.xxx",
-    "username": "systemusername",
-    "password": "userpassword",
-    "port": "22",
-    "deploy_path": "/var/www/"
-  }
-}
+mv secret.json.example secret.json
 ```
