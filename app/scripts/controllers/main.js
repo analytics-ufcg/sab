@@ -17,13 +17,13 @@
     vm.selectedTab = 2;
     vm.showInfo = true;
 
-    vm.markers = [];
     vm.map = {
       center: {
         lat: -10.240929,
         lon: -44.231820,
         zoom: 6
       },
+      markers: [],
       layers: [
         {
           name: 'OpenCycleMap',
@@ -90,9 +90,10 @@
         }
       }
 
-      vm.markers =[{
-      lat: lat,
-      lon: lon}];
+      vm.map.markers = [{
+        lat: lat,
+        lon: lon
+      }];
 
       setZoom(lat, lon, zoom);
       vm.reservatorioSelecionado = reservatorio;
