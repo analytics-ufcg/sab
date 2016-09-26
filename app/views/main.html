@@ -86,7 +86,8 @@
     </div>
 
   </div>
-  <openlayers id="map" ol-center="main.map.center" ol-defaults="main.map.defaults" custom-layers="true">
+  <openlayers id="map" ol-center="main.map.center" ol-defaults="main.map.defaults" custom-layers="true" ol-markers="main.markers">
+    <ol-marker ng-repeat="marker in main.map.markers" lat="marker.lat" lon="marker.lon"></ol-marker>
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in main.map.layers"></ol-layer>
   </openlayers>
 </section>

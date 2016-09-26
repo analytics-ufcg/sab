@@ -16,12 +16,14 @@
     };
     vm.selectedTab = 2;
     vm.showInfo = true;
+
     vm.map = {
       center: {
         lat: -10.240929,
         lon: -44.231820,
         zoom: 6
       },
+      markers: [],
       layers: [
         {
           name: 'OpenCycleMap',
@@ -81,12 +83,18 @@
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
           if (vm.reservatoriosGeo[i].properties.ID == reservatorio.id) {
             lat = vm.reservatoriosGeo[i].properties.LATITUDE;
-            lon = vm.reservatoriosGeo[i].properties.LONGITUDE-0.5;
+            lon = vm.reservatoriosGeo[i].properties.LONGITUDE;
             zoom = 10;
             break;
           }
         }
       }
+
+      vm.map.markers = [{
+        lat: lat,
+        lon: lon
+      }];
+
       setZoom(lat, lon, zoom);
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
@@ -146,7 +154,7 @@
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function(scope) {
           if(feature) {
-            vm.setReservatorioByID(feature.get('ID'), feature.get('LATITUDE'), feature.get('LONGITUDE')-0.5, 10);
+            vm.setReservatorioByID(feature.get('ID'), feature.get('LATITUDE'), feature.get('LONGITUDE'), 10);
           }
       });
     });
