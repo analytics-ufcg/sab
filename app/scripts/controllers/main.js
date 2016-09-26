@@ -52,6 +52,14 @@
       defaults: {
           events: {
               layers: [ 'mousemove', 'click' ]
+          },
+          controls: {
+              zoom: false,
+              rotate: false,
+              attribution: false
+          },
+          interactions: {
+              mouseWheelZoom: true
           }
       }
     };
@@ -64,7 +72,7 @@
 
     vm.reservatorios = Reservatorio.info.query();
 
-    Reservatorio.geolocalizacao.query(function() {
+    vm.reservatoriosGeo = Reservatorio.geolocalizacao.query(function() {
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
     });
 
