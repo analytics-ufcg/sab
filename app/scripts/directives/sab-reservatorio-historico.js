@@ -219,8 +219,8 @@
             .enter().append("circle")
               .attr("class", "pontos")
               .attr("r", 1)
-              .attr("cx", valueline.x())
-              .attr("cy", valueline.y());
+              .attr("cx", function(d) { return x(d.date); })
+              .attr("cy", function(d) { return y(d.close); });
 
 
             // Scale the range of the data
