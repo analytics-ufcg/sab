@@ -63,7 +63,25 @@
 
     vm.reservatorios = Reservatorio.info.query();
 
+    vm.reservatoriosJson = {
+      informacoes: []
+    };
+
+    vm.reservatoriosJson = Reservatorio.reservatoriosJson.query(function() {
+        vm.reservatoriosJson.informacoes = vm.reservatoriosJson.features;
+      });
+
     function setReservatorio(reservatorio, lat, lon, zoom) {
+      if (!(lat && lon && zoom)) {
+        for (var i = 0; i < vm.reservatoriosJson.informacoes.length; i++) {
+          if(vm.reservatoriosJson.informacoes[i].properties.ID == reservatorio.id){
+            lat = vm.reservatoriosJson.informacoes[i].properties.LATITUDE;
+            lon = vm.reservatoriosJson.informacoes[i].properties.LONGITUDE-0.5;
+            zoom = 10;
+            break;
+          }
+        }
+      }
       setZoom(lat, lon, zoom);
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {

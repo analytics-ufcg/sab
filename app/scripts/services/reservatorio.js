@@ -10,7 +10,8 @@
   function reservatorio(RESTAPI, $resource) {
     var factory = {
       info: $resource(RESTAPI.url+'/reservatorios/:id/info'),
-      monitoramento: $resource(RESTAPI.url+'/reservatorios/:id/monitoramento', null, {query: {isArray: false}})
+      monitoramento: $resource(RESTAPI.url+'/reservatorios/:id/monitoramento', null, {query: {isArray: false}}),
+      reservatoriosJson: $resource(RESTAPI.url+'/reservatorios', null, {query: {isArray: false}})
     };
     return factory;
   }
