@@ -55,6 +55,7 @@
           }
       }
     };
+    vm.reservatoriosGeo = [];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
@@ -63,20 +64,16 @@
 
     vm.reservatorios = Reservatorio.info.query();
 
-    vm.reservatoriosJson = {
-      informacoes: []
-    };
-
-    vm.reservatoriosJson = Reservatorio.reservatoriosJson.query(function() {
-        vm.reservatoriosJson.informacoes = vm.reservatoriosJson.features;
-      });
+    Reservatorio.geolocalizacao.query(function() {
+      vm.reservatoriosGeo = vm.reservatoriosGeo.features;
+    });
 
     function setReservatorio(reservatorio, lat, lon, zoom) {
       if (!(lat && lon && zoom)) {
-        for (var i = 0; i < vm.reservatoriosJson.informacoes.length; i++) {
-          if(vm.reservatoriosJson.informacoes[i].properties.ID == reservatorio.id){
-            lat = vm.reservatoriosJson.informacoes[i].properties.LATITUDE;
-            lon = vm.reservatoriosJson.informacoes[i].properties.LONGITUDE-0.5;
+        for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
+          if (vm.reservatoriosGeo[i].properties.ID == reservatorio.id) {
+            lat = vm.reservatoriosGeo[i].properties.LATITUDE;
+            lon = vm.reservatoriosGeo[i].properties.LONGITUDE-0.5;
             zoom = 10;
             break;
           }
