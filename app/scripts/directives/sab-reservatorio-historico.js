@@ -251,6 +251,13 @@
             // Add the X Axis
             xAxisSvg.call(xAxis);
             xAxisAuxSvg.call(xAxisAux);
+
+            xAxis2.tickFormat(localized.timeFormat('%Y'));
+            if(months < 60){
+                xAxis2.ticks(d3.time.year);
+            }
+
+
             xAxis2Svg.call(xAxis2);
             // Add the Y Axis
             yAxisSvg.call(yAxis);
