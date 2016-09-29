@@ -78,12 +78,15 @@
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
     });
 
+/*    console.log($(window).width());
+    console.log($(window).height());
+*/
     function setReservatorio(reservatorio, lat, lon, zoom) {
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
-          if (vm.reservatoriosGeo[i].properties.ID == reservatorio.id) {
-            lat = vm.reservatoriosGeo[i].properties.LATITUDE;
-            lon = vm.reservatoriosGeo[i].properties.LONGITUDE;
+          if (vm.reservatoriosGeo[i].properties.id == reservatorio.id) {
+            lat = parseFloat(vm.reservatoriosGeo[i].properties.latitude);
+            lon = parseFloat(vm.reservatoriosGeo[i].properties.longitude);
             zoom = 10;
             break;
           }
@@ -125,7 +128,7 @@
     }
 
     function tamanhoReservatorio(feature) {
-      var log = Math.log(feature.get("CAPACIDADE"));
+      var log = Math.log(feature.get("capacidade"));
       if (log <= 2) {
         return 2;
       } else {
@@ -154,7 +157,7 @@
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function(scope) {
           if(feature) {
-            vm.setReservatorioByID(feature.get('ID'), feature.get('LATITUDE'), feature.get('LONGITUDE'), 10);
+            vm.setReservatorioByID(feature.get('id'), parseFloat(feature.get('latitude')), parseFloat(feature.get('longitude')), 10);
           }
       });
     });
