@@ -314,8 +314,8 @@
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
 
               focus.selectAll(".pontos")
-                .attr("cx", valueline.x())
-                .attr("cy", valueline.y());
+                .attr("cx", function(d) { return x(d.date); })
+                .attr("cy", function(d) { return y(d.close); });
             }
 
             function mouseover() {
