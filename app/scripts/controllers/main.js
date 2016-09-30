@@ -78,9 +78,6 @@
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
     });
 
-/*    console.log($(window).width());
-    console.log($(window).height());
-*/
     function setReservatorio(reservatorio, lat, lon, zoom) {
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
@@ -92,6 +89,7 @@
           }
         }
       }
+
 
       vm.map.markers = [{
         lat: lat,
@@ -180,9 +178,21 @@
     });
 
     function setZoom(lat, lon, zoom) {
+
+      var latMais = 0;
+      var lonMais = 0;
+
+      var larguraTela = $(window).width();
+
+      if(larguraTela < 1600 && larguraTela > 1000){
+        lonMais = -0.4;
+      } else if( larguraTela <= 1000 ) {
+        latMais = -0.2;
+      }
+
       if (lat && lon && zoom) {
-        vm.map.center.lat = lat;
-        vm.map.center.lon = lon;
+        vm.map.center.lat = lat + latMais;
+        vm.map.center.lon = lon + lonMais;
         vm.map.center.zoom = zoom;
       }
     };
