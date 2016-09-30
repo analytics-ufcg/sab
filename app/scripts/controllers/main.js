@@ -136,12 +136,29 @@
       }
     }
 
+    function corReservatorio(feature) {
+      if(feature.get("volume_percentual") == null){
+        return new ol.style.Fill({ color: 'rgba(154, 153, 158, 0.6)'});
+      } else{
+        var volume_percentual = parseFloat(feature.get("volume_percentual"));
+        
+        if (volume_percentual == 0) {
+          return new ol.style.Fill({ color: 'rgba(160, 17, 39, 0.6)'});
+        } else if(volume_percentual <= 10) {
+          return new ol.style.Fill({ color: 'rgba(204, 59, 2, 0.6)'});
+        } else {
+          return new ol.style.Fill({ color: 'rgba(90, 213, 219, 0.6)'});
+        }
+      }
+
+    }    
+
     function reservStyle() {
       return function(feature) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
             radius:tamanhoReservatorio(feature),
-            fill: new ol.style.Fill({ color: 'rgba(52, 152, 219, 0.6)'})
+            fill: corReservatorio(feature)
           })
         })];
       };
