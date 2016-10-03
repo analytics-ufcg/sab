@@ -66,6 +66,13 @@
       }
     };
     vm.reservatoriosGeo = [];
+    vm.coresReservatorios = [
+      {cor: '#9a999e', texto: 'Sem informação'},
+      {cor: '#b2182b', texto: 'Menor que 10%'},
+      {cor: '#ef8a62', texto: 'Entre 10% e 30%'},
+      {cor: '#67a9cf', texto: 'Entre 30% e 70%'},
+      {cor: '#2166ac', texto: 'Maior que 70%'}
+    ];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
@@ -77,9 +84,6 @@
     vm.reservatoriosGeo = Reservatorio.geolocalizacao.query(function() {
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
     });
-
-    vm.coresReservatorios = {semInfo: 'rgb(154, 153, 158)', menor10: '#b2182b',
-                entre10e30: '#ef8a62',entre30e70: '#67a9cf', maior70: '#2166ac'}
 
     function setReservatorio(reservatorio, lat, lon, zoom) {
       if (!(lat && lon && zoom)) {
@@ -139,22 +143,22 @@
 
     function corReservatorio(feature) {
       if(feature.get("volume_percentual") == null){
-        return new ol.style.Fill({ color: vm.coresReservatorios.semInfo});
+        return new ol.style.Fill({ color: vm.coresReservatorios[0].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
 
         if (volume_percentual <= 10){
-          return new ol.style.Fill({ color: vm.coresReservatorios.menor10});
+          return new ol.style.Fill({ color: vm.coresReservatorios[1].cor});
         } else if (volume_percentual <= 30){
-          return new ol.style.Fill({ color: vm.coresReservatorios.entre10e30});
+          return new ol.style.Fill({ color: vm.coresReservatorios[2].cor});
         } else if (volume_percentual <= 70){
-          return new ol.style.Fill({ color: vm.coresReservatorios.entre30e70});
+          return new ol.style.Fill({ color: vm.coresReservatorios[3].cor});
         } else{
-          return new ol.style.Fill({ color: vm.coresReservatorios.maior70});
+          return new ol.style.Fill({ color: vm.coresReservatorios[4].cor});
         }
       }
 
-    }    
+    }
 
     function reservStyle() {
       return function(feature) {

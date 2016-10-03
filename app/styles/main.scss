@@ -172,6 +172,18 @@ body {
   }
 }
 
+.legenda {
+  z-index: 10;
+  position: absolute;
+  bottom: $map-info-margin-vertical;
+  right: $map-info-margin-horizontal;
+  padding: $padding-base-vertical;
+  width: 150px;
+  background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  text-align: center;
+}
+
 .svg-br {
   fill: rgba(236, 240, 241, 0.4);
   stroke: #bdc3c7;
