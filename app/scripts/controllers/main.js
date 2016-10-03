@@ -78,9 +78,6 @@
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
     });
 
-/*    console.log($(window).width());
-    console.log($(window).height());
-*/
     function setReservatorio(reservatorio, lat, lon, zoom) {
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
@@ -92,6 +89,7 @@
           }
         }
       }
+
 
       vm.map.markers = [{
         lat: lat,
@@ -136,12 +134,29 @@
       }
     }
 
+    function corReservatorio(feature) {
+      if(feature.get("volume_percentual") == null){
+        return new ol.style.Fill({ color: 'rgba(154, 153, 158, 0.6)'});
+      } else{
+        var volume_percentual = parseFloat(feature.get("volume_percentual"));
+        
+        if (volume_percentual == 0) {
+          return new ol.style.Fill({ color: 'rgba(160, 17, 39, 0.6)'});
+        } else if(volume_percentual <= 10) {
+          return new ol.style.Fill({ color: 'rgba(204, 59, 2, 0.6)'});
+        } else {
+          return new ol.style.Fill({ color: 'rgba(90, 213, 219, 0.6)'});
+        }
+      }
+
+    }    
+
     function reservStyle() {
       return function(feature) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
             radius:tamanhoReservatorio(feature),
-            fill: new ol.style.Fill({ color: 'rgba(52, 152, 219, 0.6)'})
+            fill: corReservatorio(feature)
           })
         })];
       };
@@ -163,9 +178,21 @@
     });
 
     function setZoom(lat, lon, zoom) {
+
+      var latMais = 0;
+      var lonMais = 0;
+
+      var larguraTela = $(window).width();
+
+      if(larguraTela < 1600 && larguraTela > 1000){
+        lonMais = -0.4;
+      } else if( larguraTela <= 1000 ) {
+        latMais = -0.2;
+      }
+
       if (lat && lon && zoom) {
-        vm.map.center.lat = lat;
-        vm.map.center.lon = lon;
+        vm.map.center.lat = lat + latMais;
+        vm.map.center.lon = lon + lonMais;
         vm.map.center.zoom = zoom;
       }
     };
