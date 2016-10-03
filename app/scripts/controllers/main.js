@@ -136,16 +136,24 @@
 
     function corReservatorio(feature) {
       if(feature.get("volume_percentual") == null){
-        return new ol.style.Fill({ color: 'rgba(154, 153, 158, 0.6)'});
+        return new ol.style.Fill({ color: 'rgb(154, 153, 158)'});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
-        
-        if (volume_percentual == 0) {
-          return new ol.style.Fill({ color: 'rgba(160, 17, 39, 0.6)'});
-        } else if(volume_percentual <= 10) {
-          return new ol.style.Fill({ color: 'rgba(204, 59, 2, 0.6)'});
-        } else {
-          return new ol.style.Fill({ color: 'rgba(90, 213, 219, 0.6)'});
+
+        if(volume_percentual <= 10) {
+          return new ol.style.Fill({ color: 'rgb(255, 77, 77)'});
+        } else if (volume_percentual <= 20){
+          return new ol.style.Fill({ color: 'rgb(255, 122, 122)'});
+        } else if (volume_percentual <= 30){
+          return new ol.style.Fill({ color: 'rgb(255, 166, 166)'});
+        } else if (volume_percentual <= 40){
+          return new ol.style.Fill({ color: 'rgb(255, 178, 250)'});
+        } else if (volume_percentual <= 50){
+          return new ol.style.Fill({ color: 'rgb(127, 191, 255)'});
+        } else if (volume_percentual < 100){
+          return new ol.style.Fill({ color: 'rgb(64, 160, 255)'});
+        } else{
+          return new ol.style.Fill({ color: 'rgb(0, 128, 255)'});
         }
       }
 
