@@ -49,14 +49,16 @@
 
                   <div class="row">
                     <div class="col-xs-5">
-                      <div class="info-card-row" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
+                      <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.capacidade"><strong>Capacidade máxima de armazenamento</strong></div>
                       <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.capacidade">{{main.reservatorioSelecionado.capacidade | sabVolume}}</div>
                     </div>
                     <div class="col-xs-7">
-                      <div class="info-card-row" ng-show="main.reservatorioSelecionado.volume"><strong>Volume</strong></div>
+                      <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume"><strong>Volume<br/>(Última medição)</strong></div>
                       <div class="info-card-row info-card-lg" ng-show="main.reservatorioSelecionado.volume">{{main.reservatorioSelecionado.volume | sabVolume}}</div>
-                      <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                       <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume">Medido em {{main.reservatorioSelecionado.data_informacao}}</div>
+                      <br>
+                      <div class="info-card-row info-card-row-small" ng-show="main.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses</strong></div>
+                      <sab-volume-recente monitoramento="main.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                     </div>
                   </div>
 
