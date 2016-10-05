@@ -206,7 +206,7 @@
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
               d.close = +d.VolumePercentual;
-              if (d.close){
+              if (d.VolumePercentual){
                 dataValidos.push(d);
               }
             });
