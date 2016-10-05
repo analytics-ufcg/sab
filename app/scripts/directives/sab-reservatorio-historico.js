@@ -213,7 +213,7 @@
             data.sort(function(a, b) {
                 return a.date - b.date;
             });
-
+            focus.selectAll(".pontos").remove();
             focus.selectAll(".pontos")
               .data(dataValidos)
             .enter().append("circle")
