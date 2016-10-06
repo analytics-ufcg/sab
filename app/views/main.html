@@ -31,6 +31,8 @@
 
           <div class="info-card-body">
 
+            <span us-spinner ng-show="main.loadingInfo"></span>
+
             <div class="info-card-tab" ng-if="main.isSelectedTab(0)">
               <div class="info-card-row" ng-show="main.reservatorioSelecionado.nome"><strong>Nome</strong> {{main.reservatorioSelecionado.nome}}</div>
               <div class="info-card-row" ng-show="main.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{main.reservatorioSelecionado.municipio + ' - ' + main.reservatorioSelecionado.estado}}</div>
@@ -70,7 +72,7 @@
               <div class="map-graph" ng-if="main.reservatorioSelecionado.volumes.length">
                 <sab-reservatorio-historico monitoramento="main.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
               </div>
-              <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length">Não possui dados de monitoramento</p>
+              <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length || main.loadingInfo">Não possui dados de monitoramento</p>
             </div>
           </div>
 
@@ -88,6 +90,7 @@
     </div>
 
   </div>
+  <span us-spinner ng-show="main.loadingMap"></span>
   <openlayers id="map" ol-center="main.map.center" ol-defaults="main.map.defaults" custom-layers="true" ol-markers="main.markers">
     <ol-marker ng-repeat="marker in main.map.markers" lat="marker.lat" lon="marker.lon"></ol-marker>
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in main.map.layers"></ol-layer>
