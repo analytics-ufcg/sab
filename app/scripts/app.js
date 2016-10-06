@@ -10,7 +10,7 @@
    * Main module of the application.
    */
   angular
-    .module('sabApp', ['ngResource', 'ui.router', 'ui.bootstrap', 'openlayers-directive'])
+    .module('sabApp', ['ngResource', 'ui.router', 'ui.bootstrap', 'openlayers-directive', 'angularSpinner'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api'
     })

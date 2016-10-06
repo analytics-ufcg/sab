@@ -32,6 +32,8 @@ module.exports = function(config) {
       'bower_components/simple-statistics/dist/simple-statistics.min.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-openlayers-directive/dist/angular-openlayers-directive.min.js',
+      'bower_components/spin.js/spin.js',
+      'bower_components/angular-spinner/angular-spinner.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
