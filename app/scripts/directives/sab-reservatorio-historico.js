@@ -339,15 +339,19 @@
                     d0 = data[i-1];
                   }
 
-                  if(data[i].VolumePercentual == null){
-                    for (var j = 0; j < data.length; j++) {
-                      if(data[i+j].VolumePercentual != null){
-                        d1 = data[i+j];
-                        break;
+                  if(i < data.length){
+                    if(data[i].VolumePercentual == null){
+                      for (var j = 0; j < data.length; j++) {
+                        if(data[i+j].VolumePercentual != null){
+                          d1 = data[i+j];
+                          break;
+                        }
                       }
+                    }else{
+                      d1 = data[i];
                     }
-                  }else{
-                    d1 = data[i];
+                  } else{
+                    d1 =d0;
                   }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
