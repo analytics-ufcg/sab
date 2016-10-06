@@ -205,7 +205,7 @@
 
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
-              d.close = +d.VolumePercentual;
+              d.close = d.VolumePercentual;
               if (d.VolumePercentual){
                 dataValidos.push(d);
               }
@@ -351,7 +351,7 @@
                   }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Number((d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
+              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
           	}
