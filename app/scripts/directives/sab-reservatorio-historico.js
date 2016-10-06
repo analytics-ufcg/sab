@@ -18,8 +18,8 @@
           var d3 = $window.d3;
 
           // Set the dimensions of the canvas / graph
-          var margin = {top: 5, right: 5, bottom: 80, left: 25},
-              margin2 = {top: 200, right: 5, bottom: 20, left: 25},
+          var margin = {top: 5, right: 5, bottom: 80, left: 35},
+              margin2 = {top: 200, right: 5, bottom: 20, left: 35},
               width = 500 - margin.left - margin.right,
               height = 250 - margin.top - margin.bottom,
               height2 = 250 - margin2.top - margin2.bottom;
@@ -54,7 +54,7 @@
           // Define the axes
           var xAxis = d3.svg.axis().scale(x).orient("bottom");
           var xAxisAux = d3.svg.axis().scale(x).orient("bottom");
-          var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
+          var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2).tickFormat(function(d) { return d + "%";});
           var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
 
           // Define the line
