@@ -100,7 +100,7 @@
 
 
           svg.append("defs").append("clipPath")
-            .attr("id", "clip")
+            .attr("id", "clip-grafico")
           .append("rect")
             .attr("width", width)
             .attr("height", height);
@@ -110,17 +110,17 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
           var lineSvg = focus.append("g")
             .append("path")
-            .attr("class", "time-graph-path line");
+            .attr("class", "time-graph-path line").attr("clip-path", "url(#clip-grafico)");
           var lineInvalidosSvg = focus.append("g")
             .append("path")
-            .attr("class", "time-graph-path line line-invalidos");
+            .attr("class", "time-graph-path line line-invalidos").attr("clip-path", "url(#clip-grafico)");
 
           var areaSvg = focus.append("g")
             .append("path")
-            .attr("class", "time-graph-path area");
+            .attr("class", "time-graph-path area").attr("clip-path", "url(#clip-grafico)");
           var areaInvalidoSvg = focus.append("g")
             .append("path")
-            .attr("class", "time-graph-path area area-invalidos");
+            .attr("class", "time-graph-path area area-invalidos").attr("clip-path", "url(#clip-grafico)");
 
           var xAxisSvg = focus.append("g")
               .attr("class", "x axis")
@@ -220,6 +220,7 @@
               .data(dataValidos)
             .enter().append("circle")
               .attr("class", "pontos")
+              .attr("clip-path", "url(#clip-grafico)")
               .attr("r", 1)
               .attr("cx", function(d) { return x(d.date); })
               .attr("cy", function(d) { return y(d.close); });

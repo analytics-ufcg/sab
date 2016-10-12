@@ -215,17 +215,12 @@ body {
   }
 }
 
-.pontos {
-  clip-path: url(#clip);
-}
-
 .time-graph-path {
 
   &.line {
     stroke: $brand-primary;
     fill: none;
     stroke-width: 2;
-    clip-path: url(#clip);
 
     &.line-sm {
       stroke-width: 1;
@@ -239,7 +234,6 @@ body {
   &.area {
     fill: $brand-primary;
     fill-opacity: 0.6;
-    clip-path: url(#clip);
 
     &.area-invalidos {
       fill: opacify($brand-primary, 0.2);
