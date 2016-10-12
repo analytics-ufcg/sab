@@ -97,6 +97,14 @@
                 'class': 'time-graph'});
 
           // Focus: Gráfico principal
+
+
+          svg.append("defs").append("clipPath")
+            .attr("id", "clip")
+          .append("rect")
+            .attr("width", width)
+            .attr("height", height);
+
           var focus = svg.append("g")
             .attr("class", "focus")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -187,12 +195,6 @@
             .attr("height", height2 + 7);
           // END Context: Gráfico menor, para controlar o principal
 
-          svg.append("defs").append("clipPath")
-            .attr("id", "clip")
-          .append("rect")
-            .attr("width", width)
-            .attr("height", height);
-
           scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
             if (typeof newValue !== 'undefined') {
               draw(newValue);
@@ -205,9 +207,11 @@
 
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
-              d.close = d.VolumePercentual;
               if (d.VolumePercentual){
+                d.close = parseFloat(d.VolumePercentual);
                 dataValidos.push(d);
+              }else{
+                d.close = d.VolumePercentual;
               }
             });
 
@@ -223,7 +227,7 @@
 
             // Scale the range of the data
             var max = d3.max(data, function(d) { return d.close; });
-            if (max < 100) { max = 100;}
+            if (max < 100) {console.log(max); max = 100;}
             var extent = d3.extent(data, function(d) { return d.date; });
             var months = diffMouths(extent);
             var brushExtent = extent;
@@ -353,7 +357,7 @@
                   }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
+              statusVolume.html(Number(d.close.toFixed(2)) + "%"+" | "+d.Volume+" hm³");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
           	}
