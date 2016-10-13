@@ -68,10 +68,10 @@
     vm.reservatoriosGeo = [];
     vm.coresReservatorios = [
       {cor: '#9a999e', texto: 'Sem informação'},
-      {cor: '#b2182b', texto: 'Menor que 10%'},
-      {cor: '#ef8a62', texto: 'Entre 10% e 30%'},
-      {cor: '#67a9cf', texto: 'Entre 30% e 70%'},
-      {cor: '#2166ac', texto: 'Maior que 70%'}
+      {cor: '#b2182b', texto: '0% - 10%'},
+      {cor: '#ef8a62', texto: '10% - 30%'},
+      {cor: '#67a9cf', texto: '30% - 70%'},
+      {cor: '#2166ac', texto: '70% - 100%'}
     ];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
@@ -96,7 +96,6 @@
           }
         }
       }
-
 
       vm.map.markers = [{
         lat: lat,

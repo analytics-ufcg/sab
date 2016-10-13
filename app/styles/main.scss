@@ -173,15 +173,19 @@ body {
 }
 
 .legenda {
-  z-index: 10;
+  z-index: 9;
   position: absolute;
   bottom: $map-info-margin-vertical;
   right: $map-info-margin-horizontal;
   padding: $padding-base-vertical;
-  width: 150px;
+  width: 140px;
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   text-align: center;
+  font-size: 1em;
+  @media (max-width: $screen-sm-min) {
+    bottom: $map-info-margin-vertical + 56;
+  }
 }
 
 .svg-br {
