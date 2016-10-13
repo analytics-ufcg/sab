@@ -68,6 +68,13 @@
       }
     };
     vm.reservatoriosGeo = [];
+    vm.coresReservatorios = [
+      {cor: '#9a999e', texto: 'Sem informação'},
+      {cor: '#b2182b', texto: '0% - 10%'},
+      {cor: '#ef8a62', texto: '10% - 30%'},
+      {cor: '#67a9cf', texto: '30% - 70%'},
+      {cor: '#2166ac', texto: '70% - 100%'}
+    ];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
@@ -94,7 +101,6 @@
           }
         }
       }
-
 
       vm.map.markers = [{
         lat: lat,
@@ -144,20 +150,22 @@
 
     function corReservatorio(feature) {
       if(feature.get("volume_percentual") == null){
-        return new ol.style.Fill({ color: 'rgba(154, 153, 158, 0.6)'});
+        return new ol.style.Fill({ color: vm.coresReservatorios[0].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
-        
-        if (volume_percentual == 0) {
-          return new ol.style.Fill({ color: 'rgba(160, 17, 39, 0.6)'});
-        } else if(volume_percentual <= 10) {
-          return new ol.style.Fill({ color: 'rgba(204, 59, 2, 0.6)'});
-        } else {
-          return new ol.style.Fill({ color: 'rgba(90, 213, 219, 0.6)'});
+
+        if (volume_percentual <= 10){
+          return new ol.style.Fill({ color: vm.coresReservatorios[1].cor});
+        } else if (volume_percentual <= 30){
+          return new ol.style.Fill({ color: vm.coresReservatorios[2].cor});
+        } else if (volume_percentual <= 70){
+          return new ol.style.Fill({ color: vm.coresReservatorios[3].cor});
+        } else{
+          return new ol.style.Fill({ color: vm.coresReservatorios[4].cor});
         }
       }
 
-    }    
+    }
 
     function reservStyle() {
       return function(feature) {
