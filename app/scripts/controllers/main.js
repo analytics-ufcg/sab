@@ -42,7 +42,7 @@
             type: 'GeoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
-          style: semiaridoStyle()
+          style: semiaridoStyle(6)
         },
         {
           name: 'reservatorios',
@@ -140,13 +140,23 @@
       vm.showInfo = !vm.showInfo;
     }
 
-    function tamanhoReservatorio(feature) {
-      var log = Math.log(feature.get("capacidade"));
-      if (log <= 2) {
-        return 2;
-      } else {
-        return log;
-      }
+    function tamanhoReservatorio(feature, zoom) {
+      console.log(zoom);
+      // console.log(Math.log(zoom));
+      // var log =
+      return Math.abs(Math.log(feature.get("capacidade")));
+      // var menor = 2;
+      // // 155 porque sim
+      // if (zoom <= 155) {
+      //   log = log*3;
+      //   menor = 5;
+      // }
+      // if (log <= menor) {
+      //   return menor;
+      // } else {
+      //   return log;
+      // }
+
     }
 
     function corReservatorio(feature) {
@@ -170,11 +180,11 @@
 
     }
 
-    function reservStyle() {
-      return function(feature) {
+    function reservStyle(teste) {
+      return function(feature, teste) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
-            radius:tamanhoReservatorio(feature),
+            radius:tamanhoReservatorio(feature, teste),
             fill: corReservatorio(feature)
           })
         })];
@@ -214,6 +224,8 @@
         vm.map.center.lon = lon + lonMais;
         vm.map.center.zoom = zoom;
       }
+      vm.map.layers[2].style = reservStyle(zoom);
+
     };
 
   }
