@@ -42,6 +42,8 @@
             </div>
 
             <div class="info-card-tab" ng-if="main.isSelectedTab(1)">
+              <p class="mensagem-monitoramento" ng-hide="main.reservatorioSelecionado.volumes.length || main.loadingInfo">Não possui dados sobre volume</p>
+              
               <hr class="info-card-divider hidden-xs">
               <div class="row row-sm" ng-show="main.reservatorioSelecionado.volumes.length">
                 <div class="col-xs-6 col-xs-offset-3 col-sm-5 col-sm-offset-0 col-sm" ng-show="main.reservatorioSelecionado.volume_percentual">

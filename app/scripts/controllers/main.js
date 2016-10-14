@@ -14,7 +14,7 @@
       nome: "",
       volumes: []
     };
-    vm.selectedTab = 2;
+    vm.selectedTab = 1;
     vm.showInfo = true;
     vm.loadingMap = true;
     vm.loadingInfo = true;
