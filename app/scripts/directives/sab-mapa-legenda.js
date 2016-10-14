@@ -20,7 +20,7 @@
           // Set the dimensions of the canvas / graph
           var margin = {top: 15, right: 5, bottom: 5, left: 10},
               width = 90 - margin.left - margin.right,
-              height = 75 - margin.top - margin.bottom,
+              height = 85 - margin.top - margin.bottom,
               circleHeight = 5,
               circlePadding = 3;
 
@@ -53,7 +53,7 @@
                 .attr("class", "text")
                 .attr("font-size", "8px")
                 .attr("alignment-baseline", "middle")
-                .attr("transform", "translate(12," + (i*((circleHeight*2)+circlePadding)) + ")")
+                .attr("transform", "translate(12," + (i*((circleHeight*2)+circlePadding)+1) + ")")
                 .text(cor.texto);
             });
           }
