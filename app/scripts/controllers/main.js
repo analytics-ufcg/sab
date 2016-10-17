@@ -19,11 +19,13 @@
     vm.loadingMap = true;
     vm.loadingInfo = true;
 
+    vm.zoomInicial = 6;
+
     vm.map = {
       center: {
         lat: -10.240929,
         lon: -44.231820,
-        zoom: 6
+        zoom: vm.zoomInicial
       },
       markers: [],
       layers: [
@@ -144,13 +146,14 @@
       vm.showInfo = !vm.showInfo;
     }
 
-    function tamanhoReservatorio(feature) {
-      var log = Math.log(feature.get("capacidade"));
-      if (log <= 2) {
-        return 2;
-      } else {
-        return log;
+    function tamanhoReservatorio(feature, zoom) {
+      var tamanho = Math.abs(Math.log(feature.get("capacidade")));
+      if (tamanho < 2){
+        tamanho = 2;
       }
+      // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
+      return tamanho +(vm.zoomInicial+1.8) - Math.log(zoom);
+
     }
 
     function corReservatorio(feature) {
@@ -175,10 +178,10 @@
     }
 
     function reservStyle() {
-      return function(feature) {
+      return function(feature, zoom) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
-            radius:tamanhoReservatorio(feature),
+            radius:tamanhoReservatorio(feature, zoom),
             fill: corReservatorio(feature)
           })
         })];
@@ -199,28 +202,7 @@
           }
       });
     });
-/*
-    function setZoom(lat, lon, zoom) {
 
-      var latMais = 0;
-      var lonMais = 0;
-
-      var larguraTela = $(window).width();
-
-      if(larguraTela < 1600 && larguraTela > 1000){
-        lonMais = -0.4;
-      } else if( larguraTela <= 1000 ) {
-        latMais = -0.2;
-      }
-
-      if (lat && lon && zoom) {
-        vm.map.center.lat = lat + latMais;
-        vm.map.center.lon = lon + lonMais;
-        vm.map.center.zoom = zoom;
-      }
-
-    };
-*/
     function efeitoZoom(lat, lon, zoom) {
       var latMais = 0;
       var lonMais = 0;
