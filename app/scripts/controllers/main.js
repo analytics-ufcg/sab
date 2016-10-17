@@ -19,11 +19,13 @@
     vm.loadingMap = true;
     vm.loadingInfo = true;
 
+    vm.zoomInicial = 6;
+
     vm.map = {
       center: {
         lat: -10.240929,
         lon: -44.231820,
-        zoom: 6
+        zoom: vm.zoomInicial
       },
       markers: [],
       layers: [
@@ -42,7 +44,7 @@
             type: 'GeoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
-          style: semiaridoStyle(6)
+          style: semiaridoStyle()
         },
         {
           name: 'reservatorios',
@@ -141,21 +143,12 @@
     }
 
     function tamanhoReservatorio(feature, zoom) {
-      console.log(zoom);
-      // console.log(Math.log(zoom));
-      // var log =
-      return Math.abs(Math.log(feature.get("capacidade")));
-      // var menor = 2;
-      // // 155 porque sim
-      // if (zoom <= 155) {
-      //   log = log*3;
-      //   menor = 5;
-      // }
-      // if (log <= menor) {
-      //   return menor;
-      // } else {
-      //   return log;
-      // }
+      var tamanho = Math.abs(Math.log(feature.get("capacidade")));
+      if (tamanho < 2){
+        tamanho = 2;
+      }
+      // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
+      return tamanho +(vm.zoomInicial+1.8) - Math.log(zoom);
 
     }
 
@@ -180,11 +173,11 @@
 
     }
 
-    function reservStyle(teste) {
-      return function(feature, teste) {
+    function reservStyle() {
+      return function(feature, zoom) {
         return [new ol.style.Style({
           image: new ol.style.Circle({
-            radius:tamanhoReservatorio(feature, teste),
+            radius:tamanhoReservatorio(feature, zoom),
             fill: corReservatorio(feature)
           })
         })];
