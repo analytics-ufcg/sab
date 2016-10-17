@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI'];
+  MainCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','olData'];
 
   /*jshint latedef: nofunc */
-  function MainCtrl($scope, Reservatorio, RESTAPI) {
+  function MainCtrl($scope, Reservatorio, RESTAPI,olData) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -64,6 +64,10 @@
           },
           interactions: {
               mouseWheelZoom: true
+          },
+          view: {
+              maxZoom: 16,
+              minZoom: 4
           }
       }
     };
@@ -108,7 +112,7 @@
         lon: lon
       }];
 
-      setZoom(lat, lon, zoom);
+      efeitoZoom(lat, lon, zoom);
       vm.reservatorioSelecionado = reservatorio;
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
@@ -195,7 +199,7 @@
           }
       });
     });
-
+/*
     function setZoom(lat, lon, zoom) {
 
       var latMais = 0;
@@ -214,7 +218,38 @@
         vm.map.center.lon = lon + lonMais;
         vm.map.center.zoom = zoom;
       }
+
     };
+*/
+    function efeitoZoom(lat, lon, zoom) {
+      var latMais = 0;
+      var lonMais = 0;
+
+      var larguraTela = $(window).width();
+
+      if(larguraTela < 1600 && larguraTela > 1000){
+        lonMais = -0.4;
+      } else if( larguraTela <= 1000 ) {
+        latMais = -0.2;
+      }
+
+      var reservatorio = ol.proj.fromLonLat([lon + lonMais,lat + latMais]);
+      olData.getMap().then(function(map) {
+          var bounce = ol.animation.bounce({
+              resolution: 1500,
+              duration: 2000
+            });
+          var pan = ol.animation.pan({
+              duration: 2000,
+              source: map.getView().getCenter()
+            });
+          map.beforeRender(bounce);
+          map.beforeRender(pan);
+
+        map.getView().setCenter(reservatorio);
+        map.getView().setZoom(zoom);
+      });
+    }
 
   }
 })();
