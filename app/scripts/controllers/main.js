@@ -19,12 +19,23 @@
     vm.loadingMap = true;
     vm.loadingInfo = true;
 
-    vm.zoomInicial = 6;
+    var larguraTela = $(window).width();
+
+    if( larguraTela <= 1000 ) {
+      vm.zoomInicial = 5;
+      vm.latitude = -9.4044477;
+      vm.longitude = -40.507917;
+    } else {
+      vm.zoomInicial = 6;
+      vm.latitude = -10.240929;
+      vm.longitude = -44.231820;
+    }
+
 
     vm.map = {
       center: {
-        lat: -10.240929,
-        lon: -44.231820,
+        lat: vm.latitude,
+        lon: vm.longitude,
         zoom: vm.zoomInicial
       },
       markers: [],
@@ -147,12 +158,12 @@
     }
 
     function tamanhoReservatorio(feature, zoom) {
-      var tamanho = Math.abs(Math.log(feature.get("capacidade")));
+      // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
+      var tamanho = Math.abs(Math.log(feature.get("capacidade")))+(vm.zoomInicial+1.8) - Math.log(zoom);
       if (tamanho < 2){
         tamanho = 2;
       }
-      // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
-      return tamanho +(vm.zoomInicial+1.8) - Math.log(zoom);
+      return tamanho;
 
     }
 
@@ -206,8 +217,6 @@
     function efeitoZoom(lat, lon, zoom) {
       var latMais = 0;
       var lonMais = 0;
-
-      var larguraTela = $(window).width();
 
       if(larguraTela < 1600 && larguraTela > 1000){
         lonMais = -0.4;
