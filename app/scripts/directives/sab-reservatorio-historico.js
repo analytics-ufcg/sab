@@ -224,7 +224,7 @@
 
 
             // Scale the range of the data
-            var max = d3.max(data, function(d) { return d.close; });
+            var max = d3.max(data, function(d) { return parseFloat(d.close); });
             if (max < 100) { max = 100;}
             var extent = d3.extent(data, function(d) { return d.date; });
             var months = diffMouths(extent);
