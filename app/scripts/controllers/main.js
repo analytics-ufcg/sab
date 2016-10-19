@@ -30,14 +30,15 @@
       markers: [],
       layers: [
         {
-          name: 'OpenCycleMap',
-          active: false,
+          name: 'TileMap',
+          active: true,
           source: {
-            type: 'OSM',
-            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
-            attribution: 'All maps &copy; <a href="http://www.opencyclemap.org/">OpenCycleMap</a>'
+            type: 'MapBoxStudio',
+            mapId: 'citep6zo000242inxhqdd19p2',
+            userId: 'jeffersonrpn',
+            accessToken: 'pk.eyJ1IjoiamVmZmVyc29ucnBuIiwiYSI6ImNpcnZhc2FoMTBpZGtmYW04M3IyZTZ6NWoifQ.xTtlY-a--vOAS25Op_7uIA'
           }
-        },
+},
         {
           name: 'semiarido',
           source: {
@@ -75,11 +76,11 @@
     };
     vm.reservatoriosGeo = [];
     vm.coresReservatorios = [
-      {cor: '#a50026', texto: 'Colapso'},
-      {cor: '#d73027', texto: 'Crítico'},
-      {cor: '#74add1', texto: 'Normal'},
-      {cor: '#4575b4', texto: 'Cheio'},
-      {cor: '#313695', texto: 'Em Vertimento'},
+      {cor: '#000000', texto: 'Abaixo de 10%'},
+      {cor: '#A50026', texto: '10% - 25%'},
+      {cor: '#0047A4', texto: '25% - 50%'},
+      {cor: '#00A4A4', texto: '50% - 75%'},
+      {cor: '#08A400', texto: 'Acima de 75%'},
       {cor: '#9a999e', texto: 'Sem informação'}
     ];
     vm.setReservatorio = setReservatorio;
@@ -162,13 +163,13 @@
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
 
-        if (volume_percentual == 0){
+        if (volume_percentual  <= 10){
           return new ol.style.Fill({ color: vm.coresReservatorios[0].cor});
-        }else if (volume_percentual <= 10){
+        }else if (volume_percentual <= 25){
           return new ol.style.Fill({ color: vm.coresReservatorios[1].cor});
-        } else if (volume_percentual < 100){
+        } else if (volume_percentual <= 50){
           return new ol.style.Fill({ color: vm.coresReservatorios[2].cor});
-        } else if (volume_percentual == 100){
+        } else if (volume_percentual <= 75){
           return new ol.style.Fill({ color: vm.coresReservatorios[3].cor});
         } else{
           return new ol.style.Fill({ color: vm.coresReservatorios[4].cor});
