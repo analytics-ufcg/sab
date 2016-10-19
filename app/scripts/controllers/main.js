@@ -49,7 +49,7 @@
             userId: 'jeffersonrpn',
             accessToken: 'pk.eyJ1IjoiamVmZmVyc29ucnBuIiwiYSI6ImNpcnZhc2FoMTBpZGtmYW04M3IyZTZ6NWoifQ.xTtlY-a--vOAS25Op_7uIA'
           }
-},
+        },
         {
           name: 'semiarido',
           source: {
@@ -88,10 +88,10 @@
     vm.reservatoriosGeo = [];
     vm.coresReservatorios = [
       {cor: '#000000', texto: 'Abaixo de 10%'},
-      {cor: '#A50026', texto: '10% - 25%'},
-      {cor: '#0047A4', texto: '25% - 50%'},
-      {cor: '#00A4A4', texto: '50% - 75%'},
-      {cor: '#08A400', texto: 'Acima de 75%'},
+      {cor: '#FF2222', texto: '10% - 25%'},
+      {cor: '#2468FF', texto: '25% - 50%'},
+      {cor: '#24FFEF', texto: '50% - 75%'},
+      {cor: '#22FF37', texto: 'Acima de 75%'},
       {cor: '#9a999e', texto: 'Sem informação'}
     ];
     vm.setReservatorio = setReservatorio;
@@ -202,8 +202,7 @@
 
     function semiaridoStyle() {
       return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(255, 255, 255, 0.3)"}),
-        stroke: new ol.style.Stroke({color: "rgba(230, 126, 34, 1)"})
+        fill: new ol.style.Fill({color: "rgba(0, 0, 0, 0.3)"})
       });
     }
 
