@@ -12,11 +12,6 @@
   }
 }
 
-.navbar-default {
-  background-color: opacify($navbar-default-bg, 0.1);
-  border-color: $navbar-default-border;
-}
-
 .form-control {
   box-shadow: none;
   &:focus {

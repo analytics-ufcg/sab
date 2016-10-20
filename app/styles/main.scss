@@ -9,6 +9,8 @@ $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
+$section-padding-vertical: 80px;
+$section-padding-horizontal: 0px;
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -19,13 +21,9 @@ body {
   position: relative;
   width: 100%;
   height: 100vh;
-}
-
-.map-svg {
-  height: -webkit-calc(100vh - (#{$navbar-height} + 5px));
-  height:    -moz-calc(100vh - (#{$navbar-height} + 5px));
-  height:         calc(100vh - (#{$navbar-height} + 5px));
-  background-color: #fff;
+  height: -webkit-calc(100vh - (#{$navbar-height}));
+  height:    -moz-calc(100vh - (#{$navbar-height}));
+  height:         calc(100vh - (#{$navbar-height}));
 }
 
 .map-overlay {
@@ -185,6 +183,19 @@ body {
   font-size: 1em;
   @media (max-width: $screen-sm-min) {
     bottom: $map-info-margin-vertical + 56;
+  }
+}
+
+.section {
+  padding: $section-padding-vertical $section-padding-horizontal;
+
+  &.section-primary {
+    background-color: $brand-primary;
+  }
+
+  &.section-inverse {
+    background-color: $gray-base;
+    color: #fff;
   }
 }
 

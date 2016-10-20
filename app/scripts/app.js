@@ -26,6 +26,12 @@
       templateUrl: "views/main.html",
       controller: "MainCtrl",
       controllerAs: "main"
+    })
+    .state('mapa', {
+      url: "/mapa",
+      templateUrl: "views/mapa.html",
+      controller: "MapaCtrl",
+      controllerAs: "ctrl"
     });
     $urlRouterProvider.otherwise('/');
   }
