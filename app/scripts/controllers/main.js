@@ -215,6 +215,7 @@
     });
 
     function efeitoZoom(lat, lon, zoom) {
+      larguraTela = $(window).width();
       var latMais = 0;
       var lonMais = 0;
 
