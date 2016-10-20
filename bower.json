@@ -11,7 +11,6 @@
     "bootstrap-sass-official": "^3.2.0",
     "angular-bootstrap": "^2.0.0",
     "d3-queue": "^3.0.1",
-    "simple-statistics": "https://unpkg.com/simple-statistics@2.1.0/bower.zip",
     "angular-openlayers-directive": "^1.15.4",
     "angular-spinner": "^0.8.1"
   },
