@@ -1,14 +1,14 @@
-<section class="map-container">
+<div class="map-container">
 
   <div class="map-controls-wrapper">
 
     <div class="search-bar">
       <div class="input-group">
-        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
           type="text"
-          class="form-control"
-          placeholder="Pesquisar..."
+          class="form-control search-input"
+          placeholder="Pesquisar reservatório..."
           ng-model="reservatorioSelecionado"
           uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
           typeahead-min-length="3"
@@ -48,27 +48,18 @@
               </div>
               <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">Última medição: {{ctrl.reservatorioSelecionado.data_informacao}}</div>
 
-              <hr class="info-card-divider hidden-xs">
+              <hr class="info-card-divider">
+
               <div class="row row-sm" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-xs-6 col-xs-offset-3 col-sm-5 col-sm-offset-0 col-sm" ng-show="ctrl.reservatorioSelecionado.volume_percentual">
-                    <sab-volume volume="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
+                <div class="col-sm-9" ng-show="ctrl.reservatorioSelecionado.volume_percentual">
+                  <sab-volume
+                    capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
+                    volume="ctrl.reservatorioSelecionado.volume | sabVolume"
+                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
                 </div>
-                <div class="col-xs-10 col-xs-offset-2 col-sm-7 col-sm-offset-0 col-sm">
-
-                  <div class="row">
-                    <div class="col-xs-5">
-                      <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade máxima de armazenamento</strong></div>
-                      <div class="info-card-row info-card-lg" ng-show="ctrl.reservatorioSelecionado.capacidade">{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
-                    </div>
-                    <div class="col-xs-7">
-                      <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Volume</strong></div>
-                      <div class="info-card-row info-card-lg" ng-show="ctrl.reservatorioSelecionado.volume">{{ctrl.reservatorioSelecionado.volume | sabVolume}}</div>
-                      <br>
-                      <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses</strong></div>
-                      <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
-                    </div>
-                  </div>
-
+                <div class="col-sm-3">
+                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses</strong></div>
+                  <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                 </div>
               </div>
             </div>
@@ -108,4 +99,4 @@
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in ctrl.map.layers"></ol-layer>
   </openlayers>
 
-</section>
+</div>

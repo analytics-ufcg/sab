@@ -12,6 +12,12 @@ $card-padding-horizontal: 20px;
 $section-padding-vertical: 80px;
 $section-padding-horizontal: 0px;
 
+.logo {
+  position: absolute;
+  top: 5px;
+  z-index: 999;
+}
+
 #map {
   float: left;
   position: relative;
@@ -52,22 +58,13 @@ $section-padding-horizontal: 0px;
   }
   @media (min-width: $screen-md-min) {
     width: 680px;
-    top: 22px;
-    padding: $padding-large-vertical $padding-large-horizontal;
+    top: 80px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
 }
 
 .info-card {
-
-  @media (max-width: $screen-sm-min) {
-    margin-top: $map-info-margin-vertical + 45px;
-  }
-
-  @media (min-width: $screen-md-min) {
-    margin: $map-info-margin-vertical + 45px 0;
-  }
-
+  margin-top: $map-info-margin-vertical + 45px;
 }
 
 .info-card-header {
@@ -140,21 +137,39 @@ $section-padding-horizontal: 0px;
 .info-card-divider {
   margin-top: $card-padding-vertical*2;
   border: none;
+  @media (max-width: $screen-xs-min) {
+    margin-top: 0px;
+  }
 }
 
 .search-bar {
   float: left;
   position: absolute;
+  top: 80px;
   z-index: 11;
-  margin: $map-info-margin-vertical $map-info-margin-horizontal;
+  padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
   @media (min-width: $screen-xs-min) {
     width: 100%;
   }
   @media (min-width: $screen-md-min) {
-    width: 680px;
-    padding: 0 $padding-large-horizontal;
+    width: 680px + $map-info-margin-horizontal*2;
+
   }
+}
+
+.search-input {
+  background-color: #fff;
+  border: none;
+  color: #000;
+  height: 44px;
+}
+
+.search-addon {
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 0px;
 }
 
 .legenda {

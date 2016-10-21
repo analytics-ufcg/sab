@@ -14,9 +14,12 @@
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api'
     })
-    .config(routeConfig);
+    .config(routeConfig)
+    .run(runConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+  runConfig.$inject = ['$rootScope', '$state'];
 
   /*jshint latedef: nofunc */
   function routeConfig($stateProvider, $urlRouterProvider) {
@@ -35,4 +38,9 @@
     });
     $urlRouterProvider.otherwise('/');
   }
+
+  function runConfig($rootScope, $state) {
+    $rootScope.$state = $state;
+  }
+
 })();

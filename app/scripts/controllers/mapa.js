@@ -7,7 +7,7 @@
   MapaCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','olData'];
 
   /*jshint latedef: nofunc */
-  function MapaCtrl($scope, Reservatorio, RESTAPI,olData) {
+  function MapaCtrl($scope, Reservatorio, RESTAPI, olData) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -92,7 +92,7 @@
       {cor: '#ffff31', texto: '25% - 50%'},
       {cor: '#33ffff', texto: '50% - 75%'},
       {cor: '#3381ff', texto: 'Acima de 75%'},
-      {cor: '#dddddd', texto: 'Sem informação'}
+      {cor: '#ffffff', texto: 'Sem informação'}
     ];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
@@ -201,7 +201,7 @@
 
     function semiaridoStyle() {
       return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(0, 0, 0, 0.3)"})
+        fill: new ol.style.Fill({color: "rgba(0, 0, 0, 0.1)"})
       });
     }
 
