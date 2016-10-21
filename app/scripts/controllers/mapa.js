@@ -87,12 +87,12 @@
     };
     vm.reservatoriosGeo = [];
     vm.coresReservatorios = [
-      {cor: '#000000', texto: 'Abaixo de 10%'},
-      {cor: '#FF2222', texto: '10% - 25%'},
-      {cor: '#2468FF', texto: '25% - 50%'},
-      {cor: '#24FFEF', texto: '50% - 75%'},
-      {cor: '#22FF37', texto: 'Acima de 75%'},
-      {cor: '#9a999e', texto: 'Sem informação'}
+      {cor: '#ff2222', texto: 'Abaixo de 10%'},
+      {cor: '#ffa42c', texto: '10% - 25%'},
+      {cor: '#ffff31', texto: '25% - 50%'},
+      {cor: '#33ffff', texto: '50% - 75%'},
+      {cor: '#3381ff', texto: 'Acima de 75%'},
+      {cor: '#dddddd', texto: 'Sem informação'}
     ];
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
@@ -104,7 +104,6 @@
 
     vm.reservatoriosGeo = Reservatorio.geolocalizacao.query(function() {
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
-
       vm.loadingMap = false;
     });
 
@@ -215,6 +214,7 @@
     });
 
     function efeitoZoom(lat, lon, zoom) {
+      larguraTela = $(window).width();
       var latMais = 0;
       var lonMais = 0;
 
@@ -226,17 +226,15 @@
 
       var reservatorio = ol.proj.fromLonLat([lon + lonMais,lat + latMais]);
       olData.getMap().then(function(map) {
-          var bounce = ol.animation.bounce({
-              resolution: 1500,
-              duration: 2000
-            });
-          var pan = ol.animation.pan({
-              duration: 2000,
-              source: map.getView().getCenter()
-            });
-          map.beforeRender(bounce);
-          map.beforeRender(pan);
-
+        var bounce = ol.animation.bounce({
+            resolution: 750,
+            duration: 2000
+          });
+        var pan = ol.animation.pan({
+            duration: 2000,
+            source: map.getView().getCenter()
+          });
+        map.beforeRender(pan, bounce);
         map.getView().setCenter(reservatorio);
         map.getView().setZoom(zoom);
       });
