@@ -12,7 +12,8 @@
           ng-model="reservatorioSelecionado"
           uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
           typeahead-min-length="3"
-          typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';">
+          typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';"
+          ng-focus="ctrl.hideInfo()">
       </div>
     </div>
 
@@ -90,7 +91,7 @@
 
   <span us-spinner ng-show="ctrl.loadingMap"></span>
 
-  <div class="legenda">
+  <div class="legenda hidden-xs">
     Volume <br><small>(Última medição)</small>
     <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>
   </div>

@@ -99,6 +99,7 @@
     vm.isSelectedTab = isSelectedTab;
     vm.setSelectedTab = setSelectedTab;
     vm.toggleInfo = toggleInfo;
+    vm.hideInfo = hideInfo;
 
     vm.reservatorios = Reservatorio.info.query();
 
@@ -155,6 +156,10 @@
 
     function toggleInfo() {
       vm.showInfo = !vm.showInfo;
+    }
+
+    function hideInfo() {
+      vm.showInfo = false;
     }
 
     function tamanhoReservatorio(feature, zoom) {
