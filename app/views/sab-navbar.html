@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-  <div ng-class="{'container-fluid': $state.is('mapa'), 'container': !$state.is('mapa')}">
+  <div ng-class="{'container-fluid': expanded, 'container': !expanded}">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
@@ -18,7 +18,7 @@
   </div>
 </nav>
 
-<div ng-class="{'container-fluid': $state.is('mapa'), 'container': !$state.is('mapa')}"">
+<div ng-class="{'container-fluid': expanded, 'container': !expanded}">
   <a ui-sref="home" class="logo">
     <img src="images/logo.svg" alt="" width="120px">
   </a>

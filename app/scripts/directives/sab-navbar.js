@@ -11,7 +11,8 @@
       return {
         templateUrl: 'views/sab-navbar.html',
         restrict: 'E',
-        link: function postLink(scope, element) {
+        scope: {
+          expanded: '='
         }
       }
     };
