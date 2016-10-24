@@ -12,6 +12,12 @@
   }
 }
 
+.navbar-nav {
+  @media (max-width: $grid-float-breakpoint-max) {
+    margin-top: ($navbar-padding-vertical * 4);
+  }
+}
+
 .form-control {
   box-shadow: none;
   &:focus {
