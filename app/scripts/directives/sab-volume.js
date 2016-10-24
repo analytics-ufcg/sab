@@ -164,7 +164,7 @@
             var capacidadeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("alignment-baseline", "baseline")
+                .attr("dominant-baseline", "baseline")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+textLocationX+', '+config.volumeTextPadding+')');
@@ -178,7 +178,7 @@
             var capacidadeTextValue = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("alignment-baseline", "baseline")
+                .attr("dominant-baseline", "baseline")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
                 .attr('transform','translate(0, '+config.volumeTextPadding+')');
@@ -193,7 +193,7 @@
             var volumeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "right")
-                .attr("alignment-baseline", "hanging")
+                .attr("dominant-baseline", "hanging")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+textLocationX+','+config.volumeTextPadding+')');
@@ -208,7 +208,7 @@
                 .text("Volume atual")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "right")
-                .attr("alignment-baseline", "hanging")
+                .attr("dominant-baseline", "hanging")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
                 .attr("dy", "2")
