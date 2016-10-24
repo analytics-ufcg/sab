@@ -10,7 +10,8 @@
     function sabVolume() {
       return function (input) {
         if (!input) {return;}
-        var newInput = input.replace(".", ",");
+        var inputRound = parseFloat(input).toFixed(2).toString();
+        var newInput = inputRound.replace(".", ",");
         return newInput+" hm³";
       };
     }
