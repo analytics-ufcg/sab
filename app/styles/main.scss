@@ -230,6 +230,7 @@ $section-padding-horizontal: 0px;
 
 .tick {
   font-size: 9px;
+  fill: #fff;
 }
 
 .axis-sm {
@@ -323,6 +324,10 @@ $section-padding-horizontal: 0px;
     border-radius: $border-radius-base;
     pointer-events: none;
     color: #fff;
+}
+
+.status {
+  color: #fff;
 }
 
 .status-date {

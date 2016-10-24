@@ -51,14 +51,15 @@
               <hr class="info-card-divider">
 
               <div class="row row-sm" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-sm-9" ng-show="ctrl.reservatorioSelecionado.volume_percentual">
+                <div class="col-sm-8" ng-show="ctrl.reservatorioSelecionado.volume_percentual">
                   <sab-volume
                     capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                     volume="ctrl.reservatorioSelecionado.volume | sabVolume"
                     percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
                 </div>
-                <div class="col-sm-3">
-                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses</strong></div>
+                <div class="col-sm-4" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
+                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
+                  <hr class="info-card-divider">
                   <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                 </div>
               </div>
