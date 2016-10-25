@@ -89,7 +89,7 @@ $section-padding-horizontal: 0px;
   background-color: #5d5d5d;
 
   @media (min-width: $screen-md-min) {
-    height: 360px;
+    height: 400px;
   }
 
 }
@@ -177,9 +177,10 @@ $section-padding-horizontal: 0px;
   position: absolute;
   bottom: $map-info-margin-vertical;
   right: $map-info-margin-horizontal;
-  padding: $padding-base-vertical;
-  width: 140px;
-  background-color: #fff;
+  padding: $padding-base-vertical*2;
+  width: 180px;
+  background-color: #9a999e;
+  color: #fff;
   text-align: center;
   font-size: 1em;
   @media (max-width: $screen-sm-min) {

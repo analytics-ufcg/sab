@@ -88,9 +88,9 @@
     vm.reservatoriosGeo = [];
     vm.coresReservatorios = [
       {cor: '#ff2222', texto: 'Abaixo de 10%'},
-      {cor: '#ffa42c', texto: '10% - 25%'},
-      {cor: '#ffff31', texto: '25% - 50%'},
-      {cor: '#33ffff', texto: '50% - 75%'},
+      {cor: '#ff8f61', texto: '10% - 25%'},
+      {cor: '#fffc9f', texto: '25% - 50%'},
+      {cor: '#99bfcf', texto: '50% - 75%'},
       {cor: '#3381ff', texto: 'Acima de 75%'},
       {cor: '#ffffff', texto: 'Sem informação'}
     ];

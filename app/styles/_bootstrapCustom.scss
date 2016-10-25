@@ -192,6 +192,7 @@
     margin-right: 0;
     border: none;
     border-radius: 0;
+    // background-color: #9a999e;
   }
 
   > .active > a,
@@ -199,6 +200,7 @@
   > .active > a:focus {
     border: none;
     border-top: 2px solid $nav-tabs-justified-active-link-border-color;
+    // background-color: #fff;
   }
 
   @media (min-width: $screen-sm-min) {
