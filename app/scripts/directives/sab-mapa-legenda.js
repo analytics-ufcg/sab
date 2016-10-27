@@ -52,6 +52,7 @@
               focus.append("text")
                 .attr("class", "text")
                 .attr("font-size", "8px")
+                .attr("fill", "#fff")
                 .attr("alignment-baseline", "middle")
                 .attr("transform", "translate(12," + (i*((circleHeight*2)+circlePadding)+1) + ")")
                 .text(cor.texto);

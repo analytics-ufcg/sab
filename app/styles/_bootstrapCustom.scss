@@ -12,9 +12,10 @@
   }
 }
 
-.navbar-default {
-  background-color: opacify($navbar-default-bg, 0.1);
-  border-color: $navbar-default-border;
+.navbar-nav {
+  @media (max-width: $grid-float-breakpoint-max) {
+    margin-top: ($navbar-padding-vertical * 4);
+  }
 }
 
 .form-control {
@@ -162,7 +163,7 @@
     width: 1%;
     > a {
       text-align: center;
-      margin-bottom: 5px;
+      margin-bottom: 0px;
     }
   }
 
@@ -191,6 +192,7 @@
     margin-right: 0;
     border: none;
     border-radius: 0;
+    // background-color: #9a999e;
   }
 
   > .active > a,
@@ -198,6 +200,7 @@
   > .active > a:focus {
     border: none;
     border-top: 2px solid $nav-tabs-justified-active-link-border-color;
+    // background-color: #fff;
   }
 
   @media (min-width: $screen-sm-min) {

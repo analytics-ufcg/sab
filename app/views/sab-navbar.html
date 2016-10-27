@@ -1,0 +1,25 @@
+<nav class="navbar navbar-default">
+  <div ng-class="{'container-fluid': expanded, 'container': !expanded}">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li ui-sref-active="active"><a ui-sref="mapa">Explore o semiárido</a></li>
+        <li ui-sref-active="active"><a href="#">Sobre</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div ng-class="{'container-fluid': expanded, 'container': !expanded}">
+  <a ui-sref="home" class="logo">
+    <img src="images/logo.svg" alt="" width="120px">
+  </a>
+</div>
