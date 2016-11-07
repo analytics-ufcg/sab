@@ -52,13 +52,14 @@ $section-padding-horizontal: 0px;
   z-index: 10;
   text-align: left;
 
-  @media (max-width: $screen-sm-min) {
+  @media (max-width: $screen-md-min) {
     bottom: 0;
     width: 100%;
+    margin: 0;
   }
   @media (min-width: $screen-md-min) {
-    width: 680px;
     top: 80px;
+    width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
 }
@@ -84,14 +85,8 @@ $section-padding-horizontal: 0px;
 }
 
 .info-card-body {
-  height: 220px;
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #5d5d5d;
-
-  @media (min-width: $screen-md-min) {
-    height: 400px;
-  }
-
 }
 
 .info-card-footer {
