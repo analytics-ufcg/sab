@@ -110,6 +110,7 @@
 
     function setReservatorio(reservatorio, lat, lon, zoom) {
       vm.loadingInfo = true;
+      vm.showInfo = true;
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
           if (vm.reservatoriosGeo[i].properties.id == reservatorio.id) {
@@ -131,9 +132,7 @@
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
         vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
-
         vm.loadingInfo = false;
-
       });
     }
 
