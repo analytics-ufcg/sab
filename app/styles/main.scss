@@ -87,6 +87,10 @@ $section-padding-horizontal: 0px;
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #5d5d5d;
+
+  @media (min-width: $screen-md-min) {
+    height: 400px;
+  }
 }
 
 .info-card-footer {
