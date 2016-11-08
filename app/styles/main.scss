@@ -88,8 +88,30 @@ $section-padding-horizontal: 0px;
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #5d5d5d;
 
+  @media (min-width: $screen-sm-min) {
+    height: auto;
+  }
+
   @media (min-width: $screen-md-min) {
+    height: 300px;
+  }
+
+  @media (min-width: $screen-lg-min) {
     height: 400px;
+  }
+}
+
+.info-card-tab-sm {
+  @media (min-width: $screen-sm-min) {
+    padding: 0;
+  }
+
+  @media (min-width: $screen-md-min) {
+    padding: 0 80px;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    padding: 0;
   }
 }
 
