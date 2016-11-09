@@ -1,23 +1,26 @@
 <div class="section section-default">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 hidden-xs" style="height: 300px;">
+      <div class="col-sm-6" style="height: 300px;">
         <sab-mapa-equivalente map-data="main.sabMapa" set-estado="main.setEstado"></sab-mapa-equivalente>
 
       </div>
       <div class="col-sm-6">
         <h2>{{main.estadoAtual.semiarido}}</h2>
-        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatórios monitorados</p>
-        <p><strong>{{main.estadoAtual.capacidade_equivalente}} hm³</strong> de capacidade total</p>
-        <p><strong>{{main.estadoAtual.volume_equivalente}} hm³</strong> de volume total</p>
-        <p><strong>{{main.estadoAtual.porcentagem_equivalente}} %</strong> de volume atual</p>
-        
-<!--         <sab-volume
-          capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
-          volume="main.estadoAtual.volume_equivalente | sabVolume"
-          percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume> -->
-
-        <br><br><br>
+        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) monitorado(s) com informação</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) monitorado(s) sem informação</p>
+        <div style="width: 300px; height: 200px;">
+          <div ng-show="main.estadoAtual.capacidade_equivalente">
+            <sab-volume
+              capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
+              volume="main.estadoAtual.volume_equivalente | sabVolume"
+              percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
+          </div>
+          <div ng-hide="main.estadoAtual.capacidade_equivalente">
+            <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+          </div>
+        </div>
 
         <a ui-sref="mapa" class="btn btn-primary">Explore o semiárido</a>
       </div>

@@ -46,9 +46,10 @@
               .data(features)
             .enter().append('path')
               .attr('d', path)
-              .attr('vector-effect', 'non-scaling-stroke')
+              .attr("class", "recorte-sab-path")
+              .attr('textPath', function(d) {return d.properties.estado})
               .on('mouseover', mouseOver)
-              .on('mouseout', mouseOut)
+              .on('mouseout', mouseOut);
 
 
           };
@@ -56,11 +57,16 @@
         var mouseOver = function(d) {
             scope.setEstado()(d.properties.UF);
             scope.$apply();
+            d3.select(this).attr('class', 'recorte-sab-path-select');
+
+
         };
 
         var mouseOut = function(d) {
             scope.setEstado()("Semiarido");
             scope.$apply();
+            svg.selectAll('path').attr('class', 'recorte-sab-path');
+
         };
 
         }
