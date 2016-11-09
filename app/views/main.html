@@ -2,14 +2,23 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6 hidden-xs" style="height: 300px;">
+        <sab-mapa-equivalente map-data="main.sabMapa" set-estado="main.setEstado"></sab-mapa-equivalente>
 
       </div>
       <div class="col-sm-6">
-        <h2>Semiárido brasileiro</h2>
-        <p><strong>452</strong> reservatórios monitorados</p>
-        <p><strong>40.256hm³</strong> de capacidade total</p>
-        <p><strong>22%</strong> de volume atual</p>
+        <h2>{{main.estadoAtual.semiarido}}</h2>
+        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatórios monitorados</p>
+        <p><strong>{{main.estadoAtual.capacidade_equivalente}} hm³</strong> de capacidade total</p>
+        <p><strong>{{main.estadoAtual.volume_equivalente}} hm³</strong> de volume total</p>
+        <p><strong>{{main.estadoAtual.porcentagem_equivalente}} %</strong> de volume atual</p>
+        
+<!--         <sab-volume
+          capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
+          volume="main.estadoAtual.volume_equivalente | sabVolume"
+          percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume> -->
+
         <br><br><br>
+
         <a ui-sref="mapa" class="btn btn-primary">Explore o semiárido</a>
       </div>
     </div>
