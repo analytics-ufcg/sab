@@ -15,13 +15,19 @@
 
     vm.setEstado = setEstado;
 
+    vm.loadingInfo = true;
+
     ReservatorioEquivalente.sabMapa.query(function(response) {
+		vm.loadingInfo = true;    	
     	vm.sabMapa = response;
+    	vm.loadingInfo = false;
     });
 
     ReservatorioEquivalente.estadoEquivalente.query(function(response) {
+    	vm.loadingInfo = true;
     	vm.estadoEquivalente = response;
     	setEstado("Semiarido");
+    	vm.loadingInfo = false;
     });
 
     function setEstado(uf){

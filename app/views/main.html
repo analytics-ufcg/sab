@@ -5,7 +5,8 @@
         <sab-mapa-equivalente map-data="main.sabMapa" set-estado="main.setEstado"></sab-mapa-equivalente>
 
       </div>
-      <div class="col-sm-6">
+      <span us-spinner ng-show="main.loadingInfo"></span>
+      <div class="col-sm-6" ng-hide="main.loadingInfo">
         <h2>{{main.estadoAtual.semiarido}}</h2>
         <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
         <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) monitorado(s) com informação</p>
