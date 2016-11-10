@@ -47,7 +47,6 @@
             .enter().append('path')
               .attr('d', path)
               .attr("class", "recorte-sab-path")
-              .attr('textPath', function(d) {return d.properties.estado})
               .on('mouseover', mouseOver)
               .on('mouseout', mouseOut);
 
