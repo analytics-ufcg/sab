@@ -9,7 +9,7 @@ $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
-$section-padding-vertical: 80px;
+$section-padding-vertical: 50px;
 $section-padding-horizontal: 0px;
 
 .logo {
@@ -192,12 +192,30 @@ $section-padding-horizontal: 0px;
   padding: $section-padding-vertical $section-padding-horizontal;
 
   &.section-primary {
-    background-color: $brand-primary;
+    background-color: #FFFFFF;
   }
 
   &.section-inverse {
-    background-color: $gray-base;
+    background-color: #DD3B47;
     color: #fff;
+  }
+
+  &.section-default {
+    background-color: #192E39;
+  }
+
+  &.section-blue {
+    background-color: #192E39;
+    color: #fff;
+  }
+}
+
+.section-title {
+    text-align: center;
+    color: #41A0AA;
+
+  &.section-title-white {
+    color: #FFFFFF;
   }
 }
 
