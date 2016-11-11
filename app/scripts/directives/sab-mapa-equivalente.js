@@ -16,11 +16,12 @@
           setEstado: '&'
         },
         link: function postLink(scope, element) {
-          var
+
+          var margin = {top: 1, right: 1, bottom: 1, left: 1},
             d3 = $window.d3,
             geojson = $window.geojson,
-            width = 800,
-            height = 400;
+            width = 800 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
           var projection = d3.geo.mercator()
             .scale(1500)
             .translate([width * 1.8, height * -0.20]);
@@ -30,7 +31,7 @@
             .append('svg')
             .attr({
               'version': '1.1',
-              'viewBox': '0 0 '+width+' '+height,
+              'viewBox': '0 0 '+(width+ margin.left + margin.right)+' '+(height+ margin.top + margin.bottom),
               'width': '100%',
               'class': 'recorte-sab-svg'});
 

@@ -18,7 +18,7 @@
         link: function postLink(scope, element) {
 
 
-    var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    var margin = {top: 0, right: 1, bottom: 0, left: 0},
             width = 300 - margin.left - margin.right,
             height = 50 - margin.top - margin.bottom;
 
@@ -34,7 +34,7 @@
             .append('svg')
             .attr({
               'version': '1.1',
-              'viewBox': '0 0 '+width+' '+height,
+              'viewBox': '0 0 '+(width+ margin.left + margin.right)+' '+height,
               'width': '100%',
               'class': 'recorte-sab-svg'});
 
@@ -45,7 +45,7 @@
     });
 
     var desenhaBarra = function(mapData) {
-      var dataIntermediate = [[{x:mapData.quant_reserv_intervalo_1, x0:1}],
+      var dataIntermediate = [[{x:mapData.quant_reserv_intervalo_1, x0:0}],
         [{x:mapData.quant_reserv_intervalo_2, x0:mapData.quant_reserv_intervalo_1}],
         [{x:mapData.quant_reserv_intervalo_3, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2)}],
         [{x:mapData.quant_reserv_intervalo_4, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3)}],
@@ -64,6 +64,7 @@
               .data(dataStackLayout)
               .enter().append("g")
               .attr("class", "stack")
+              .attr("transform", 'translate('+margin.right+','+margin.top+')')
               .style("fill", function (d, i) {
                   return scope.cores[i].cor;
               }).style("stroke","#000");
