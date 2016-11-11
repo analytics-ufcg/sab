@@ -12,8 +12,9 @@
         template: '',
         restrict: 'E',
         scope: {
-          mapData: '=',
-          setEstado: '&'
+          mapSabData: '=',
+          setEstado: '&',
+          mapBrData: '='
         },
         link: function postLink(scope, element) {
 
@@ -35,23 +36,34 @@
               'width': '100%',
               'class': 'recorte-sab-svg'});
 
-          scope.$watch(function(scope) { return scope.mapData; }, function(newValue) {
-            if ((typeof newValue !== 'undefined') && !(angular.equals(newValue, {}))) {
-              desenhaSab(newValue);
+
+
+          scope.$watch(function(scope) { return scope.mapBrData; }, function(newValue) {
+            if (((typeof scope.mapSabData !== 'undefined') && !(angular.equals(scope.mapSabData, {}))) && 
+              ((typeof newValue !== 'undefined') && !(angular.equals(newValue, {})))) {
+              Brazil(newValue);
+              desenhaSab(scope.mapSabData);
             }
           });
 
-          var desenhaSab = function(mapData) {
-            var features = mapData.features;
-            svg.selectAll('path')
+          var desenhaSab = function(mapSabData) {
+            var features = mapSabData.features;
+            svg.selectAll('.recorte-sab-path')
               .data(features)
             .enter().append('path')
               .attr('d', path)
               .attr("class", "recorte-sab-path")
               .on('mouseover', mouseOver)
               .on('mouseout', mouseOut);
+          };
 
-
+          var Brazil = function(mapBrData) {
+            var features = mapBrData.features;
+            svg.selectAll('.pais-path')
+              .data(features)
+            .enter().append('path')
+              .attr('d', path)
+              .attr("class", "pais-path");
           };
 
         var mouseOver = function(d) {
@@ -65,7 +77,7 @@
         var mouseOut = function(d) {
             scope.setEstado()("Semiarido");
             scope.$apply();
-            svg.selectAll('path').attr('class', 'recorte-sab-path');
+            svg.selectAll('.recorte-sab-path-select').attr('class', 'recorte-sab-path');
 
         };
 

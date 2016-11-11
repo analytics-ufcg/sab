@@ -2,15 +2,13 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-6" style="height: 300px;">
-        <sab-mapa-equivalente map-data="main.sabMapa" set-estado="main.setEstado"></sab-mapa-equivalente>
+        <sab-mapa-equivalente map-sab-data="main.mapSabData" set-estado="main.setEstado" map-br-data="main.mapBrData"></sab-mapa-equivalente>
 
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
       <div class="col-sm-6" ng-hide="main.loadingInfo">
         <h2>{{main.estadoAtual.semiarido}}</h2>
         <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
-        <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) monitorado(s) com informação</p>
-        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) monitorado(s) sem informação</p>
         <div style="width: 300px; height: 150px;">
           <div ng-show="main.estadoAtual.capacidade_equivalente">
             <sab-volume

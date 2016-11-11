@@ -199,6 +199,10 @@ $section-padding-horizontal: 0px;
     background-color: $gray-base;
     color: #fff;
   }
+
+  &.section-default {
+    background-color: #3D4A5B;
+  }
 }
 
 .svg-br {
@@ -365,12 +369,15 @@ $section-padding-horizontal: 0px;
 
 .recorte-sab-path {
   fill: #468DC3;
+  stroke: #FFF;
 }
 
 .recorte-sab-path-select {
   fill: #0F547D;
+  stroke: #FFF;
 }
 
-.recorte-sab-svg {
+.pais-path {
+  fill: #445164;
   stroke: #000;
 }

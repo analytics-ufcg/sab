@@ -9,7 +9,8 @@
   /*jshint latedef: nofunc */
   function reservatorioEquivalente(RESTAPI, $resource) {
     var factory = {
-      sabMapa: $resource(RESTAPI.url + '/estados/sab', null, {query: {isArray: false}}),
+      mapSabData: $resource(RESTAPI.url + '/estados/sab', null, {query: {isArray: false}}),
+      mapBrData: $resource(RESTAPI.url + '/pais', null, {query: {isArray: false}}),
       estadoEquivalente: $resource(RESTAPI.url+'/reservatorio/equivalente/estado'),
       baciaEquivalente: $resource(RESTAPI.url+'/reservatorio/equivalente/bacia')
     };

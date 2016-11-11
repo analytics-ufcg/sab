@@ -9,7 +9,8 @@
   /*jshint latedef: nofunc */
   function MainCtrl($scope, ReservatorioEquivalente, RESTAPI,olData) {
     var vm = this;
-    vm.sabMapa = {};
+    vm.mapSabData = {};
+    vm.mapBrData = {};
     vm.estadoEquivalente = [];
     vm.estadoAtual = {};
 
@@ -17,10 +18,16 @@
 
     vm.loadingInfo = true;
 
-    ReservatorioEquivalente.sabMapa.query(function(response) {
+    ReservatorioEquivalente.mapSabData.query(function(response) {
 		vm.loadingInfo = true;    	
-    	vm.sabMapa = response;
+    	vm.mapSabData = response;
     	vm.loadingInfo = false;
+    });
+
+    ReservatorioEquivalente.mapBrData.query(function(response) {
+    vm.loadingInfo = true;      
+      vm.mapBrData = response;
+      vm.loadingInfo = false;
     });
 
     ReservatorioEquivalente.estadoEquivalente.query(function(response) {

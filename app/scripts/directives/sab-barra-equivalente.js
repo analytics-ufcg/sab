@@ -67,7 +67,7 @@
               .attr("transform", 'translate('+margin.right+','+margin.top+')')
               .style("fill", function (d, i) {
                   return scope.cores[i].cor;
-              }).style("stroke","#000");
+              });
 
       layer.selectAll("rect")
               .data(function (d) {
@@ -75,7 +75,6 @@
               })
               .enter().append("rect")
               .attr("x", function (d) {
-                console.log(d);
                   return x(d.x0);
               })
               .attr("height", height)
