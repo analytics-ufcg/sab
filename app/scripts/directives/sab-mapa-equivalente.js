@@ -21,11 +21,11 @@
           var margin = {top: 1, right: 1, bottom: 1, left: 1},
             d3 = $window.d3,
             geojson = $window.geojson,
-            width = 800 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+            width = 600 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
           var projection = d3.geo.mercator()
-            .scale(1500)
-            .translate([width * 1.8, height * -0.20]);
+            .scale(1000)
+            .translate([width * 1.8, height * -0.10]);
           var path = d3.geo.path()
             .projection(projection);
           var svg = d3.select(element[0])
@@ -35,8 +35,7 @@
               'viewBox': '0 0 '+(width+ margin.left + margin.right)+' '+(height+ margin.top + margin.bottom),
               'width': '100%',
               'class': 'recorte-sab-svg'});
-
-
+          var stateSelected = "Semiarido";
 
           scope.$watch(function(scope) { return scope.mapBrData; }, function(newValue) {
             if (((typeof scope.mapSabData !== 'undefined') && !(angular.equals(scope.mapSabData, {}))) && 
@@ -53,8 +52,7 @@
             .enter().append('path')
               .attr('d', path)
               .attr("class", "recorte-sab-path")
-              .on('mouseover', mouseOver)
-              .on('mouseout', mouseOut);
+              .on('click', clickState);
           };
 
           var Brazil = function(mapBrData) {
@@ -66,19 +64,17 @@
               .attr("class", "pais-path");
           };
 
-        var mouseOver = function(d) {
-            scope.setEstado()(d.properties.UF);
-            scope.$apply();
+        var clickState = function(d) {
+          svg.selectAll('.recorte-sab-path-select').attr('class', 'recorte-sab-path');
+          
+          if (d.properties.UF === stateSelected){
+            stateSelected = "Semiarido";
+          } else{
+            stateSelected = d.properties.UF;
             d3.select(this).attr('class', 'recorte-sab-path-select');
-
-
-        };
-
-        var mouseOut = function(d) {
-            scope.setEstado()("Semiarido");
+          }
+            scope.setEstado()(stateSelected);
             scope.$apply();
-            svg.selectAll('.recorte-sab-path-select').attr('class', 'recorte-sab-path');
-
         };
 
         }
