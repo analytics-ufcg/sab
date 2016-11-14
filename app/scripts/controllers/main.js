@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$scope', 'ReservatorioEquivalente', 'RESTAPI','olData'];
+  MainCtrl.$inject = ['$scope', 'ReservatorioEquivalente', 'LEGENDCOLORS'];
 
   /*jshint latedef: nofunc */
-  function MainCtrl($scope, ReservatorioEquivalente, RESTAPI,olData) {
+  function MainCtrl($scope, ReservatorioEquivalente, LEGENDCOLORS) {
     var vm = this;
     vm.mapSabData = {};
     vm.mapBrData = {};
@@ -45,14 +45,7 @@
     	}
     }
 
-    vm.coresReservatorios = [
-      {cor: '#ff2222', texto: 'Abaixo de 10%'},
-      {cor: '#ff8f61', texto: '10% - 25%'},
-      {cor: '#fffc9f', texto: '25% - 50%'},
-      {cor: '#99bfcf', texto: '50% - 75%'},
-      {cor: '#3381ff', texto: 'Acima de 75%'},
-      {cor: '#ffffff', texto: 'Sem informação'}
-    ];
+    vm.coresReservatorios = LEGENDCOLORS.coresReservatorios;
 
   }
 })();
