@@ -2,12 +2,13 @@
     <div class="row">
       <div class="col-sm-6">
         <sab-mapa-equivalente map-sab-data="main.mapSabData" set-estado="main.setEstado" map-br-data="main.mapBrData"></sab-mapa-equivalente>
-
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
-      <div class="col-sm-6" ng-hide="main.loadingInfo">
+      <div class="col-sm-6 primeiras-informacoes" ng-hide="main.loadingInfo">
         <h2>{{main.estadoAtual.semiarido}}</h2>
         <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) com informação</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
         <div class="graficos-main">
           <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
           <div ng-show="main.estadoAtual.capacidade_equivalente">
@@ -20,8 +21,6 @@
             <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
           </div>
         </div>
-        <br><br>
-        <a ui-sref="mapa" class="btn btn-primary">Explore o semiárido</a>
       </div>
     </div>
 </div>
