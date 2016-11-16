@@ -11,10 +11,27 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li ui-sref-active="active"><a href="#">Sobre</a></li>
-        <li ui-sref-active="active"><a href="#">Equipe</a></li>
-        <li ui-sref-active="active"><a href="#">Parceiros</a></li>
-        <li ui-sref-active="active"><a ui-sref="mapa">Explore o semiárido</a></li>
+        <li ui-sref-active="active">
+          <a href="#" class="link-navbar">
+              <img src="images/sobre.svg" alt="" class="img-circle img-navbar">
+              <p class="textos-navbar">Sobre</p>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <a href="#" class="link-navbar">
+              <img src="images/equipe.svg" alt="" class="img-circle img-navbar">
+              <p class="textos-navbar">Equipe</p>
+          </a>
+        </li>
+         <li ui-sref-active="active">
+          <a href="#" class="link-navbar">
+              <img src="images/parceiros.svg" alt="" class="img-circle img-navbar">
+              <p class="textos-navbar">Parceiros</p>
+          </a>
+        </li>
+        <li ui-sref-active="active">
+          <button class="botao-olho-nagua" type="button" ui-sref="mapa">FIQUE DE<br> OLHO N'ÁGUA</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -22,6 +39,6 @@
 
 <div ng-class="{'container-fluid': expanded, 'container': !expanded}">
   <a ui-sref="home" class="logo">
-    <img src="images/logo.svg" alt="" width="150px">
+    <img src="images/logo.svg" alt="" width="200px">
   </a>
 </div>
