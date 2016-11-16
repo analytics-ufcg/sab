@@ -1,19 +1,28 @@
-<div class="section section-default">
-  <div class="container">
+<div class="section-mapa">
     <div class="row">
-      <div class="col-sm-6 hidden-xs" style="height: 300px;">
-
-      </div>
       <div class="col-sm-6">
-        <h2>Semiárido brasileiro</h2>
-        <p><strong>452</strong> reservatórios monitorados</p>
-        <p><strong>40.256hm³</strong> de capacidade total</p>
-        <p><strong>22%</strong> de volume atual</p>
-        <br><br><br>
-        <a ui-sref="mapa" class="btn btn-primary">Explore o semiárido</a>
+        <sab-mapa-equivalente map-sab-data="main.mapSabData" set-estado="main.setEstado" map-br-data="main.mapBrData"></sab-mapa-equivalente>
+      </div>
+      <span us-spinner ng-show="main.loadingInfo"></span>
+      <div class="col-sm-6 primeiras-informacoes" ng-hide="main.loadingInfo">
+        <h2>{{main.estadoAtual.semiarido}}</h2>
+        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) com informação</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
+        <div class="graficos-main">
+          <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
+          <div ng-show="main.estadoAtual.capacidade_equivalente">
+            <sab-volume
+              capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
+              volume="main.estadoAtual.volume_equivalente | sabVolume"
+              percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
+          </div>
+          <div ng-hide="main.estadoAtual.capacidade_equivalente">
+            <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </div>
 
 <div class="section section-primary">
