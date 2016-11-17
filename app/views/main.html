@@ -2,23 +2,32 @@
     <div class="row">
       <div class="col-sm-6">
         <sab-mapa-equivalente map-sab-data="main.mapSabData" set-estado="main.setEstado" map-br-data="main.mapBrData"></sab-mapa-equivalente>
+          <div class="legenda legenda-main hidden-xs">
+            Volume
+            <sab-legenda-cores-reservatorios cores="main.coresReservatorios"></sab-legenda-cores-reservatorios>
+          </div>
+
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
-      <div class="col-sm-6 primeiras-informacoes" ng-hide="main.loadingInfo">
-        <h2>{{main.estadoAtual.semiarido}}</h2>
-        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
-        <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) com informação</p>
-        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
-        <div class="graficos-main">
-          <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
-          <div ng-show="main.estadoAtual.capacidade_equivalente">
-            <sab-volume
-              capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
-              volume="main.estadoAtual.volume_equivalente | sabVolume"
-              percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
-          </div>
-          <div ng-hide="main.estadoAtual.capacidade_equivalente">
-            <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+      <div class="col-sm-6 textos-main" ng-hide="main.loadingInfo">
+        <div class="container">
+          <h2>{{main.estadoAtual.semiarido}}</h2>
+          <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
+          <p><strong>{{main.estadoAtual.quant_reservatorio_com_info}}</strong> reservatório(s) com informação</p>
+          <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
+          <div class="graficos-main">
+          <h4>Situação dos reservatórios:</h4>
+            <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
+            <br><br>
+            <div ng-show="main.estadoAtual.capacidade_equivalente">
+              <sab-volume
+                capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
+                volume="main.estadoAtual.volume_equivalente | sabVolume"
+                percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
+            </div>
+            <div ng-hide="main.estadoAtual.capacidade_equivalente">
+              <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+            </div>
           </div>
         </div>
       </div>
@@ -36,7 +45,7 @@
 <div class="section section-blue">
   <div class="container">
     <h3 class="section-title">EQUIPE</h3>
-    <br><br><br><br><br>
+    <br><br>
     <div class="row">
       <div class="col-xs-6 col-sm-4 col-md-3">
         <img src="images/equipe.svg" alt="" class="img-circle img-equipe">

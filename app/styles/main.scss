@@ -186,6 +186,9 @@ $section-padding-horizontal: 0px;
   @media (max-width: $screen-sm-min) {
     bottom: $map-info-margin-vertical + 56;
   }
+  &.legenda-main {
+    width: 120px;
+  }  
 }
 
 .section {
@@ -458,20 +461,14 @@ $section-padding-horizontal: 0px;
 
 .graficos-main {
   width: 300px;
-  height: 200px;
 }
 
 .tooltip-barra {
   position: absolute;
   width: 120px;
-  height: 50px;
   padding: 8px;
   font-size: 12px;
   background: #0F547D;
   pointer-events: none;
   color: #FFF;
-}
-
-.primeiras-informacoes {
-  color: #FFF; 
 }

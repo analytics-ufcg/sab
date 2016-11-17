@@ -45,7 +45,7 @@
     	}
     }
 
-    vm.coresReservatorios = LEGENDCOLORS.coresReservatorios;
+    vm.coresReservatorios = LEGENDCOLORS.coresReservatorios.slice(0,-1);
 
   }
 })();
