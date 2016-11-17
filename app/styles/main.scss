@@ -145,7 +145,7 @@ $section-padding-horizontal: 0px;
 .search-bar {
   float: left;
   position: absolute;
-  top: 80px;
+  top: 100px;
   z-index: 11;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -159,17 +159,30 @@ $section-padding-horizontal: 0px;
 }
 
 .search-input {
-  background-color: #fff;
+  background-color: #9a999e;
   border: none;
-  color: #000;
+  color: #fff;
   height: 44px;
 }
 
 .search-addon {
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #9a999e;
   border: none;
   border-radius: 0px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #fff !important;
 }
 
 .legenda {
