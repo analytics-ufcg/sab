@@ -81,7 +81,7 @@
               .on("mouseover", function(d){
                     div.style("display", "inline");
                     div.html((d[0].x) +" reservatorios<br>"
-                         + (Math.round((d[0].x/mapData.quant_reservatorio_com_info) * 100)) +"% de reservatórios")
+                         + ((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(2) +"% de reservatórios")
                       .style("left", (x(d[0].x0)+ (x(d[0].x)/4)) + "px")
                       .style("margin-top", (-50)+"px");
               })
