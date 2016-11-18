@@ -199,9 +199,6 @@ $section-padding-horizontal: 0px;
   @media (max-width: $screen-sm-min) {
     bottom: $map-info-margin-vertical + 56;
   }
-  &.legenda-main {
-    width: 120px;
-  }  
 }
 
 .section {
@@ -484,4 +481,5 @@ $section-padding-horizontal: 0px;
   background: #0F547D;
   pointer-events: none;
   color: #FFF;
+  margin-top: -70px;
 }

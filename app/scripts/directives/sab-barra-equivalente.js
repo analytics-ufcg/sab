@@ -49,14 +49,15 @@
     });
 
     var desenhaBarra = function(mapData) {
-      var dataIntermediate = [[{x:mapData.quant_reserv_intervalo_1, x0:0, cor: scope.cores[0].cor}],
-        [{x:mapData.quant_reserv_intervalo_2, x0:mapData.quant_reserv_intervalo_1, cor: scope.cores[1].cor}],
-        [{x:mapData.quant_reserv_intervalo_3, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2), cor: scope.cores[2].cor}],
+      var dataIntermediate = [[{x:mapData.quant_reserv_intervalo_1, x0:0, cor: scope.cores[0].cor, legenda: scope.cores[0].texto}],
+        [{x:mapData.quant_reserv_intervalo_2, x0:mapData.quant_reserv_intervalo_1, cor: scope.cores[1].cor, legenda: scope.cores[1].texto}],
+        [{x:mapData.quant_reserv_intervalo_3, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2), cor: scope.cores[2].cor,
+         legenda: scope.cores[2].texto}],
         [{x:mapData.quant_reserv_intervalo_4, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3),
-         cor: scope.cores[3].cor}],
+         cor: scope.cores[3].cor, legenda: scope.cores[3].texto}],
         [{x:mapData.quant_reserv_intervalo_5, 
           x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3+mapData.quant_reserv_intervalo_4),
-           cor: scope.cores[4].cor}]];
+           cor: scope.cores[4].cor, legenda: scope.cores[4].texto}]];
 
     /*,
         [{x:mapData.quant_reservatorio_sem_info, 
@@ -80,10 +81,9 @@
               })
               .on("mouseover", function(d){
                     div.style("display", "inline");
-                    div.html((d[0].x) +" reservatorios<br>"
+                    div.html("Volume "+d[0].legenda+"%<br>"+(d[0].x) +" reservatorios<br>"
                          + ((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(2) +"% de reservatórios")
-                      .style("left", (x(d[0].x0)+ (x(d[0].x)/4)) + "px")
-                      .style("margin-top", (-50)+"px");
+                      .style("left", (x(d[0].x0)+ (x(d[0].x)/4)) + "px");
               })
               .on("mouseout", function(){
                 div.style("display", "none");
