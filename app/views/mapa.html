@@ -2,7 +2,7 @@
 
   <div class="map-controls-wrapper">
 
-    <div class="search-bar">
+    <div class="search-bar hidden-xs">
       <div class="input-group">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
@@ -90,6 +90,13 @@
 
     </div>
 
+  </div>
+
+  <div class="map-controls-nav visible-xs">
+    <div class="btn-group-vertical" role="group">
+      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-btn glyphicon-search"></span></button>
+      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-btn glyphicon-th-list"></span></button>
+    </div>
   </div>
 
   <span us-spinner ng-show="ctrl.loadingMap"></span>

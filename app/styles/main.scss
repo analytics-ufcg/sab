@@ -7,6 +7,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
+$map-info-z-index: 10;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
 $section-padding-vertical: 80px;
@@ -35,7 +36,7 @@ $section-padding-horizontal: 0px;
 
 .map-tooltip {
   position: absolute;
-  z-index: 10;
+  z-index: $map-info-z-index;
   visibility: hidden;
   background-color: #fff;
   padding: $padding-base-vertical $padding-base-horizontal;
@@ -46,10 +47,19 @@ $section-padding-horizontal: 0px;
   margin-left: 0;
 }
 
+.map-controls-nav {
+  position: absolute;
+  top: auto;
+  bottom: 70px;
+  right: 10px;
+  z-index: $map-info-z-index - 1;
+  background: none;
+}
+
 .map-info {
   float: left;
   position: absolute;
-  z-index: 10;
+  z-index: $map-info-z-index;
   text-align: left;
 
   @media (max-width: $screen-md-min) {
@@ -65,12 +75,14 @@ $section-padding-horizontal: 0px;
 }
 
 .info-card {
-  margin-top: $map-info-margin-vertical + 45px;
+  @media (min-width: $screen-md-min) {
+    margin-top: $map-info-margin-vertical + 45px;
+  }
 }
 
 .info-card-header {
   padding: $card-padding-vertical $card-padding-horizontal;
-  background-color: rgba(93, 93, 93, 0.8);
+  background-color: transparentize($gray-base, 0.2);
   color: #fff;
 }
 
@@ -220,6 +232,10 @@ $section-padding-horizontal: 0px;
     background-color: $gray-base;
     color: #fff;
   }
+}
+
+.glyphicon-btn {
+  padding: 6px;
 }
 
 .svg-br {

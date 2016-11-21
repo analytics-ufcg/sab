@@ -247,4 +247,7 @@
     max-width: 246px;
     overflow: hidden;
   }
+  @media (min-width: $screen-sm-min) {
+    max-width: none;
+  }
 }
