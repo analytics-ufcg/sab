@@ -214,8 +214,14 @@ $section-padding-horizontal: 0px;
   }
 
   &.section-blue {
-    background-color: #192E39;
+    background-color: #111B31;
     color: #fff;
+  }
+
+  &.section-final {
+    background-color: #0F141E;
+    color: #fff;
+    padding: 0px 0px;
   }
 }
 
@@ -228,7 +234,7 @@ $section-padding-horizontal: 0px;
   }
 }
 .section-mapa{
-  background-color: #3D4A5B;
+  background-color: #283C52;
 }
 
 .svg-br {
@@ -438,7 +444,7 @@ $section-padding-horizontal: 0px;
 }
 
 .botao-olho-nagua {
-  background-color: #0F547D;
+  background-color: #0C4C71;
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -465,7 +471,7 @@ $section-padding-horizontal: 0px;
 }
 
 .pais-path {
-  fill: #445164;
+  fill: #283C52;
   stroke: #000;
 }
 
@@ -482,4 +488,8 @@ $section-padding-horizontal: 0px;
   pointer-events: none;
   color: #FFF;
   margin-top: -70px;
+}
+
+.a-link-white {
+  color: #fff;
 }
