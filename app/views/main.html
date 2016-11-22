@@ -5,12 +5,12 @@
 
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
-      <div class="col-sm-6 textos-main" ng-hide="main.loadingInfo">
+      <div class="col-sm-6" ng-hide="main.loadingInfo">
         <div class="container">
           <h2>{{main.estadoAtual.semiarido}}</h2>
           <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
           <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
-          <div class="graficos-main">
+          <div class="main-graphics">
           <h4>Situação dos reservatórios:</h4>
             <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
             <br><br>
@@ -32,8 +32,7 @@
 <div class="section section-primary">
   <div class="container">
     <h3 class="section-title">SOBRE</h3>
-    <br>
-    <span class= "textos-main">
+    <span>
       <p>
         O sistema Olho N’Água é fruto de uma parceria do Instituto Nacional do Semiárido (INSA) e da Universidade Federal de Campina Grande (UFCG), através do Laboratório de Sistemas Distribuídos (LSD), com o objetivo de compartilhar com a sociedade informações atualizadas da disponibilidade de água nos principais reservatórios que atendem os quase 24 milhões de habitantes da região semiárida. Este esforço é parte integrante do Sistema de Gestão da Informação e do Conhecimento do Semiárido Brasileiro (SIGSAB), que reúne e disponibiliza informações econômicas, sociais, ambientais e da infraestrutura do Semiárida Brasileiro.
       </p>
@@ -47,58 +46,49 @@
   </div>
 </div>
 
-<div class="section section-blue">
+<div class="section section-inverse">
   <div class="container">
     <h3 class="section-title">EQUIPE</h3>
-    <br><br>
     <div class="row">
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/salomao.png" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Salomão Medeiros</p>
-        <p class="cargo-equipe">Coordenador Geral</p>
+        <img src="images/salomao.png" alt="" class="img-circle team-img">
+        <p class="team-name">Salomão Medeiros</p>
+        <p class="team-office">Coordenador Geral</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/nazareno.png" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Nazareno Andrade</p>
-        <p class="cargo-equipe">Coordenador técnico</p>
+        <img src="images/nazareno.png" alt="" class="img-circle team-img">
+        <p class="team-name">Nazareno Andrade</p>
+        <p class="team-office">Coordenador técnico</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/everaldo.png" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Everaldo Silva</p>
-        <p class="cargo-equipe">Supervisor</p>
+        <img src="images/everaldo.png" alt="" class="img-circle team-img">
+        <p class="team-name">Everaldo Silva</p>
+        <p class="team-office">Supervisor</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/chateau.png" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Chateaubriand Almeida</p>
-        <p class="cargo-equipe">Designer</p>
+        <img src="images/chateau.png" alt="" class="img-circle team-img">
+        <p class="team-name">Chateaubriand Almeida</p>
+        <p class="team-office">Designer</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/celio.jpeg" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Célio Barros</p>
-        <p class="cargo-equipe">Eng. de Software</p>
+        <img src="images/celio.jpeg" alt="" class="img-circle team-img">
+        <p class="team-name">Célio Barros</p>
+        <p class="team-office">Eng. de Software</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/diego.jpg" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Diego Coelho</p>
-        <p class="cargo-equipe">Eng. de Software</p>
+        <img src="images/diego.jpg" alt="" class="img-circle team-img">
+        <p class="team-name">Diego Coelho</p>
+        <p class="team-office">Eng. de Software</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/jefferson.jpg" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Jefferson Neves</p>
-        <p class="cargo-equipe">Eng. de Software</p>
+        <img src="images/jefferson.jpg" alt="" class="img-circle team-img">
+        <p class="team-name">Jefferson Neves</p>
+        <p class="team-office">Eng. de Software</p>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/tereza.png" alt="" class="img-circle img-equipe">
-        <br>
-        <p class="nome-equipe">Tereza Helena</p>
-        <p class="cargo-equipe">Hidróloga</p>
+        <img src="images/tereza.png" alt="" class="img-circle team-img">
+        <p class="team-name">Tereza Helena</p>
+        <p class="team-office">Hidróloga</p>
       </div>
     </div>
 
@@ -106,48 +96,48 @@
 </div>
 
 
-<div class="section section-inverse">
+<div class="section section-secondary">
   <div class="container">
-    <h3 class="section-title section-title-white">PARCEIROS</h3>
+    <h3 class="section-title section-title-inverse">PARCEIROS</h3>
     <div class="row">
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.ana.gov.br/">
-          <img src="images/ana.svg" alt="" class="parceiros">
+          <img src="images/ana.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.aesa.pb.gov.br/">
-          <img src="images/aesa.svg" alt="" class="parceiros">
+          <img src="images/aesa.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.apac.pe.gov.br/">
-          <img src="images/apac.svg" alt="" class="parceiros">
+          <img src="images/apac.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.cogerh.com.br/">
-          <img src="images/cogerh.svg" alt="" class="parceiros">
+          <img src="images/cogerh.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.dnocs.gov.br/">
-          <img src="images/dnocs.svg" alt="" class="parceiros">
+          <img src="images/dnocs.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.funceme.br/">
-          <img src="images/funceme.svg" alt="" class="parceiros">
+          <img src="images/funceme.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.inema.ba.gov.br/">
-          <img src="images/inema.svg" alt="" class="parceiros">
+          <img src="images/inema.svg" alt="" class="partners">
         </a>
       </div>
       <div class="col-xs-6 col-sm-4 col-md-3">
         <a href="http://www.rn.gov.br/">
-          <img src="images/governo_rn.svg" alt="" class="parceiros">
+          <img src="images/governo_rn.svg" alt="" class="partners">
         </a>
       </div>
     </div>
@@ -159,31 +149,29 @@
 <div class="section section-primary">
   <div class="container">
     <h3 class="section-title">DE OLHO N'ÁGUA</h3>
-    <br>
     <div class="row">
       <div class="col-sm-6">
         <img src="images/logo.svg" alt="" width="100%;">
       </div>
       <div class="col-sm-6">
-        <p class= "textos-main">Navegue em nosso sistema e verifique a situação dos reservatórios de água de diversas cidades e estados do nosso semiárido. Acompanhe todos esses dados e fique sempre de olho n'água.</p>
-        <button class="botao-olho-nagua" type="button" ui-sref="mapa">FIQUE DE<br> OLHO N'ÁGUA</button>
+        <p>Navegue em nosso sistema e verifique a situação dos reservatórios de água de diversas cidades e estados do nosso semiárido. Acompanhe todos esses dados e fique sempre de olho n'água.</p>
+        <button type="button" class="btn btn-primary navbar-btn">FIQUE DE<br> OLHO N'ÁGUA</button>
       </div>
     </div>
-    
   </div>
 </div>
 
-<div class="section section-blue">
+<div class="section section-inverse">
   <div class="container">
     <div class="row">
       <div class="col-xs-4">
         <div class="row">
            <ul style="list-style-type:none">
               <li><h2>Assuntos</h2></li>
-              <li><a href="#" class="a-link-white">Sobre</a></li>
-              <li><a href="#" class="a-link-white">Equipe</a></li>
-              <li><a href="#" class="a-link-white">Parceiros</a></li>
-              <li><a href="#" class="a-link-white">De olho n'Água</a></li>
+              <li><a href="#" class="text-color-white">Sobre</a></li>
+              <li><a href="#" class="text-color-white">Equipe</a></li>
+              <li><a href="#" class="text-color-white">Parceiros</a></li>
+              <li><a href="#" class="text-color-white">De olho n'Água</a></li>
             </ul> 
         </div>
       </div>
@@ -191,16 +179,16 @@
         <div class="row">
           <ul style="list-style-type:none">
             <li><h2>Servios</h2></li>
-            <li><a href="http://www.insa.gov.br/" class="a-link-white">INSA</a></li>
-            <li><a href="http://www.insa.gov.br/sigsab/" class="a-link-white">SIGSAB</a></li>
-            <li><a href="www.acessoainformacao.gov.br/" class="a-link-white">Acesso à informação</a></li>
+            <li><a href="http://www.insa.gov.br/" class="text-color-white">INSA</a></li>
+            <li><a href="http://www.insa.gov.br/sigsab/" class="text-color-white">SIGSAB</a></li>
+            <li><a href="www.acessoainformacao.gov.br/" class="text-color-white">Acesso à informação</a></li>
           </ul> 
         </div>
       </div>
       <div class="col-xs-4">
           <ul style="list-style-type:none">
             <li><h2>Redes sociais</h2></li>
-            <li><a href="https://www.facebook.com/InsaMcti/?fref=ts/" class="a-link-white">Facebook</a></li>
+            <li><a href="https://www.facebook.com/InsaMcti/?fref=ts/" class="text-color-white">Facebook</a></li>
           </ul> 
       </div>
     </div>

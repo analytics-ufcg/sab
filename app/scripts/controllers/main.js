@@ -18,34 +18,34 @@
 
     vm.loadingInfo = true;
 
-    ReservatorioEquivalente.mapSabData.query(function(response) {
-		vm.loadingInfo = true;    	
-    	vm.mapSabData = response;
-    	vm.loadingInfo = false;
+    ReservatorioEquivalente.mapSabGeoJson.query(function(response) {
+      vm.loadingInfo = true;      
+      vm.mapSabData = response;
+      vm.loadingInfo = false;
     });
 
-    ReservatorioEquivalente.mapBrData.query(function(response) {
-    vm.loadingInfo = true;      
+    ReservatorioEquivalente.mapBrGeoJson.query(function(response) {
+      vm.loadingInfo = true;      
       vm.mapBrData = response;
       vm.loadingInfo = false;
     });
 
     ReservatorioEquivalente.estadoEquivalente.query(function(response) {
-    	vm.loadingInfo = true;
-    	vm.estadoEquivalente = response;
-    	setEstado("Semiarido");
-    	vm.loadingInfo = false;
+      vm.loadingInfo = true;
+      vm.estadoEquivalente = response;
+      setEstado("Semiarido");
+      vm.loadingInfo = false;
     });
 
-    function setEstado(uf){
-    	for (var i = 0; i < vm.estadoEquivalente.length; i++) {
-    		if (vm.estadoEquivalente[i].uf == uf){
-    			vm.estadoAtual = vm.estadoEquivalente[i];
-    		}
-    	}
+    function setEstado(uf) {
+      for (var i = 0; i < vm.estadoEquivalente.length; i++) {
+        if (vm.estadoEquivalente[i].uf == uf){
+          vm.estadoAtual = vm.estadoEquivalente[i];
+        }
+      }
     }
 
-    vm.coresReservatorios = LEGENDCOLORS.coresReservatorios.slice(0,-1);
+    vm.coresReservatorios = LEGENDCOLORS.reservoirsColors.slice(0,-1);
 
   }
 })();

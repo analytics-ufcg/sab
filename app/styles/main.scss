@@ -11,6 +11,10 @@ $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
 $section-padding-vertical: 50px;
 $section-padding-horizontal: 0px;
+$themes-section-colors-a: #fff;
+$themes-section-colors-b: #DD3B47;
+$themes-section-colors-c: #111B31;
+$themes-section-colors-d: #0F141E;
 
 .logo {
   position: absolute;
@@ -205,36 +209,39 @@ $section-padding-horizontal: 0px;
   padding: $section-padding-vertical $section-padding-horizontal;
 
   &.section-primary {
-    background-color: #FFFFFF;
+    background-color: $themes-section-colors-a;
+    color: #aaa;
   }
 
-  &.section-inverse {
-    background-color: #DD3B47;
+  &.section-secondary {
+    background-color: $themes-section-colors-b;
     color: #fff;
   }
 
-  &.section-blue {
-    background-color: #111B31;
+  &.section-inverse  {
+    background-color: $themes-section-colors-c;
     color: #fff;
   }
 
   &.section-final {
-    background-color: #0F141E;
+    background-color: $themes-section-colors-d;
     color: #fff;
     padding: 0px 0px;
   }
 }
 
 .section-title {
-    text-align: center;
-    color: #41A0AA;
+  text-align: center;
+  color: #41A0AA;
+  margin-bottom: 30px;
 
-  &.section-title-white {
-    color: #FFFFFF;
+  &.section-title-inverse {
+    color: #fff;
   }
 }
 .section-mapa{
   background-color: #283C52;
+  color: #aaa;
 }
 
 .svg-br {
@@ -395,36 +402,34 @@ $section-padding-horizontal: 0px;
   padding-right: 0;
 }
 
-.pontos {
+.points {
   fill: $brand-primary;
 }
 
-.parceiros {
+.partners {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
 }
 
-.textos-main {
-  color: #aaa;
-}
-
-.img-equipe {
+.team-img {
   width: 50%;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 15px;
 }
 
-.nome-equipe {
+.team-name {
   text-align: center;
   font-size: 12px;
 }
 
-.cargo-equipe {
+.team-office {
   text-align: center;
   font-size: 10px;
+  margin-bottom: 15px; 
 }
 
 .img-navbar {
@@ -434,52 +439,33 @@ $section-padding-horizontal: 0px;
   margin-right: auto;
 }
 
-.textos-navbar {
+.texts-navbar {
   text-align: center;
   font-size: 10px;
 }
 
-.link-navbar {
-  padding-bottom: 0px !important;
-}
-
-.botao-olho-nagua {
-  background-color: #0C4C71;
-  color: white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 40px;
-  padding-right: 40px;
-  text-align: center;
-  font-size: 12px;
-  margin-top: 39px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.recorte-sab-path {
+.main-sab-path {
   fill: #468DC3;
-  stroke: #FFF;
+  stroke: #fff;
   cursor: pointer;
 }
 
-.recorte-sab-path-select {
+.main-sab-path-select {
   fill: #0F547D;
-  stroke: #FFF;
+  stroke: #fff;
   cursor: pointer;
 }
 
-.pais-path {
+.country-path {
   fill: #283C52;
   stroke: #000;
 }
 
-.graficos-main {
+.main-graphics {
   width: 300px;
 }
 
-.tooltip-barra {
+.tooltip-bar {
   position: absolute;
   width: 165px;
   padding: 8px;
@@ -490,6 +476,6 @@ $section-padding-horizontal: 0px;
   margin-top: -70px;
 }
 
-.a-link-white {
+.text-color-white {
   color: #fff;
 }

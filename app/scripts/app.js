@@ -15,12 +15,12 @@
       url: 'http://localhost:5003/api'
     })
     .constant('LEGENDCOLORS', {
-      coresReservatorios: [
-          {cor: '#ff2222', texto: 'Abaixo de 10', texto_alternativo: 'abaixo de 10'},
-          {cor: '#ff8f61', texto: '10 - 25', texto_alternativo: 'entre 10 e 25'},
-          {cor: '#fffc9f', texto: '25 - 50', texto_alternativo: 'entre 25 e 50'},
-          {cor: '#99bfcf', texto: '50 - 75', texto_alternativo: 'entre 50 e 75'},
-          {cor: '#3381ff', texto: 'Acima de 75', texto_alternativo: 'acima de 75'},
+      reservoirsColors: [
+          {cor: '#ff2222', texto: 'Abaixo de 10', textoAlternativo: 'abaixo de 10'},
+          {cor: '#ff8f61', texto: '10 - 25', textoAlternativo: 'entre 10 e 25'},
+          {cor: '#fffc9f', texto: '25 - 50', textoAlternativo: 'entre 25 e 50'},
+          {cor: '#99bfcf', texto: '50 - 75', textoAlternativo: 'entre 50 e 75'},
+          {cor: '#3381ff', texto: 'Acima de 75', textoAlternativo: 'acima de 75'},
           {cor: '#ffffff', texto: 'Sem informação'}
         ]
     })

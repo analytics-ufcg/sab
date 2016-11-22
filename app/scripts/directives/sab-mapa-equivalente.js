@@ -34,48 +34,48 @@
               'version': '1.1',
               'viewBox': '0 0 '+(width+ margin.left + margin.right)+' '+(height+ margin.top + margin.bottom),
               'width': '100%',
-              'class': 'recorte-sab-svg'});
+              'class': 'main-sab-svg'});
           var stateSelected = "Semiarido";
 
           scope.$watch(function(scope) { return scope.mapBrData; }, function(newValue) {
             if (((typeof scope.mapSabData !== 'undefined') && !(angular.equals(scope.mapSabData, {}))) && 
               ((typeof newValue !== 'undefined') && !(angular.equals(newValue, {})))) {
-              Brazil(newValue);
-              desenhaSab(scope.mapSabData);
+                Brazil(newValue);
+                drawSab(scope.mapSabData);
             }
           });
 
-          var desenhaSab = function(mapSabData) {
+          var drawSab = function(mapSabData) {
             var features = mapSabData.features;
-            svg.selectAll('.recorte-sab-path')
+            svg.selectAll('.main-sab-path')
               .data(features)
-            .enter().append('path')
+              .enter().append('path')
               .attr('d', path)
-              .attr("class", "recorte-sab-path")
+              .attr("class", "main-sab-path")
               .on('click', clickState);
           };
 
           var Brazil = function(mapBrData) {
             var features = mapBrData.features;
-            svg.selectAll('.pais-path')
+            svg.selectAll('.country-path')
               .data(features)
-            .enter().append('path')
+              .enter().append('path')
               .attr('d', path)
-              .attr("class", "pais-path");
+              .attr("class", "country-path");
           };
 
-        var clickState = function(d) {
-          svg.selectAll('.recorte-sab-path-select').attr('class', 'recorte-sab-path');
-          
-          if (d.properties.UF === stateSelected){
-            stateSelected = "Semiarido";
-          } else{
-            stateSelected = d.properties.UF;
-            d3.select(this).attr('class', 'recorte-sab-path-select');
-          }
-            scope.setEstado()(stateSelected);
-            scope.$apply();
-        };
+          var clickState = function(d) {
+            svg.selectAll('.main-sab-path-select').attr('class', 'main-sab-path');
+            
+            if (d.properties.UF === stateSelected){
+              stateSelected = "Semiarido";
+            } else{
+              stateSelected = d.properties.UF;
+              d3.select(this).attr('class', 'main-sab-path-select');
+            }
+              scope.setEstado()(stateSelected);
+              scope.$apply();
+          };
 
         }
       };

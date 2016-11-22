@@ -212,11 +212,11 @@
               }
             });
 
-            focus.selectAll(".pontos").remove();
-            focus.append("g").selectAll(".pontos")
+            focus.selectAll(".points").remove();
+            focus.append("g").selectAll(".points")
               .data(dataValidos)
             .enter().append("circle")
-              .attr("class", "pontos")
+              .attr("class", "points")
               .attr("clip-path", "url(#clip-grafico)")
               .attr("r", 1)
               .attr("cx", function(d) { return x(d.date); })
@@ -313,7 +313,7 @@
               areaSvg.attr("d", valuearea(data));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
 
-              focus.selectAll(".pontos")
+              focus.selectAll(".points")
                 .attr("cx", function(d) { return x(d.date); })
                 .attr("cy", function(d) { return y(d.close); });
             }

@@ -87,7 +87,7 @@
     };
     vm.reservatoriosGeo = [];
     
-    vm.coresReservatorios = LEGENDCOLORS.coresReservatorios;
+    vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
