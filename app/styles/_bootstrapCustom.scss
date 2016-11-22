@@ -243,7 +243,14 @@
 }
 
 .dropdown-menu {
+  @media (min-width: $screen-sm-min) {
+    max-width: none;
+  }
   @media (max-width: $screen-sm-min) {
+    max-width: 360px;
+    overflow: hidden;
+  }
+  @media (max-width: $screen-xs-min) {
     max-width: 246px;
     overflow: hidden;
   }

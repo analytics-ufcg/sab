@@ -8,7 +8,7 @@ $bootstrap-sass-asset-helper: false !default;
 //
 //## Gray and brand colors for use across Bootstrap.
 
-$gray-base:              #211915 !default;
+$gray-base:              #5d5d5d !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              lighten($gray-base, 20%) !default;   // #333
 $gray:                   lighten($gray-base, 33.5%) !default; // #555
@@ -107,7 +107,7 @@ $padding-xs-horizontal:     2px !default;
 $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small:         1.5 !default;
 
-$border-radius-base:        4px !default;
+$border-radius-base:        0px !default;
 $border-radius-large:       6px !default;
 $border-radius-small:       3px !default;
 
@@ -149,9 +149,9 @@ $table-border-color:            #ddd !default;
 
 $btn-font-weight:                normal !default;
 
-$btn-default-color:              #333 !default;
-$btn-default-bg:                 #fff !default;
-$btn-default-border:             #ccc !default;
+$btn-default-color:              #fff !default;
+$btn-default-bg:                 transparentize($gray-base, 0.2) !default;
+$btn-default-border:             transparent !default;
 
 $btn-primary-color:              #fff !default;
 $btn-primary-bg:                 $brand-primary !default;

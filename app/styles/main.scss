@@ -7,6 +7,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
+$map-info-z-index: 10;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
 $section-padding-vertical: 80px;
@@ -15,7 +16,7 @@ $section-padding-horizontal: 0px;
 .logo {
   position: absolute;
   top: 5px;
-  z-index: 999;
+  z-index: $map-info-z-index;
 }
 
 #map {
@@ -35,7 +36,7 @@ $section-padding-horizontal: 0px;
 
 .map-tooltip {
   position: absolute;
-  z-index: 10;
+  z-index: $map-info-z-index;
   visibility: hidden;
   background-color: #fff;
   padding: $padding-base-vertical $padding-base-horizontal;
@@ -46,30 +47,42 @@ $section-padding-horizontal: 0px;
   margin-left: 0;
 }
 
+.map-controls-nav {
+  position: absolute;
+  top: auto;
+  bottom: 70px;
+  right: 10px;
+  z-index: $map-info-z-index - 1;
+  background: none;
+}
+
 .map-info {
   float: left;
   position: absolute;
-  z-index: 10;
+  z-index: $map-info-z-index;
   text-align: left;
 
-  @media (max-width: $screen-sm-min) {
+  @media (max-width: $screen-md-min) {
     bottom: 0;
     width: 100%;
+    margin: 0;
   }
   @media (min-width: $screen-md-min) {
-    width: 680px;
     top: 80px;
+    width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
 }
 
 .info-card {
-  margin-top: $map-info-margin-vertical + 45px;
+  @media (min-width: $screen-md-min) {
+    margin-top: $map-info-margin-vertical + 45px;
+  }
 }
 
 .info-card-header {
   padding: $card-padding-vertical $card-padding-horizontal;
-  background-color: rgba(93, 93, 93, 0.8);
+  background-color: transparentize($gray-base, 0.2);
   color: #fff;
 }
 
@@ -84,14 +97,34 @@ $section-padding-horizontal: 0px;
 }
 
 .info-card-body {
-  height: 220px;
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #5d5d5d;
 
-  @media (min-width: $screen-md-min) {
-    height: 400px;
+  @media (min-width: $screen-sm-min) {
+    height: auto;
   }
 
+  @media (min-width: $screen-md-min) {
+    height: 300px;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    height: 400px;
+  }
+}
+
+.info-card-tab-sm {
+  @media (min-width: $screen-sm-min) {
+    padding: 0;
+  }
+
+  @media (min-width: $screen-md-min) {
+    padding: 0 80px;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    padding: 0;
+  }
 }
 
 .info-card-footer {
@@ -173,19 +206,45 @@ $section-padding-horizontal: 0px;
 }
 
 .legenda {
-  z-index: 9;
+  z-index: $map-info-z-index;
   position: absolute;
-  bottom: $map-info-margin-vertical;
-  right: $map-info-margin-horizontal;
   padding: $padding-base-vertical*2;
   width: 180px;
   background-color: #9a999e;
   color: #fff;
   text-align: center;
   font-size: 1em;
-  @media (max-width: $screen-sm-min) {
-    bottom: $map-info-margin-vertical + 56;
+
+  @media (min-width: $screen-md-min) {
+    bottom: $map-info-margin-vertical;
+    right: $map-info-margin-horizontal;
   }
+  @media (max-width: $screen-md-min) {
+    bottom: $map-info-margin-vertical + 70px;
+    right: $map-info-margin-horizontal;
+  }
+  @media (max-width: $screen-sm-min) {
+    bottom: 70px;
+    right: 62px;
+  }
+
+}
+
+.legenda-lg {
+  position: absolute;
+  top: 80px;
+  z-index: $map-info-z-index;
+  padding: $padding-base-vertical*2;
+  margin: 10px 40px;
+  background-color: #9a999e;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2em;
+
+  > .legenda-lg-data {
+    padding: 10px 25px;
+  }
+
 }
 
 .section {
@@ -199,6 +258,10 @@ $section-padding-horizontal: 0px;
     background-color: $gray-base;
     color: #fff;
   }
+}
+
+.glyphicon-btn {
+  padding: 6px;
 }
 
 .svg-br {
@@ -361,4 +424,15 @@ $section-padding-horizontal: 0px;
 
 .pontos {
   fill: $brand-primary;
+}
+
+.modal-overlay {
+  position: absolute;
+  z-index: $map-info-z-index;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.8;
 }

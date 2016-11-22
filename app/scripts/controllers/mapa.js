@@ -18,6 +18,8 @@
     vm.showInfo = true;
     vm.loadingMap = true;
     vm.loadingInfo = true;
+    vm.showSearchbar = false;
+    vm.showLegend = false;
 
     var larguraTela = $(window).width();
 
@@ -100,6 +102,8 @@
     vm.setSelectedTab = setSelectedTab;
     vm.toggleInfo = toggleInfo;
     vm.hideInfo = hideInfo;
+    vm.toggleSearchbar = toggleSearchbar;
+    vm.toggleLegend = toggleLegend;
 
     vm.reservatorios = Reservatorio.info.query();
 
@@ -110,6 +114,9 @@
 
     function setReservatorio(reservatorio, lat, lon, zoom) {
       vm.loadingInfo = true;
+      vm.showInfo = true;
+      vm.showSearchbar = false;
+      vm.showLegend = false;
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
           if (vm.reservatoriosGeo[i].properties.id == reservatorio.id) {
@@ -131,9 +138,7 @@
       var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
         vm.reservatorioSelecionado.volumes = data.volumes;
         vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
-
         vm.loadingInfo = false;
-
       });
     }
 
@@ -158,6 +163,14 @@
       vm.showInfo = !vm.showInfo;
     }
 
+    function toggleSearchbar() {
+      vm.showSearchbar = !vm.showSearchbar;
+    }
+
+    function toggleLegend() {
+      vm.showLegend = !vm.showLegend;
+    }
+
     function hideInfo() {
       vm.showInfo = false;
     }
@@ -173,7 +186,7 @@
     }
 
     function corReservatorio(feature) {
-      if(feature.get("volume_percentual") == null){
+      if(feature.get("volume_percentual") == null) {
         return new ol.style.Fill({ color: vm.coresReservatorios[5].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
