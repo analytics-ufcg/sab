@@ -94,8 +94,8 @@
 
   <div class="map-controls-nav visible-xs">
     <div class="btn-group-vertical" role="group">
-      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-btn glyphicon-search"></span></button>
-      <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-btn glyphicon-th-list"></span></button>
+      <button type="button" class="btn btn-default" ng-click="ctrl.toggleSearchbar()"><span class="glyphicon glyphicon-btn glyphicon-search"></span></button>
+      <button type="button" class="btn btn-default" ng-click="ctrl.toggleLegend()"><span class="glyphicon glyphicon-btn glyphicon-tasks"></span></button>
     </div>
   </div>
 
@@ -111,4 +111,26 @@
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in ctrl.map.layers"></ol-layer>
   </openlayers>
 
+</div>
+<div class="ng-modal-overlay" ng-show="ctrl.showSearchbar" ng-click="ctrl.toggleSearchbar()"></div>
+<div class="search-bar" ng-show="ctrl.showSearchbar">
+ <div class="input-group">
+   <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
+   <input
+     type="text"
+     class="form-control search-input"
+     placeholder="Pesquisar reservatório..."
+     ng-model="reservatorioSelecionado"
+     uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
+     typeahead-min-length="3"
+     typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';"
+     ng-focus="ctrl.hideInfo()">
+ </div>
+</div>
+<div class="ng-modal-overlay" ng-show="ctrl.showLegend" ng-click="ctrl.toggleLegend()"></div>
+<div class="legenda-lg" ng-show="ctrl.showLegend">
+  Volume <br><small>(Última medição)</small>
+  <div class="legenda-lg-data">
+    <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>
+  </div>
 </div>

@@ -16,7 +16,7 @@ $section-padding-horizontal: 0px;
 .logo {
   position: absolute;
   top: 5px;
-  z-index: 999;
+  z-index: $map-info-z-index;
 }
 
 #map {
@@ -206,19 +206,45 @@ $section-padding-horizontal: 0px;
 }
 
 .legenda {
-  z-index: 9;
+  z-index: $map-info-z-index;
   position: absolute;
-  bottom: $map-info-margin-vertical;
-  right: $map-info-margin-horizontal;
   padding: $padding-base-vertical*2;
   width: 180px;
   background-color: #9a999e;
   color: #fff;
   text-align: center;
   font-size: 1em;
-  @media (max-width: $screen-sm-min) {
-    bottom: $map-info-margin-vertical + 56;
+
+  @media (min-width: $screen-md-min) {
+    bottom: $map-info-margin-vertical;
+    right: $map-info-margin-horizontal;
   }
+  @media (max-width: $screen-md-min) {
+    bottom: $map-info-margin-vertical + 70px;
+    right: $map-info-margin-horizontal;
+  }
+  @media (max-width: $screen-sm-min) {
+    bottom: 70px;
+    right: 62px;
+  }
+
+}
+
+.legenda-lg {
+  position: absolute;
+  top: 80px;
+  z-index: $map-info-z-index;
+  padding: $padding-base-vertical*2;
+  margin: 10px 40px;
+  background-color: #9a999e;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2em;
+
+  > .legenda-lg-data {
+    padding: 10px 25px;
+  }
+
 }
 
 .section {
@@ -398,4 +424,15 @@ $section-padding-horizontal: 0px;
 
 .pontos {
   fill: $brand-primary;
+}
+
+.ng-modal-overlay {
+  position: absolute;
+  z-index: $map-info-z-index;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.8;
 }
