@@ -59,7 +59,7 @@ $section-padding-horizontal: 0px;
 .map-info {
   float: left;
   position: absolute;
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index + 1;
   text-align: left;
 
   @media (max-width: $screen-md-min) {
@@ -102,6 +102,10 @@ $section-padding-horizontal: 0px;
 
   @media (min-width: $screen-sm-min) {
     height: auto;
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: 300px;
   }
 
   @media (min-width: $screen-md-min) {
