@@ -10,8 +10,16 @@ $map-info-margin-horizontal: 20px;
 $map-info-z-index: 10;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
-$section-padding-vertical: 80px;
+$section-padding-vertical: 50px;
 $section-padding-horizontal: 0px;
+$themes-section-colors-a: #fff;
+$themes-section-colors-b: #DD3B47;
+$themes-section-colors-c: #111B31;
+$themes-section-colors-d: #0F141E;
+
+a.inverse {
+  color: #fff;
+}
 
 .logo {
   position: absolute;
@@ -76,7 +84,7 @@ $section-padding-horizontal: 0px;
 
 .info-card {
   @media (min-width: $screen-md-min) {
-    margin-top: $map-info-margin-vertical + 45px;
+    margin-top: $map-info-margin-vertical + 65px;
   }
 }
 
@@ -182,7 +190,7 @@ $section-padding-horizontal: 0px;
 .search-bar {
   float: left;
   position: absolute;
-  top: 80px;
+  top: 120px;
   z-index: 11;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -196,17 +204,30 @@ $section-padding-horizontal: 0px;
 }
 
 .search-input {
-  background-color: #fff;
+  background-color: #9a999e;
   border: none;
-  color: #000;
+  color: #fff;
   height: 44px;
 }
 
 .search-addon {
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #9a999e;
   border: none;
   border-radius: 0px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff !important;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff !important;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #fff !important;
 }
 
 .legenda {
@@ -255,13 +276,43 @@ $section-padding-horizontal: 0px;
   padding: $section-padding-vertical $section-padding-horizontal;
 
   &.section-primary {
-    background-color: $brand-primary;
+    background-color: $themes-section-colors-a;
+    color: #aaa;
   }
 
-  &.section-inverse {
-    background-color: $gray-base;
+  &.section-secondary {
+    background-color: $themes-section-colors-b;
     color: #fff;
   }
+
+  &.section-inverse  {
+    background-color: $themes-section-colors-c;
+    color: #fff;
+
+    > a {
+      color: #fff;
+    }
+  }
+
+  &.section-final {
+    background-color: $themes-section-colors-d;
+    color: #fff;
+    padding: 0px 0px;
+  }
+}
+
+.section-title {
+  text-align: center;
+  color: #41A0AA;
+  margin-bottom: 30px;
+
+  &.section-title-inverse {
+    color: #fff;
+  }
+}
+.section-mapa{
+  background-color: #283C52;
+  color: #aaa;
 }
 
 .glyphicon-btn {
@@ -426,7 +477,7 @@ $section-padding-horizontal: 0px;
   padding-right: 0;
 }
 
-.pontos {
+.points {
   fill: $brand-primary;
 }
 
@@ -439,4 +490,74 @@ $section-padding-horizontal: 0px;
   height: 100%;
   background-color: #000000;
   opacity: 0.8;
+}
+
+.partners {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.team-img {
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+
+.team-name {
+  text-align: center;
+  font-size: 12px;
+}
+
+.team-office {
+  text-align: center;
+  font-size: 10px;
+  margin-bottom: 15px;
+}
+
+.img-navbar {
+  width: 35px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.texts-navbar {
+  text-align: center;
+  font-size: 10px;
+}
+
+.main-sab-path {
+  fill: #468DC3;
+  stroke: #fff;
+  cursor: pointer;
+}
+
+.main-sab-path-select {
+  fill: #0F547D;
+  stroke: #fff;
+  cursor: pointer;
+}
+
+.country-path {
+  fill: #283C52;
+  stroke: #000;
+}
+
+.main-graphics {
+  width: 300px;
+}
+
+.tooltip-bar {
+  position: absolute;
+  width: 165px;
+  padding: 8px;
+  font-size: 12px;
+  background: #0F547D;
+  pointer-events: none;
+  color: #FFF;
+  margin-top: -70px;
 }

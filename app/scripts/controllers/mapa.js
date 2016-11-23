@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MapaCtrl', MapaCtrl);
 
-  MapaCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','olData'];
+  MapaCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','LEGENDCOLORS', 'olData'];
 
   /*jshint latedef: nofunc */
-  function MapaCtrl($scope, Reservatorio, RESTAPI, olData) {
+  function MapaCtrl($scope, Reservatorio, RESTAPI, LEGENDCOLORS, olData) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -88,14 +88,9 @@
       }
     };
     vm.reservatoriosGeo = [];
-    vm.coresReservatorios = [
-      {cor: '#ff2222', texto: 'Abaixo de 10%'},
-      {cor: '#ff8f61', texto: '10% - 25%'},
-      {cor: '#fffc9f', texto: '25% - 50%'},
-      {cor: '#99bfcf', texto: '50% - 75%'},
-      {cor: '#3381ff', texto: 'Acima de 75%'},
-      {cor: '#ffffff', texto: 'Sem informação'}
-    ];
+    
+    vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
+
     vm.setReservatorio = setReservatorio;
     vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
