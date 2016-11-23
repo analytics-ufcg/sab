@@ -1,9 +1,19 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+@font-face {
+  font-family: 'Franklin Gothic';
+  src: url('fonts/FranklinGothic-DemiCond.eot');
+  src: url('fonts/FranklinGothic-DemiCond.eot?#iefix') format('embedded-opentype'),
+  url('fonts/FranklinGothic-DemiCond.woff') format('woff'),
+  url('fonts/FranklinGothic-DemiCond.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 @import "customVariables";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 @import "bootstrapCustom";
+
 
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
