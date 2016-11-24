@@ -16,6 +16,29 @@
   @media (max-width: $grid-float-breakpoint-max) {
     margin-top: ($navbar-padding-vertical * 4);
   }
+
+  // Uncollapse the nav
+  @media (min-width: $grid-float-breakpoint) {
+    float: left;
+    margin: 0;
+
+    > li {
+      float: left;
+      > a {
+        padding-top: $navbar-padding-vertical;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+}
+
+.navbar-btn {
+  @include navbar-vertical-align($navbar-padding-vertical);
+}
+
+.navbar-brand {
+  padding: 0px;
 }
 
 .form-control {
