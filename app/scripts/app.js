@@ -45,6 +45,10 @@
       templateUrl: "views/mapa.html",
       controller: "MapaCtrl",
       controllerAs: "ctrl"
+    })
+    .state('sobre', {
+      url: "/sobre",
+      templateUrl: "views/sobre.html"
     });
     $urlRouterProvider.otherwise('/');
   }

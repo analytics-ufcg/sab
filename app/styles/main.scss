@@ -288,6 +288,11 @@ a.inverse {
     color: #aaa;
   }
 
+  &.section-text {
+    background-color: $gray-light;
+    color: $text-color;
+  }
+
   &.section-secondary {
     background-color: $themes-section-colors-b;
     color: #fff;
@@ -321,6 +326,13 @@ a.inverse {
 .section-mapa{
   background-color: #283C52;
   color: #aaa;
+  padding-bottom: 40px;
+}
+
+.call-to-action-text {
+  line-height: 46px;
+  font-size: 1.5em;
+  color: #fff;
 }
 
 .glyphicon-btn {

@@ -3,160 +3,34 @@
     <div class="row">
       <div class="col-sm-6">
         <sab-mapa-equivalente map-sab-data="main.mapSabData" set-estado="main.setEstado" map-br-data="main.mapBrData"></sab-mapa-equivalente>
-
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
       <div class="col-sm-6" ng-hide="main.loadingInfo">
-          <h2>{{main.estadoAtual.semiarido}}</h2>
-          <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
-          <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
-          <div class="main-graphics">
-          <h4>Situação dos reservatórios:</h4>
-            <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
-            <br><br>
-            <div ng-show="main.estadoAtual.capacidade_equivalente">
-              <sab-volume
-                capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
-                volume="main.estadoAtual.volume_equivalente | sabVolume"
-                percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
-            </div>
-            <div ng-hide="main.estadoAtual.capacidade_equivalente">
-              <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
-            </div>
+        <h2>{{main.estadoAtual.semiarido}}</h2>
+        <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
+        <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
+        <div class="main-graphics">
+        <h4>Situação dos reservatórios:</h4>
+          <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
+          <br><br>
+          <div ng-show="main.estadoAtual.capacidade_equivalente">
+            <sab-volume
+              capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
+              volume="main.estadoAtual.volume_equivalente | sabVolume"
+              percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
+          </div>
+          <div ng-hide="main.estadoAtual.capacidade_equivalente">
+            <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="section section-primary">
-  <div class="container">
-    <h3 class="section-title">SOBRE</h3>
-    <span>
-      <p>
-        O sistema Olho N’Água é fruto de uma parceria do Instituto Nacional do Semiárido (INSA) e da Universidade Federal de Campina Grande (UFCG), através do Laboratório de Sistemas Distribuídos (LSD), com o objetivo de compartilhar com a sociedade informações atualizadas da disponibilidade de água nos principais reservatórios que atendem os quase 24 milhões de habitantes da região semiárida. Este esforço é parte integrante do Sistema de Gestão da Informação e do Conhecimento do Semiárido Brasileiro (SIGSAB), que reúne e disponibiliza informações econômicas, sociais, ambientais e da infraestrutura do Semiárida Brasileiro.
-      </p>
-      <p>
-        Atualmente, o sistema Olho N’Água acompanha 452 reservatórios de água distribuídos na porção Semiárida dos nove Estados (Alagoas, Bahia, Ceará, Minas Gerais, Paraíba, Pernambuco, Piauí, Rio Grande do Norte e Sergipe) que compõem a região, totalizando uma capacidade máxima de armazenamento de 40.256 hm³.
-      </p>
-      <p>
-        As informações dos níveis dos reservatórios são oriundas do monitoramento mensal realizado pela Agência Nacional de Águas (ANA), Agência Executiva de Gestão das Águas do Estado da Paraíba (AESA), Agência Pernambucana de Águas e Clima (APAC), Companhia de Gestão dos Recursos Hídricos (COGERH), Departamento Nacional de Obras Contra a Seca (DNOCS), Fundação Cearense de Meteorologia e Recursos Hídricos (FUNCEME), Instituto do Meio Ambiente e Recursos Hídricos (INEMA) e da Secretaria de Estado do Meio Ambiente e dos Recursos Hídricos do Rio Grande do Norte (SEMARH-RN).
-      </p>
-    </span>
-  </div>
-</div>
-
-<div class="section section-inverse">
-  <div class="container">
-    <h3 class="section-title">EQUIPE</h3>
     <div class="row">
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/salomao.png" alt="" class="img-circle team-img">
-        <p class="team-name">Salomão Medeiros</p>
-        <p class="team-office">Coordenador Geral</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/nazareno.png" alt="" class="img-circle team-img">
-        <p class="team-name">Nazareno Andrade</p>
-        <p class="team-office">Coordenador técnico</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/everaldo.png" alt="" class="img-circle team-img">
-        <p class="team-name">Everaldo Silva</p>
-        <p class="team-office">Supervisor</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/chateau.png" alt="" class="img-circle team-img">
-        <p class="team-name">Chateaubriand Almeida</p>
-        <p class="team-office">Designer</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/celio.jpeg" alt="" class="img-circle team-img">
-        <p class="team-name">Célio Barros</p>
-        <p class="team-office">Eng. de Software</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/diego.jpg" alt="" class="img-circle team-img">
-        <p class="team-name">Diego Coelho</p>
-        <p class="team-office">Eng. de Software</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/jefferson.jpg" alt="" class="img-circle team-img">
-        <p class="team-name">Jefferson Neves</p>
-        <p class="team-office">Eng. de Software</p>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <img src="images/tereza.png" alt="" class="img-circle team-img">
-        <p class="team-name">Tereza Helena</p>
-        <p class="team-office">Hidróloga</p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-<div class="section section-secondary">
-  <div class="container">
-    <h3 class="section-title section-title-inverse">PARCEIROS</h3>
-    <div class="row">
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.ana.gov.br/">
-          <img src="images/ana.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.aesa.pb.gov.br/">
-          <img src="images/aesa.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.apac.pe.gov.br/">
-          <img src="images/apac.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.cogerh.com.br/">
-          <img src="images/cogerh.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.dnocs.gov.br/">
-          <img src="images/dnocs.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.funceme.br/">
-          <img src="images/funceme.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.inema.ba.gov.br/">
-          <img src="images/inema.svg" alt="" class="partners">
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <a href="http://www.rn.gov.br/">
-          <img src="images/governo_rn.svg" alt="" class="partners">
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="section section-primary">
-  <div class="container">
-    <h3 class="section-title">DE OLHO N'ÁGUA</h3>
-    <div class="row">
-      <div class="col-sm-6">
-        <img src="images/logo.svg" alt="" width="100%;">
+      <div class="call-to-action-text col-sm-6 text-right">
+        Fique de olho nas águas dos reservatórios
       </div>
       <div class="col-sm-6">
-        <p>Navegue em nosso sistema e verifique a situação dos reservatórios de água de diversas cidades e estados do nosso semiárido. Acompanhe todos esses dados e fique sempre de olho n'água.</p>
-        <button type="button" class="btn btn-primary navbar-btn" ui-sref="mapa">FIQUE DE<br> OLHO N'ÁGUA</button>
+       <a ui-sref="mapa" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-map-marker"></span> Veja no mapa</a>
       </div>
     </div>
   </div>
