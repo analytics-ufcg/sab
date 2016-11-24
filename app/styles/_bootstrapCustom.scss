@@ -34,7 +34,7 @@
 }
 
 .navbar-btn {
-  @include navbar-vertical-align($navbar-padding-vertical);
+  @include navbar-vertical-align(59px);
 }
 
 .navbar-brand {

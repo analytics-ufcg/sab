@@ -43,7 +43,7 @@
               textVertPosition: 0.5, // The height at which to display the percentage text withing the wave circle. 0 = bottom, 1 = top.
               lineHeight: 0.14, // The distance between text line. 0 = bottom, 1 = top.
               textSize: 0.6, // The relative height of the text to display in the wave circle. 1 = 50%
-              textSmallSize: 0.4, // The relative height of the text to display in the wave circle. 1 = 50%
+              textSmallSize: 0.3, // The relative height of the text to display in the wave circle. 1 = 50%
               valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
               displayPercent: true, // If true, a % symbol is displayed after the value.
               textColor: "#aeadb3", // The color of the value text when the wave does not overlap it.
@@ -187,8 +187,8 @@
                 .attr("dy", "-10")
                 .text("Capacidade total");
             capacidadeTextValue.append("tspan")
-                .attr("dx", "-70")
-                .attr("dy", "12")
+                .attr("dx", "-63")
+                .attr("dy", "11")
                 .text("de armazenamento");
             var volumeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
