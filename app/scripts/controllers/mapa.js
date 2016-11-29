@@ -71,6 +71,7 @@
       ],
       defaults: {
           events: {
+              map: ['pointermove', 'mousemove'],
               layers: [ 'mousemove', 'click' ]
           },
           controls: {
@@ -226,6 +227,26 @@
       });
     });
 
+    $scope.$on('openlayers.map.pointermove', function (e, data) {
+        $scope.$apply(function () {
+            olData.getMap().then(function (map) {
+                var pixel = map.getEventPixel(data.event.originalEvent);
+                var hit = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                  if(layer.get('name')==="reservatorios"){
+                    map.getTarget().style.cursor = 'pointer';
+                    return true;
+                  }
+                    return false;
+                });
+
+                if (typeof hit === 'undefined') {
+                    map.getTarget().style.cursor = '';                        
+                    return;
+                }
+            });
+        });
+    });
+
     function efeitoZoom(lat, lon, zoom) {
       larguraTela = $(window).width();
       var latMais = 0;
@@ -250,6 +271,7 @@
         map.beforeRender(pan, bounce);
         map.getView().setCenter(reservatorio);
         map.getView().setZoom(zoom);
+
       });
     }
 
