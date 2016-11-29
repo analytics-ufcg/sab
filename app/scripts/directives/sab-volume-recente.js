@@ -61,7 +61,7 @@
               .attr("points", "0,0 "+statusWidth+",0 "+statusHeight+","+statusHeight+"");
 
             scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
-              if (typeof newValue !== 'undefined') {
+              if ((typeof newValue !== 'undefined') && (newValue.volumes.length !== 0)) {
                 draw(newValue);
               }
             });
