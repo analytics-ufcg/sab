@@ -379,9 +379,9 @@
                     .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding)+')');
             }
 
-          scope.$watch(function(scope) { return scope.volume; }, function(newValue) {
-            if (typeof newValue !== 'undefined') {
-              new GaugeUpdater(scope.capacidade, scope.volume, scope.percentual);
+          scope.$watchCollection(function(scope) { return [scope.capacidade, scope.volume, scope.percentual] ; }, function(newValue) {
+            if ((typeof newValue[0] !== 'undefined') && (typeof newValue[1] !== 'undefined') && (typeof newValue[2] !== 'undefined')) {
+              new GaugeUpdater(newValue[0], newValue[1], newValue[2]);
             }
           });
         }
