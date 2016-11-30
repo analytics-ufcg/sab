@@ -18,18 +18,6 @@
 
     vm.loadingInfo = true;
 
-    ReservatorioEquivalente.mapSabGeoJson.query(function(response) {
-      vm.loadingInfo = true;      
-      vm.mapSabData = response;
-      vm.loadingInfo = false;
-    });
-
-    ReservatorioEquivalente.mapBrGeoJson.query(function(response) {
-      vm.loadingInfo = true;      
-      vm.mapBrData = response;
-      vm.loadingInfo = false;
-    });
-
     ReservatorioEquivalente.estadoEquivalente.query(function(response) {
       vm.loadingInfo = true;
       vm.estadoEquivalente = response;
@@ -46,6 +34,20 @@
     }
 
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors.slice(0,-1);
+
+
+    $(document).on("click", ".main-sab-path", function() {
+      setEstado($(this).attr('data-uf'));
+      $('.main-sab-path-select').attr('class', 'main-sab-path');
+      $(this).attr('class', 'main-sab-path-select');
+      $scope.$apply();
+    });
+
+    $(document).on("click", ".main-sab-path-select", function() {
+      setEstado("Semiarido");
+      $('.main-sab-path-select').attr('class', 'main-sab-path');
+      $scope.$apply();
+    });
 
   }
 })();
