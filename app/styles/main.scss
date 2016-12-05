@@ -27,7 +27,7 @@ $themes-section-colors-b: #DD3B47;
 $themes-section-colors-c: #373b52;
 
 a.inverse {
-  color: #fff;
+  color: $gray;
 }
 
 a.link-img {
@@ -335,6 +335,11 @@ a.link-img {
   background-color: #283C52;
   color: #aaa;
   padding-bottom: 40px;
+}
+
+.plaintext {
+  max-width: 740px;
+  margin: auto;
 }
 
 .call-to-action-text {
