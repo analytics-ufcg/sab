@@ -15,7 +15,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 @import "bootstrapCustom";
 
-
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
 $map-info-z-index: 10;
@@ -25,11 +24,19 @@ $section-padding-vertical: 50px;
 $section-padding-horizontal: 0px;
 $themes-section-colors-a: #fff;
 $themes-section-colors-b: #DD3B47;
-$themes-section-colors-c: #111B31;
-$themes-section-colors-d: #0F141E;
+$themes-section-colors-c: #373b52;
 
 a.inverse {
   color: #fff;
+}
+
+a.link-img {
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
 }
 
 .logo {
@@ -289,8 +296,8 @@ a.inverse {
   }
 
   &.section-text {
-    background-color: $gray-light;
-    color: $text-color;
+    background-color: #fff;
+
   }
 
   &.section-secondary {
@@ -308,22 +315,23 @@ a.inverse {
   }
 
   &.section-final {
-    background-color: $themes-section-colors-d;
-    color: #fff;
+    background-color: $themes-section-colors-a;
+    color: #aaa;
     padding: 0px 0px;
   }
 }
 
 .section-title {
-  text-align: center;
-  color: #41A0AA;
   margin-bottom: 30px;
+  color: $gray;
 
   &.section-title-inverse {
     color: #fff;
   }
+
 }
-.section-mapa{
+
+.section-mapa {
   background-color: #283C52;
   color: #aaa;
   padding-bottom: 40px;
@@ -529,13 +537,13 @@ a.inverse {
 
 .team-name {
   text-align: center;
-  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 0px;
 }
 
 .team-office {
   text-align: center;
-  font-size: 10px;
-  margin-bottom: 15px;
+  margin-bottom: $padding-base-vertical*4;
 }
 
 .img-navbar {
