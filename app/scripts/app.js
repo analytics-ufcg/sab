@@ -49,6 +49,14 @@
     .state('sobre', {
       url: "/sobre",
       templateUrl: "views/sobre.html"
+    })
+    .state('informese', {
+      url: "/informese",
+      templateUrl: "views/informese.html"
+    })
+    .state('parceiros', {
+      url: "/parceiros",
+      templateUrl: "views/parceiros.html"
     });
     $urlRouterProvider.otherwise('/');
   }

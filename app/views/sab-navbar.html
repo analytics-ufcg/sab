@@ -7,26 +7,31 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" ui-sref="home">
         <img src="images/logo.svg" alt="Home" width="220px" height="110px">
       </a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li class="text-center">
-          <a ui-sref="home">
-            <span class="icon-lg icon-about"></span><br>Início
-          </a>
-        </li>
-        <li class="text-center">
-          <a ui-sref="sobre">
-            <span class="icon-lg icon-partners"></span><br>Sobre
-          </a>
-        </li>
-        <li class="text-center">
+        <li class="text-center" ui-sref-active="active">
           <a ui-sref="mapa">
-            <span class="icon-lg icon-staff"></span><br>Fique de olho
+            <span class="icon-lg icon-mapa"></span><br>De olho n'água
+          </a>
+        </li>
+        <li class="text-center" ui-sref-active="active">
+          <a ui-sref="sobre">
+            <span class="icon-lg icon-info"></span><br>Sobre
+          </a>
+        </li>
+        <li class="text-center" ui-sref-active="active">
+          <a ui-sref="informese">
+            <span class="icon-lg icon-raio"></span><br>Informe-se
+          </a>
+        </li>
+        <li class="text-center" ui-sref-active="active">
+          <a ui-sref="parceiros">
+            <span class="icon-lg icon-maos"></span><br>Parceiros
           </a>
         </li>
       </ul>
