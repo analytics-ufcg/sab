@@ -25,6 +25,7 @@ $section-padding-horizontal: 0px;
 $themes-section-colors-a: #fff;
 $themes-section-colors-b: #DD3B47;
 $themes-section-colors-c: #373b52;
+$footer-height: 128px;
 
 a.inverse {
   color: $gray;
@@ -37,6 +38,12 @@ a.link-img {
     text-decoration: none;
   }
 
+}
+
+footer {
+  height: $footer-height;
+  background-color: $themes-section-colors-a;
+  color: #aaa;
 }
 
 .logo {
@@ -314,11 +321,6 @@ a.link-img {
     }
   }
 
-  &.section-final {
-    background-color: $themes-section-colors-a;
-    color: #aaa;
-    padding: 0px 0px;
-  }
 }
 
 .section-title {
@@ -331,10 +333,17 @@ a.link-img {
 
 }
 
+.section-expande {
+  height: -webkit-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  height:    -moz-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  height:         calc(100vh - (#{$navbar-height} + #{$footer-height}));
+}
+
 .section-mapa {
   background-color: #283C52;
-  color: #aaa;
+  color: #fff;
   padding-bottom: 40px;
+  overflow: hidden;
 }
 
 .plaintext {
@@ -589,9 +598,9 @@ a.link-img {
   width: 165px;
   padding: 8px;
   font-size: 12px;
-  background: #0F547D;
+  background: #000;
   pointer-events: none;
-  color: #FFF;
+  color: #fff;
   margin-top: -70px;
 }
 

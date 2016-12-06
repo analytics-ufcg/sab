@@ -1,4 +1,4 @@
-<div class="section-mapa">
+<div class="section-mapa section-expande">
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
@@ -22,15 +22,10 @@
           <div ng-hide="main.estadoAtual.capacidade_equivalente">
             <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
           </div>
+            <div class="col-sm-6">
+              <a ui-sref="mapa" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-map-marker"></span> Veja no mapa</a>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="call-to-action-text col-sm-6 text-right">
-        Fique de olho nas águas dos reservatórios
-      </div>
-      <div class="col-sm-6">
-       <a ui-sref="mapa" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-map-marker"></span> Veja no mapa</a>
       </div>
     </div>
   </div>
