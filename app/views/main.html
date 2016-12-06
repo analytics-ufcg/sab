@@ -1,6 +1,6 @@
 <div class="section-mapa">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row map-section">
       <div class="col-sm-6">
         <ng-include src="'images/mapa_equivalente.svg'"></ng-include>
       </div>
@@ -22,49 +22,10 @@
           <div ng-hide="main.estadoAtual.capacidade_equivalente">
             <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
           </div>
+            <div class="col-sm-6">
+              <a ui-sref="mapa" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-map-marker"></span> Veja no mapa</a>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="call-to-action-text col-sm-6 text-right">
-        Fique de olho nas águas dos reservatórios
-      </div>
-      <div class="col-sm-6">
-       <a ui-sref="mapa" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-map-marker"></span> Veja no mapa</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section section-inverse">
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-4">
-        <div class="row">
-           <ul class="list-unstyled">
-              <li><h2>Assuntos</h2></li>
-              <li><a href="#" class="inverse">Sobre</a></li>
-              <li><a href="#" class="inverse">Equipe</a></li>
-              <li><a href="#" class="inverse">Parceiros</a></li>
-              <li><a href="#" class="inverse">De olho n'Água</a></li>
-            </ul>
-        </div>
-      </div>
-      <div class="col-xs-4">
-        <div class="row">
-          <ul class="list-unstyled">
-            <li><h2>Serviços</h2></li>
-            <li><a href="http://www.insa.gov.br/" class="inverse">INSA</a></li>
-            <li><a href="http://www.insa.gov.br/sigsab/" class="inverse">SIGSAB</a></li>
-            <li><a href="www.acessoainformacao.gov.br/" class="inverse">Acesso à informação</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-xs-4">
-          <ul class="list-unstyled">
-            <li><h2>Redes sociais</h2></li>
-            <li><a href="https://www.facebook.com/InsaMcti/?fref=ts/" class="inverse">Facebook</a></li>
-          </ul>
       </div>
     </div>
   </div>

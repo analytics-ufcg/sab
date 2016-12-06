@@ -28,6 +28,7 @@ $themes-section-colors-b: #DD3B47;
 $themes-section-colors-c: #111B31;
 $themes-section-colors-d: #0F141E;
 
+
 a.inverse {
   color: #fff;
 }
@@ -325,8 +326,12 @@ a.inverse {
 }
 .section-mapa{
   background-color: #283C52;
-  color: #aaa;
+  color: #fff;
   padding-bottom: 40px;
+  height: -webkit-calc(100vh - (#{$navbar-height}));
+  height:    -moz-calc(100vh - (#{$navbar-height}));
+  height:         calc(100vh - (#{$navbar-height}));
+  overflow: hidden;
 }
 
 .call-to-action-text {
@@ -576,8 +581,8 @@ a.inverse {
   width: 165px;
   padding: 8px;
   font-size: 12px;
-  background: #0F547D;
+  background: #000;
   pointer-events: none;
-  color: #FFF;
+  color: #fff;
   margin-top: -70px;
 }
