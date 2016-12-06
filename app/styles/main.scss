@@ -41,10 +41,15 @@ a.link-img {
 }
 
 footer {
-  height: $footer-height;
+  padding-top: 20px;
   overflow: hidden;
   background-color: $themes-section-colors-a;
   color: #aaa;
+
+  @media (min-width: $screen-md-min) {
+    height: $footer-height;
+  }
+
 }
 
 .logo {
@@ -335,9 +340,9 @@ footer {
 }
 
 .section-expande {
-  height: -webkit-calc(98vh - (#{$navbar-height} + #{$footer-height}));
-  height:    -moz-calc(98vh - (#{$navbar-height} + #{$footer-height}));
-  height:         calc(98vh - (#{$navbar-height} + #{$footer-height}));
+  min-height: -webkit-calc(98vh - (#{$navbar-height} + #{$footer-height}));
+  min-height:    -moz-calc(98vh - (#{$navbar-height} + #{$footer-height}));
+  min-height:         calc(98vh - (#{$navbar-height} + #{$footer-height}));
 }
 
 .section-mapa {
