@@ -348,7 +348,6 @@ footer {
 .section-mapa {
   background-color: #283C52;
   color: #fff;
-  padding-bottom: 40px;
   overflow: hidden;
 }
 
@@ -612,4 +611,8 @@ footer {
 
 .icon-lg {
   font-size: 2.5em;
+}
+
+.col-no-padding {
+  margin: -15px;
 }
