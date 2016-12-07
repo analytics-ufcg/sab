@@ -1,11 +1,39 @@
 <div class="section section-inverse section-expande">
   <div class="container">
-    <h3 class="section-title section-title-inverse text-center">INFORME-SE</h3>
-    <div class="plaintext">
-      <p>Você pode consultar o estado dos reservatórios do Semiárido a qualquer momento ou se cadastrar para receber atualizações sempre que houver novas medições de reservatórios de seu interesse usando o <a href="https://m.me/696527830503502" class="inverse" target="_blank">Facebook Messenger</a>.</p>
-      <p class="text-center"><a href="https://m.me/696527830503502" class="btn btn-primary" target="_blank">Converse com a gente</a></p>
+    <div class="row">
+      <div class="col-sm-3 col-sm-offset-1 hidden-xs">
+        <img src="images/mockup.png" alt="Converse com a gente" width="100%" />
+      </div>
+      <div class="col-sm-6 col-sm-offset-1">
+        <h3 class="section-title section-title-inverse">INFORME-SE</h3>
+        <p>Você pode consultar o estado dos reservatórios do Semiárido a qualquer momento ou se cadastrar para receber atualizações sempre que houver novas medições de reservatórios de seu interesse usando o <a href="https://m.me/696527830503502" class="inverse" target="_blank">Facebook Messenger</a>.</p>
+        <br>
+        <div class="fb-messengermessageus"
+          messenger_app_id="543791825832138"
+          page_id="696527830503502"
+          color="blue"
+          size="xlarge">
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: "543791825832138",
+      xfbml: true,
+      version: "v2.6"
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) { return; }
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
 
 <ng-include src="'views/footer.html'"></ng-include>

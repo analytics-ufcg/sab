@@ -25,7 +25,7 @@ $section-padding-horizontal: 0px;
 $themes-section-colors-a: #fff;
 $themes-section-colors-b: #DD3B47;
 $themes-section-colors-c: #373b52;
-$footer-height: 60px;
+$footer-height: 80px;
 
 a.inverse {
   color: $gray;
@@ -41,7 +41,7 @@ a.link-img {
 }
 
 footer {
-  padding-top: 20px;
+  padding-top: 25px;
   overflow: hidden;
   background-color: $themes-section-colors-a;
   color: #aaa;
@@ -340,9 +340,9 @@ footer {
 }
 
 .section-expande {
-  min-height: -webkit-calc(98vh - (#{$navbar-height} + #{$footer-height}));
-  min-height:    -moz-calc(98vh - (#{$navbar-height} + #{$footer-height}));
-  min-height:         calc(98vh - (#{$navbar-height} + #{$footer-height}));
+  min-height: -webkit-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  min-height:    -moz-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  min-height:         calc(100vh - (#{$navbar-height} + #{$footer-height}));
 }
 
 .section-mapa {
