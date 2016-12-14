@@ -593,8 +593,13 @@ footer {
   stroke: #000;
 }
 
+.main-status {
+  padding-bottom: $section-padding-vertical;
+}
+
 .main-graphics {
-  width: 300px;
+  max-width: 300px;
+  margin-bottom: 15px;
 }
 
 .tooltip-bar {
