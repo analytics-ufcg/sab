@@ -81,9 +81,16 @@
                     })
                     .on("mouseover", function(d){
                           div.style("display", "inline");
-                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(1)+"%) dos reservatorios "
+                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(1)+"%) dos <br> reservatorios "
                                +"estão com <span id='legenda_main'>volume "+d[0].legenda+"</span> da capacidade")
-                            .style("left", (x(d[0].x0)+ (x(d[0].x)/4)) + "px");
+                            .style("left", function(){
+                              if (((x(d[0].x0)+(x(d[0].x)/4))+165) <= width){
+                                return (x(d[0].x0)+ (x(d[0].x)/4)) + "px"
+                              } else{
+                                return (width-165+16) + "px"
+                              }
+
+                            });
                           div.select("#legenda_main").style("color", d[0].cor);
                     })
                     .on("mouseout", function(){
