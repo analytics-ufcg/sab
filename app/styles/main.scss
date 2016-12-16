@@ -351,6 +351,12 @@ footer {
   overflow: hidden;
 }
 
+.section-img-mapa {
+  max-height: -webkit-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  max-height:    -moz-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  max-height:         calc(100vh - (#{$navbar-height} + #{$footer-height}));
+}
+
 .plaintext {
   max-width: 740px;
   margin: auto;

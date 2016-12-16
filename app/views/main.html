@@ -1,17 +1,20 @@
 <div class="section-mapa section-expande">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-6 col-no-padding">
+      <div class="col-sm-6 col-no-padding section-img-mapa">
         <ng-include src="'images/brasil_mapa.svg'"></ng-include>
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
-      <div class="col-sm-6" ng-hide="main.loadingInfo">
+      <div class="col-sm-6 col-md-5 col-md-offset-1" ng-hide="main.loadingInfo">
         <div class="main-status">
           <h2>{{main.estadoAtual.semiarido}}</h2>
           <p><strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</p>
           <p><strong>{{main.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</p>
           <div class="main-graphics">
             <h4>Situação dos reservatórios:</h4>
+            <div ng-hide="main.estadoAtual.capacidade_equivalente">
+              <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+            </div>
             <sab-barra-equivalente info-estado="main.estadoAtual" cores="main.coresReservatorios"></sab-barra-equivalente>
             <br><br>
             <div ng-show="main.estadoAtual.capacidade_equivalente">
@@ -19,9 +22,6 @@
                 capacidade="main.estadoAtual.capacidade_equivalente | sabVolume"
                 volume="main.estadoAtual.volume_equivalente | sabVolume"
                 percentual="main.estadoAtual.porcentagem_equivalente"></sab-volume>
-            </div>
-            <div ng-hide="main.estadoAtual.capacidade_equivalente">
-              <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
             </div>
           </div>
           <div class="row">
