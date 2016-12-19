@@ -27,12 +27,12 @@
     .config(routeConfig)
     .run(runConfig);
 
-  routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
+  routeConfig.$inject = ['$stateProvider', '$urlRouterProvider','$locationProvider'];
 
   runConfig.$inject = ['$rootScope', '$state'];
 
   /*jshint latedef: nofunc */
-  function routeConfig($stateProvider, $urlRouterProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('home', {
       url: "/",
@@ -59,6 +59,7 @@
       templateUrl: "views/parceiros.html"
     });
     $urlRouterProvider.otherwise('/');
+    $locationProvider.html5Mode(true);
   }
 
   function runConfig($rootScope, $state) {

@@ -41,7 +41,7 @@ a.link-img {
 }
 
 footer {
-  padding-top: 25px;
+  padding-top: 20px;
   overflow: hidden;
   background-color: $themes-section-colors-a;
   color: #aaa;
@@ -351,6 +351,12 @@ footer {
   overflow: hidden;
 }
 
+.section-img-mapa {
+  max-height: -webkit-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  max-height:    -moz-calc(100vh - (#{$navbar-height} + #{$footer-height}));
+  max-height:         calc(100vh - (#{$navbar-height} + #{$footer-height}));
+}
+
 .plaintext {
   max-width: 740px;
   margin: auto;
@@ -593,8 +599,13 @@ footer {
   stroke: #000;
 }
 
+.main-status {
+  padding-bottom: $section-padding-vertical;
+}
+
 .main-graphics {
-  width: 300px;
+  max-width: 300px;
+  margin-bottom: 15px;
 }
 
 .tooltip-bar {
@@ -605,7 +616,7 @@ footer {
   background: #000;
   pointer-events: none;
   color: #fff;
-  margin-top: -70px;
+  margin-top: -90px;
 }
 
 .icon-lg {
