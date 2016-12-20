@@ -4,10 +4,8 @@
   angular.module('sabApp')
     .directive('sabBarraEquivalente', sabBarraEquivalente);
 
-    sabBarraEquivalente.$inject = ['$window','RESTAPI'];
-
     /*jshint latedef: nofunc */
-    function sabBarraEquivalente($window, RESTAPI) {
+    function sabBarraEquivalente() {
       return {
         template: '',
         restrict: 'E',
@@ -24,11 +22,6 @@
 
           var x = d3.scale.linear()
                   .rangeRound([0, width]);
-
-          var y = d3.scale.linear()
-                  .rangeRound([height, 0]);
-
-          var color = d3.scale.category20();
 
           var svg = d3.select(element[0])
                   .append('svg')
@@ -81,19 +74,18 @@
                     })
                     .on("mouseover", function(d){
                           div.style("display", "inline");
-                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(1)+"%) dos <br> reservatorios "
-                               +"estão com <span id='legenda_main'>volume "+d[0].legenda+"</span> da capacidade")
+                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(1)+"%) dos <br> reservatorios "+
+                               "estão com <span id='legenda_main'>volume "+d[0].legenda+"</span> da capacidade")
                             .style("left", function(){
                               if (((x(d[0].x0)+(x(d[0].x)/4))+165) <= width){
-                                return (x(d[0].x0)+ (x(d[0].x)/4)) + "px"
+                                return (x(d[0].x0)+ (x(d[0].x)/4)) + "px";
                               } else{
-                                return (width-165+16) + "px"
+                                return (width-165+16) + "px";
                               }
 
                             });
                           div.select("#legenda_main").style("color", d[0].cor);
-                    })
-                    .on("mouseout", function(){
+                    }).on("mouseout", function(){
                       div.style("display", "none");
                     });
 
@@ -108,9 +100,9 @@
                     .attr("height", height)
                     .attr("width", function (d) {
                         return x(d.x);
-                    })
+                    });
 
-          }
+          };
               
         }
       };

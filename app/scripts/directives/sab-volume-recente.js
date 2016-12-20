@@ -108,7 +108,7 @@
                triangle
                 .style({
                   "fill": color(regression),
-                  "visibility": regression == 0 ? "hidden" : "visible"
+                  "visibility": regression === 0 ? "hidden" : "visible"
                 })
                 .attr("transform", rotate(regression));
 

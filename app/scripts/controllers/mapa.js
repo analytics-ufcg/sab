@@ -115,7 +115,7 @@
       vm.showLegend = false;
       if (!(lat && lon && zoom)) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
-          if (vm.reservatoriosGeo[i].properties.id == reservatorio.id) {
+          if (vm.reservatoriosGeo[i].properties.id === reservatorio.id) {
             lat = parseFloat(vm.reservatoriosGeo[i].properties.latitude);
             lon = parseFloat(vm.reservatoriosGeo[i].properties.longitude);
             zoom = 10;
@@ -182,7 +182,7 @@
     }
 
     function corReservatorio(feature) {
-      if(feature.get("volume_percentual") == null) {
+      if(feature.get("volume_percentual") === null) {
         return new ol.style.Fill({ color: vm.coresReservatorios[5].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
@@ -220,7 +220,7 @@
     }
 
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
-      $scope.$apply(function(scope) {
+      $scope.$apply(function() {
           if(feature) {
             vm.setReservatorioByID(feature.get('id'), parseFloat(feature.get('latitude')), parseFloat(feature.get('longitude')), 10);
           }
