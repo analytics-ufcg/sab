@@ -153,6 +153,13 @@
                 .attr("d", gaugeCircleArc)
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+radius+','+radius+')');
+            var capacidadeLine = textGroup.append("line")
+                .attr("x1", gaugeDimensions.top.x - config.indicatorWidth)
+                .attr("y1", config.volumeTextPadding + (circleThickness/2))
+                .attr("x2", gaugeDimensions.top.x)
+                .attr("y2", config.volumeTextPadding + (circleThickness/2))
+                .style("stroke", config.circleColor)
+                .style("stroke-width", circleThickness);
 
             gaugeGroup.append("circle")
                 .attr("cx", radius)
