@@ -339,6 +339,10 @@ footer {
 
 }
 
+.section-text {
+  font-size: 1.2em;
+}
+
 .section-expande {
   min-height: -webkit-calc(100vh - (#{$navbar-height} + #{$footer-height}));
   min-height:    -moz-calc(100vh - (#{$navbar-height} + #{$footer-height}));
