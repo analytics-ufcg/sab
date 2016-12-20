@@ -27,7 +27,7 @@
 
     function setEstado(uf) {
       for (var i = 0; i < vm.estadoEquivalente.length; i++) {
-        if (vm.estadoEquivalente[i].uf == uf){
+        if (vm.estadoEquivalente[i].uf === uf){
           vm.estadoAtual = vm.estadoEquivalente[i];
         }
       }

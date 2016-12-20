@@ -328,9 +328,9 @@
           		    i = bisectDate(data, x0, 1),
                   d0,d1,d;
 
-                  if(data[i - 1].VolumePercentual == null){
+                  if(data[i - 1].VolumePercentual === null){
                     for (var j = 1; j < data.length; j++) {
-                      if(data[i-j].VolumePercentual != null){
+                      if(data[i-j].VolumePercentual !== null){
                         d0 = data[i-j];
                         break;
                       }
@@ -340,9 +340,9 @@
                   }
 
                   if(i < data.length){
-                    if(data[i].VolumePercentual == null){
+                    if(data[i].VolumePercentual === null){
                       for (var j = 0; j < data.length; j++) {
-                        if(data[i+j].VolumePercentual != null){
+                        if(data[i+j].VolumePercentual !== null){
                           d1 = data[i+j];
                           break;
                         }

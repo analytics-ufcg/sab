@@ -4,16 +4,15 @@
   angular.module('sabApp')
     .directive('sabNavbar', sabNavbar);
 
-    sabNavbar.$inject = ['$state'];
 
     /*jshint latedef: nofunc */
-    function sabNavbar($state) {
+    function sabNavbar() {
       return {
         templateUrl: 'views/sab-navbar.html',
         restrict: 'E',
         scope: {
           expanded: '='
         }
-      }
-    };
+      };
+    }
 })();

@@ -115,7 +115,7 @@
                 x: locationX + radius,
                 y: locationY
               }
-            }
+            };
 
             // Scales for controlling the size of the clipping path.
             var waveScaleX = d3.scale.linear().range([0,waveClipWidth]).domain([0,1]);
@@ -139,7 +139,6 @@
 
             // Center the gauge within the parent SVG.
             var textGroup = gauge.append("g");
-            var titleGroup = gauge.append("g");
             var gaugeGroup = gauge.append("g")
                 .attr("class", "gaugeGroup")
                 .attr('transform','translate('+locationX+','+locationY+')');
@@ -168,13 +167,6 @@
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+textLocationX+', '+config.volumeTextPadding+')');
-            var capacidadeLine = textGroup.append("line")
-                .attr("x1", gaugeDimensions.top.x - config.indicatorWidth)
-                .attr("y1", config.volumeTextPadding + (circleThickness/2))
-                .attr("x2", gaugeDimensions.top.x)
-                .attr("y2", config.volumeTextPadding + (circleThickness/2))
-                .style("stroke", config.circleColor)
-                .style("stroke-width", circleThickness);
             var capacidadeTextValue = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")

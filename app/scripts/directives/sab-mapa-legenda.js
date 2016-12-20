@@ -24,10 +24,6 @@
               circleHeight = 5,
               circlePadding = 3;
 
-          var y = d3.scale.linear()
-            .range([height, 0])
-            .domain([0, 100]);
-
           var svg = d3.select(element[0])
             .append("svg")
             .attr({
@@ -59,6 +55,6 @@
             });
           }
         }
-      }
-    };
+      };
+    }
 })();
