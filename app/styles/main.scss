@@ -600,7 +600,12 @@ footer {
 }
 
 .main-status {
+  padding-top: $section-padding-vertical/2;
   padding-bottom: $section-padding-vertical;
+}
+
+.main-status-item {
+  padding: 16px 0;
 }
 
 .main-graphics {
@@ -625,4 +630,15 @@ footer {
 
 .col-no-padding {
   margin: -15px;
+}
+
+.navbar-subitem {
+  font-size: 12px;
+  display: block;
+  line-height: 25px;
+
+  &.navbar-subitem-first {
+    line-height: 15px;
+  }
+
 }
