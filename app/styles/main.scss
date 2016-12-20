@@ -218,7 +218,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 130px;
+  top: 40px;
   z-index: $map-info-z-index + 2;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -625,4 +625,15 @@ footer {
 
 .col-no-padding {
   margin: -15px;
+}
+
+.navbar-subitem {
+  font-size: 12px;
+  display: block;
+  line-height: 25px;
+
+  &.navbar-subitem-first {
+    line-height: 15px;
+  }
+
 }
