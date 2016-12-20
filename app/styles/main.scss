@@ -218,7 +218,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 40px;
+  top: 130px;
   z-index: $map-info-z-index + 2;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -600,7 +600,12 @@ footer {
 }
 
 .main-status {
+  padding-top: $section-padding-vertical/2;
   padding-bottom: $section-padding-vertical;
+}
+
+.main-status-item {
+  padding: 16px 0;
 }
 
 .main-graphics {
