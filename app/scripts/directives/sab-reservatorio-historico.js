@@ -54,7 +54,7 @@
           // Define the axes
           var xAxis = d3.svg.axis().scale(x).orient("bottom");
           var xAxisAux = d3.svg.axis().scale(x).orient("bottom");
-          var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2).tickFormat(function(d) { return d + "%";});
+          var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
           var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
 
           // Define the line
@@ -130,6 +130,14 @@
               .attr("transform", "translate(0," + (height + 10) + ")");
           var yAxisSvg = focus.append("g")
               .attr("class", "y axis");
+          yAxisSvg.append("text")
+              .attr("class", "tick2")
+              .attr("transform", "rotate(-90)")
+              .attr("y", -33)
+              .attr("x", -30)
+              .attr("dy", "0.71em")
+              .style("text-anchor", "end")
+              .text("Volume armazenado (%)");
           var line100PercSVG = focus.append("line")
             .attr("class", "time-graph-path limit-line");
           var selectedValue = focus.append("g")
