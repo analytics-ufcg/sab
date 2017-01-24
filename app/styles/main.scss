@@ -624,7 +624,14 @@ footer {
 
 .col-no-padding {
   margin: -15px;
+
+  &.no-padding-menu {
+    @media (max-width: $screen-xs-min) {
+      margin: 0px;
+    }
+  }
 }
+
 
 .navbar-subitem {
   font-size: 12px;
