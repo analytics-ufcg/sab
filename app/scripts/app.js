@@ -44,7 +44,8 @@
       url: "/mapa",
       templateUrl: "views/mapa.html",
       controller: "MapaCtrl",
-      controllerAs: "ctrl"
+      controllerAs: "ctrl",
+      reloadOnSearch: false
     })
     .state('sobre', {
       url: "/sobre",

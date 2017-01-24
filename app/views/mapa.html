@@ -12,7 +12,7 @@
           ng-model="reservatorioSelecionado"
           uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
           typeahead-min-length="3"
-          typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';"
+          typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado.id); reservatorioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
       </div>
     </div>
@@ -123,7 +123,7 @@
      ng-model="reservatorioSelecionado"
      uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
      typeahead-min-length="3"
-     typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado); reservatorioSelecionado = '';"
+     typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado.id); reservatorioSelecionado = '';"
      ng-focus="ctrl.hideInfo()">
  </div>
 </div>
