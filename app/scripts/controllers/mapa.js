@@ -109,19 +109,19 @@
     });
 
     function init() {
-      if (Number.isInteger(parseInt($location.search().id))){
-        vm.setReservatorio(parseInt($location.search().id));
+      if (Number.isInteger(parseInt($location.search().id_reservatorio))){
+        vm.setReservatorio(parseInt($location.search().id_reservatorio));
       }
     }
 
-    function setReservatorio(id) {
+    function setReservatorio(id_reservatorio) {
       vm.loadingInfo = true;
       vm.showInfo = true;
       vm.showSearchbar = false;
       vm.showLegend = false;
 
       for (var i = 0; i < vm.reservatorios.length; i++) {
-        if (parseInt(vm.reservatorios[i].id) === id) {
+        if (parseInt(vm.reservatorios[i].id) === id_reservatorio) {
           vm.reservatorioSelecionado = vm.reservatorios[i];
           break;
         }
@@ -136,8 +136,8 @@
             break;
           }
         }
-        $location.search('id', vm.reservatorioSelecionado.id);
-        $location.search('nome', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_"));
+        $location.search('id_reservatorio', vm.reservatorioSelecionado.id);
+        $location.search('nome_reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_"));
 
         efeitoZoom(vm.map.markers[0].lat, vm.map.markers[0].lon, 10);
         var data = Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function() {
