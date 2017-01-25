@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('MapaCtrl', MapaCtrl);
 
-  MapaCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','LEGENDCOLORS', 'olData'];
+  MapaCtrl.$inject = ['$scope', 'Reservatorio', 'RESTAPI','LEGENDCOLORS', 'olData', '$location'];
 
   /*jshint latedef: nofunc */
-  function MapaCtrl($scope, Reservatorio, RESTAPI, LEGENDCOLORS, olData) {
+  function MapaCtrl($scope, Reservatorio, RESTAPI, LEGENDCOLORS, olData, $location) {
     var vm = this;
     vm.reservatorios = [];
     vm.reservatorioSelecionado = {
@@ -32,7 +32,6 @@
       vm.latitude = -10.240929;
       vm.longitude = -44.231820;
     }
-
 
     vm.map = {
       center: {
@@ -93,7 +92,6 @@
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
     vm.setReservatorio = setReservatorio;
-    vm.setReservatorioByID = setReservatorioByID;
     vm.isSelectedTab = isSelectedTab;
     vm.setSelectedTab = setSelectedTab;
     vm.toggleInfo = toggleInfo;
@@ -101,49 +99,52 @@
     vm.toggleSearchbar = toggleSearchbar;
     vm.toggleLegend = toggleLegend;
 
-    vm.reservatorios = Reservatorio.info.query();
+    vm.reservatorios = Reservatorio.info.query(function() {
+      init();
+    });
 
     vm.reservatoriosGeo = Reservatorio.geolocalizacao.query(function() {
       vm.reservatoriosGeo = vm.reservatoriosGeo.features;
       vm.loadingMap = false;
     });
 
-    function setReservatorio(reservatorio, lat, lon, zoom) {
+    function init() {
+      if (Number.isInteger(parseInt($location.search().id_reservatorio))){
+        vm.setReservatorio(parseInt($location.search().id_reservatorio));
+      }
+    }
+
+    function setReservatorio(id_reservatorio) {
       vm.loadingInfo = true;
       vm.showInfo = true;
       vm.showSearchbar = false;
       vm.showLegend = false;
-      if (!(lat && lon && zoom)) {
+
+      for (var i = 0; i < vm.reservatorios.length; i++) {
+        if (parseInt(vm.reservatorios[i].id) === id_reservatorio) {
+          vm.reservatorioSelecionado = vm.reservatorios[i];
+          break;
+        }
+      }
+      if (vm.reservatorioSelecionado.id){
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
-          if (vm.reservatoriosGeo[i].properties.id === reservatorio.id) {
-            lat = parseFloat(vm.reservatoriosGeo[i].properties.latitude);
-            lon = parseFloat(vm.reservatoriosGeo[i].properties.longitude);
-            zoom = 10;
+          if (vm.reservatoriosGeo[i].properties.id === vm.reservatorioSelecionado.id) {
+            vm.map.markers = [{
+              lat: parseFloat(vm.reservatoriosGeo[i].properties.latitude),
+              lon: parseFloat(vm.reservatoriosGeo[i].properties.longitude)
+            }];
             break;
           }
         }
-      }
+        $location.search('id_reservatorio', vm.reservatorioSelecionado.id);
+        $location.search('nome_reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_"));
 
-      vm.map.markers = [{
-        lat: lat,
-        lon: lon
-      }];
-
-      efeitoZoom(lat, lon, zoom);
-      vm.reservatorioSelecionado = reservatorio;
-      var data = Reservatorio.monitoramento.query({id: reservatorio.id}, function() {
-        vm.reservatorioSelecionado.volumes = data.volumes;
-        vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
-        vm.loadingInfo = false;
-      });
-    }
-
-    function setReservatorioByID(id, lat, lon, zoom) {
-      for (var i = 0; i < vm.reservatorios.length; i++) {
-        if (parseInt(vm.reservatorios[i].id) === id) {
-          setReservatorio(vm.reservatorios[i], lat, lon, zoom);
-          break;
-        }
+        efeitoZoom(vm.map.markers[0].lat, vm.map.markers[0].lon, 10);
+        var data = Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function() {
+          vm.reservatorioSelecionado.volumes = data.volumes;
+          vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
+          vm.loadingInfo = false;
+        });
       }
     }
 
@@ -222,7 +223,7 @@
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
           if(feature) {
-            vm.setReservatorioByID(feature.get('id'), parseFloat(feature.get('latitude')), parseFloat(feature.get('longitude')), 10);
+            vm.setReservatorio(feature.get('id'));
           }
       });
     });
