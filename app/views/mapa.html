@@ -22,7 +22,7 @@
       <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat">
 
         <div class="info-card-header">
-          <a ui-sref="mapa" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
+          <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
             <span class="glyphicon" ng-class="{'glyphicon-chevron-down': ctrl.showInfo, 'glyphicon-chevron-up': !ctrl.showInfo}"></span>
           </a>
           <h2 class="info-card-title">{{ctrl.reservatorioSelecionado.reservat}}</h2>
@@ -67,11 +67,11 @@
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(2)">
-              <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length || ctrl.loadingInfo">
+              <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
                 <br><br><br>
-                Não possui dados sobre volume
+                Não possui dados históricos suficientes
               </div>
-              <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length">
+              <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length > 2">
                 <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
               </div>
             </div>
@@ -79,9 +79,9 @@
 
           <div class="info-card-footer">
             <ul class="nav nav-tabs nav-justified">
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(0)}"><a ui-sref="mapa" ng-click="ctrl.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(1)}"><a ui-sref="mapa" ng-click="ctrl.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span> Volume</a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a ui-sref="mapa" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span> Histórico</a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(0)}"><a href="" ng-click="ctrl.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(1)}"><a href="" ng-click="ctrl.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span> Volume</a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span> Histórico</a></li>
             </ul>
           </div>
         </div>
