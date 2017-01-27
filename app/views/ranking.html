@@ -1,0 +1,43 @@
+<div class="container">
+	<table st-table="ctrl.reservatorios" class="table table-bordered table-hover table-condensed">
+		<thead>
+		<tr>
+			<th>Nome</th>
+			<th>Bacia</th>
+			<th>Municipio</th>
+			<th>UF</th>
+			<th>Capacidade (hm³)</th>
+			<th>Volume (hm³)</th>
+			<th>Data</th>
+			<th>Volume Percentual</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="reservatorio in ctrl.reservatorios">
+				<td>{{reservatorio.nome}}</td>
+				<td>{{reservatorio.bacia}}</td>
+				<td>{{reservatorio.municipio}}</td>
+				<td>{{reservatorio.uf}}</td>
+				<td>{{reservatorio.capacidade}}</td>
+				<td colspan="{{reservatorio.volume_percentual!=null ? 1 : 3}}">
+					<div ng-show= "{{reservatorio.volume_percentual!=null}}">
+						{{reservatorio.volume}}
+					</div>
+					
+					<div ng-hide= "{{reservatorio.volume_percentual!=null}}" class="text-center">
+						Sem informação
+					</div>
+				</td>
+				<td ng-if="reservatorio.volume_percentual!=null">{{reservatorio.data_informacao}}</td>
+				<td ng-if="reservatorio.volume_percentual!=null">
+
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: {{ctrl.corVolume(reservatorio.volume_percentual)}}; width:{{ctrl.tamanhoBarra(reservatorio.volume_percentual)}}%;">
+							<span style="color: #9d9d9c">{{reservatorio.volume_percentual}}%</span>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -57,6 +57,12 @@
     .state('parceiros', {
       url: "/parceiros",
       templateUrl: "views/parceiros.html"
+    })
+    .state('ranking', {
+      url: "/ranking",
+      controller: "RankingCtrl",
+      controllerAs: "ctrl",
+      templateUrl: "views/ranking.html"
     });
     $urlRouterProvider.otherwise('/');
   }
