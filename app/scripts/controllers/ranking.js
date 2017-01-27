@@ -11,10 +11,13 @@
   function RankingCtrl(Reservatorio,LEGENDCOLORS) {
   	var vm = this;
   	vm.reservatorios = Reservatorio.info.query();
+
 	vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
     vm.corVolume = corVolume;
     vm.tamanhoBarra = tamanhoBarra;
 
+	vm.sortType = 'volume_percentual';
+	vm.sortReverse = false;
 
     function corVolume(volume) {
       if(volume === null) {

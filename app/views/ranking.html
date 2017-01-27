@@ -1,4 +1,5 @@
 <div class="container">
+
 	<table st-table="ctrl.reservatorios" class="table table-bordered table-hover table-condensed">
 		<thead>
 		<tr>
@@ -9,11 +10,17 @@
 			<th>Capacidade (hm³)</th>
 			<th>Volume (hm³)</th>
 			<th>Data</th>
-			<th>Volume Percentual</th>
+			<th>
+			     <a href="" ng-click="sortType = 'volume_percentual'; sortReverse = !sortReverse">
+		            Volume Percentual
+		            <span ng-show="sortType == 'volume_percentual' && !sortReverse" class="fa fa-caret-down"></span>
+		            <span ng-show="sortType == 'volume_percentual' && sortReverse" class="fa fa-caret-up"></span>
+          		</a>
+          	</th>
 		</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="reservatorio in ctrl.reservatorios">
+			<tr ng-repeat="reservatorio in ctrl.reservatorios | orderBy:sortType:sortReverse">
 				<td>{{reservatorio.nome}}</td>
 				<td>{{reservatorio.bacia}}</td>
 				<td>{{reservatorio.municipio}}</td>
