@@ -52,6 +52,24 @@ footer {
 
 }
 
+.text-small {
+  font-size: 0.95em;
+}
+
+.text-smaller {
+  font-size: 0.75em;
+}
+
+.cell-orderby {
+  line-height: 36px;
+}
+
+.bar-orderby {
+  padding-top: 15px;
+  padding-bottom: 10px;
+  background-color: #f7f7f7;
+}
+
 .logo {
   position: absolute;
   top: 5px;
@@ -636,7 +654,6 @@ footer {
   }
 
 }
-
 
 .main-sab-path {
   cursor: pointer;

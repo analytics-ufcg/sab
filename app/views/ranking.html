@@ -1,50 +1,60 @@
-<div class="container">
+<div class="section section-inverse">
+	<div class="container">
 
-	<table st-table="ctrl.reservatorios" class="table table-bordered table-hover table-condensed">
-		<thead>
-		<tr>
-			<th>Nome</th>
-			<th>Bacia</th>
-			<th>Municipio</th>
-			<th>UF</th>
-			<th>Capacidade (hm³)</th>
-			<th>Volume (hm³)</th>
-			<th>Data</th>
-			<th>
-			     <a href="" ng-click="sortType = 'volume_percentual'; sortReverse = !sortReverse">
-		            Volume Percentual
-		            <span ng-show="sortType == 'volume_percentual' && !sortReverse" class="fa fa-caret-down"></span>
-		            <span ng-show="sortType == 'volume_percentual' && sortReverse" class="fa fa-caret-up"></span>
-          		</a>
-          	</th>
-		</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="reservatorio in ctrl.reservatorios | orderBy:sortType:sortReverse">
-				<td>{{reservatorio.nome}}</td>
-				<td>{{reservatorio.bacia}}</td>
-				<td>{{reservatorio.municipio}}</td>
-				<td>{{reservatorio.uf}}</td>
-				<td>{{reservatorio.capacidade}}</td>
-				<td colspan="{{reservatorio.volume_percentual!=null ? 1 : 3}}">
-					<div ng-show= "{{reservatorio.volume_percentual!=null}}">
-						{{reservatorio.volume}}
-					</div>
-					
-					<div ng-hide= "{{reservatorio.volume_percentual!=null}}" class="text-center">
-						Sem informação
-					</div>
-				</td>
-				<td ng-if="reservatorio.volume_percentual!=null">{{reservatorio.data_informacao}}</td>
-				<td ng-if="reservatorio.volume_percentual!=null">
+		<h1>Ranking dos reservatórios</h1>
+		<br>
+		<div class="row bar-orderby" ng-hide="ctrl.loading">
+			<div class="col-sm-6 col-md-4">
+				<select ng-options="uf as uf.nome disable when (uf.sigla === '--') for uf in ctrl.ufs track by uf.sigla" ng-model="ctrl.selectedUf" class="form-control"></select>
+			</div>
+			<div class="col-sm-6 col-md-8 cell-orderby">
+				<button type="button" class="btn-link" ng-click="ctrl.setOrderby()">
+					<span class="glyphicon" ng-class="{'glyphicon-triangle-bottom': ctrl.orderBy, 'glyphicon-triangle-top': !ctrl.orderBy}"></span> Reordenar
+				</button>
+			</div>
+		</div>
+		<br>
 
-					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: {{ctrl.corVolume(reservatorio.volume_percentual)}}; width:{{ctrl.tamanhoBarra(reservatorio.volume_percentual)}}%;">
-							<span style="color: #9d9d9c">{{reservatorio.volume_percentual}}%</span>
-						</div>
+		<span us-spinner ng-show="ctrl.loading"></span>
+
+		<div class="row hidden-xs" ng-hide="ctrl.loading">
+			<div class="col-xs-10 col-sm-4 col-md-6"><h4>Reservatório</h4></div>
+			<div class="col-xs-10 col-sm-1"><h5>UF</h5></div>
+			<div class="col-xs-10 col-sm-2 col-md-1"><h5>Capacidade (hm³)</h5></div>
+			<div class="col-xs-10 col-sm-2 col-md-1"><h5>Volume (hm³)</h5></div>
+			<div class="col-xs-10 col-sm-3"></div>
+		</div>
+
+		<div class="row" ng-repeat="reservatorio in ctrl.reservatorios | filter:{volume_percentual: '', uf: ctrl.selectedUf.sigla} | orderBy:'volume_percentual':ctrl.orderBy">
+			<div class="col-xs-10 col-sm-4 col-md-6">
+				<div class="text-small"><strong>{{reservatorio.nome}}</strong></div>
+				<div class="text-smaller">{{reservatorio.municipio}}</div>
+			</div>
+			<div class="col-xs-2 col-sm-1 text-small">
+				{{reservatorio.uf}}
+			</div>
+			<div class="col-xs-6 col-sm-2 col-md-1 text-small hidden-xs">{{reservatorio.volume}}</div>
+			<div class="col-xs-6 col-sm-2 col-md-1 text-small hidden-xs">{{reservatorio.capacidade}}</div>
+			<div class="col-xs-12 col-sm-3">
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: {{ctrl.corVolume(reservatorio.volume_percentual)}}; width:{{ctrl.tamanhoBarra(reservatorio.volume_percentual)}}%;">
+						<span style="color: #373B52; font-weight: bold;">{{reservatorio.volume_percentual}}%</span>
 					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="row" ng-repeat="reservatorio in ctrl.reservatorios | filter:{volume_percentual: '!', uf: ctrl.selectedUf.sigla} | orderBy:'-nome'">
+			<div class="col-xs-9">
+				<div class="text-small"><strong>{{reservatorio.nome}}</strong></div>
+				<div class="text-smaller">{{reservatorio.municipio}}</div>
+			</div>
+			<div class="col-xs-3">
+				Sem informação
+			</div>
+		</div>
+
+	</div>
 </div>
