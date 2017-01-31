@@ -27,14 +27,14 @@
 
 		<div class="row" ng-repeat="reservatorio in ctrl.reservatorios | filter:{volume_percentual: '', uf: ctrl.selectedUf.sigla} | orderBy:'volume_percentual':ctrl.orderBy">
 			<div class="col-xs-10 col-sm-4 col-md-6">
-				<div class="text-small"><strong>{{reservatorio.nome}}</strong></div>
+				<div class="text-small"><strong>{{reservatorio.reservat}}</strong></div>
 				<div class="text-smaller">{{reservatorio.municipio}}</div>
 			</div>
 			<div class="col-xs-2 col-sm-1 text-small">
 				{{reservatorio.uf}}
 			</div>
-			<div class="col-xs-6 col-sm-2 col-md-1 text-small hidden-xs">{{reservatorio.volume}}</div>
 			<div class="col-xs-6 col-sm-2 col-md-1 text-small hidden-xs">{{reservatorio.capacidade}}</div>
+			<div class="col-xs-6 col-sm-2 col-md-1 text-small hidden-xs">{{reservatorio.volume}}</div>
 			<div class="col-xs-12 col-sm-3">
 				<div class="progress">
 					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="background-color: {{ctrl.corVolume(reservatorio.volume_percentual)}}; width:{{ctrl.tamanhoBarra(reservatorio.volume_percentual)}}%;">
@@ -48,7 +48,7 @@
 
 		<div class="row" ng-repeat="reservatorio in ctrl.reservatorios | filter:{volume_percentual: '!', uf: ctrl.selectedUf.sigla} | orderBy:'-nome'">
 			<div class="col-xs-9">
-				<div class="text-small"><strong>{{reservatorio.nome}}</strong></div>
+				<div class="text-small"><strong>{{reservatorio.reservat}}</strong></div>
 				<div class="text-smaller">{{reservatorio.municipio}}</div>
 			</div>
 			<div class="col-xs-3">
