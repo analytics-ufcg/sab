@@ -54,18 +54,10 @@
         {
           name: 'semiarido',
           source: {
-            type: 'GeoJSON',
+            type: 'TopoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
           style: semiaridoStyle()
-        },
-        {
-          name: 'reservatorios',
-          source: {
-            type: 'GeoJSON',
-            url: RESTAPI.url+'/reservatorios'
-          },
-          style: reservStyle()
         }
       ],
       defaults: {
@@ -99,20 +91,35 @@
     vm.toggleSearchbar = toggleSearchbar;
     vm.toggleLegend = toggleLegend;
 
-    vm.reservatorios = Reservatorio.info.query(function() {
-      init();
-    });
-
-    vm.reservatoriosGeo = Reservatorio.geolocalizacao.query(function() {
-      vm.reservatoriosGeo = vm.reservatoriosGeo.features;
-      vm.loadingMap = false;
-    });
 
     function init() {
-      if (Number.isInteger(parseInt($location.search().id))){
-        vm.setReservatorio(parseInt($location.search().id));
-      }
+      Reservatorio.info.query(function(data) {
+        vm.reservatorios = data;
+        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatoriosGeo.length){
+          vm.setReservatorio(parseInt($location.search().id));
+        }
+      });
+
+      Reservatorio.geolocalizacao.query(function(data) {
+        vm.reservatoriosGeo = data.features;
+        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatorios.length){
+          vm.setReservatorio(parseInt($location.search().id));
+        }
+        vm.map.layers.push({
+          name: 'reservatorios',
+          source: {
+            type: 'GeoJSON',
+            geojson: {
+                projection: "EPSG:4326",
+                object: data
+            }
+          },
+          style: reservStyle()
+        });
+        vm.loadingMap = false;
+      });
     }
+    init(); 
 
     function setReservatorio(id) {
       vm.loadingInfo = true;
