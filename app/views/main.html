@@ -6,7 +6,7 @@
       </div>
       <span us-spinner ng-show="main.loadingInfo"></span>
       <div class="col-sm-6 col-md-5 col-md-offset-1" ng-hide="main.loadingInfo">
-        <div class="main-status">
+        <div class="main-status" ng-hide="main.gotError">
           <h2>{{main.estadoAtual.semiarido}}</h2>
           <div class="main-status-item">
             <strong>{{main.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s) <br>
@@ -34,5 +34,7 @@
     </div>
   </div>
 </div>
+
+<sab-error ng-show="main.gotError"></sab-error>
 
 <ng-include src="'views/footer.html'"></ng-include>

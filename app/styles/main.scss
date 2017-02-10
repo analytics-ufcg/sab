@@ -689,3 +689,27 @@ footer {
     stroke-dashoffset: 0;
   }
 }
+
+.modal-backdrop-error {
+  top: $navbar-height;
+}
+
+.modal-backdrop-error-dialog {
+  position: fixed;
+  top: $navbar-height;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+
+  > .modal-backdrop-error-message {
+    position: relative;
+    width: 600px;
+    margin: 100px auto;
+    background-color: #fff;
+    padding: $padding-large-vertical $padding-large-horizontal * 2;
+  }
+}

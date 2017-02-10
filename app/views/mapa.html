@@ -112,7 +112,10 @@
   </openlayers>
 
 </div>
+<sab-error ng-show="ctrl.gotError"></sab-error>
+
 <div class="modal-overlay" ng-show="ctrl.showSearchbar" ng-click="ctrl.toggleSearchbar()"></div>
+
 <div class="search-bar" ng-show="ctrl.showSearchbar">
  <div class="input-group">
    <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>

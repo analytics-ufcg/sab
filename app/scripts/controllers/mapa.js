@@ -20,6 +20,7 @@
     vm.loadingInfo = true;
     vm.showSearchbar = false;
     vm.showLegend = false;
+    vm.gotError = false;
 
     var larguraTela = $(window).width();
 
@@ -95,14 +96,14 @@
     function init() {
       Reservatorio.info.query(function(data) {
         vm.reservatorios = data;
-        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatoriosGeo.length){
+        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatoriosGeo.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
       });
 
       Reservatorio.geolocalizacao.query(function(data) {
         vm.reservatoriosGeo = data.features;
-        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatorios.length){
+        if (Number.isInteger(parseInt($location.search().id)) && vm.reservatorios.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
         vm.map.layers.push({
@@ -117,9 +118,12 @@
           style: reservStyle()
         });
         vm.loadingMap = false;
+      }, function(error) {
+        vm.loadingMap = false;
+        vm.gotError = true;
       });
     }
-    init(); 
+    init();
 
     function setReservatorio(id) {
       vm.loadingInfo = true;
