@@ -47,7 +47,12 @@
                 <br><br><br>
                 Não possui dados sobre volume
               </div>
-              <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">Última medição: {{ctrl.reservatorioSelecionado.data_informacao}}</div>
+              <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
+                Última medição: {{ctrl.reservatorioSelecionado.data_informacao}}
+                <a href="" class="btn-link" uib-tooltip="Fonte: {{ctrl.reservatorioSelecionado.fonte}}">
+                  <i class="glyphicon glyphicon-info-sign"></i>
+                </a>
+              </div>
 
               <hr class="info-card-divider">
 
