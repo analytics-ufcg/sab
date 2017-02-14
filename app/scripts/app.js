@@ -10,7 +10,14 @@
    * Main module of the application.
    */
   angular
-    .module('sabApp', ['ngResource', 'ui.router', 'ui.bootstrap', 'openlayers-directive', 'angularSpinner'])
+    .module('sabApp', [
+      'ngResource',
+      'ui.router',
+      'ui.bootstrap',
+      'openlayers-directive',
+      'angularSpinner',
+      'angulartics',
+      'angulartics.google.analytics'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api'
     })
@@ -42,6 +49,13 @@
     })
     .state('mapa', {
       url: "/mapa",
+      templateUrl: "views/mapa.html",
+      controller: "MapaCtrl",
+      controllerAs: "ctrl",
+      reloadOnSearch: false
+    })
+    .state('mapa2', {
+      url: "/mapa/:id/:name",
       templateUrl: "views/mapa.html",
       controller: "MapaCtrl",
       controllerAs: "ctrl",
