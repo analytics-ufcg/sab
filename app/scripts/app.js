@@ -54,13 +54,6 @@
       controllerAs: "ctrl",
       reloadOnSearch: false
     })
-    .state('mapa2', {
-      url: "/mapa/:id/:name",
-      templateUrl: "views/mapa.html",
-      controller: "MapaCtrl",
-      controllerAs: "ctrl",
-      reloadOnSearch: false
-    })
     .state('sobre', {
       url: "/sobre",
       templateUrl: "views/sobre.html"
