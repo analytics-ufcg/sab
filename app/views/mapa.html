@@ -108,7 +108,14 @@
 
   <div class="legenda hidden-xs">
     Volume (%)<br><small>(Última medição)</small>
-    <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>
+    <div class="legenda-data">
+      <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>
+    </div>
+    <div class="legenda-info">
+      <a href="" class="btn-link" tooltip-placement="top-right" uib-tooltip="Sem medições nos últimos 90 dias">
+        <i class="glyphicon glyphicon-info-sign"></i>
+      </a>
+    </div>
   </div>
 
   <openlayers id="map" ol-center="ctrl.map.center" ol-defaults="ctrl.map.defaults" custom-layers="true" ol-markers="ctrl.markers">
@@ -140,5 +147,10 @@
   Volume <br><small>(Última medição)</small>
   <div class="legenda-lg-data">
     <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>
+  </div>
+  <div class="legenda-lg-info">
+    <a href="" class="btn-link" tooltip-placement="top-right" uib-tooltip="Sem medições nos últimos 90 dias">
+      <i class="glyphicon glyphicon-info-sign"></i>
+    </a>
   </div>
 </div>

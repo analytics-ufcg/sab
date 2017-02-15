@@ -262,7 +262,7 @@ footer {
   z-index: $map-info-z-index;
   position: absolute;
   padding: $padding-base-vertical*2;
-  width: 180px;
+  width: 190px;
   background-color: #9a999e;
   color: #fff;
   text-align: center;
@@ -281,6 +281,15 @@ footer {
     right: 62px;
   }
 
+  > .legenda-data {
+    padding-right: 13px;
+  }
+
+  > .legenda-info {
+    float: right;
+    margin-top: -21px;
+  }
+
 }
 
 .legenda-lg {
@@ -296,6 +305,12 @@ footer {
 
   > .legenda-lg-data {
     padding: 10px 25px;
+  }
+
+  > .legenda-lg-info {
+    float: right;
+    margin-top: -36px;
+    margin-right: 8px;
   }
 
 }
