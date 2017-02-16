@@ -9,8 +9,6 @@
   /*jshint latedef: nofunc */
   function MainCtrl($scope, ReservatorioEquivalente, LEGENDCOLORS) {
     var vm = this;
-    vm.mapSabData = {};
-    vm.mapBrData = {};
     vm.estadoEquivalente = [];
     vm.estadoAtual = {};
 

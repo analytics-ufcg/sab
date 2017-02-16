@@ -1,5 +1,11 @@
 <div class="map-container">
 
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#">Home</a></li>
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
+</ul>
+
   <div class="map-controls-wrapper">
 
     <div class="search-bar hidden-xs">
@@ -19,7 +25,7 @@
 
     <div class="map-info">
 
-      <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat">
+<!--       <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat">
 
         <div class="info-card-header">
           <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
@@ -85,9 +91,44 @@
             </ul>
           </div>
         </div>
-
       </div>
+ -->
+      <div class="info-card">
 
+        <div class="info-card-header">
+          <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
+            <span class="glyphicon" ng-class="{'glyphicon-chevron-down': ctrl.showInfo, 'glyphicon-chevron-up': !ctrl.showInfo}"></span>
+          </a>
+          <h2 class="info-card-title">{{ctrl.estadoAtual.semiarido}}</h2>
+        </div>
+
+        <div  ng-if="ctrl.showInfo">
+
+          <div class="info-card-body">
+
+            <span us-spinner ng-show="ctrl.loadingInfo"></span>
+            <div class="main-status-item">
+              <strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s) <br>
+              <strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação
+            </div>
+            <div class="main-graphics">
+              <h4>Situação dos reservatórios monitorados:</h4>
+              <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
+                <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+              </div>
+              <sab-barra-equivalente info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
+              <br><br>
+              <div ng-show="ctrl.estadoAtual.capacidade_equivalente">
+                <sab-volume
+                  capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume"
+                  volume="ctrl.estadoAtual.volume_equivalente | sabVolume"
+                  percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>

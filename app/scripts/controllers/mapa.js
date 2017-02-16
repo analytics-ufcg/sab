@@ -106,7 +106,7 @@
         if (Number.isInteger(parseInt($location.search().id)) && vm.reservatorios.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
-        vm.map.layers.push({
+/*        vm.map.layers.push({
           name: 'reservatorios',
           source: {
             type: 'GeoJSON',
@@ -116,7 +116,9 @@
             }
           },
           style: reservStyle()
-        });
+        });*/
+
+/*      vm.map.layers.pop();*/
         vm.loadingMap = false;
       }, function(error) {
         vm.loadingMap = false;
@@ -239,6 +241,7 @@
       });
     });
 
+
     $scope.$on('openlayers.map.pointermove', function (e, data) {
         $scope.$apply(function () {
             olData.getMap().then(function (map) {
@@ -286,6 +289,61 @@
 
       });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    vm.estadoEquivalente = [];
+    vm.estadoAtual = {};
+    vm.setEstado = setEstado;
+
+    Reservatorio.estadoEquivalente.query(function(response) {
+      vm.loadingInfo = true;
+      vm.estadoEquivalente = response;
+      setEstado("Semiarido");
+      vm.loadingInfo = false;
+    }, function(error) {
+      vm.loadingInfo = false;
+      vm.gotError = true;
+    });
+
+    function setEstado(uf) {
+      for (var i = 0; i < vm.estadoEquivalente.length; i++) {
+        if (vm.estadoEquivalente[i].uf === uf){
+          vm.estadoAtual = vm.estadoEquivalente[i];
+        }
+      }
+    }
+
+    var previousFeature;
+
+    $scope.$on('openlayers.layers.semiarido.click', function(event, feature) {
+      $scope.$apply(function() {
+          if (feature) {
+              setEstado(feature.getId());
+              feature.setStyle(new ol.style.Style({
+                fill: new ol.style.Fill({ color:"rgba(0, 0, 0, 0.5)"})
+              }));
+
+              if (previousFeature && feature !== previousFeature) {
+                previousFeature.setStyle(semiaridoStyle);
+              }
+
+              previousFeature = feature;
+          }
+
+      });
+    });
 
   }
 })();
