@@ -15,6 +15,7 @@
       volumes: []
     };
     vm.selectedTab = 1;
+    vm.selectedMapType = 0;
     vm.showInfo = true;
     vm.loadingMap = true;
     vm.loadingInfo = true;
@@ -63,7 +64,7 @@
       ],
       defaults: {
           events: {
-              map: ['pointermove', 'mousemove'],
+              map: ['pointermove', 'mousemove', 'click'],
               layers: [ 'mousemove', 'click' ]
           },
           controls: {
@@ -81,16 +82,21 @@
       }
     };
     vm.reservatoriosGeo = [];
+    vm.estadoEquivalente = [];
+    vm.estadoAtual = {};
 
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
     vm.setReservatorio = setReservatorio;
     vm.isSelectedTab = isSelectedTab;
     vm.setSelectedTab = setSelectedTab;
+    vm.isSelectedMapType = isSelectedMapType;
+    vm.setSelectedMapType = setSelectedMapType;
     vm.toggleInfo = toggleInfo;
     vm.hideInfo = hideInfo;
     vm.toggleSearchbar = toggleSearchbar;
     vm.toggleLegend = toggleLegend;
+    vm.setEstado = setEstado;
 
 
     function init() {
@@ -106,7 +112,7 @@
         if (Number.isInteger(parseInt($location.search().id)) && vm.reservatorios.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
-/*        vm.map.layers.push({
+        vm.map.layers.push({
           name: 'reservatorios',
           source: {
             type: 'GeoJSON',
@@ -116,7 +122,7 @@
             }
           },
           style: reservStyle()
-        });*/
+        });
 
 /*      vm.map.layers.pop();*/
         vm.loadingMap = false;
@@ -160,6 +166,31 @@
         });
       }
     }
+
+    function isSelectedMapType(type) {
+      return vm.selectedMapType === type;
+    }
+
+    function setSelectedMapType(type) {
+      vm.selectedMapType = type;
+      if (type == 1){
+        $location.search({});
+        vm.map.markers.pop();
+        vm.reservatorioSelecionado = {
+          nome: "",
+          volumes: []
+        };
+      }
+      if (type == 0){
+        if (previousFeature){
+          previousFeature.setStyle(semiaridoStyle());
+          previousFeature = null;
+        }
+        setEstado("Semiarido");
+      }
+      efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
+    }
+
 
     function isSelectedTab(tab) {
       return vm.selectedTab === tab;
@@ -235,7 +266,7 @@
 
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
-          if(feature) {
+          if(feature && isSelectedMapType(0)) {
             vm.setReservatorio(feature.get('id'));
           }
       });
@@ -247,7 +278,10 @@
             olData.getMap().then(function (map) {
                 var pixel = map.getEventPixel(data.event.originalEvent);
                 var hit = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-                  if(layer.get('name')==="reservatorios"){
+                  if(layer.get('name')==="reservatorios" && isSelectedMapType(0)){
+                    map.getTarget().style.cursor = 'pointer';
+                    return true;
+                  } else if(layer.get('name')==="semiarido" && isSelectedMapType(1)){
                     map.getTarget().style.cursor = 'pointer';
                     return true;
                   }
@@ -291,22 +325,6 @@
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    vm.estadoEquivalente = [];
-    vm.estadoAtual = {};
-    vm.setEstado = setEstado;
-
     Reservatorio.estadoEquivalente.query(function(response) {
       vm.loadingInfo = true;
       vm.estadoEquivalente = response;
@@ -329,19 +347,31 @@
 
     $scope.$on('openlayers.layers.semiarido.click', function(event, feature) {
       $scope.$apply(function() {
-          if (feature) {
+          if (feature && isSelectedMapType(1)) {
               setEstado(feature.getId());
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(0, 0, 0, 0.5)"})
               }));
 
               if (previousFeature && feature !== previousFeature) {
-                previousFeature.setStyle(semiaridoStyle);
+                previousFeature.setStyle(semiaridoStyle());
               }
 
               previousFeature = feature;
           }
 
+      });
+    });
+
+    $scope.$on('openlayers.map.click', function(event, feature) {
+      $scope.$apply(function() {
+          if (feature && isSelectedMapType(1)) {
+              setEstado("Semiarido");
+              if (previousFeature){
+                previousFeature.setStyle(semiaridoStyle());
+                previousFeature = null;
+              }
+          }
       });
     });
 

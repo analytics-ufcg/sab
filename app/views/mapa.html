@@ -1,14 +1,14 @@
 <div class="map-container">
 
-<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">Home</a></li>
-  <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="#">Messages</a></li>
-</ul>
-
+<div class="map-type-tab">
+  <ul class="nav nav-tabs">
+    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)"> Reservatorios</a></li>
+    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1)">Estados</a></li>
+  </ul>
+</div>
   <div class="map-controls-wrapper">
 
-    <div class="search-bar hidden-xs">
+    <div class="search-bar hidden-xs"  ng-show="ctrl.isSelectedMapType(0)">
       <div class="input-group">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
@@ -25,7 +25,7 @@
 
     <div class="map-info">
 
-<!--       <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat">
+      <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat" ng-if="ctrl.isSelectedMapType(0)">
 
         <div class="info-card-header">
           <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
@@ -92,8 +92,8 @@
           </div>
         </div>
       </div>
- -->
-      <div class="info-card">
+
+      <div class="info-card" ng-if="ctrl.isSelectedMapType(1)">
 
         <div class="info-card-header">
           <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
