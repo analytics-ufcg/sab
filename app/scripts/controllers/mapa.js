@@ -10,10 +10,7 @@
   function MapaCtrl($scope, Reservatorio, RESTAPI, LEGENDCOLORS, olData, $location) {
     var vm = this;
     vm.reservatorios = [];
-    vm.reservatorioSelecionado = {
-      nome: "",
-      volumes: []
-    };
+    vm.reservatorioSelecionado = {};
     vm.selectedTab = 1;
     vm.selectedMapType = 0;
     vm.showInfo = true;
@@ -97,6 +94,7 @@
     vm.toggleSearchbar = toggleSearchbar;
     vm.toggleLegend = toggleLegend;
     vm.setEstado = setEstado;
+    var previousFeature;
 
 
     function init() {
@@ -124,7 +122,6 @@
           style: reservStyle()
         });
 
-/*      vm.map.layers.pop();*/
         vm.loadingMap = false;
       }, function(error) {
         vm.loadingMap = false;
@@ -176,10 +173,7 @@
       if (type == 1){
         $location.search({});
         vm.map.markers.pop();
-        vm.reservatorioSelecionado = {
-          nome: "",
-          volumes: []
-        };
+        vm.reservatorioSelecionado = {};
       }
       if (type == 0){
         if (previousFeature){
@@ -342,8 +336,6 @@
         }
       }
     }
-
-    var previousFeature;
 
     $scope.$on('openlayers.layers.semiarido.click', function(event, feature) {
       $scope.$apply(function() {
