@@ -17,9 +17,13 @@
       'openlayers-directive',
       'angularSpinner',
       'angulartics',
-      'angulartics.google.analytics'])
+      'angulartics.google.analytics',
+      '720kb.socialshare',
+      'angular-clipboard'])
     .constant('RESTAPI', {
-      url: 'http://localhost:5003/api'
+      url: 'http://localhost:5003/api',
+      facebookAppID: '543791825832138',
+      publicImagesPath: 'https://wwws-cloud.lsd.ufcg.edu.br:42160/public'
     })
     .constant('LEGENDCOLORS', {
       reservoirsColors: [
