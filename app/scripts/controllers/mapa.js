@@ -119,7 +119,8 @@
                 object: data
             }
           },
-          style: reservStyle()
+          style: reservStyle(),
+          opacity: 1
         });
 
         vm.loadingMap = false;
@@ -174,17 +175,20 @@
         $location.search({});
         vm.map.markers.pop();
         vm.reservatorioSelecionado = {};
+        vm.map.layers[1].style = semiaridoStyleEstado();
+        vm.map.layers[2].opacity = 0.7;
       }
       if (type == 0){
         if (previousFeature){
-          previousFeature.setStyle(semiaridoStyle());
+          previousFeature.setStyle(null);
           previousFeature = null;
         }
+        vm.map.layers[1].style = semiaridoStyle();
         setEstado("Semiarido");
+        vm.map.layers[2].opacity = 1;
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
     }
-
 
     function isSelectedTab(tab) {
       return vm.selectedTab === tab;
@@ -258,6 +262,12 @@
       });
     }
 
+    function semiaridoStyleEstado() {
+      return new ol.style.Style({
+        fill: new ol.style.Fill({color: "rgba(40, 60, 82, 1)"})
+      });
+    }
+
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
           if(feature && isSelectedMapType(0)) {
@@ -303,15 +313,15 @@
 
       var reservatorio = ol.proj.fromLonLat([lon + lonMais,lat + latMais]);
       olData.getMap().then(function(map) {
-        var bounce = ol.animation.bounce({
-            resolution: 750,
+        var zoomAnim = ol.animation.zoom({
+            resolution: map.getView().getResolution(),
             duration: 2000
           });
         var pan = ol.animation.pan({
             duration: 2000,
             source: map.getView().getCenter()
           });
-        map.beforeRender(pan, bounce);
+        map.beforeRender(pan, zoomAnim);
         map.getView().setCenter(reservatorio);
         map.getView().setZoom(zoom);
 
@@ -342,11 +352,11 @@
           if (feature && isSelectedMapType(1)) {
               setEstado(feature.getId());
               feature.setStyle(new ol.style.Style({
-                fill: new ol.style.Fill({ color:"rgba(0, 0, 0, 0.5)"})
+                fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
 
               if (previousFeature && feature !== previousFeature) {
-                previousFeature.setStyle(semiaridoStyle());
+                previousFeature.setStyle(null);
               }
 
               previousFeature = feature;
@@ -360,7 +370,7 @@
           if (feature && isSelectedMapType(1)) {
               setEstado("Semiarido");
               if (previousFeature){
-                previousFeature.setStyle(semiaridoStyle());
+                previousFeature.setStyle(null);
                 previousFeature = null;
               }
           }
