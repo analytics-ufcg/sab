@@ -95,7 +95,7 @@
                     socialshare-title="{{ctrl.share.title}}"
                     socialshare-description="{{ctrl.share.longText}}"
                     socialshare-url="{{ctrl.share.url}}"
-                    socialshare-media="https://wwws-cloud.lsd.ufcg.edu.br:42160/public/12172.png"
+                    socialshare-media="{{ctrl.share.media}}"
                     ><span class="icon-facebook2"></span> Facebook</button>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
@@ -103,20 +103,13 @@
                     socialshare
                     socialshare-provider="twitter"
                     socialshare-text="{{ctrl.share.shortText}}"
-                    socialshare-url="http://localhost:9000/#/mapa?id=12172&reservatorio=epitacio_pessoa"><span class="icon-twitter"></span> Twitter</button>
+                    socialshare-url="{{ctrl.share.url}}"><span class="icon-twitter"></span> Twitter</button>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
                   <button class="btn btn-default btn-block btn-google"
                     socialshare
                     socialshare-provider="google"
                     socialshare-url="{{ctrl.share.url}}"><span class="icon-google-plus"></span> Google+</button>
-                </div>
-                <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 visible-xs">
-                  <button class="btn btn-default btn-block btn-whatsapp"
-                    socialshare
-                    socialshare-provider="whatsapp"
-                    socialshare-url="{{ctrl.share.url}}"
-                    socialshare-text="{{ctrl.share.longText}}"><span class="icon-whatsapp"></span> Whatsapp</button>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
                   <button class="btn btn-default btn-block btn-share"
@@ -219,7 +212,7 @@
         socialshare-title="{{ctrl.share.title}}"
         socialshare-description="{{ctrl.share.longText}}"
         socialshare-url="{{ctrl.share.url}}"
-        socialshare-media="https://wwws-cloud.lsd.ufcg.edu.br:42160/public/12172.png"
+        socialshare-media="{{ctrl.share.media}}"
         ><span class="icon-facebook2"></span> Facebook</button>
     </div>
     <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
@@ -227,7 +220,7 @@
         socialshare
         socialshare-provider="twitter"
         socialshare-text="{{ctrl.share.shortText}}"
-        socialshare-url="http://localhost:9000/#/mapa?id=12172&reservatorio=epitacio_pessoa"><span class="icon-twitter"></span> Twitter</button>
+        socialshare-url="{{ctrl.share.url}}"><span class="icon-twitter"></span> Twitter</button>
     </div>
     <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
       <button class="btn btn-default btn-block btn-google"
@@ -236,11 +229,11 @@
         socialshare-url="{{ctrl.share.url}}"><span class="icon-google-plus"></span> Google+</button>
     </div>
     <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 visible-xs">
-      <button class="btn btn-default btn-block btn-whatsapp"
+      <a class="btn btn-default btn-block btn-whatsapp"
         socialshare
         socialshare-provider="whatsapp"
         socialshare-url="{{ctrl.share.url}}"
-        socialshare-text="{{ctrl.share.longText}}"><span class="icon-whatsapp"></span> Whatsapp</button>
+        socialshare-text="{{ctrl.share.longText}}"><span class="icon-whatsapp"></span> Whatsapp</a>
     </div>
     <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3">
       <button class="btn btn-default btn-block btn-share"
