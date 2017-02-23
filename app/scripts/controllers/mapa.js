@@ -10,6 +10,8 @@
   function MapaCtrl($scope, Reservatorio, RESTAPI, LEGENDCOLORS, olData, $location) {
     var vm = this;
     vm.reservatorios = [];
+    vm.municipios = [];
+    vm.municipioSelecionado = {};
     vm.reservatorioSelecionado = {};
     vm.selectedTab = 1;
     vm.selectedMapType = 0;
@@ -95,6 +97,7 @@
     vm.toggleLegend = toggleLegend;
     vm.setEstado = setEstado;
     var previousFeature;
+    vm.efeitoZoom = efeitoZoom;
 
 
     function init() {
@@ -103,6 +106,10 @@
         if (Number.isInteger(parseInt($location.search().id)) && vm.reservatoriosGeo.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
+      });
+
+      Reservatorio.municipios.query(function(data) {
+        vm.municipios = data;
       });
 
       Reservatorio.geolocalizacao.query(function(data) {
@@ -270,7 +277,7 @@
 
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
-          if(feature && isSelectedMapType(0)) {
+          if(feature && isSelectedMapType(0) || isSelectedMapType(2)) {
             vm.setReservatorio(feature.get('id'));
           }
       });
@@ -282,7 +289,7 @@
             olData.getMap().then(function (map) {
                 var pixel = map.getEventPixel(data.event.originalEvent);
                 var hit = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-                  if(layer.get('name')==="reservatorios" && isSelectedMapType(0)){
+                  if(layer.get('name')==="reservatorios" && (isSelectedMapType(0) || isSelectedMapType(2))){
                     map.getTarget().style.cursor = 'pointer';
                     return true;
                   } else if(layer.get('name')==="semiarido" && isSelectedMapType(1)){
@@ -311,7 +318,7 @@
         latMais = -0.2;
       }
 
-      var reservatorio = ol.proj.fromLonLat([lon + lonMais,lat + latMais]);
+      var reservatorio = ol.proj.fromLonLat([parseFloat(lon) + lonMais,parseFloat(lat) + latMais]);
       olData.getMap().then(function(map) {
         var zoomAnim = ol.animation.zoom({
             resolution: map.getView().getResolution(),

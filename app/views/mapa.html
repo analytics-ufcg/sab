@@ -4,6 +4,7 @@
   <ul class="nav nav-tabs">
     <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)"> Reservatorios</a></li>
     <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1)">Estados</a></li>
+    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Municipios</a></li>
   </ul>
 </div>
   <div class="map-controls-wrapper">
@@ -23,9 +24,24 @@
       </div>
     </div>
 
+    <div class="search-bar hidden-xs"  ng-show="ctrl.isSelectedMapType(2)">
+      <div class="input-group">
+        <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Pesquisar municipio..."
+          ng-model="municipioSelecionado"
+          uib-typeahead="municipio as municipio.nome_municipio for municipio in ctrl.municipios | filter:$viewValue"
+          typeahead-min-length="3"
+          typeahead-on-select="ctrl.efeitoZoom(municipioSelecionado.latitude,municipioSelecionado.longitude,10);"
+          ng-focus="ctrl.hideInfo()">
+      </div>
+    </div>
+
     <div class="map-info">
 
-      <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat" ng-if="ctrl.isSelectedMapType(0)">
+      <div class="info-card" ng-show="ctrl.reservatorioSelecionado.reservat" ng-if="ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)">
 
         <div class="info-card-header">
           <a href="" class="info-card-showhide-btn" ng-click="ctrl.toggleInfo()">
