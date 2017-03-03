@@ -169,7 +169,7 @@
         vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
         vm.share.url = $location.absUrl();
         // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
-        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+".png";
+        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
         vm.resetCopyUrl();
 
         efeitoZoom(vm.map.markers[0].lat, vm.map.markers[0].lon, 10);
