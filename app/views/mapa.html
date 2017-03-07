@@ -1,15 +1,21 @@
 <div class="map-container">
 
-<div class="map-type-tab">
-  <ul class="nav nav-tabs">
-    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)"> Reservatorios</a></li>
-    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1)">Estados</a></li>
-    <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Municipios</a></li>
-  </ul>
-</div>
   <div class="map-controls-wrapper">
 
+    <div class="map-tabs">
+      <ul class="nav nav-tabs">
+        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(0)"> Reservatórios</a></li>
+        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1)"> Resumo estadual</a></li>
+      </ul>
+    </div>
+
     <div class="search-bar hidden-xs"  ng-show="ctrl.isSelectedMapType(0)">
+      <div class="input-group-footer">
+        <ul class="nav nav-pills">
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+        </ul>
+      </div>
       <div class="input-group">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
@@ -25,12 +31,18 @@
     </div>
 
     <div class="search-bar hidden-xs"  ng-show="ctrl.isSelectedMapType(2)">
+      <div class="input-group-footer">
+        <ul class="nav nav-pills">
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+        </ul>
+      </div>
       <div class="input-group">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
           type="text"
           class="form-control search-input"
-          placeholder="Pesquisar municipio..."
+          placeholder="Pesquisar município..."
           ng-model="municipioSelecionado"
           uib-typeahead="municipio as municipio.nome_municipio for municipio in ctrl.municipios | filter:$viewValue"
           typeahead-min-length="3"
@@ -121,20 +133,22 @@
         <div  ng-if="ctrl.showInfo">
 
           <div class="info-card-body">
-
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
-            <div class="main-status-item">
-              <strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s) <br>
-              <strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação
-            </div>
-            <div class="main-graphics">
-              <h4>Situação dos reservatórios monitorados:</h4>
-              <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
-                <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</div>
+                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
               </div>
-              <sab-barra-equivalente info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
-              <br><br>
-              <div ng-show="ctrl.estadoAtual.capacidade_equivalente">
+              <div class="col-md-6" style="padding-top: 10px;">
+                <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
+                  <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+                </div>
+                <sab-barra-equivalente info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
+              </div>
+            </div>
+            <hr class="info-card-divider">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2" ng-show="ctrl.estadoAtual.capacidade_equivalente">
                 <sab-volume
                   capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume"
                   volume="ctrl.estadoAtual.volume_equivalente | sabVolume"
@@ -151,7 +165,7 @@
 
   <div class="map-controls-nav visible-xs">
     <div class="btn-group-vertical" role="group">
-      <button type="button" class="btn btn-default" ng-click="ctrl.toggleSearchbar()"><span class="glyphicon glyphicon-btn glyphicon-search"></span></button>
+      <button type="button" class="btn btn-default" ng-click="ctrl.toggleSearchbar()" ng-show="ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)"><span class="glyphicon glyphicon-btn glyphicon-search"></span></button>
       <button type="button" class="btn btn-default" ng-click="ctrl.toggleLegend()"><span class="glyphicon glyphicon-btn glyphicon-tasks"></span></button>
     </div>
   </div>

@@ -25,11 +25,6 @@
 
 .navbar-brand {
   padding: 0px;
-
-  @media (min-width: $screen-xs-min) {
-    padding-top: 13px;
-    padding-left: 15%;
-  }
 }
 
 .form-control {

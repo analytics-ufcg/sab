@@ -106,9 +106,28 @@ footer {
     margin: 0;
   }
   @media (min-width: $screen-md-min) {
-    top: 110px;
+    top: 175px;
     width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
+  }
+}
+
+.map-tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 110px;
+  width: 100%;
+  z-index: $map-info-z-index + 1;
+
+}
+
+.map-tabs-nav {
+  text-align: center;
+
+  @media (max-width: $screen-sm-min) {
+    font-size: 0.8em;
   }
 }
 
@@ -218,7 +237,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 130px;
+  top: 155px;
   z-index: $map-info-z-index + 2;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -598,15 +617,6 @@ footer {
   padding-bottom: $section-padding-vertical;
 }
 
-.main-status-item {
-  padding: 16px 0;
-}
-
-.main-graphics {
-  max-width: 300px;
-  margin-bottom: 15px;
-}
-
 .tooltip-bar {
   position: absolute;
   width: 165px;
@@ -714,7 +724,13 @@ footer {
   }
 }
 
+.input-group-footer {
+  color: #fff;
+  font-size: 0.8em;
 
-.map-type-tab {
-  float: right;
+  & > .nav-pills {
+    & > li {
+      background-color: #fff;
+    }
+  }
 }

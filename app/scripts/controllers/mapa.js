@@ -43,8 +43,9 @@
       markers: [],
       layers: [
         {
-          name: 'TileMap',
+          name: 'ReservatoriosMap',
           active: true,
+          visible: true,
           source: {
             type: 'MapBoxStudio',
             mapId: 'citep6zo000242inxhqdd19p2',
@@ -53,12 +54,33 @@
           }
         },
         {
-          name: 'semiarido',
+          name: 'EstadosMap',
+          active: true,
+          visible: false,
+          source: {
+            type: 'MapBoxStudio',
+            mapId: 'cizzk95ld007h2so5b2rywdfq',
+            userId: 'jeffersonrpn',
+            accessToken: 'pk.eyJ1IjoiamVmZmVyc29ucnBuIiwiYSI6ImNpcnZhc2FoMTBpZGtmYW04M3IyZTZ6NWoifQ.xTtlY-a--vOAS25Op_7uIA'
+          }
+        },
+        {
+          name: 'Semiarido',
+          visible: true,
           source: {
             type: 'TopoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
           style: semiaridoStyle()
+        },
+        {
+          name: 'SemiaridoDark',
+          visible: false,
+          source: {
+            type: 'TopoJSON',
+            url: RESTAPI.url+'/estados/sab'
+          },
+          style: semiaridoStyleEstado()
         }
       ],
       defaults: {
@@ -98,7 +120,6 @@
     vm.setEstado = setEstado;
     var previousFeature;
     vm.efeitoZoom = efeitoZoom;
-
 
     function init() {
       Reservatorio.info.query(function(data) {
@@ -178,21 +199,30 @@
 
     function setSelectedMapType(type) {
       vm.selectedMapType = type;
-      if (type == 1){
+      if (type == 1) {
         $location.search({});
         vm.map.markers.pop();
         vm.reservatorioSelecionado = {};
-        vm.map.layers[1].style = semiaridoStyleEstado();
-        vm.map.layers[2].opacity = 0.7;
+        vm.map.layers[0].visible = false;
+        vm.map.layers[1].visible = true;
+        vm.map.layers[2].visible = false;
+        vm.map.layers[3].visible = true;
+        vm.map.layers[4].opacity = 0.7;
+        if (larguraTela <= 640) {
+          vm.showInfo = false;
+        }
       }
-      if (type == 0){
+      if (type == 0) {
         if (previousFeature){
           previousFeature.setStyle(null);
           previousFeature = null;
         }
-        vm.map.layers[1].style = semiaridoStyle();
+        vm.map.layers[0].visible = true;
+        vm.map.layers[1].visible = false;
+        vm.map.layers[2].visible = true;
+        vm.map.layers[3].visible = false;
+        vm.map.layers[4].opacity = 1;
         setEstado("Semiarido");
-        vm.map.layers[2].opacity = 1;
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
     }
@@ -271,7 +301,7 @@
 
     function semiaridoStyleEstado() {
       return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(40, 60, 82, 1)"})
+        fill: new ol.style.Fill({color: "rgba(12, 137, 193, 0.5)"})
       });
     }
 
@@ -292,7 +322,7 @@
                   if(layer.get('name')==="reservatorios" && (isSelectedMapType(0) || isSelectedMapType(2))){
                     map.getTarget().style.cursor = 'pointer';
                     return true;
-                  } else if(layer.get('name')==="semiarido" && isSelectedMapType(1)){
+                  } else if(layer.get('name')==="SemiaridoDark" && isSelectedMapType(1)){
                     map.getTarget().style.cursor = 'pointer';
                     return true;
                   }
@@ -354,7 +384,7 @@
       }
     }
 
-    $scope.$on('openlayers.layers.semiarido.click', function(event, feature) {
+    $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
               setEstado(feature.getId());

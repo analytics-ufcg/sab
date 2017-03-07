@@ -43,6 +43,12 @@
     $stateProvider
     .state('home', {
       url: "/",
+      templateUrl: "views/mapa.html",
+      controller: "MapaCtrl",
+      controllerAs: "ctrl"
+    })
+    .state('main', {
+      url: "/main",
       templateUrl: "views/main.html",
       controller: "MainCtrl",
       controllerAs: "main"
