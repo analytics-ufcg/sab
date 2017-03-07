@@ -363,7 +363,7 @@
                   }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³");
+              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³ (Fonte: "+d.Fonte+")");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
           	}

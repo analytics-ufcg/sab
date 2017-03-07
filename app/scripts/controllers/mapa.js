@@ -20,7 +20,21 @@
     vm.loadingInfo = true;
     vm.showSearchbar = false;
     vm.showLegend = false;
+    vm.showShare = false;
     vm.gotError = false;
+
+    // Variáveis para compartilhamento
+    vm.share = {
+      appID: RESTAPI.facebookAppID,
+      title: "",
+      longText: "",
+      shortText: "",
+      url: "",
+      media: ""
+    }
+    vm.copyTooltipText = "";
+    vm.copyUrl = copyUrl;
+    vm.resetCopyUrl = resetCopyUrl;
 
     var larguraTela = $(window).width();
 
@@ -120,6 +134,7 @@
     vm.setEstado = setEstado;
     var previousFeature;
     vm.efeitoZoom = efeitoZoom;
+    vm.toggleShare = toggleShare;
 
     function init() {
       Reservatorio.info.query(function(data) {
@@ -156,6 +171,7 @@
         vm.loadingMap = false;
         vm.gotError = true;
       });
+      vm.resetCopyUrl();
     }
     init();
 
@@ -171,7 +187,7 @@
           break;
         }
       }
-      if (vm.reservatorioSelecionado.id){
+      if (vm.reservatorioSelecionado.id) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
           if (vm.reservatoriosGeo[i].properties.id === vm.reservatorioSelecionado.id) {
             vm.map.markers = [{
@@ -183,9 +199,16 @@
         }
         $location.search('id', vm.reservatorioSelecionado.id);
         $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
+        vm.share.title = vm.reservatorioSelecionado.reservat;
+        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água";
+        vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
+        vm.share.url = $location.absUrl();
+        // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
+        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
+        vm.resetCopyUrl();
 
         efeitoZoom(vm.map.markers[0].lat, vm.map.markers[0].lon, 10);
-        var data = Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function() {
+        Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
           vm.reservatorioSelecionado.volumes = data.volumes;
           vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
           vm.loadingInfo = false;
@@ -245,6 +268,18 @@
 
     function toggleLegend() {
       vm.showLegend = !vm.showLegend;
+    }
+
+    function toggleShare() {
+      vm.showShare = !vm.showShare;
+    }
+
+    function copyUrl() {
+      vm.copyTooltipText = "Copiado!";
+    }
+
+    function resetCopyUrl() {
+      vm.copyTooltipText = "Copiar para área de transferência";
     }
 
     function hideInfo() {
