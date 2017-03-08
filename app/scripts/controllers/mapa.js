@@ -54,7 +54,8 @@
         lon: vm.longitude,
         zoom: vm.zoomInicial
       },
-      markers: [],
+      markers_reserv: [],
+      markers_municipio: [],
       layers: [
         {
           name: 'ReservatoriosMap',
@@ -135,6 +136,18 @@
     var previousFeature;
     vm.efeitoZoom = efeitoZoom;
     vm.toggleShare = toggleShare;
+    vm.setMunicipio = setMunicipio;
+    vm.municipio_marker_style = {
+      image: {
+          icon: {
+              anchor: [0.5, 1],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              opacity: 0.90,
+              src: 'https://openlayers.org/en/v4.0.1/examples/data/icon.png'
+          }
+      }
+    };
 
     function init() {
       Reservatorio.info.query(function(data) {
@@ -190,7 +203,7 @@
       if (vm.reservatorioSelecionado.id) {
         for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
           if (vm.reservatoriosGeo[i].properties.id === vm.reservatorioSelecionado.id) {
-            vm.map.markers = [{
+            vm.map.markers_reserv = [{
               lat: parseFloat(vm.reservatoriosGeo[i].properties.latitude),
               lon: parseFloat(vm.reservatoriosGeo[i].properties.longitude)
             }];
@@ -207,13 +220,63 @@
         vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
         vm.resetCopyUrl();
 
-        efeitoZoom(vm.map.markers[0].lat, vm.map.markers[0].lon, 10);
+        efeitoZoom(vm.map.markers_reserv[0].lat, vm.map.markers_reserv[0].lon, 10);
         Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
           vm.reservatorioSelecionado.volumes = data.volumes;
           vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
           vm.loadingInfo = false;
         });
       }
+    }
+
+    function setReservatorio(id) {
+      vm.loadingInfo = true;
+      vm.showInfo = true;
+      vm.showSearchbar = false;
+      vm.showLegend = false;
+
+      for (var i = 0; i < vm.reservatorios.length; i++) {
+        if (parseInt(vm.reservatorios[i].id) === id) {
+          vm.reservatorioSelecionado = vm.reservatorios[i];
+          break;
+        }
+      }
+      if (vm.reservatorioSelecionado.id) {
+        for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
+          if (vm.reservatoriosGeo[i].properties.id === vm.reservatorioSelecionado.id) {
+            vm.map.markers_reserv = [{
+              lat: parseFloat(vm.reservatoriosGeo[i].properties.latitude),
+              lon: parseFloat(vm.reservatoriosGeo[i].properties.longitude)
+            }];
+            break;
+          }
+        }
+        $location.search('id', vm.reservatorioSelecionado.id);
+        $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
+        vm.share.title = vm.reservatorioSelecionado.reservat;
+        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água";
+        vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
+        vm.share.url = $location.absUrl();
+        // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
+        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
+        vm.resetCopyUrl();
+
+        efeitoZoom(vm.map.markers_reserv[0].lat, vm.map.markers_reserv[0].lon, 10);
+        Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
+          vm.reservatorioSelecionado.volumes = data.volumes;
+          vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
+          vm.loadingInfo = false;
+        });
+      }
+    }
+
+    function setMunicipio(municipio) {
+      vm.municipioSelecionado = municipio;
+      efeitoZoom(parseFloat(vm.municipioSelecionado.latitude),parseFloat(vm.municipioSelecionado.longitude),10);
+      vm.map.markers_municipio = [{
+        lat: parseFloat(vm.municipioSelecionado.latitude),
+        lon: parseFloat(vm.municipioSelecionado.longitude)
+      }];
     }
 
     function isSelectedMapType(type) {
@@ -224,7 +287,8 @@
       vm.selectedMapType = type;
       if (type == 1) {
         $location.search({});
-        vm.map.markers.pop();
+        vm.map.markers_reserv.pop();
+        vm.map.markers_municipio.pop();
         vm.reservatorioSelecionado = {};
         vm.map.layers[0].visible = false;
         vm.map.layers[1].visible = true;

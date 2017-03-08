@@ -45,7 +45,7 @@
           ng-model="municipioSelecionado"
           uib-typeahead="municipio as municipio.nome_municipio for municipio in ctrl.municipios | filter:$viewValue"
           typeahead-min-length="3"
-          typeahead-on-select="ctrl.efeitoZoom(municipioSelecionado.latitude,municipioSelecionado.longitude,10);"
+          typeahead-on-select="ctrl.setMunicipio(municipioSelecionado); municipioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
       </div>
     </div>
@@ -232,8 +232,9 @@
     </div>
   </div>
 
-  <openlayers id="map" ol-center="ctrl.map.center" ol-defaults="ctrl.map.defaults" custom-layers="true" ol-markers="ctrl.markers">
-    <ol-marker ng-repeat="marker in ctrl.map.markers" lat="marker.lat" lon="marker.lon"></ol-marker>
+  <openlayers id="map" ol-center="ctrl.map.center" ol-defaults="ctrl.map.defaults" custom-layers="true">
+    <ol-marker ng-repeat="marker in ctrl.map.markers_reserv" lat="marker.lat" lon="marker.lon"></ol-marker>
+    <ol-marker ng-repeat="marker in ctrl.map.markers_municipio" lat="marker.lat" lon="marker.lon" ol-style="ctrl.municipio_marker_style"></ol-marker>
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in ctrl.map.layers"></ol-layer>
   </openlayers>
 
