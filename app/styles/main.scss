@@ -17,7 +17,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
-$map-info-z-index: 10;
+$map-info-z-index: 5;
 $card-padding-vertical: 20px;
 $card-padding-horizontal: 20px;
 $section-padding-vertical: 50px;
@@ -52,12 +52,6 @@ footer {
 
 }
 
-.logo {
-  position: absolute;
-  top: 5px;
-  z-index: $map-info-z-index;
-}
-
 #map {
   float: left;
   position: relative;
@@ -74,7 +68,7 @@ footer {
 
 .map-tooltip {
   position: absolute;
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index + 1;
   visibility: hidden;
   background-color: #fff;
   padding: $padding-base-vertical $padding-base-horizontal;
@@ -97,7 +91,7 @@ footer {
 .map-info {
   float: left;
   position: absolute;
-  z-index: $map-info-z-index + 1;
+  z-index: $map-info-z-index;
   text-align: left;
 
   @media (max-width: $screen-md-min) {
@@ -119,7 +113,7 @@ footer {
   position: absolute;
   top: 110px;
   width: 100%;
-  z-index: $map-info-z-index + 1;
+  z-index: $map-info-z-index - 1;
 
 }
 
@@ -238,7 +232,7 @@ footer {
   float: left;
   position: absolute;
   top: 155px;
-  z-index: $map-info-z-index + 2;
+  z-index: $map-info-z-index + 1;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
   @media (min-width: $screen-xs-min) {
@@ -314,7 +308,7 @@ footer {
 .legenda-lg {
   position: absolute;
   top: 80px;
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index + 1;
   padding: $padding-base-vertical*2;
   margin: 10px 40px;
   background-color: #9a999e;
@@ -581,7 +575,7 @@ footer {
 
 .modal-overlay {
   position: absolute;
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index + 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -754,6 +748,10 @@ footer {
       background-color: #fff;
     }
   }
+}
+
+.navbar-menu {
+  z-index: $map-info-z-index;
 }
 
 .btn-facebook {  background-color: #4867AA; }
