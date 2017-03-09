@@ -294,7 +294,7 @@
         vm.map.layers[1].visible = true;
         vm.map.layers[2].visible = false;
         vm.map.layers[3].visible = true;
-        vm.map.layers[4].opacity = 0.7;
+        vm.map.layers[4].opacity = 0.4;
         if (larguraTela <= 640) {
           vm.showInfo = false;
         }
@@ -400,7 +400,8 @@
 
     function semiaridoStyleEstado() {
       return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(12, 137, 193, 0.5)"})
+        fill: new ol.style.Fill({color: "rgba(12, 137, 193, 0.8)"}),
+        stroke: new ol.style.Stroke({color: "rgba(16, 84, 125, 1)"}),
       });
     }
 
