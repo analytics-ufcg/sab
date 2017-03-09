@@ -197,8 +197,8 @@
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2" ng-show="ctrl.estadoAtual.capacidade_equivalente">
                 <sab-volume
-                  capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume"
-                  volume="ctrl.estadoAtual.volume_equivalente | sabVolume"
+                  capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
+                  volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
                   percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume>
               </div>
             </div>

@@ -14,7 +14,8 @@
         scope: {
           capacidade: '=',
           volume: '=',
-          percentual: '='
+          percentual: '=',
+          arredondar: '='
         },
         link: function postLink(scope, element) {
           var
@@ -78,7 +79,7 @@
 
             var textPixels = (config.textSize*radius/1.5);
             var textSmallPixels = (config.textSmallSize*radius/1.5);
-            var textFinalValue = parseFloat(value).toFixed(2);
+            var textFinalValue = parseFloat(value);
             var percentText = config.displayPercent?"%":"";
             var circleThickness = config.circleThickness * radius;
             var circleFillGap = config.circleFillGap * radius;
