@@ -10,8 +10,8 @@
     function sabArea() {
       return function (input) {
         if (!input) {return;}
-        var newInput = (input/1000000).toFixed(2);
-        newInput = newInput.replace(".", ",");
+        var newInput = (input/1000000).toLocaleString('pt-BR', {minimumFractionDigits: 2,maximumFractionDigits: 2});
+        
         return newInput+" km²";
       };
     }
