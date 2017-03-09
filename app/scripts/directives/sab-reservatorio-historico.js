@@ -67,10 +67,10 @@
               .x(function(d) { return x(d.date); })
               .y0(height)
               .y1(function(d) { return y(d.close); });
-          var valueline2 = d3.svg.line()
+/*          var valueline2 = d3.svg.line()
               .defined(function(d) { return d.close; })
               .x(function(d) { return x2(d.date); })
-              .y(function(d) { return y2(d.close); });
+              .y(function(d) { return y2(d.close); });*/
           var valuearea2 = d3.svg.area()
               .defined(function(d) { return d.close; })
               .x(function(d) { return x2(d.date); })
@@ -159,12 +159,12 @@
             .attr("class", "context")
             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-          var line2Svg = context.append("g")
+/*          var line2Svg = context.append("g")
             .append("path")
             .attr("class", "time-graph-path line line-sm");
           var line2InvalidosSvg = context.append("g")
             .append("path")
-            .attr("class", "time-graph-path line line-sm line-invalidos");
+            .attr("class", "time-graph-path line line-sm line-invalidos");*/
 
           var area2Svg = context.append("g")
             .append("path")
@@ -220,7 +220,7 @@
               }
             });
 
-            focus.selectAll(".points").remove();
+/*            focus.selectAll(".points").remove();
             focus.append("g").selectAll(".points")
               .data(dataValidos)
             .enter().append("circle")
@@ -229,7 +229,7 @@
               .attr("r", 1)
               .attr("cx", function(d) { return x(d.date); })
               .attr("cy", function(d) { return y(d.close); });
-
+*/
 
             // Scale the range of the data
             var max = d3.max(data, function(d) { return parseFloat(d.close); });
@@ -252,8 +252,8 @@
             // Add the valueline path.
             // lineSvg.attr("d", valueline(data));
             //areaSvg.attr("d", valuearea(data));
-            line2Svg.attr("d", valueline2(data));
-            line2InvalidosSvg.attr("d", valueline2(dataValidos));
+/*            line2Svg.attr("d", valueline2(data));
+            line2InvalidosSvg.attr("d", valueline2(dataValidos));*/
             area2Svg.attr("d", valuearea2(data));
             area2InvalidoSvg.attr("d", valuearea2(dataValidos));
             // Add the X Axis
@@ -321,9 +321,9 @@
               areaSvg.attr("d", valuearea(data));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
 
-              focus.selectAll(".points")
+/*              focus.selectAll(".points")
                 .attr("cx", function(d) { return x(d.date); })
-                .attr("cy", function(d) { return y(d.close); });
+                .attr("cy", function(d) { return y(d.close); });*/
             }
 
             function mouseover() {
