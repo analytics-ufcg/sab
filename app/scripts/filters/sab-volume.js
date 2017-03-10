@@ -8,9 +8,12 @@
 
     /*jshint latedef: nofunc */
     function sabVolume() {
-      return function (input) {
+      return function (input, decimais) {
         if (!input) {return;}
-        var newInput = parseFloat(input).toLocaleString('pt-BR', {minimumFractionDigits: 2,maximumFractionDigits: 2});
+        if (decimais == undefined) {
+          decimais = 2;
+        }
+        var newInput = parseFloat(input).toLocaleString('pt-BR', {minimumFractionDigits: decimais, maximumFractionDigits: decimais});
         return newInput+" hm³";
       };
     }
