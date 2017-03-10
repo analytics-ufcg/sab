@@ -14,8 +14,7 @@
         scope: {
           capacidade: '=',
           volume: '=',
-          percentual: '=',
-          arredondar: '='
+          percentual: '='
         },
         link: function postLink(scope, element) {
           var
