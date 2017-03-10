@@ -10,8 +10,7 @@
     function sabVolume() {
       return function (input) {
         if (!input) {return;}
-        var inputRound = parseFloat(input).toFixed(2).toString();
-        var newInput = inputRound.replace(".", ",");
+        var newInput = parseFloat(input).toLocaleString('pt-BR', {minimumFractionDigits: 2,maximumFractionDigits: 2});
         return newInput+" hm³";
       };
     }

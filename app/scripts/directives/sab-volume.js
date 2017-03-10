@@ -46,7 +46,7 @@
               textSmallSize: 0.3, // The relative height of the text to display in the wave circle. 1 = 50%
               valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
               displayPercent: true, // If true, a % symbol is displayed after the value.
-              textColor: "#aeadb3", // The color of the value text when the wave does not overlap it.
+              textColor: "#5d5d5d", // The color of the value text when the wave does not overlap it.
               waveTextColor: "#ffffff" // The color of the value text when the wave overlaps it.
             };
 
@@ -172,8 +172,9 @@
                 .attr("text-anchor", "left")
                 .attr("dominant-baseline", "baseline")
                 .attr("font-size", textSmallPixels + "px")
+                .attr("font-weight", "bold")
                 .style("fill", config.circleColor)
-                .attr('transform','translate('+textLocationX+', '+config.volumeTextPadding+')');
+                .attr('transform','translate('+textLocationX+', '+(config.volumeTextPadding-3)+')');
             var capacidadeTextValue = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
@@ -194,6 +195,7 @@
                 .attr("text-anchor", "right")
                 .attr("dominant-baseline", "hanging")
                 .attr("font-size", textSmallPixels + "px")
+                .attr("font-weight", "bold")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+textLocationX+','+config.volumeTextPadding+')');
             var volumeLine = textGroup.append("line")

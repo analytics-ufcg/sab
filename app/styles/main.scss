@@ -106,9 +106,28 @@ footer {
     margin: 0;
   }
   @media (min-width: $screen-md-min) {
-    top: 110px;
+    top: 175px;
     width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
+  }
+}
+
+.map-tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 110px;
+  width: 100%;
+  z-index: $map-info-z-index + 1;
+
+}
+
+.map-tabs-nav {
+  text-align: center;
+
+  @media (max-width: $screen-sm-min) {
+    font-size: 0.8em;
   }
 }
 
@@ -121,7 +140,7 @@ footer {
 .info-card-header {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: transparentize(#fff, 0.2);
-  color: $themes-section-colors-b;
+  color: $nav-tabs-active-link-hover-bg;
 }
 
 .info-card-title {
@@ -218,7 +237,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 130px;
+  top: 155px;
   z-index: $map-info-z-index + 2;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -313,6 +332,12 @@ footer {
     margin-right: 8px;
   }
 
+}
+
+.ol-modal {
+  margin: 10px;
+  padding: 10px;
+  background-color: #9a999e;
 }
 
 .section {
@@ -613,15 +638,6 @@ footer {
   padding-bottom: $section-padding-vertical;
 }
 
-.main-status-item {
-  padding: 16px 0;
-}
-
-.main-graphics {
-  max-width: 300px;
-  margin-bottom: 15px;
-}
-
 .tooltip-bar {
   position: absolute;
   width: 165px;
@@ -728,3 +744,24 @@ footer {
     padding: $padding-large-vertical $padding-large-horizontal * 2;
   }
 }
+
+.input-group-footer {
+  color: #fff;
+  font-size: 0.8em;
+
+  & > .nav-pills {
+    & > li {
+      background-color: #fff;
+    }
+  }
+}
+
+.navbar-item {
+  width: 100px;
+}
+
+.btn-facebook {  background-color: #4867AA; }
+.btn-twitter {   background-color: #1DA1F2; }
+.btn-google {    background-color: #C53929; }
+.btn-whatsapp {  background-color: #00B35C; }
+.btn-share {     background-color: #DDDDDD; color: #5d5d5d; }
