@@ -444,8 +444,6 @@
 
       if(larguraTela < 1600 && larguraTela > 1000){
         lonMais = -0.4;
-      } else if( larguraTela <= 1000 ) {
-        latMais = -0.2;
       }
 
       var reservatorio = ol.proj.fromLonLat([parseFloat(lon) + lonMais,parseFloat(lat) + latMais]);
