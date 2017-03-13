@@ -229,49 +229,11 @@
       }
     }
 
-    function setReservatorio(id) {
-      vm.loadingInfo = true;
-      vm.showInfo = true;
+    function setMunicipio(municipio) {
+      vm.municipioSelecionado = municipio;
       vm.showSearchbar = false;
       vm.showLegend = false;
 
-      for (var i = 0; i < vm.reservatorios.length; i++) {
-        if (parseInt(vm.reservatorios[i].id) === id) {
-          vm.reservatorioSelecionado = vm.reservatorios[i];
-          break;
-        }
-      }
-      if (vm.reservatorioSelecionado.id) {
-        for (var i = 0; i < vm.reservatoriosGeo.length; i++) {
-          if (vm.reservatoriosGeo[i].properties.id === vm.reservatorioSelecionado.id) {
-            vm.map.markers_reserv = [{
-              lat: parseFloat(vm.reservatoriosGeo[i].properties.latitude),
-              lon: parseFloat(vm.reservatoriosGeo[i].properties.longitude)
-            }];
-            break;
-          }
-        }
-        $location.search('id', vm.reservatorioSelecionado.id);
-        $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
-        vm.share.title = vm.reservatorioSelecionado.reservat;
-        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água";
-        vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
-        vm.share.url = $location.absUrl();
-        // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
-        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
-        vm.resetCopyUrl();
-
-        efeitoZoom(vm.map.markers_reserv[0].lat, vm.map.markers_reserv[0].lon, 10);
-        Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
-          vm.reservatorioSelecionado.volumes = data.volumes;
-          vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
-          vm.loadingInfo = false;
-        });
-      }
-    }
-
-    function setMunicipio(municipio) {
-      vm.municipioSelecionado = municipio;
       efeitoZoom(parseFloat(vm.municipioSelecionado.latitude),parseFloat(vm.municipioSelecionado.longitude),10);
       vm.map.markers_municipio = [{
         lat: parseFloat(vm.municipioSelecionado.latitude),
