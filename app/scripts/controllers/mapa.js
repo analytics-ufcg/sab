@@ -58,20 +58,9 @@
       markers_municipio: [],
       layers: [
         {
-          name: 'ReservatoriosMap',
-          active: true,
-          visible: true,
-          source: {
-            type: 'MapBoxStudio',
-            mapId: 'citep6zo000242inxhqdd19p2',
-            userId: 'jeffersonrpn',
-            accessToken: 'pk.eyJ1IjoiamVmZmVyc29ucnBuIiwiYSI6ImNpcnZhc2FoMTBpZGtmYW04M3IyZTZ6NWoifQ.xTtlY-a--vOAS25Op_7uIA'
-          }
-        },
-        {
           name: 'EstadosMap',
           active: true,
-          visible: false,
+          visible: true,
           source: {
             type: 'MapBoxStudio',
             mapId: 'cizzk95ld007h2so5b2rywdfq',
@@ -290,11 +279,9 @@
         vm.map.markers_reserv.pop();
         vm.map.markers_municipio.pop();
         vm.reservatorioSelecionado = {};
-        vm.map.layers[0].visible = false;
-        vm.map.layers[1].visible = true;
-        vm.map.layers[2].visible = false;
-        vm.map.layers[3].visible = true;
-        vm.map.layers[4].opacity = 0.4;
+        vm.map.layers[1].visible = false;
+        vm.map.layers[2].visible = true;
+        vm.map.layers[3].opacity = 0.4;
         if (larguraTela <= 640) {
           vm.showInfo = false;
         }
@@ -304,11 +291,9 @@
           previousFeature.setStyle(null);
           previousFeature = null;
         }
-        vm.map.layers[0].visible = true;
-        vm.map.layers[1].visible = false;
-        vm.map.layers[2].visible = true;
-        vm.map.layers[3].visible = false;
-        vm.map.layers[4].opacity = 1;
+        vm.map.layers[1].visible = true;
+        vm.map.layers[2].visible = false;
+        vm.map.layers[3].opacity = 1;
         setEstado("Semiarido");
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
