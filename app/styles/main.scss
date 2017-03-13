@@ -18,8 +18,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 $map-info-margin-vertical: 20px;
 $map-info-margin-horizontal: 20px;
 $map-info-z-index: 5;
-$card-padding-vertical: 20px;
-$card-padding-horizontal: 20px;
+$card-padding-vertical: 15px;
+$card-padding-horizontal: 15px;
 $section-padding-vertical: 50px;
 $section-padding-horizontal: 0px;
 $themes-section-colors-a: #fff;
@@ -101,6 +101,12 @@ footer {
   }
   @media (min-width: $screen-md-min) {
     top: 175px;
+    width: 600px;
+    margin: $map-info-margin-vertical $map-info-margin-horizontal;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    top: 175px;
     width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
@@ -111,7 +117,7 @@ footer {
   justify-content: space-around;
   background-color: rgba(255, 255, 255, 0.5);
   position: absolute;
-  top: 110px;
+  top: 105px;
   width: 100%;
   z-index: $map-info-z-index - 1;
 
@@ -119,15 +125,12 @@ footer {
 
 .map-tabs-nav {
   text-align: center;
-
-  @media (max-width: $screen-sm-min) {
-    font-size: 0.8em;
-  }
+  font-size: 0.8em;
 }
 
 .info-card {
   @media (min-width: $screen-md-min) {
-    margin-top: $map-info-margin-vertical + 65px;
+    margin-top: $map-info-margin-vertical + 25px;
   }
 }
 
@@ -156,11 +159,7 @@ footer {
   }
 
   @media (min-width: $screen-md-min) {
-    height: 300px;
-  }
-
-  @media (min-width: $screen-md-min) {
-    height: 300px;
+    height: 250px;
   }
 
   @media (min-width: $screen-lg-min) {
@@ -231,7 +230,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 155px;
+  top: 130px;
   z-index: $map-info-z-index + 1;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
@@ -239,8 +238,11 @@ footer {
     width: 100%;
   }
   @media (min-width: $screen-md-min) {
-    width: 680px + $map-info-margin-horizontal*2;
+    width: 600px + $map-info-margin-horizontal*2;
+  }
 
+  @media (min-width: $screen-lg-min) {
+    width: 680px + $map-info-margin-horizontal*2;
   }
 }
 
