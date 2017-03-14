@@ -757,7 +757,7 @@ footer {
 }
 
 .navbar-menu {
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index+1;
 
 }
 

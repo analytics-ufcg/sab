@@ -15,7 +15,6 @@
 .nav > li {
   @media (max-width: $grid-float-breakpoint - 1) {
     display: inline-table;
-    width: 150px;
   }
 }
 
