@@ -20,10 +20,10 @@
           var
             d3 = $window.d3,
             config = {
-              width: 240,
+              width: 160,
               height: 120,
-              gaugeWidth: 80,
-              gaugeHeight: 80,
+              gaugeWidth: 65,
+              gaugeHeight: 65,
               indicatorWidth: 60,
               volumeTextPadding: 20,
               minValue: 0, // The gauge minimum value.
@@ -43,7 +43,6 @@
               textVertPosition: 0.5, // The height at which to display the percentage text withing the wave circle. 0 = bottom, 1 = top.
               lineHeight: 0.14, // The distance between text line. 0 = bottom, 1 = top.
               textSize: 0.6, // The relative height of the text to display in the wave circle. 1 = 50%
-              textSmallSize: 0.3, // The relative height of the text to display in the wave circle. 1 = 50%
               valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
               displayPercent: true, // If true, a % symbol is displayed after the value.
               textColor: "#5d5d5d", // The color of the value text when the wave does not overlap it.
@@ -62,7 +61,7 @@
             var radius = Math.min(parseInt(config.gaugeWidth), parseInt(config.gaugeHeight))/2;
             var locationX = parseInt(config.width) - config.gaugeWidth;
             var textLocationX = locationX - radius - config.volumeTextPadding;
-            var locationY = parseInt(config.height)/2 - radius;
+            var locationY = parseInt(config.height)/2 - radius/1.5;
             var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
 
             var waveHeightScale;
@@ -77,7 +76,7 @@
             }
 
             var textPixels = (config.textSize*radius/1.5);
-            var textSmallPixels = (config.textSmallSize*radius/1.5);
+            var textSmallPixels = 9;
             var textFinalValue = parseFloat(value);
             var percentText = config.displayPercent?"%":"";
             var circleThickness = config.circleThickness * radius;
@@ -138,7 +137,9 @@
                 .domain([0,1]);
 
             // Center the gauge within the parent SVG.
-            var textGroup = gauge.append("g");
+            var textGroup = gauge.append("g")
+                .attr("class", "textGroup")
+                .attr('transform', 'translate(0,0)');
             var gaugeGroup = gauge.append("g")
                 .attr("class", "gaugeGroup")
                 .attr('transform','translate('+locationX+','+locationY+')');
@@ -155,40 +156,40 @@
                 .attr('transform','translate('+radius+','+radius+')');
             var capacidadeLine = textGroup.append("line")
                 .attr("x1", gaugeDimensions.top.x - config.indicatorWidth)
-                .attr("y1", config.volumeTextPadding + (circleThickness/2))
+                .attr("y1", gaugeDimensions.top.y + (circleThickness/2))
                 .attr("x2", gaugeDimensions.top.x)
-                .attr("y2", config.volumeTextPadding + (circleThickness/2))
+                .attr("y2", gaugeDimensions.top.y + (circleThickness/2))
                 .style("stroke", config.circleColor)
                 .style("stroke-width", circleThickness);
 
             gaugeGroup.append("circle")
                 .attr("cx", radius)
                 .attr("cy", radius)
-                .attr("r", (radius - 3.5))
+                .attr("r", (radius - 2.7))
                 .style("fill", "#f9f9f9");
 
             var capacidadeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("dominant-baseline", "baseline")
+                .attr("alignment-baseline", "text-before-edge")
                 .attr("font-size", textSmallPixels + "px")
                 .attr("font-weight", "bold")
                 .style("fill", config.circleColor)
-                .attr('transform','translate('+textLocationX+', '+(config.volumeTextPadding-3)+')');
+                .attr('transform','translate(0, 0)');
             var capacidadeTextValue = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("dominant-baseline", "baseline")
+                .attr("alignment-baseline", "text-before-edge")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
-                .attr('transform','translate(0, '+config.volumeTextPadding+')');
+                .attr('transform','translate(0, '+(config.volumeTextPadding+10)+')');
             capacidadeTextValue.append("tspan")
                 .attr("dx", "0")
                 .attr("dy", "-10")
                 .text("Capacidade total");
             capacidadeTextValue.append("tspan")
-                .attr("dx", "-63")
-                .attr("dy", "11")
+                .attr("dx", "-70")
+                .attr("dy", "10")
                 .text("de armazenamento");
             var volumeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
@@ -197,12 +198,12 @@
                 .attr("font-size", textSmallPixels + "px")
                 .attr("font-weight", "bold")
                 .style("fill", config.circleColor)
-                .attr('transform','translate('+textLocationX+','+config.volumeTextPadding+')');
+                .attr('transform','translate(0,'+(config.volumeTextPadding+15)+')');
             var volumeLine = textGroup.append("line")
                 .attr("x1", gaugeDimensions.top.x - config.indicatorWidth)
-                .attr("y1", config.volumeTextPadding)
+                .attr("y1", gaugeDimensions.top.y)
                 .attr("x2", gaugeDimensions.top.x)
-                .attr("y2", config.volumeTextPadding)
+                .attr("y2", gaugeDimensions.top.y)
                 .style("stroke", config.circleColor)
                 .style("stroke-width", circleThickness);
             var volumeTextValue = textGroup.append("text")
@@ -213,7 +214,7 @@
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
                 .attr("dy", "2")
-                .attr('transform','translate(0,'+config.volumeTextPadding+')');
+                .attr('transform','translate(0,'+(config.volumeTextPadding+22)+')');
 
             // Text where the wave does not overlap.
             var text1 = gaugeGroup.append("text");
@@ -365,19 +366,18 @@
                     .duration(config.waveRiseTime)
                     .attr('transform','translate('+waveGroupXPosition+','+newHeight+')');
 
-
                 volumeText.text(volume)
                     .transition()
                     .duration(config.waveRiseTime)
-                    .attr('transform','translate('+textLocationX+','+(newHeight+config.volumeTextPadding)+')');
+                    .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding+15)+')');
                 volumeLine
                     .transition()
                     .duration(config.waveRiseTime)
-                    .attr('transform','translate(0,'+newHeight+')');
+                    .attr('transform','translate(0,'+(newHeight)+')');
                 volumeTextValue
                     .transition()
                     .duration(config.waveRiseTime)
-                    .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding)+')');
+                    .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding+22)+')');
             }
 
           scope.$watchCollection(function(scope) { return [scope.capacidade, scope.volume, scope.percentual] ; }, function(newValue) {
