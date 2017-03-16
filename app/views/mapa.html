@@ -13,7 +13,7 @@
       <div class="input-group-footer">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
-          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Por município</a></li>
         </ul>
       </div>
       <div class="input-group">
@@ -34,7 +34,7 @@
       <div class="input-group-footer">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
-          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Por município</a></li>
         </ul>
       </div>
       <div class="input-group">
@@ -250,26 +250,11 @@
 
 <div class="modal-overlay" ng-show="ctrl.showSearchbar" ng-click="ctrl.toggleSearchbar()"></div>
 
-<!-- <div class="search-bar" ng-show="ctrl.showSearchbar">
- <div class="input-group">
-   <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
-   <input
-     type="text"
-     class="form-control search-input"
-     placeholder="Pesquisar reservatório..."
-     ng-model="reservatorioSelecionado"
-     uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
-     typeahead-min-length="3"
-     typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado.id); reservatorioSelecionado = '';"
-     ng-focus="ctrl.hideInfo()">
- </div>
-</div>
- -->
     <div class="search-bar"  ng-show="ctrl.isSelectedMapType(0) && ctrl.showSearchbar">
       <div class="input-group-footer">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
-          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Por município</a></li>
         </ul>
       </div>
       <div class="input-group">
@@ -290,7 +275,7 @@
       <div class="input-group-footer">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
-          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}" ng-click="ctrl.setSelectedMapType(2)"><a href="#">Por município</a></li>
+          <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(2)">Por município</a></li>
         </ul>
       </div>
       <div class="input-group">

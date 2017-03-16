@@ -171,15 +171,13 @@
             var capacidadeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("alignment-baseline", "text-before-edge")
                 .attr("font-size", textSmallPixels + "px")
                 .attr("font-weight", "bold")
                 .style("fill", config.circleColor)
-                .attr('transform','translate(0, 0)');
+                .attr('transform','translate(0, 10)');
             var capacidadeTextValue = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("alignment-baseline", "text-before-edge")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
                 .attr('transform','translate(0, '+(config.volumeTextPadding+10)+')');
@@ -188,7 +186,7 @@
                 .attr("dy", "-10")
                 .text("Capacidade total");
             capacidadeTextValue.append("tspan")
-                .attr("dx", "-70")
+                .attr("dx", "-71")
                 .attr("dy", "10")
                 .text("de armazenamento");
             var volumeText = textGroup.append("text")
