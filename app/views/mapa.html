@@ -240,8 +240,8 @@
   </div>
 
   <openlayers id="map" ol-center="ctrl.map.center" ol-defaults="ctrl.map.defaults" custom-layers="true">
-    <ol-marker ng-repeat="marker in ctrl.map.markers_reserv" lat="marker.lat" lon="marker.lon"></ol-marker>
-    <ol-marker ng-repeat="marker in ctrl.map.markers_municipio" lat="marker.lat" lon="marker.lon" ol-style="ctrl.municipio_marker_style"></ol-marker>
+    <ol-marker ng-repeat="marker in ctrl.map.markers_reserv" lat="marker.lat" lon="marker.lon" ol-style="ctrl.waterMarkerStyle"></ol-marker>
+    <ol-marker ng-repeat="marker in ctrl.map.markers_municipio" lat="marker.lat" lon="marker.lon" ol-style="ctrl.cityMarkerStyle"></ol-marker>
     <ol-layer name="{{layer.name}}" ol-layer-properties="layer" ng-repeat="layer in ctrl.map.layers"></ol-layer>
   </openlayers>
 
