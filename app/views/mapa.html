@@ -44,7 +44,7 @@
           class="form-control search-input"
           placeholder="Pesquisar município..."
           ng-model="municipioSelecionado"
-          uib-typeahead="municipio as municipio.nome_municipio for municipio in ctrl.municipios | filter:$viewValue"
+          uib-typeahead="municipio as municipio.nome_municipio +' - '+ municipio.UF for municipio in ctrl.municipios | filter:$viewValue"
           typeahead-min-length="3"
           typeahead-on-select="ctrl.setMunicipio(municipioSelecionado); municipioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
@@ -285,7 +285,7 @@
           class="form-control search-input"
           placeholder="Pesquisar município..."
           ng-model="municipioSelecionado"
-          uib-typeahead="municipio as municipio.nome_municipio for municipio in ctrl.municipios | filter:$viewValue"
+          uib-typeahead="municipio as municipio.nome_municipio +' - '+ municipio.UF for municipio in ctrl.municipios | filter:$viewValue"
           typeahead-min-length="3"
           typeahead-on-select="ctrl.setMunicipio(municipioSelecionado); municipioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
