@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="search-bar hidden-xs"  ng-show="ctrl.isSelectedMapType(2)">
+    <div class="search-bar hidden-xs" ng-show="ctrl.isSelectedMapType(2)">
       <div class="input-group-footer">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': ctrl.isSelectedMapType(0)}"><a href="" ng-click="ctrl.setSelectedMapType(0)">Por reservatório</a></li>
@@ -76,7 +76,7 @@
               <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong> {{ctrl.reservatorioSelecionado.area | sabArea}}</div>
             </div>
 
-            <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(1)">
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(1)">
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados sobre volume
@@ -91,13 +91,13 @@
               <hr class="info-card-divider">
 
               <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                   <sab-volume
                     capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                     volume="ctrl.reservatorioSelecionado.volume | sabVolume"
                     percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
                 </div>
-                <div class="col-sm-4 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
+                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
                   <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
                   <hr class="info-card-divider">
                   <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>

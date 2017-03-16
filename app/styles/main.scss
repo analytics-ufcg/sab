@@ -222,8 +222,9 @@ footer {
 .info-card-divider {
   margin-top: $card-padding-vertical*2;
   border: none;
-  @media (max-width: $screen-xs-min) {
+  @media (max-width: $screen-md-max) {
     margin-top: 0px;
+    margin-bottom: 0px;
   }
 }
 

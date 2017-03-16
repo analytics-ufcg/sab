@@ -186,7 +186,7 @@
                 .attr("dy", "-10")
                 .text("Capacidade total");
             capacidadeTextValue.append("tspan")
-                .attr("dx", "-71")
+                .attr("dx", "-69")
                 .attr("dy", "10")
                 .text("de armazenamento");
             var volumeText = textGroup.append("text")
