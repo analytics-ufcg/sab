@@ -130,7 +130,7 @@ footer {
 
 .info-card {
   @media (min-width: $screen-md-min) {
-    margin-top: $map-info-margin-vertical + 25px;
+    margin-top: $map-info-margin-vertical - 15px;
   }
 }
 

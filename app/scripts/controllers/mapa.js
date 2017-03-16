@@ -22,6 +22,8 @@
     vm.showLegend = false;
     vm.showShare = false;
     vm.gotError = false;
+    vm.municipioReservatorio = [];
+    vm.municipioReservatorioSelecionado = {};
 
     // Variáveis para compartilhamento
     vm.share = {
@@ -126,6 +128,7 @@
     vm.efeitoZoom = efeitoZoom;
     vm.toggleShare = toggleShare;
     vm.setMunicipio = setMunicipio;
+    vm.setReservatorioMunicipio = setReservatorioMunicipio;
     vm.municipio_marker_style = {
       image: {
           icon: {
@@ -144,6 +147,10 @@
         if (Number.isInteger(parseInt($location.search().id)) && vm.reservatoriosGeo.length) {
           vm.setReservatorio(parseInt($location.search().id));
         }
+      });
+
+      Reservatorio.municipioReservatorio.query(function(data) {
+        vm.municipioReservatorio = data;
       });
 
       Reservatorio.municipios.query(function(data) {
@@ -228,6 +235,20 @@
         lat: parseFloat(vm.municipioSelecionado.latitude),
         lon: parseFloat(vm.municipioSelecionado.longitude)
       }];
+    }
+
+    function setReservatorioMunicipio(id,tipo) {
+      console.log(id);
+      if(tipo === "reservatorio") {
+        setReservatorio(id);
+      } else if(tipo === "municipio"){
+        for (var i = vm.municipios.length - 1; i >= 0; i--) {
+          if (vm.municipios[i].id_municipio === id){
+            setMunicipio(vm.municipios[i]);
+            break;
+          }
+        }
+      }
     }
 
     function isSelectedMapType(type) {

@@ -14,7 +14,8 @@
       geolocalizacao: $resource(RESTAPI.url+'/reservatorios', null, {query: {isArray: false}}),
       estadoEquivalente: $resource(RESTAPI.url+'/reservatorio/equivalente/estado'),
       baciaEquivalente: $resource(RESTAPI.url+'/reservatorio/equivalente/bacia'),
-      municipios: $resource(RESTAPI.url+'/municipios/sab')
+      municipios: $resource(RESTAPI.url+'/municipios/sab'),
+      municipioReservatorio: $resource(RESTAPI.url+'/pesquisa/municipio_reservatorio')
     };
     return factory;
   }
