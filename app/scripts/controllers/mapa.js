@@ -107,9 +107,32 @@
           }
       }
     };
+    vm.cityMarkerStyle = {
+      image: {
+          icon: {
+              anchor: [0.5, 1],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              opacity: 1,
+              src: 'http://localhost:9000/images/city-marker.png'
+          }
+      }
+    };
+    vm.waterMarkerStyle = {
+      image: {
+          icon: {
+              anchor: [0.5, 1],
+              anchorXUnits: 'fraction',
+              anchorYUnits: 'fraction',
+              opacity: 1,
+              src: 'http://localhost:9000/images/water-marker.png'
+          }
+      }
+    };
     vm.reservatoriosGeo = [];
     vm.estadoEquivalente = [];
     vm.estadoAtual = {};
+    var previousFeature;
 
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
@@ -123,7 +146,6 @@
     vm.toggleSearchbar = toggleSearchbar;
     vm.toggleLegend = toggleLegend;
     vm.setEstado = setEstado;
-    var previousFeature;
     vm.efeitoZoom = efeitoZoom;
     vm.toggleShare = toggleShare;
     vm.setMunicipio = setMunicipio;
