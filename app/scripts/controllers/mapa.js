@@ -114,7 +114,7 @@
               anchorXUnits: 'fraction',
               anchorYUnits: 'fraction',
               opacity: 1,
-              src: 'http://localhost:9000/images/city-marker.png'
+              src: 'images/city-marker.png'
           }
       }
     };
@@ -125,7 +125,7 @@
               anchorXUnits: 'fraction',
               anchorYUnits: 'fraction',
               opacity: 1,
-              src: 'http://localhost:9000/images/water-marker.png'
+              src: 'images/water-marker.png'
           }
       }
     };
@@ -150,17 +150,6 @@
     vm.toggleShare = toggleShare;
     vm.setMunicipio = setMunicipio;
     vm.setReservatorioMunicipio = setReservatorioMunicipio;
-    vm.municipio_marker_style = {
-      image: {
-          icon: {
-              anchor: [0.5, 1],
-              anchorXUnits: 'fraction',
-              anchorYUnits: 'fraction',
-              opacity: 0.90,
-              src: 'https://openlayers.org/en/v4.0.1/examples/data/icon.png'
-          }
-      }
-    };
 
     function init() {
       Reservatorio.info.query(function(data) {
