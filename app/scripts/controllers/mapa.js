@@ -23,7 +23,6 @@
     vm.showShare = false;
     vm.gotError = false;
     vm.municipioReservatorio = [];
-    vm.municipioReservatorioSelecionado = {};
 
     // Variáveis para compartilhamento
     vm.share = {
@@ -238,7 +237,6 @@
     }
 
     function setReservatorioMunicipio(id,tipo) {
-      console.log(id);
       if(tipo === "reservatorio") {
         setReservatorio(id);
       } else if(tipo === "municipio"){

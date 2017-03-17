@@ -100,13 +100,13 @@ footer {
     margin: 0;
   }
   @media (min-width: $screen-md-min) {
-    top: 175px;
+    top: 200px;
     width: 600px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
 
   @media (min-width: $screen-lg-min) {
-    top: 175px;
+    top: 200px;
     width: 680px;
     margin: $map-info-margin-vertical $map-info-margin-horizontal;
   }
@@ -231,7 +231,7 @@ footer {
 .search-bar {
   float: left;
   position: absolute;
-  top: 130px;
+  top: 145px;
   z-index: $map-info-z-index + 1;
   padding: $map-info-margin-vertical $map-info-margin-horizontal;
 
