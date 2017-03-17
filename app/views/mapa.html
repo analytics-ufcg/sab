@@ -10,7 +10,7 @@
     </div>
 
     <div class="search-bar hidden-xs">
-      <div class="input-group">
+      <div class="input-group typeahead-fixed">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
           type="text"
@@ -19,6 +19,7 @@
           ng-model="municipioReservatorioSelecionado"
           uib-typeahead="municipio as municipio.nome_exibicao for municipio in ctrl.municipioReservatorio | filter:$viewValue"
           typeahead-min-length="3"
+          typeahead-template-url="customTemplate.html"
           typeahead-on-select="ctrl.setReservatorioMunicipio(municipioReservatorioSelecionado.id, municipioReservatorioSelecionado.tipo); municipioReservatorioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
       </div>
@@ -224,16 +225,17 @@
 <div class="modal-overlay" ng-show="ctrl.showSearchbar" ng-click="ctrl.toggleSearchbar()"></div>
 
     <div class="search-bar"  ng-show="ctrl.showSearchbar">
-      <div class="input-group">
+      <div class="input-group typeahead-fixed">
         <span class="input-group-addon search-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input
           type="text"
           class="form-control search-input"
           placeholder="Pesquisar município/reservatório..."
-          ng-model="municipioSelecionado"
-          uib-typeahead="municipio as municipio.nome_municipio +' - '+ municipio.UF for municipio in ctrl.municipios | filter:$viewValue"
+          ng-model="municipioReservatorioSelecionado"
+          uib-typeahead="municipio as municipio.nome_exibicao for municipio in ctrl.municipioReservatorio | filter:$viewValue"
           typeahead-min-length="3"
-          typeahead-on-select="ctrl.setMunicipio(municipioSelecionado); municipioSelecionado = '';"
+          typeahead-template-url="customTemplate.html"
+          typeahead-on-select="ctrl.setReservatorioMunicipio(municipioReservatorioSelecionado.id, municipioReservatorioSelecionado.tipo); municipioReservatorioSelecionado = '';"
           ng-focus="ctrl.hideInfo()">
       </div>
     </div>
@@ -250,3 +252,10 @@
     </a>
   </div>
 </div>
+
+<script type="text/ng-template" id="customTemplate.html">
+  <a>
+    <span class="glyphicon" ng-class="{'glyphicon-tint': match.model.tipo === 'reservatorio', 'glyphicon-home': match.model.tipo === 'municipio'}"></span>
+    <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+  </a>
+</script>
