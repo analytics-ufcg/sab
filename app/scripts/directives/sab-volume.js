@@ -289,10 +289,10 @@
                 var newFinalValue = parseFloat(percentual).toFixed(2);
                 var textRounderUpdater = function(percentual){ return Math.round(percentual); };
                 if(parseFloat(newFinalValue) !== parseFloat(textRounderUpdater(newFinalValue))){
-                    textRounderUpdater = function(percentual){ return parseFloat(percentual).toFixed(1); };
+                    textRounderUpdater = function(percentual){ return parseFloat(percentual).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}); };
                 }
                 if(parseFloat(newFinalValue) !== parseFloat(textRounderUpdater(newFinalValue))){
-                    textRounderUpdater = function(percentual){ return parseFloat(percentual).toFixed(2); };
+                    textRounderUpdater = function(percentual){ return parseFloat(percentual).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 2}); };
                 }
 
                 var textTween = function(){

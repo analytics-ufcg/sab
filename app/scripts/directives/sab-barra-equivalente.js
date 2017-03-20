@@ -74,7 +74,8 @@
                     })
                     .on("mouseover", function(d){
                           div.style("display", "inline");
-                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toFixed(1)+"%) dos <br> reservatorios "+
+                          div.html((d[0].x) +" ("+((d[0].x/mapData.quant_reservatorio_com_info) * 100).toLocaleString('pt-BR', {minimumFractionDigits: 1,maximumFractionDigits: 1})
+                            +"%) dos <br> reservatorios "+
                                "estão com <span id='legenda_main'>volume "+d[0].legenda+"%</span> da capacidade")
                             .style("left", function(){
                               if (((x(d[0].x0)+(x(d[0].x)/4))+165) <= width){
