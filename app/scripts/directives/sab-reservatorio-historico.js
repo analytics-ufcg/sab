@@ -86,6 +86,9 @@
           var statusVolume = statusRect.append("div")
             .attr("class", "status-volume")
             .html("&nbsp;");
+          var statusDownload = statusRect.append("div")
+            .attr("class", "status-download")
+            .html("&nbsp;");
 
           // Adds the svg canvas
           var svg = d3.select(element[0])

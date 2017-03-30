@@ -84,6 +84,9 @@
                 <br><br><br>
                 Não possui dados históricos suficientes
               </div>
+              <div class="btn-info-card-download visible-lg-block text-right">
+                <a ng-href="{{ ctrl.RESTAPI.url   }}/reservatorios/{{ctrl.reservatorioSelecionado.id}}/monitoramento/csv" target="_blank" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download"></span> Baixar dados</a>
+              </div>
               <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length > 2">
                 <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
               </div>
