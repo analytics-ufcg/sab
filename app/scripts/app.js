@@ -79,6 +79,10 @@
     .state('login', {
       url: "/login",
       templateUrl: "views/login.html"
+    })
+    .state('atualizar', {
+      url: "/atualizar",
+      templateUrl: "views/admin-atualizar.html"
     });
     $urlRouterProvider.otherwise('/');
   }
