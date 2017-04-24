@@ -355,6 +355,11 @@ footer {
     color: #fff;
   }
 
+  &.section-gray {
+    background-color: $gray-light;
+    color: #aaa;
+  }
+
   &.section-inverse  {
     background-color: $themes-section-colors-c;
     color: #fff;
@@ -791,5 +796,19 @@ footer {
   overflow: auto;
   @media (max-width: $screen-xs-min) {
     max-height: 200px;
+  }
+}
+
+.form-login {
+  width: 400px;
+  margin: auto;
+  margin-top: 100px;
+  padding: $padding-large-vertical $padding-large-vertical*3 $padding-large-vertical*3 $padding-large-vertical*3;
+  background-color: $themes-section-colors-c;
+  color: #fff;
+
+  @media (max-width: $screen-xs-min) {
+    width: 100%;
+    margin-top: 50px;
   }
 }

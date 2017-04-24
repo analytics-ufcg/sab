@@ -75,6 +75,10 @@
     .state('parceiros', {
       url: "/parceiros",
       templateUrl: "views/parceiros.html"
+    })
+    .state('login', {
+      url: "/login",
+      templateUrl: "views/login.html"
     });
     $urlRouterProvider.otherwise('/');
   }

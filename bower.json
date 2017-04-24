@@ -32,5 +32,5 @@
     }
   },
   "development": "http://localhost:5003/api",
-  "production": "https://olhonagua.lsd.ufcg.edu.br/api"
+  "production": "https://api.insa.gov.br/"
 }
