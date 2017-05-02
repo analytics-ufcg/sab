@@ -1,6 +1,64 @@
 <div class="section section-gray section-expande">
   <div class="container">
     <h1>Atualizar volume histórico de reservatório</h1>
+
+    <div id="step1" class="step" ng-show="ctrl.step === 1">
+      <h3>1. Selecione o reservatório</h3>
+      <div class="step-form">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Pesquisar reservatório..."
+            ng-model="reservatorioSelecionado"
+            uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
+            typeahead-min-length="3"
+            typeahead-on-select="ctrl.setReservatorio(reservatorioSelecionado);">
+        </div>
+        <button type="button" class="btn btn-default btn-block"
+          ng-disabled="!ctrl.reservatorioSelecionado.id"
+          ng-click="ctrl.setReservatorio(reservatorioSelecionado);">Próximo <span class="glyphicon glyphicon-chevron-right"></span></button>
+      </div>
+    </div>
+    <div id="step2" class="step" ng-show="ctrl.step === 2">
+      <h3>2. Baixe os dados atuais e faça as alterações necessárias</h3>
+
+      <div ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong> {{ctrl.reservatorioSelecionado.nome}}</div>
+      <div ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
+      <div ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{ctrl.reservatorioSelecionado.bacia}}</div>
+      <div ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{ctrl.reservatorioSelecionado.tipo}}</div>
+      <div ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong> {{ctrl.reservatorioSelecionado.area | sabArea}}</div>
+
+      <p class="text-center">
+        <a ng-href="{{ctrl.RESTAPI.url}}/reservatorios/{{ctrl.reservatorioSelecionado.id}}/monitoramento/csv" target="_blank" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> Baixar dados</a>
+      </p>
+
+      <button type="button" class="btn btn-default btn-block"
+        ng-disabled="!ctrl.reservatorioSelecionado.id"
+        ng-click="ctrl.setStep(3);">Próximo <span class="glyphicon glyphicon-chevron-right"></span></button>
+    </div>
+    <div id="step3" class="step" ng-show="ctrl.step === 3">
+      <h3>3. Envie o novo arquivo com as alterações</h3>
+      <div class="step-form">
+        <div class="form-group">
+          <input type="file" class="form-control search-input">
+        </div>
+        <button type="button" class="btn btn-default btn-block"
+          ng-disabled="!ctrl.reservatorioSelecionado.id"
+          ng-click="ctrl.sendFile()"
+          ladda="ctrl.sending"
+          data-style="expand-left"><span ng-hide="ctrl.sending">Enviar</span><span ng-show="ctrl.sending">Enviando...</span></button>
+      </div>
+    </div>
+
+    <div class="step-indicators carousel slide">
+      <ol class="carousel-indicators">
+        <li ng-class="{'active': ctrl.step === 1}" ng-click="ctrl.setStep(1);"></li>
+        <li ng-class="{'active': ctrl.step === 2}" ng-click="ctrl.setStep(2);"></li>
+        <li ng-class="{'active': ctrl.step === 3}" ng-click="ctrl.setStep(3);"></li>
+      </ol>
+    </div>
+
   </div>
 </div>
 

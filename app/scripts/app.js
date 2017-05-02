@@ -19,7 +19,8 @@
       'angulartics',
       'angulartics.google.analytics',
       '720kb.socialshare',
-      'angular-clipboard'])
+      'angular-clipboard',
+      'angular-ladda'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
@@ -82,7 +83,9 @@
     })
     .state('atualizar', {
       url: "/atualizar",
-      templateUrl: "views/admin-atualizar.html"
+      templateUrl: "views/admin-atualizar.html",
+      controller: "AdminAtualizarCtrl",
+      controllerAs: "ctrl",
     });
     $urlRouterProvider.otherwise('/');
   }

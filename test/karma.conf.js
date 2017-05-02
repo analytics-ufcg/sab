@@ -38,6 +38,8 @@ module.exports = function(config) {
       'bower_components/angulartics-google-analytics/lib/angulartics-ga.js',
       'bower_components/angular-socialshare/dist/angular-socialshare.min.js',
       'bower_components/angular-clipboard/angular-clipboard.js',
+      'bower_components/ladda/dist/ladda.min.js',
+      'bower_components/angular-ladda/dist/angular-ladda.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
