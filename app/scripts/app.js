@@ -23,7 +23,7 @@
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
-      publicImagesPath: 'https://wwws-cloud.lsd.ufcg.edu.br:42160/public/'
+      publicImagesPath: 'https://olhonagua.lsd.ufcg.edu.br/public/'
     })
     .constant('LEGENDCOLORS', {
       reservoirsColors: [

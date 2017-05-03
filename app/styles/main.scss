@@ -120,7 +120,7 @@ footer {
   top: 105px;
   width: 100%;
   z-index: $map-info-z-index - 1;
-
+  text-transform: uppercase;
 }
 
 .map-tabs-nav {
@@ -541,14 +541,28 @@ footer {
 }
 
 .status {
-  color: $gray;
+  @media (min-width: $screen-lg-min) {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .status-date {
   float: left;
+  @media (min-width: $screen-lg-min) {
+    float: none;
+    width: 190px;
+  }
 }
 
 .status-volume {
+  float: right;
+  @media (min-width: $screen-lg-min) {
+    float: none;
+  }
+}
+
+.btn-info-card-download {
   float: right;
 }
 

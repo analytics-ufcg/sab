@@ -32,5 +32,5 @@
     }
   },
   "development": "http://localhost:5003/api",
-  "production": "https://wwws-cloud.lsd.ufcg.edu.br:42160/api"
+  "production": "https://olhonagua.lsd.ufcg.edu.br/api"
 }

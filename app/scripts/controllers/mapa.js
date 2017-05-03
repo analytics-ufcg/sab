@@ -22,6 +22,7 @@
     vm.showLegend = false;
     vm.showShare = false;
     vm.gotError = false;
+    vm.RESTAPI = RESTAPI;
     vm.municipioReservatorio = [];
 
     // Variáveis para compartilhamento
