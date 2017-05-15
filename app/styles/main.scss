@@ -818,11 +818,15 @@ footer {
   margin: auto;
   margin-top: 60px;
   padding: $padding-large-vertical $padding-large-vertical*3 $padding-large-vertical*3 $padding-large-vertical*3;
-  background-color: $themes-section-colors-c;
-  color: #fff;
 }
 
 .step-form {
+  margin-top: 60px;
+  height: 55px;
+}
+
+.step-content {
+  height: 230px;
 }
 
 .step-indicators {

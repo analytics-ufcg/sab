@@ -9,10 +9,11 @@
   /*jshint latedef: nofunc */
   function AdminAtualizarCtrl(RESTAPI, Reservatorio) {
     var vm = this;
-    vm.reservatorioSelecionado = {};
+    vm.selectedReservat = {};
     vm.reservatorios = [];
     vm.step = 1;
     vm.sending = false;
+    vm.fileOk = false;
     vm.RESTAPI = RESTAPI;
 
     vm.setReservatorio = setReservatorio;
@@ -27,9 +28,7 @@
     init();
 
     function setReservatorio(reservatorio) {
-      console.log(reservatorio);
-      vm.reservatorioSelecionado = reservatorio;
-      vm.step = 2;
+      vm.selectedReservat = reservatorio;
     }
 
     function setStep(step) {
