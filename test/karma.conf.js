@@ -40,6 +40,8 @@ module.exports = function(config) {
       'bower_components/angular-clipboard/angular-clipboard.js',
       'bower_components/ladda/dist/ladda.min.js',
       'bower_components/angular-ladda/dist/angular-ladda.min.js',
+      'bower_components/ng-file-upload/ng-file-upload.js',
+      'bower_components/ng-file-upload-shim/ng-file-upload-shim.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -20,7 +20,8 @@
       'angulartics.google.analytics',
       '720kb.socialshare',
       'angular-clipboard',
-      'angular-ladda'])
+      'angular-ladda',
+      'ngFileUpload'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',

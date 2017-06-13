@@ -50,32 +50,47 @@
     <div id="step2" class="step" ng-show="ctrl.step === 2">
       <h2>Envie o arquivo com o novo histórico</h2>
       <p>Todo o histórico deste reservatório será subistituído pelo arquivo enviado.</p>
-      <div class="step-form">
-        <div class="form-group">
-          <input type="file" class="form-control search-input">
-        </div>
-      </div>
-      <div class="step-content">
+
+      <form name="sendFileForm" action="index.html" method="post">
+        <div class="step-form">
+          <div class="form-group">
+            <input
+              type="file"
+              ngf-select
+              required
+              ng-model="csvFile"
+              name="file"
+              ngf-max-size="2MB"
+              class="form-control search-input">
+          </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" ng-model="ctrl.fileOk"> Fiz as alterações necessárias
+              <input type="checkbox" required> Fiz as alterações necessárias
             </label>
           </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-6 col-sm-offset-6">
-          <button
-            type="button"
-            class="btn btn-primary btn-lg btn-block"
-            ng-disabled="!ctrl.fileOk"
-            ng-click="ctrl.sendFile(3);"
-            ladda="ctrl.sending"
-            data-style="expand-left">
-              <span ng-hide="ctrl.sending">Enviar</span><span ng-show="ctrl.sending">Enviando...</span>
-          </button>
         </div>
-      </div>
+        <div class="step-content">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-6">
+            <button
+              type="button"
+              class="btn btn-primary btn-lg btn-block"
+              ng-disabled="!sendFileForm.$valid"
+              ng-click="ctrl.sendFile(csvFile)"
+              ladda="ctrl.sending"
+              data-style="expand-left">
+                <span ng-hide="ctrl.sending">Enviar</span><span ng-show="ctrl.sending">Enviando...</span>
+            </button>
+          </div>
+        </div>
+      </form>
 
     </div>
 
