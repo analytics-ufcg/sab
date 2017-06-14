@@ -65,9 +65,9 @@
           visible: true,
           source: {
             type: 'MapBoxStudio',
-            mapId: 'cizzk95ld007h2so5b2rywdfq',
-            userId: 'jeffersonrpn',
-            accessToken: 'pk.eyJ1IjoiamVmZmVyc29ucnBuIiwiYSI6ImNpcnZhc2FoMTBpZGtmYW04M3IyZTZ6NWoifQ.xTtlY-a--vOAS25Op_7uIA'
+            mapId: 'cj3x16wjm0rwe2ro3820wtie2',
+            userId: 'diegocoelhods',
+            accessToken: 'pk.eyJ1IjoiZGllZ29jb2VsaG9kcyIsImEiOiJjajN4MTFnbWUwMDlhMnFyeXU5dGNtbGw0In0.EYzAmrfQzUw3aPlVKZOIWA'
           }
         },
         {
