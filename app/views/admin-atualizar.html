@@ -53,15 +53,21 @@
 
       <form name="sendFileForm" action="index.html" method="post">
         <div class="step-form">
-          <div class="form-group">
-            <input
-              type="file"
-              ngf-select
-              required
-              ng-model="csvFile"
-              name="file"
-              ngf-max-size="2MB"
-              class="form-control search-input">
+          <div class="input-group">
+            <label class="input-group-btn">
+              <span class="btn btn-primary">
+                  Carregar arquivo&hellip;
+                  <input type="file" style="display: none;"
+                    type="file"
+                    ngf-select
+                    required
+                    ng-model="csvFile"
+                    name="file"
+                    ngf-max-size="2MB"
+                    class="form-control btn btn-default">
+              </span>
+            </label>
+            <input type="text" class="form-control" ng-model="csvFile.name" readonly>
           </div>
           <div class="checkbox">
             <label>
