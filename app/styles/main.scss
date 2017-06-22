@@ -355,6 +355,11 @@ footer {
     color: #fff;
   }
 
+  &.section-gray {
+    background-color: $gray-light;
+    color: #333;
+  }
+
   &.section-inverse  {
     background-color: $themes-section-colors-c;
     color: #fff;
@@ -792,4 +797,41 @@ footer {
   @media (max-width: $screen-xs-min) {
     max-height: 200px;
   }
+}
+
+.form-login {
+  width: 400px;
+  margin: auto;
+  margin-top: 100px;
+  padding: $padding-large-vertical $padding-large-vertical*3 $padding-large-vertical*3 $padding-large-vertical*3;
+  background-color: $themes-section-colors-c;
+  color: #fff;
+
+  @media (max-width: $screen-xs-min) {
+    width: 100%;
+    margin-top: 50px;
+  }
+}
+
+.step {
+  width: 640px;
+  margin: auto;
+  margin-top: 60px;
+  padding: $padding-large-vertical $padding-large-vertical*3 $padding-large-vertical*3 $padding-large-vertical*3;
+}
+
+.step-form {
+  margin-top: 60px;
+}
+
+.step-content {
+  height: 230px;
+}
+
+.step-indicators {
+  height: 80px;
+}
+
+.glyphicon-lg {
+  font-size: 1.3em;
 }

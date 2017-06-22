@@ -19,7 +19,9 @@
       'angulartics',
       'angulartics.google.analytics',
       '720kb.socialshare',
-      'angular-clipboard'])
+      'angular-clipboard',
+      'angular-ladda',
+      'ngFileUpload'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
@@ -75,6 +77,16 @@
     .state('parceiros', {
       url: "/parceiros",
       templateUrl: "views/parceiros.html"
+    })
+    .state('login', {
+      url: "/login",
+      templateUrl: "views/login.html"
+    })
+    .state('atualizar', {
+      url: "/atualizar",
+      templateUrl: "views/admin-atualizar.html",
+      controller: "AdminAtualizarCtrl",
+      controllerAs: "ctrl",
     });
     $urlRouterProvider.otherwise('/');
   }

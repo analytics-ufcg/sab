@@ -3,6 +3,7 @@
   min-height: $navbar-height;
   margin: 0;
   border: none;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
 
   // Prevent floats from breaking the navbar
   @include clearfix;
@@ -263,4 +264,14 @@
     max-width: 246px;
     overflow: hidden;
   }
+}
+
+.btn {
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    @include opacity(.1);
+  }
+
 }
