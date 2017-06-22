@@ -12,12 +12,18 @@
     vm.selectedReservat = {};
     vm.reservatorios = [];
     vm.step = 1;
-    vm.sending = false;
+    vm.file = {
+      sending: false,
+      verified: false,
+      rejected: false,
+      lines: 0
+    }
     vm.RESTAPI = RESTAPI;
 
     vm.setReservatorio = setReservatorio;
     vm.setStep = setStep;
     vm.sendFile = sendFile;
+    vm.reset = reset;
 
     function init() {
       Reservatorio.info.query(function(data) {
@@ -31,26 +37,33 @@
     }
 
     function setStep(step) {
-      vm.sending = false;
+      vm.file.sending = false;
+      vm.file.verified = false;
       vm.step = step;
     }
 
     function sendFile(file) {
-      vm.sending = true;
+      vm.file.sending = true;
+      vm.file.verified = false;
       file.upload = Upload.upload({
         url: RESTAPI.url + '/upload/verificacao',
         data: {file: file},
       });
 
       file.upload.then(function (response) {
-        vm.sending = false;
-      }, function (response) {
-        if (response.status > 0) {
-          console.log(response.status + ': ' + response.data);
-        }
-      }, function (evt) {
-        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        vm.file.sending = false;
+        vm.file.verified = response.data.valido;
+        vm.file.rejected = !vm.file.verified;
+        vm.file.lines = response.data.linhas;
       });
+    }
+
+    function reset() {
+      vm.selectedReservat = {};
+      vm.step = 1;
+      vm.file.sending = false;
+      vm.file.verified = false;
+      vm.file.rejected = false;
     }
 
   }
