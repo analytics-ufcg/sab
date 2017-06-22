@@ -46,7 +46,7 @@ module.exports = function (grunt) {
     environments: {
       options: {
         local_path: 'dist',
-        current_symlink: 'site'
+        current_symlink: 'olhonagua'
       },
       dev: {
           options: {
