@@ -4,10 +4,10 @@
   angular.module('sabApp')
     .controller('AdminAtualizarCtrl', AdminAtualizarCtrl);
 
-  AdminAtualizarCtrl.$inject = ['RESTAPI', 'Reservatorio', 'Upload'];
+  AdminAtualizarCtrl.$inject = ['RESTAPI', 'Reservatorio', 'Upload', '$http'];
 
   /*jshint latedef: nofunc */
-  function AdminAtualizarCtrl(RESTAPI, Reservatorio, Upload) {
+  function AdminAtualizarCtrl(RESTAPI, Reservatorio, Upload, $http) {
     var vm = this;
     vm.selectedReservat = {};
     vm.reservatorios = [];
@@ -24,6 +24,7 @@
     vm.setStep = setStep;
     vm.sendFile = sendFile;
     vm.reset = reset;
+    vm.confirm = confirm;
 
     function init() {
       Reservatorio.info.query(function(data) {
@@ -47,7 +48,10 @@
       vm.file.verified = false;
       file.upload = Upload.upload({
         url: RESTAPI.url + '/upload/verificacao',
-        data: {file: file},
+        data: {
+          reservatId: vm.selectedReservat.id,
+          file: file
+        },
       });
 
       file.upload.then(function (response) {
@@ -64,6 +68,15 @@
       vm.file.sending = false;
       vm.file.verified = false;
       vm.file.rejected = false;
+    }
+
+    function confirm() {
+      $http({
+        method: 'GET',
+        url: RESTAPI.url + '/upload/confirmacao/'+vm.selectedReservat.id
+     }).then(function(response) {
+          console.log(response.data);
+        });
     }
 
   }

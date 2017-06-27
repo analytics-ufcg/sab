@@ -90,6 +90,14 @@
             <div class="media-body">
               <h4 class="media-heading">Arquivo aceito!</h4>
               <p><strong>{{ctrl.file.lines}}</strong> registros de histórico encontrados</p>
+              <p>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  ng-click="ctrl.confirm();">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Confirmar substituição dos dados
+                </button>
+              </p>
             </div>
           </div>
           <div class="media" ng-show="ctrl.file.rejected">
