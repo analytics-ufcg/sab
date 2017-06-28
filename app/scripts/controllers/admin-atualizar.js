@@ -16,6 +16,7 @@
       sending: false,
       verified: false,
       rejected: false,
+      replaced: false,
       lines: 0
     }
     vm.RESTAPI = RESTAPI;
@@ -46,6 +47,7 @@
     function sendFile(file) {
       vm.file.sending = true;
       vm.file.verified = false;
+      vm.step = 3;
       file.upload = Upload.upload({
         url: RESTAPI.url + '/upload/verificacao',
         data: {
@@ -68,15 +70,17 @@
       vm.file.sending = false;
       vm.file.verified = false;
       vm.file.rejected = false;
+      vm.file.replaced = false;
     }
 
     function confirm() {
       $http({
         method: 'GET',
         url: RESTAPI.url + '/upload/confirmacao/'+vm.selectedReservat.id
-     }).then(function(response) {
-          console.log(response.data);
-        });
+      }).then(function(response) {
+        vm.step = 4;
+        vm.file.replaced = response.data.replaced;
+      });
     }
 
   }
