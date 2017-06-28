@@ -2,17 +2,17 @@
   <div class="container">
     <div class="form-login">
       <h3 class="text-center">Acesso restrito</h3>
-      <form>
+      <form name="formLogin">
         <div class="form-group">
-          <label for="exampleInputEmail1">Usuário</label>
-          <input type="text" class="form-control" placeholder="usuario">
+          <label for="usuario">Usuário</label>
+          <input type="text" id="usuario" class="form-control" ng-model="ctrl.user" placeholder="usuario" required>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1">Senha</label>
-          <input type="password" class="form-control" placeholder="senha">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" class="form-control" ng-model="ctrl.password" placeholder="senha" required>
         </div>
         <a ui-sref="atualizar">
-          <button type="submit" class="btn btn-default btn-block">Entrar</button>
+          <button type="submit" class="btn btn-default btn-block" ng-disabled="!formLogin.$valid">Entrar</button>
         </a>
       </form>
     </div>
