@@ -30,8 +30,9 @@
       }).then(function(response) {
         console.log(response.data);
         if (response.data.Authorized === true) {
-          $auth.setToken('token');
-          $window.localStorage.token = response.data;
+          $auth.setToken(response.data.access_token);
+          $window.localStorage.access_token = response.data.access_token;
+          $window.localStorage.refresh_token = response.data.refresh_token;
           $window.localStorage.currentUser = 'insa';
           $rootScope.currentUser = JSON.parse('{}');
           $state.go('atualizar');
@@ -47,7 +48,8 @@
     function logout() {
       $http({
         method: 'POST',
-        url: 'http://localhost:5003/logout'
+        url: 'http://localhost:5003/logout',
+        headers: {'Authorization': 'Bearer ' + $window.localStorage.access_token}
       }).then(function(response) {
         $auth.logout();
       })
