@@ -6,16 +6,14 @@
       <h2>Selecione o reservatório</h2>
       <p>Para começar, precisamos saber qual reservatório será atualizado. Se necessário, baixe o histórico atual.</p>
       <div class="step-form">
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control search-input"
-            placeholder="Pesquisar reservatório..."
-            ng-model="selectedReservat"
-            uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
-            typeahead-min-length="3"
-            typeahead-on-select="ctrl.setReservatorio(selectedReservat);">
-        </div>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Pesquisar reservatório..."
+          ng-model="selectedReservat"
+          uib-typeahead="reservatorio as reservatorio.reservat for reservatorio in ctrl.reservatorios | filter:$viewValue"
+          typeahead-min-length="3"
+          typeahead-on-select="ctrl.setReservatorio(selectedReservat);">
       </div>
 
       <div class="step-content">
@@ -73,41 +71,15 @@
             <input type="text" class="form-control" ng-model="csvFile.name" readonly>
           </div>
         </div>
-        <div class="step-content">
-          <br><br><br>
-          <div class="media" ng-show="ctrl.file.sending">
-            <div class="media-left">
-              <span class="glyphicon glyphicon-transfer glyphicon-lg"></span>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">Verificando arquivo...</h4>
-            </div>
-          </div>
-          <div class="media" ng-show="ctrl.file.verified">
-            <div class="media-left">
-              <span class="glyphicon glyphicon-ok-sign glyphicon-lg"></span>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">Arquivo aceito!</h4>
-              <p><strong>{{ctrl.file.lines}}</strong> registros de histórico encontrados</p>
-            </div>
-          </div>
-          <div class="media" ng-show="ctrl.file.rejected">
-            <div class="media-left">
-              <span class="glyphicon glyphicon-remove-sign glyphicon-lg"></span>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">Arquivo rejeitado! Verifique o formato e tente novamente.</h4>
-            </div>
-          </div>
-        </div>
+
+        <div class="step-content"></div>
 
         <div class="row">
           <div class="col-sm-6">
             <button
               type="button"
-              class="btn btn-primary btn-lg btn-block"
-              ng-click="ctrl.reset(); selectedReservat = '';">
+              class="btn btn-link btn-lg btn-block"
+              ng-click="ctrl.reset(); selectedReservat = ''; csvFile = '';">
                 <span class="glyphicon glyphicon-chevron-left"></span> Selecionar outro
             </button>
           </div>
@@ -127,10 +99,89 @@
 
     </div>
 
+    <div id="step3" class="step" ng-show="ctrl.step === 3">
+      <h2>Confirme a substituição dos dados</h2>
+      <p>Todo o histórico do <strong>{{ctrl.selectedReservat.reservat}}</strong> será subistituído pelo arquivo enviado.</p>
+      <div class="step-form"></div>
+      <div class="step-content">
+        <div class="media" ng-show="ctrl.file.sending">
+          <div class="media-left">
+            <span class="glyphicon glyphicon-transfer glyphicon-lg"></span>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Verificando arquivo...</h4>
+          </div>
+        </div>
+        <div class="media" ng-show="ctrl.file.verified">
+          <div class="media-left">
+            <span class="glyphicon glyphicon-ok-sign glyphicon-lg"></span>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Arquivo aceito!</h4>
+            <p><strong>{{ctrl.file.lines}}</strong> registros de histórico encontrados</p>
+          </div>
+        </div>
+        <div class="media" ng-show="ctrl.file.rejected">
+          <div class="media-left">
+            <span class="glyphicon glyphicon-remove-sign glyphicon-lg"></span>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">Arquivo rejeitado! Verifique o formato e tente novamente.</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            class="btn btn-link btn-lg btn-block"
+            ng-click="ctrl.reset(); selectedReservat = ''; csvFile = '';">
+              <span class="glyphicon glyphicon-chevron-left"></span> Selecionar outro
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            type="button"
+            class="btn btn-primary btn-lg btn-block"
+            ng-click="ctrl.confirm();">
+              <span class="glyphicon glyphicon-ok-sign"></span> Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="step4" class="step" ng-show="ctrl.step === 4">
+      <h2>Confirme a substituição dos dados</h2>
+      <p>Todo o histórico do <strong>{{ctrl.selectedReservat.reservat}}</strong> será subistituído pelo arquivo enviado.</p>
+      <div class="step-form"></div>
+      <div class="step-content">
+        <div class="alert alert-success" role="alert" ng-show="ctrl.file.replaced">
+          Histórico substituído com sucesso
+        </div>
+        <div class="alert alert-success" role="alert" ng-hide="ctrl.file.replaced">
+          Não foi possível substituir o histórico
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            class="btn btn-link btn-lg btn-block"
+            ng-click="ctrl.reset(); selectedReservat = ''; csvFile = '';">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span ng-show="ctrl.file.replaced">Selecionar outro</span><span ng-hide="ctrl.file.replaced">Tentar novamente</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="step-indicators carousel slide">
       <ol class="carousel-indicators">
-        <li ng-class="{'active': ctrl.step === 1}" ng-click="ctrl.setStep(1);"></li>
-        <li ng-class="{'active': ctrl.step === 2}" ng-click="ctrl.setStep(2);"></li>
+        <li ng-class="{'active': ctrl.step === 1}"></li>
+        <li ng-class="{'active': ctrl.step === 2}"></li>
+        <li ng-class="{'active': ctrl.step === 3}"></li>
+        <li ng-class="{'active': ctrl.step === 4}"></li>
       </ol>
     </div>
 
