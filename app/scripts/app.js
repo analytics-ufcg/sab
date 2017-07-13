@@ -21,7 +21,8 @@
       '720kb.socialshare',
       'angular-clipboard',
       'angular-ladda',
-      'ngFileUpload'])
+      'ngFileUpload',
+      'satellizer'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
@@ -41,8 +42,7 @@
     .run(runConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-  runConfig.$inject = ['$rootScope', '$state'];
+  runConfig.$inject = ['$rootScope', '$state', '$auth'];
 
   /*jshint latedef: nofunc */
   function routeConfig($stateProvider, $urlRouterProvider) {
@@ -80,19 +80,35 @@
     })
     .state('login', {
       url: "/login",
-      templateUrl: "views/login.html"
+      templateUrl: "views/login.html",
+      controller: "LoginCtrl",
+      controllerAs: "ctrl",
     })
     .state('atualizar', {
       url: "/atualizar",
       templateUrl: "views/admin-atualizar.html",
       controller: "AdminAtualizarCtrl",
       controllerAs: "ctrl",
+      requiredLogin: true
     });
     $urlRouterProvider.otherwise('/');
   }
 
-  function runConfig($rootScope, $state) {
+  function runConfig($rootScope, $state, $auth) {
     $rootScope.$state = $state;
+    $rootScope.$on('$stateChangeStart', function (event, toState) {
+      var requiredLogin = false;
+      // check if this state need login
+      if (toState && toState.requiredLogin) {
+        requiredLogin = true;
+      }
+
+      // if yes and if this user is not logged in, redirect him to login page
+      if (requiredLogin && !$auth.isAuthenticated()) {
+        event.preventDefault();
+        $state.go('login');
+      }
+    });
   }
 
 })();

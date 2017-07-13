@@ -2,19 +2,22 @@
   <div class="container">
     <div class="form-login">
       <h3 class="text-center">Acesso restrito</h3>
-      <form name="formLogin">
+
+      <form name="formLogin" ng-hide="ctrl.isAuthenticated()">
         <div class="form-group">
           <label for="usuario">Usuário</label>
-          <input type="text" id="usuario" class="form-control" ng-model="ctrl.user" placeholder="usuario" required>
+          <input type="text" id="usuario" class="form-control" ng-model="ctrl.user.email" placeholder="usuario" required>
         </div>
         <div class="form-group">
           <label for="senha">Senha</label>
-          <input type="password" id="senha" class="form-control" ng-model="ctrl.password" placeholder="senha" required>
+          <input type="password" id="senha" class="form-control" ng-model="ctrl.user.password" placeholder="senha" required>
         </div>
-        <a ui-sref="atualizar">
-          <button type="submit" class="btn btn-default btn-block" ng-disabled="!formLogin.$valid">Entrar</button>
-        </a>
+        <button type="submit" class="btn btn-default btn-block" ng-click="ctrl.login()">Entrar</button>
       </form>
+      <div ng-show="ctrl.isAuthenticated()">
+        <a ui-sref="atualizar" class="btn btn-default btn-block">Entrar novamente</a>
+        <button type="submit" class="btn btn-default btn-block" ng-click="ctrl.logout()">Sair</button>
+      </div>
     </div>
   </div>
 </div>
