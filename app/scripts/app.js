@@ -90,6 +90,12 @@
       controller: "AdminAtualizarCtrl",
       controllerAs: "ctrl",
       requiredLogin: true
+    })
+    .state('d3', {
+      url: "/d3",
+      templateUrl: "views/d3.html",
+      controller: "DCtrl",
+      controllerAs: "ctrl"
     });
     $urlRouterProvider.otherwise('/');
   }
