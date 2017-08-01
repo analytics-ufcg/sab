@@ -13,16 +13,46 @@
         restrict: 'E',
         scope: {},
         link: function postLink(scope, element) {
+          var source = {
+            type: 'MapBoxStudio',
+            mapId: 'cj3x16wjm0rwe2ro3820wtie2',
+            userId: 'diegocoelhods',
+            accessToken: 'pk.eyJ1IjoiZGllZ29jb2VsaG9kcyIsImEiOiJjajN4MTFnbWUwMDlhMnFyeXU5dGNtbGw0In0.EYzAmrfQzUw3aPlVKZOIWA'
+          }
+          if ( $(window).width() <= 1000 ) {
+            var zoomInicial = 5;
+            var latitude = -9.4044477;
+            var longitude = -40.507917;
+          } else {
+            var zoomInicial = 6;
+            var latitude = -10.240929;
+            var longitude = -44.231820;
+          }
+          var url = 'https://api.mapbox.com/styles/v1/' + source.userId + '/' + source.mapId + '/tiles/{z}/{x}/{y}?access_token=' + source.accessToken;
+
           var map = new ol.Map({
             layers: [
               new ol.layer.Tile({
-                source: new ol.source.OSM()
+                source: new ol.source.XYZ({
+                  url: url,
+                  // attributions: createAttribution(source),
+                  tilePixelRatio: 1,
+                  tileSize: [512, 512],
+                  wrapX: true
+                })
               })
+              // ,
+              // new ol.layer.Tile({
+              //   source: new ol.source.Vector({
+              //     url: 'http://localhost:5003/api/estados/sab',
+              //     format: new ol.format.TopoJSON()
+              //   })
+              // })
             ],
             target: 'map',
             view: new ol.View({
-              center: ol.proj.fromLonLat([-97, 38]),
-              zoom: 4
+              center: ol.proj.fromLonLat([longitude, latitude]),
+              zoom: zoomInicial
             })
           });
 
