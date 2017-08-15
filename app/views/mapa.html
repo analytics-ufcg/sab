@@ -43,19 +43,54 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(0)">
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong> {{ctrl.reservatorioSelecionado.nome}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{ctrl.reservatorioSelecionado.bacia}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{ctrl.reservatorioSelecionado.tipo}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong> {{ctrl.reservatorioSelecionado.area | sabArea}}</div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong></div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome">{{ctrl.reservatorioSelecionado.nome}}</div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong></div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio">{{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong></div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia">{{ctrl.reservatorioSelecionado.bacia}}</div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong></div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo">{{ctrl.reservatorioSelecionado.tipo}}</div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong></div>
+              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0">{{ctrl.reservatorioSelecionado.area | sabArea}}</div>
             </div>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(1)">
+
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados sobre volume
               </div>
-              <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
+
+              <div class="row">
+                <div class="col-xs-4">
+                  <div ng-show="ctrl.reservatorioSelecionado.volumes.length">
+                    <sab-volume-sm
+                      capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
+                      volume="ctrl.reservatorioSelecionado.volume | sabVolume"
+                      percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
+                  </div>
+                </div>
+                <div class="col-xs-8">
+                    <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade</strong></div>
+                    <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade">{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
+                    <br>
+                    <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Volume</strong></div>
+                    <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume">{{ctrl.reservatorioSelecionado.volume | sabVolume}}</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-4">
+                  <sab-volume-recente-sm monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente-sm>
+                </div>
+                <div class="col-xs-8">
+                </div>
+              </div>
+
+
+
+              <!-- <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
                 Última atualização: {{ctrl.reservatorioSelecionado.data_informacao}}
                 <a href="" class="btn-link" uib-tooltip="Fonte: {{ctrl.reservatorioSelecionado.fonte}}">
                   <i class="glyphicon glyphicon-info-sign"></i>
@@ -66,17 +101,19 @@
 
               <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                 <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                  <sab-volume
+                  <sab-volume-sm
                     capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                     volume="ctrl.reservatorioSelecionado.volume | sabVolume"
-                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
+                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
                 </div>
                 <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
                   <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
                   <hr class="info-card-divider">
                   <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                 </div>
-              </div>
+              </div> -->
+
+
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(2)">
