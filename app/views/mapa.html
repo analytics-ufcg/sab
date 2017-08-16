@@ -62,9 +62,9 @@
                 Não possui dados sobre volume
               </div>
 
-              <div class="row">
+              <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                 <div class="col-xs-4">
-                  <div ng-show="ctrl.reservatorioSelecionado.volumes.length">
+                  <div>
                     <sab-volume-sm
                       capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                       volume="ctrl.reservatorioSelecionado.volume | sabVolume"
@@ -80,7 +80,7 @@
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                 <div class="col-xs-4">
                   <sab-volume-recente-sm monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente-sm>
                 </div>

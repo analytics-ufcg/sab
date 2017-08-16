@@ -19,29 +19,27 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 5, right: 5, bottom: 5, left: 5},
+            var margin = {top: 5, right: 10, bottom: 5, left: 5},
                 width = 100 - margin.left - margin.right,
-                height = 50 - margin.top - margin.bottom,
-                statusWidth = 10,
-                statusHeight = 5;
+                height = 40 - margin.top - margin.bottom;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse;
 
             // Set the ranges
-            var x = d3.time.scale().range([0, width-statusWidth]);
+            var x = d3.time.scale().range([0, width]);
             var y = d3.scale.linear().range([height, 0]);
 
             // Define the line
             var valueline = d3.svg.line()
                 .interpolate("basis")
                 .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.close); });
+                .y(function(d) { return y(d.volume); });
             var valuearea = d3.svg.area()
                 .interpolate("basis")
                 .x(function(d) { return x(d.date); })
                 .y0(height)
-                .y1(function(d) { return y(d.close); });
+                .y1(function(d) { return y(d.volume); });
 
             // Adds the svg canvas
             var svgFrame = d3.select(element[0])
@@ -53,34 +51,10 @@
 
             var svg = svgFrame.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            svgFrame.append("rect").attr({
-              "x": 0,
-              "y": 0,
-              "width": width + margin.left + margin.right,
-              "height": height + margin.top + margin.bottom,
-              "style": "fill:none;stroke-width:1;stroke:rgb(0,0,0)"
-            });
-
-            svg.append("rect").attr({
-              "x": 0,
-              "y": 0,
-              "width": width,
-              "height": height,
-              "style": "fill:none;stroke-width:1;stroke:rgb(255,0,0)"
-            });
-
-            var arrow = svg.append("path").attr({
-              "d": "M36.068,20.176l-29-20C6.761-0.035,6.363-0.057,6.035,0.114C5.706,0.287,5.5,0.627,5.5,0.999v40 c0,0.372,0.206,0.713,0.535,0.886c0.146,0.076,0.306,0.114,0.465,0.114c0.199,0,0.397-0.06,0.568-0.177l29-20 c0.271-0.187,0.432-0.494,0.432-0.823S36.338,20.363,36.068,20.176z",
-              "x": 0,
-              "y": 0,
-              "transform": "scale(0.2) rotate(0 20 20)"
-            })
-
             var lineSvg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
-            var endCircle = svg.append('circle');
-            var triangle = svg.append('polygon')
-              .attr("points", "0,0 "+statusWidth+",0 "+statusHeight+","+statusHeight+"");
+            var arrowG = svg.append("g");
+            var arrow = arrowG.append("path").attr({"d": "M36.068,20.176l-29-20C6.761-0.035,6.363-0.057,6.035,0.114C5.706,0.287,5.5,0.627,5.5,0.999v40 c0,0.372,0.206,0.713,0.535,0.886c0.146,0.076,0.306,0.114,0.465,0.114c0.199,0,0.397-0.06,0.568-0.177l29-20 c0.271-0.187,0.432-0.494,0.432-0.823S36.338,20.363,36.068,20.176z"});
 
             scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
               if ((typeof newValue !== 'undefined') && (newValue.volumes.length !== 0)) {
@@ -93,16 +67,18 @@
               var minData = data.volumes;
               minData.forEach(function(d) {
                 d.date = parseDate(d.DataInformacao);
-                d.close = +d.VolumePercentual;
+                d.volume = +d.VolumePercentual;
               });
 
               // Scale the range of the data
-              var min = d3.min(minData, function(d) { return d.close; });
-              var max = d3.max(minData, function(d) { return d.close; });
+              var min = d3.min(minData, function(d) { return d.volume; });
+              var max = d3.max(minData, function(d) { return d.volume; });
               x.domain(d3.extent(minData, function(d) { return d.date; }));
               y.domain([min, max]);
               // Derive a linear regression
               var regression = data.coeficiente_regressao;
+              console.log(regression);
+              console.log(minData[minData.length-1]);
 
               // Add the valueline path.
               lineSvg
@@ -119,20 +95,8 @@
                 })
                 .attr("d", valuearea(minData));
 
-              endCircle
-               .attr('cx', x(minData[minData.length-1].date))
-               .attr('cy', y(minData[minData.length-1].close))
-               .attr('r', 1.5)
-               .style({
-                 "fill": color(regression)
-               });
-
-               triangle
-                .style({
-                  "fill": color(regression),
-                  "visibility": regression === 0 ? "hidden" : "visible"
-                })
-                .attr("transform", rotate(regression));
+              arrowG.attr('transform', 'translate('+(x(minData[minData.length-1].date) - 2)+' '+(y(minData[minData.length-1].volume) - 4)+')');
+              arrow.attr('transform', 'scale(0.2) rotate('+rotate(regression)+')').style('fill', color(regression));
 
             function color(slope) {
               if (slope > 0) {
@@ -144,10 +108,12 @@
             }
 
             function rotate(slope) {
-              if (slope >= 0) {
-                return "translate("+(width-(statusWidth/2))+", "+((height/2)+(statusHeight/2))+"), rotate(-180 5 0)";
+              if (slope > 0) {
+                return "-30 10 10";
+              } else if (slope == 0) {
+                return "0 20 20"
               }
-              return "translate("+(width-(statusWidth/2))+", "+((height/2)-(statusHeight/2))+")";
+              return "30 10 10";
             }
 
           };

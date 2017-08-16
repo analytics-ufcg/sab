@@ -306,19 +306,6 @@
                 waveGroup.transition()
                     .duration(config.waveRiseTime)
                     .attr('transform','translate('+waveGroupXPosition+','+newHeight+')');
-
-                volumeText.text(volume)
-                    .transition()
-                    .duration(config.waveRiseTime)
-                    .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding+15)+')');
-                volumeLine
-                    .transition()
-                    .duration(config.waveRiseTime)
-                    .attr('transform','translate(0,'+(newHeight)+')');
-                volumeTextValue
-                    .transition()
-                    .duration(config.waveRiseTime)
-                    .attr('transform','translate(0,'+(newHeight+config.volumeTextPadding+22)+')');
             }
 
           scope.$watchCollection(function(scope) { return [scope.capacidade, scope.volume, scope.percentual] ; }, function(newValue) {
