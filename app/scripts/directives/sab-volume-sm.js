@@ -20,15 +20,15 @@
           var
             d3 = $window.d3,
             config = {
-              width: 69,
-              height: 69,
-              gaugeWidth: 65,
-              gaugeHeight: 65,
+              width: 60,
+              height: 60,
+              gaugeWidth: 50,
+              gaugeHeight: 50,
               indicatorWidth: 60,
               volumeTextPadding: 20,
               minValue: 0, // The gauge minimum value.
               maxValue: 100, // The gauge maximum value.
-              circleThickness: 0.08, // The outer circle thickness as a percentage of it's radius.
+              circleThickness: 0.06, // The outer circle thickness as a percentage of it's radius.
               circleFillGap: 0, // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
               circleColor: "#1ba2cc", // The color of the outer circle.
               waveHeight: 0.05, // The wave height as a percentage of the radius of the wave circle.
@@ -58,9 +58,9 @@
                 'viewBox': '0 0 '+config.width+' '+config.height,
                 'width': '100%'});
             var radius = Math.min(parseInt(config.gaugeWidth), parseInt(config.gaugeHeight))/2;
-            var locationX = 2;
+            var locationX = (config.width / 2) - (config.gaugeWidth / 2);
             var textLocationX = locationX - radius - config.volumeTextPadding;
-            var locationY = 2;
+            var locationY = (config.height / 2) - (config.gaugeHeight / 2);
             var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
 
             var waveHeightScale;
@@ -136,9 +136,6 @@
                 .domain([0,1]);
 
             // Center the gauge within the parent SVG.
-            var textGroup = gauge.append("g")
-                .attr("class", "textGroup")
-                .attr('transform', 'translate(0,0)');
             var gaugeGroup = gauge.append("g")
                 .attr("class", "gaugeGroup")
                 .attr('transform','translate('+locationX+','+locationY+')');

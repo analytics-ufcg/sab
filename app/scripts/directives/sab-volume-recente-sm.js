@@ -19,9 +19,9 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 5, right: 10, bottom: 5, left: 5},
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
                 width = 100 - margin.left - margin.right,
-                height = 40 - margin.top - margin.bottom;
+                height = 60 - margin.top - margin.bottom;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse;
@@ -53,8 +53,11 @@
 
             var lineSvg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
-            var arrowG = svg.append("g");
-            var arrow = arrowG.append("path").attr({"d": "M36.068,20.176l-29-20C6.761-0.035,6.363-0.057,6.035,0.114C5.706,0.287,5.5,0.627,5.5,0.999v40 c0,0.372,0.206,0.713,0.535,0.886c0.146,0.076,0.306,0.114,0.465,0.114c0.199,0,0.397-0.06,0.568-0.177l29-20 c0.271-0.187,0.432-0.494,0.432-0.823S36.338,20.363,36.068,20.176z"});
+            var endCircle = svg.append('circle');
+            var triangle = svg.append('polygon')
+              .attr("points", "0,0 10,0 5,5");
+            // var arrowG = svg.append("g");
+            // var arrow = arrowG.append("path").attr({"d": "m3.247127,2.97649c-0.249318,-0.353201 -0.151692,-0.457542 0.217089,-0.23364l3.316589,2.013644c0.221384,0.134411 0.220741,0.352727 0,0.486748l-3.316589,2.013644c-0.369213,0.224165 -0.465573,0.118379 -0.217089,-0.23364l0.164054,-0.232409c0.698206,-0.989125 0.697693,-2.593539 0,-3.581938l-0.164054,-0.232409z"});
 
             scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
               if ((typeof newValue !== 'undefined') && (newValue.volumes.length !== 0)) {
@@ -77,8 +80,6 @@
               y.domain([min, max]);
               // Derive a linear regression
               var regression = data.coeficiente_regressao;
-              console.log(regression);
-              console.log(minData[minData.length-1]);
 
               // Add the valueline path.
               lineSvg
@@ -95,8 +96,23 @@
                 })
                 .attr("d", valuearea(minData));
 
-              arrowG.attr('transform', 'translate('+(x(minData[minData.length-1].date) - 2)+' '+(y(minData[minData.length-1].volume) - 4)+')');
-              arrow.attr('transform', 'scale(0.2) rotate('+rotate(regression)+')').style('fill', color(regression));
+              endCircle
+               .attr('cx', x(minData[minData.length-1].date))
+               .attr('cy', y(minData[minData.length-1].volume))
+               .attr('r', 1.5)
+               .style({
+                 "fill": color(regression)
+              });
+
+              triangle
+                .style({
+                  "fill": color(regression),
+                  "visibility": regression === 0 ? "hidden" : "visible"
+                })
+                .attr("transform", rotate(regression));
+
+              // arrowG.attr('transform', 'translate('+(x(minData[minData.length-1].date) - 5)+' '+(y(minData[minData.length-1].volume) - 5)+')');
+              // arrow.style('fill', color(regression));
 
             function color(slope) {
               if (slope > 0) {
@@ -108,12 +124,10 @@
             }
 
             function rotate(slope) {
-              if (slope > 0) {
-                return "-30 10 10";
-              } else if (slope == 0) {
-                return "0 20 20"
+              if (slope >= 0) {
+                return "translate("+(width / 2)+", "+(height + 10)+"), rotate(-180 5 0)";
               }
-              return "30 10 10";
+              return "translate("+(width / 2)+", "+(height + 5)+")";
             }
 
           };
