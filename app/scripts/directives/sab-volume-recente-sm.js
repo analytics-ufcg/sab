@@ -54,8 +54,8 @@
             var lineSvg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
             var endCircle = svg.append('circle');
-            var triangle = svg.append('polygon')
-              .attr("points", "0,0 10,0 5,5");
+            // var triangle = svg.append('polygon')
+            //   .attr("points", "0,0 10,0 5,5");
             // var arrowG = svg.append("g");
             // var arrow = arrowG.append("path").attr({"d": "m3.247127,2.97649c-0.249318,-0.353201 -0.151692,-0.457542 0.217089,-0.23364l3.316589,2.013644c0.221384,0.134411 0.220741,0.352727 0,0.486748l-3.316589,2.013644c-0.369213,0.224165 -0.465573,0.118379 -0.217089,-0.23364l0.164054,-0.232409c0.698206,-0.989125 0.697693,-2.593539 0,-3.581938l-0.164054,-0.232409z"});
 
@@ -104,12 +104,12 @@
                  "fill": color(regression)
               });
 
-              triangle
-                .style({
-                  "fill": color(regression),
-                  "visibility": regression === 0 ? "hidden" : "visible"
-                })
-                .attr("transform", rotate(regression));
+              // triangle
+              //   .style({
+              //     "fill": color(regression),
+              //     "visibility": regression === 0 ? "hidden" : "visible"
+              //   })
+              //   .attr("transform", rotate(regression));
 
               // arrowG.attr('transform', 'translate('+(x(minData[minData.length-1].date) - 5)+' '+(y(minData[minData.length-1].volume) - 5)+')');
               // arrow.style('fill', color(regression));

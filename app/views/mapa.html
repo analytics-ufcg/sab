@@ -65,63 +65,53 @@
               <div class="row text-center" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                 <div class="col-xs-12">
                   Última atualização: {{ctrl.reservatorioSelecionado.data_informacao}} (Fonte: {{ctrl.reservatorioSelecionado.fonte}})
+                  <div class="info-card-row">&nbsp;</div>
                 </div>
                 <div class="col-xs-6">
-                  <div class="info-card-row hidden-xs">&nbsp;</div>
-                  <div class="info-card-row">30 dias de abastecimento</div>
+                  <div class="info-card-row"><strong>Volume atual</strong></div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume">
+                    {{ctrl.reservatorioSelecionado.volume | sabVolume:2:true}}/{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}
+                  </div>
                 </div>
                 <div class="col-xs-6">
                   <div class="info-card-row"><strong>Tendência</strong></div>
                   <div class="info-card-row">Últimos 6 meses</div>
                 </div>
-                <div class="col-xs-4 col-xs-offset-1">
+                <div class="col-xs-4 col-xs-offset-1 col-md-3 col-md-offset-0 col-lg-4 col-lg-offset-1">
                   <sab-volume-sm
                     capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                     volume="ctrl.reservatorioSelecionado.volume | sabVolume"
                     percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
                 </div>
-                <div class="col-xs-6 col-xs-offset-1">
+                <div class="col-md-3 visible-md">
+                  <div ng-hide="ctrl.reservatorioSelecionado.previsao === 'NULL'">
+                    <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Equivalente à</strong></div>
+                    <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume">30 dias de abastecimento</div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-xs-offset-1 col-md-3 col-md-offset-0 col-lg-6 col-lg-offset-1">
                   <sab-volume-recente-sm monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente-sm>
                 </div>
+                <div class="col-md-3 visible-md">
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #2ecc71"></span> Crescente</div>
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #e74c3c"></span> Decrescente</div>
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #3498db"></span> Manteve-se</div>
+                </div>
               </div>
 
-              <div class="row">
+              <div class="row hidden-md">
                 <div class="col-xs-6 text-center">
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Volume atual</strong></div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume">{{ctrl.reservatorioSelecionado.volume | sabVolume}}</div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade total</strong></div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade">{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
+                  <div ng-hide="ctrl.reservatorioSelecionado.previsao === 'NULL'">
+                    <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Equivalente à</strong></div>
+                    <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume">{{ctrl.reservatorioSelecionado.previsao}} dias de abastecimento</div>
+                  </div>
                 </div>
-                <div class="col-xs-5 col-xs-offset-1">
-                  <div class="info-card-row"><span class="glyphicon glyphicon-triangle-top" style="color: #2ecc71"></span> Crescente</div>
-                  <div class="info-card-row"><span class="glyphicon glyphicon-triangle-bottom" style="color: #e74c3c"></span> Decrescente</div>
-                  <div class="info-card-row"><span class="glyphicon glyphicon-minus-sign" style="color: #3498db"></span> Manteve-se</div>
+                <div class="col-xs-4 col-xs-offset-2">
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #2ecc71"></span> Crescente</div>
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #e74c3c"></span> Decrescente</div>
+                  <div class="info-card-row info-card-row-sm"><span class="glyphicon glyphicon-custom-bullet" style="color: #3498db"></span> Manteve-se</div>
                 </div>
               </div>
-
-              <!-- <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
-                Última atualização: {{ctrl.reservatorioSelecionado.data_informacao}}
-                <a href="" class="btn-link" uib-tooltip="Fonte: {{ctrl.reservatorioSelecionado.fonte}}">
-                  <i class="glyphicon glyphicon-info-sign"></i>
-                </a>
-              </div>
-
-              <hr class="info-card-divider">
-
-              <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                  <sab-volume-sm
-                    capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
-                    volume="ctrl.reservatorioSelecionado.volume | sabVolume"
-                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
-                </div>
-                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
-                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
-                  <hr class="info-card-divider">
-                  <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
-                </div>
-              </div> -->
-
 
             </div>
 
@@ -214,8 +204,8 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
             <div class="row">
               <div class="col-md-6">
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</div>
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
+                <div class="info-card-row info-card-row-sm"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</div>
+                <div class="info-card-row info-card-row-sm"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
               </div>
               <div class="col-md-6" style="padding-top: 10px;">
                 <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
@@ -250,7 +240,7 @@
 
   <span us-spinner ng-show="ctrl.loadingMap"></span>
 
-  <div class="legenda hidden-xs">
+  <div class="legenda hidden-xs hidden-sm">
     Volume (%)<br><small>(Última atualização)</small>
     <div class="legenda-data">
       <sab-legenda-cores-reservatorios cores="ctrl.coresReservatorios"></sab-legenda-cores-reservatorios>

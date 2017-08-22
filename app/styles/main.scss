@@ -199,7 +199,7 @@ footer {
     color: $gray-darker;
   }
 
-  &.info-card-row-small {
+  &.info-card-row-sm {
     font-size: 0.7em;
 
     @media (min-width: $screen-sm-min) {
@@ -835,4 +835,9 @@ footer {
 
 .glyphicon-lg {
   font-size: 1.3em;
+}
+
+.glyphicon-custom-bullet:before {
+  content: ' \25CF';
+  font-size: 20px;
 }
