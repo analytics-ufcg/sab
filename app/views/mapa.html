@@ -84,7 +84,7 @@
                     percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
                 </div>
                 <div class="col-md-3 visible-md">
-                  <div ng-hide="ctrl.reservatorioSelecionado.previsao === 'NULL'">
+                  <div ng-show="ctrl.reservatorioSelecionado.previsao !== 'NULL'">
                     <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Equivalente à</strong></div>
                     <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume">30 dias de abastecimento</div>
                   </div>
@@ -101,7 +101,7 @@
 
               <div class="row hidden-md">
                 <div class="col-xs-6 text-center">
-                  <div ng-hide="ctrl.reservatorioSelecionado.previsao === 'NULL'">
+                  <div ng-show="ctrl.reservatorioSelecionado.previsao !== 'NULL'">
                     <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Equivalente à</strong></div>
                     <div class="info-card-row info-card-row-sm" ng-show="ctrl.reservatorioSelecionado.volume">{{ctrl.reservatorioSelecionado.previsao}} dias de abastecimento</div>
                   </div>
