@@ -11,7 +11,7 @@
       return function (input, decimais, ocultarUnidade) {
         if (!input) {return;}
         if (decimais == undefined) {
-          decimais = 2;
+          decimais = 1;
         }
         var newInput = parseFloat(input).toLocaleString('pt-BR', {minimumFractionDigits: decimais, maximumFractionDigits: decimais});
         if (ocultarUnidade) {
