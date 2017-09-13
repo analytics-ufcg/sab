@@ -153,9 +153,10 @@ footer {
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
+  height: calc(100vh - 194px);
 
   @media (min-width: $screen-sm-min) {
-    height: auto;
+    height: calc(100vh - 330px);
   }
 
   @media (min-width: $screen-md-min) {
@@ -275,7 +276,7 @@ footer {
 }
 
 .legenda {
-  z-index: $map-info-z-index;
+  z-index: $map-info-z-index - 1;
   position: absolute;
   padding: $padding-base-vertical*2;
   width: 190px;
