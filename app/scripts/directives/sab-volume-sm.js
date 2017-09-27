@@ -20,11 +20,11 @@
           var
             d3 = $window.d3,
             config = {
-              width: 240,
-              height: 150,
-              gaugeWidth: 90,
-              gaugeHeight: 90,
-              indicatorWidth: 120,
+              width: 185,
+              height: 100,
+              gaugeWidth: 80,
+              gaugeHeight: 80,
+              indicatorWidth: 90,
               volumeTextPadding: 20,
               minValue: 0, // The gauge minimum value.
               maxValue: 100, // The gauge maximum value.
@@ -76,7 +76,7 @@
             }
 
             var textPixels = (config.textSize*radius/1.5);
-            var textSmallPixels = 9;
+            var textSmallPixels = 7;
             var textFinalValue = parseFloat(value);
             var percentText = config.displayPercent?"%":"";
             var circleThickness = config.circleThickness * radius;
@@ -166,7 +166,7 @@
                 .attr("y1", gaugeDimensions.top.y + (circleThickness/2))
                 .attr("x2", gaugeDimensions.top.x)
                 .attr("y2", gaugeDimensions.top.y + (circleThickness/2))
-                .style("stroke", config.waveColor)
+                .style("stroke", config.circleColor)
                 .style("stroke-width", circleThickness);
 
             gaugeGroup.append("circle")
@@ -178,7 +178,7 @@
             var capacidadeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "left")
-                .attr("font-size", textSmallPixels + "px")
+                .attr("font-size", (textSmallPixels + 2) + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+
                         (gaugeDimensions.top.x - config.indicatorWidth)+', '+
@@ -196,7 +196,7 @@
                 .attr("class", "liquidFillGaugeText")
                 .attr("text-anchor", "end")
                 .attr("alignment-baseline", "baseline")
-                .attr("font-size", textSmallPixels + "px")
+                .attr("font-size", (textSmallPixels + 2) + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+
                       (gaugeDimensions.top.x + config.indicatorWidth)+','+

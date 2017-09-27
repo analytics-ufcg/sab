@@ -138,6 +138,7 @@ footer {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: transparentize(#fff, 0.2);
   color: $nav-tabs-active-link-hover-bg;
+
 }
 
 .info-card-title {
@@ -221,11 +222,32 @@ footer {
 }
 
 .info-card-divider {
-  margin-top: $card-padding-vertical*2;
+  margin-top: $card-padding-vertical;
   border: none;
-  @media (max-width: $screen-md-max) {
-    margin-top: 0px;
-    margin-bottom: 0px;
+
+  @media (max-width: $screen-sm-max) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+}
+
+.info-card-vertical-align {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(100vh - 260px);
+
+  @media (min-width: $screen-sm-min) {
+    height: calc(100vh - 385px);
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: 150px;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    height: 330px;
   }
 }
 
