@@ -20,24 +20,31 @@
 
             // Set the dimensions of the canvas / graph
             var margin = {top: 5, right: 5, bottom: 5, left: 5},
-                width = 100 - margin.left - margin.right,
-                height = 60 - margin.top - margin.bottom;
+                width = 200 - margin.left - margin.right,
+                height = 30 - margin.top - margin.bottom,
+                width1 = width/2,
+                width2 = width;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse;
 
             // Set the ranges
-            var x = d3.time.scale().range([0, width]);
+            var x1 = d3.time.scale().range([0, width1]);
+            var x2 = d3.time.scale().range([width1, width2]);
             var y = d3.scale.linear().range([height, 0]);
 
             // Define the line
-            var valueline = d3.svg.line()
+            var valueline1 = d3.svg.line()
                 .interpolate("basis")
-                .x(function(d) { return x(d.date); })
+                .x(function(d) { return x1(d.date); })
+                .y(function(d) { return y(d.volume); });
+            var valueline2 = d3.svg.line()
+                .interpolate("basis")
+                .x(function(d) { return x2(d.date); })
                 .y(function(d) { return y(d.volume); });
             var valuearea = d3.svg.area()
                 .interpolate("basis")
-                .x(function(d) { return x(d.date); })
+                .x(function(d) { return x1(d.date); })
                 .y0(height)
                 .y1(function(d) { return y(d.volume); });
 
@@ -51,7 +58,8 @@
 
             var svg = svgFrame.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            var lineSvg = svg.append("g").append("path");
+            var line1Svg = svg.append("g").append("path");
+            var line2Svg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
             var endCircle = svg.append('circle');
             // var triangle = svg.append('polygon')
@@ -76,19 +84,27 @@
               // Scale the range of the data
               var min = d3.min(minData, function(d) { return d.volume; });
               var max = d3.max(minData, function(d) { return d.volume; });
-              x.domain(d3.extent(minData, function(d) { return d.date; }));
+              x1.domain(d3.extent(minData, function(d) { return d.date; }));
+              x2.domain(d3.extent(minData, function(d) { return d.date; }));
               y.domain([min, max]);
               // Derive a linear regression
               var regression = data.coeficiente_regressao;
 
               // Add the valueline path.
-              lineSvg
+              line1Svg
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
                   "stroke": color(regression)
                 })
-                .attr("d", valueline(minData));
+                .attr("d", valueline1(minData));
+              line2Svg
+                .style({
+                  "fill": "none",
+                  "stroke-width": "1",
+                  "stroke": color(regression)
+                })
+                .attr("d", valueline2(minData));
               areaSvg
                 .style({
                   "fill-opacity": "0.1",
@@ -97,7 +113,7 @@
                 .attr("d", valuearea(minData));
 
               endCircle
-               .attr('cx', x(minData[minData.length-1].date))
+               .attr('cx', x1(minData[minData.length-1].date))
                .attr('cy', y(minData[minData.length-1].volume))
                .attr('r', 1.5)
                .style({

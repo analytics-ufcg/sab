@@ -233,6 +233,9 @@
           vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
           vm.loadingInfo = false;
         });
+        Reservatorio.previsoes.query({id: vm.reservatorioSelecionado.id}, function(data) {
+          vm.reservatorioSelecionado.previsoes = data;
+        });
       }
     }
 
@@ -440,7 +443,6 @@
 
       });
     }
-
 
     Reservatorio.estadoEquivalente.query(function(response) {
       vm.loadingInfo = true;
