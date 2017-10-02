@@ -65,6 +65,7 @@
             var line3Svg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
             var endCircle = svg.append('circle');
+            var dayStroke = svg.append('line');
             // var triangle = svg.append('polygon')
             //   .attr("points", "0,0 10,0 5,5");
             // var arrowG = svg.append("g");
@@ -107,8 +108,13 @@
               });
 
               // Scale the range of the data
-              var min = d3.min(volumes, function(d) { return d.volume; });
-              var max = d3.max(volumes, function(d) { return d.volume; });
+              var allVolumes = [volumes, previsaoRetirada.volumesD, previsaoOutorga.volumesD];
+              var min = d3.min(allVolumes.map(function(v) {
+                return d3.min(v, function(d) { return d.volume; });
+              }));
+              var max = d3.max(allVolumes.map(function(v) {
+                return d3.max(v, function(d) { return d.volume; });
+              }));
               x1.domain(d3.extent(volumes, function(d) { return d.date; }));
               x2.domain(d3.extent(previsaoRetirada.volumesD, function(d) { return d.date; }));
               y.domain([min, max]);
@@ -126,7 +132,7 @@
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
-                  "stroke": "blue"
+                  "stroke": "rgb(177, 177, 177)"
                 })
                 .attr("class", "retirada")
                 .attr("d", valueline2(previsaoRetirada.volumesD));
@@ -134,7 +140,7 @@
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
-                  "stroke": "red"
+                  "stroke": "rgb(195, 195, 195)"
                 })
                 .attr("class", "outorga")
                 .attr("d", valueline2(previsaoOutorga.volumesD));
@@ -144,14 +150,23 @@
                   "fill": color(regression)
                 })
                 .attr("d", valuearea(volumes));
-
+              dayStroke
+                .attr('x1', x1(volumes[volumes.length-1].date))
+                .attr('y1', y(max)-margin.top)
+                .attr('x2', x1(volumes[volumes.length-1].date))
+                .attr('y2', y(min)+margin.bottom)
+                .style({
+                  "stroke": "gray",
+                  "stroke-width": "0.5",
+                  "stroke-dasharray": "4,2"
+                });
               endCircle
-               .attr('cx', x1(volumes[volumes.length-1].date))
-               .attr('cy', y(volumes[volumes.length-1].volume))
-               .attr('r', 1.5)
-               .style({
-                 "fill": color(regression)
-              });
+                .attr('cx', x1(volumes[volumes.length-1].date))
+                .attr('cy', y(volumes[volumes.length-1].volume))
+                .attr('r', 1.5)
+                .style({
+                  "fill": color(regression)
+                });
 
               // triangle
               //   .style({
