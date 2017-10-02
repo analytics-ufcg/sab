@@ -12,7 +12,9 @@
         template: '',
         restrict: 'E',
         scope: {
-          monitoramento: '='
+          monitoramento: '=',
+          previsoes: '=',
+          data: '='
         },
         link: function postLink(scope, element) {
           var
@@ -60,6 +62,7 @@
 
             var line1Svg = svg.append("g").append("path");
             var line2Svg = svg.append("g").append("path");
+            var line3Svg = svg.append("g").append("path");
             var areaSvg = svg.append("g").append("path");
             var endCircle = svg.append('circle');
             // var triangle = svg.append('polygon')
@@ -67,28 +70,48 @@
             // var arrowG = svg.append("g");
             // var arrow = arrowG.append("path").attr({"d": "m3.247127,2.97649c-0.249318,-0.353201 -0.151692,-0.457542 0.217089,-0.23364l3.316589,2.013644c0.221384,0.134411 0.220741,0.352727 0,0.486748l-3.316589,2.013644c-0.369213,0.224165 -0.465573,0.118379 -0.217089,-0.23364l0.164054,-0.232409c0.698206,-0.989125 0.697693,-2.593539 0,-3.581938l-0.164054,-0.232409z"});
 
-            scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
-              if ((typeof newValue !== 'undefined') && (newValue.volumes.length !== 0)) {
-                draw(newValue);
+            scope.$watchCollection(function(scope) { return [scope.monitoramento, scope.previsoes, scope.data]; }, function(newValue) {
+              if ((typeof newValue[0] !== 'undefined') && (newValue[0].volumes.length !== 0) && (typeof newValue[1] !== 'undefined') && (typeof newValue[2] !== 'undefined')) {
+                draw(newValue[0], newValue[1], newValue[2]);
               }
             });
 
             // Get the data
-            var draw = function(data) {
-              var minData = data.volumes;
-              minData.forEach(function(d) {
+            var draw = function(monitoramento, previsoes, data) {
+              var
+                volumes = monitoramento.volumes,
+                regression = monitoramento.coeficiente_regressao,
+                previsaoOutorga = previsoes.outorga,
+                previsaoRetirada = previsoes.previsao,
+                volumeMorto = +previsoes.volume_morto,
+                dataBase = parseDate(data);
+
+              volumes.forEach(function(d) {
                 d.date = parseDate(d.DataInformacao);
-                d.volume = +d.VolumePercentual;
+                d.volume = +d.Volume;
+              });
+
+              previsaoRetirada.volumesD = [];
+              previsaoRetirada.volumes.forEach(function(d, i) {
+                previsaoRetirada.volumesD.push({
+                  date: d3.time.day.offset(dataBase, i+1),
+                  volume: +d
+                });
+              });
+              previsaoOutorga.volumesD = [];
+              previsaoOutorga.volumes.forEach(function(d, i) {
+                previsaoOutorga.volumesD.push({
+                  date: d3.time.day.offset(dataBase, i+1),
+                  volume: +d
+                });
               });
 
               // Scale the range of the data
-              var min = d3.min(minData, function(d) { return d.volume; });
-              var max = d3.max(minData, function(d) { return d.volume; });
-              x1.domain(d3.extent(minData, function(d) { return d.date; }));
-              x2.domain(d3.extent(minData, function(d) { return d.date; }));
+              var min = d3.min(volumes, function(d) { return d.volume; });
+              var max = d3.max(volumes, function(d) { return d.volume; });
+              x1.domain(d3.extent(volumes, function(d) { return d.date; }));
+              x2.domain(d3.extent(previsaoRetirada.volumesD, function(d) { return d.date; }));
               y.domain([min, max]);
-              // Derive a linear regression
-              var regression = data.coeficiente_regressao;
 
               // Add the valueline path.
               line1Svg
@@ -97,24 +120,34 @@
                   "stroke-width": "1",
                   "stroke": color(regression)
                 })
-                .attr("d", valueline1(minData));
+                .attr("class", "tendencia")
+                .attr("d", valueline1(volumes));
               line2Svg
                 .style({
                   "fill": "none",
                   "stroke-width": "1",
-                  "stroke": color(regression)
+                  "stroke": "blue"
                 })
-                .attr("d", valueline2(minData));
+                .attr("class", "retirada")
+                .attr("d", valueline2(previsaoRetirada.volumesD));
+              line3Svg
+                .style({
+                  "fill": "none",
+                  "stroke-width": "1",
+                  "stroke": "red"
+                })
+                .attr("class", "outorga")
+                .attr("d", valueline2(previsaoOutorga.volumesD));
               areaSvg
                 .style({
                   "fill-opacity": "0.1",
                   "fill": color(regression)
                 })
-                .attr("d", valuearea(minData));
+                .attr("d", valuearea(volumes));
 
               endCircle
-               .attr('cx', x1(minData[minData.length-1].date))
-               .attr('cy', y(minData[minData.length-1].volume))
+               .attr('cx', x1(volumes[volumes.length-1].date))
+               .attr('cy', y(volumes[volumes.length-1].volume))
                .attr('r', 1.5)
                .style({
                  "fill": color(regression)
@@ -127,7 +160,7 @@
               //   })
               //   .attr("transform", rotate(regression));
 
-              // arrowG.attr('transform', 'translate('+(x(minData[minData.length-1].date) - 5)+' '+(y(minData[minData.length-1].volume) - 5)+')');
+              // arrowG.attr('transform', 'translate('+(x(volumes[volumes.length-1].date) - 5)+' '+(y(volumes[volumes.length-1].volume) - 5)+')');
               // arrow.style('fill', color(regression));
 
             function color(slope) {
