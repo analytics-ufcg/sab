@@ -23,16 +23,14 @@
             // Set the dimensions of the canvas / graph
             var margin = {top: 5, right: 5, bottom: 5, left: 5},
                 width = 200 - margin.left - margin.right,
-                height = 30 - margin.top - margin.bottom,
-                width1 = width/2,
-                width2 = width;
+                height = 30 - margin.top - margin.bottom;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse;
 
             // Set the ranges
-            var x1 = d3.time.scale().range([0, width1]);
-            var x2 = d3.time.scale().range([width1, width2]);
+            var x1 = d3.time.scale().range([0, width/2]);
+            var x2 = d3.time.scale().range([width/2, width]);
             var y = d3.scale.linear().range([height, 0]);
 
             // Define the line
@@ -59,13 +57,16 @@
                   'width': '100%'});
 
             var svg = svgFrame.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var gLines = svg.append("g").attr("class", "lines");
+            var gAxis = svg.append("g").attr("class", "axis");
+            var gDetails = svg.append("g").attr("class", "details");
 
-            var line1Svg = svg.append("g").append("path");
-            var line2Svg = svg.append("g").append("path");
-            var line3Svg = svg.append("g").append("path");
-            var areaSvg = svg.append("g").append("path");
-            var endCircle = svg.append('circle');
-            var dayStroke = svg.append('line');
+            var line1Svg = gLines.append("path");
+            var line2Svg = gLines.append("path");
+            var line3Svg = gLines.append("path");
+            var areaSvg = gLines.append("path");
+            var dayStroke = gDetails.append('line');
+            var endCircle = gDetails.append('circle');
             // var triangle = svg.append('polygon')
             //   .attr("points", "0,0 10,0 5,5");
             // var arrowG = svg.append("g");
@@ -116,7 +117,7 @@
                 return d3.max(v, function(d) { return d.volume; });
               }));
               x1.domain(d3.extent(volumes, function(d) { return d.date; }));
-              x2.domain(d3.extent(previsaoRetirada.volumesD, function(d) { return d.date; }));
+              x2.domain([dataBase, d3.time.day.offset(dataBase, 180)]);
               y.domain([min, max]);
 
               // Add the valueline path.
@@ -131,7 +132,7 @@
               line2Svg
                 .style({
                   "fill": "none",
-                  "stroke-width": "1",
+                  "stroke-width": "0.8",
                   "stroke": "rgb(177, 177, 177)"
                 })
                 .attr("class", "retirada")
@@ -139,7 +140,7 @@
               line3Svg
                 .style({
                   "fill": "none",
-                  "stroke-width": "1",
+                  "stroke-width": "0.8",
                   "stroke": "rgb(195, 195, 195)"
                 })
                 .attr("class", "outorga")
@@ -150,9 +151,11 @@
                   "fill": color(regression)
                 })
                 .attr("d", valuearea(volumes));
+
+              // Details
               dayStroke
                 .attr('x1', x1(volumes[volumes.length-1].date))
-                .attr('y1', y(max)-margin.top)
+                .attr('y1', -margin.top)
                 .attr('x2', x1(volumes[volumes.length-1].date))
                 .attr('y2', y(min)+margin.bottom)
                 .style({
