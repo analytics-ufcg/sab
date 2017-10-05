@@ -11,6 +11,7 @@
    */
   angular
     .module('sabApp', [
+      'sabApp.serviceWorker',
       'ngResource',
       'ui.router',
       'ui.bootstrap',
@@ -42,7 +43,7 @@
     .run(runConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
-  runConfig.$inject = ['$rootScope', '$state', '$auth'];
+  runConfig.$inject = ['$rootScope', '$state', '$auth', 'ServiceWorker'];
 
   /*jshint latedef: nofunc */
   function routeConfig($stateProvider, $urlRouterProvider) {
@@ -94,7 +95,7 @@
     $urlRouterProvider.otherwise('/');
   }
 
-  function runConfig($rootScope, $state, $auth) {
+  function runConfig($rootScope, $state, $auth, ServiceWorker) {
     $rootScope.$state = $state;
     $rootScope.$on('$stateChangeStart', function (event, toState) {
       var requiredLogin = false;
@@ -109,6 +110,9 @@
         $state.go('login');
       }
     });
+
+  	var worker = 'service-worker.js';
+  	ServiceWorker.registerWorker(worker);
   }
 
 })();
