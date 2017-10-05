@@ -4,8 +4,8 @@
   "description": "Acompanhe os níveis dos reservatórios do semiárido brasileiro",
   "lang": "pt-BR",
   "start_url": "/",
-  "display": "fullscreen",
-  "orientation": "portrait",
+  "display": "standalone",
+  "orientation": "portrait-primary",
   "theme_color": "#5a8cbc",
   "background_color": "#fff",
   "icons": [
