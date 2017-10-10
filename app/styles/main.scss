@@ -836,3 +836,44 @@ footer {
 .glyphicon-lg {
   font-size: 1.3em;
 }
+
+.toast-top-right {
+  top: auto;
+  right: 0;
+  bottom: 0;
+}
+
+#toast-container .toast {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  border-radius: 0;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 0.95;
+}
+
+#toast-container .toast.toast-info {
+  background-image: none !important;
+}
+
+.toast-info {
+    background-color: #363636;
+}
+
+.toast-message {
+
+  > p {
+    margin: 0;
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+
+  > a {
+    font-size: 11px !important;
+  }
+
+}

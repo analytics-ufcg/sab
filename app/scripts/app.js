@@ -23,7 +23,8 @@
       'angular-clipboard',
       'angular-ladda',
       'ngFileUpload',
-      'satellizer'])
+      'satellizer',
+      'toastr'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
