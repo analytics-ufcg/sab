@@ -21,9 +21,9 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 5, right: 5, bottom: 5, left: 5},
-                width = 200 - margin.left - margin.right,
-                height = 30 - margin.top - margin.bottom;
+            var margin = {top: 20, right: 10, bottom: 20, left: 10},
+                width = 400 - margin.left - margin.right,
+                height = 70 - margin.top - margin.bottom;
 
             // Parse the date / time
             var parseDate = d3.time.format("%d/%m/%Y").parse;
@@ -60,6 +60,7 @@
             var gLines = svg.append("g").attr("class", "lines");
             var gAxis = svg.append("g").attr("class", "axis");
             var gDetails = svg.append("g").attr("class", "details");
+            var gTexts = svg.append("g").attr("class", "texts");
 
             var line1Svg = gLines.append("path");
             var line2Svg = gLines.append("path");
@@ -67,6 +68,12 @@
             var areaSvg = gLines.append("path");
             var dayStroke = gDetails.append('line');
             var endCircle = gDetails.append('circle');
+            var title1 = gTexts.append('text');
+            var title2 = gTexts.append('text');
+            // var barRetirada = gTexts.append('rect');
+            // var barOutorga = gTexts.append('rect');
+            // var textRetirada = gTexts.append('text');
+            // var textOutorga = gTexts.append('text');
             // var triangle = svg.append('polygon')
             //   .attr("points", "0,0 10,0 5,5");
             // var arrowG = svg.append("g");
@@ -154,23 +161,62 @@
 
               // Details
               dayStroke
-                .attr('x1', x1(volumes[volumes.length-1].date))
+                .attr('x1', width * 0.5)
                 .attr('y1', -margin.top)
-                .attr('x2', x1(volumes[volumes.length-1].date))
-                .attr('y2', y(min)+margin.bottom)
+                .attr('x2', width * 0.5)
+                .attr('y2', height + (margin.bottom * 0.5))
                 .style({
                   "stroke": "gray",
                   "stroke-width": "0.5",
                   "stroke-dasharray": "4,2"
                 });
               endCircle
-                .attr('cx', x1(volumes[volumes.length-1].date))
+                .attr('cx', width * 0.5)
                 .attr('cy', y(volumes[volumes.length-1].volume))
-                .attr('r', 1.5)
+                .attr('r', 3)
                 .style({
                   "fill": color(regression)
                 });
 
+              // Texts
+              title1
+                .attr('x', width * 0.25)
+                .attr('y', -10)
+                .attr('font-size', '8px')
+                .attr('text-anchor', 'middle')
+                .text("Últimos meses");
+              title2
+                .attr('x', width * 0.75)
+                .attr('y', -10)
+                .attr('font-size', '8px')
+                .attr('text-anchor', 'middle')
+                .text("Se não chover");
+              // barRetirada
+              //   .attr('x', width * 0.5)
+              //   .attr('y', height + 7)
+              //   .attr('width', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date) - (width * 0.5))
+              //   .attr('height', 3)
+              //   .attr('fill', 'rgb(195, 195, 195)');
+              // barOutorga
+              //   .attr('x', width * 0.5)
+              //   .attr('y', height + 12)
+              //   .attr('width', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date) - (width * 0.5))
+              //   .attr('height', 3)
+              //   .attr('fill', 'rgb(195, 195, 195)');
+              // textRetirada
+              //   .attr('x', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+              //   .attr('y', height + 10)
+              //   .attr('font-size', '8px')
+              //   .attr('text-anchor', 'end')
+              //   .attr('alignment-baseline', 'middle')
+              //   .text(previsaoRetirada.volumesD.length+" dias");
+              // textOutorga
+              //   .attr('x', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+              //   .attr('y', height + 15)
+              //   .attr('font-size', '8px')
+              //   .attr('text-anchor', 'end')
+              //   .attr('alignment-baseline', 'middle')
+              //   .text(previsaoOutorga.volumesD.length+" dias");
               // triangle
               //   .style({
               //     "fill": color(regression),
