@@ -21,17 +21,33 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 20, right: 10, bottom: 20, left: 10},
+            var margin = {top: 20, right: 20, bottom: 20, left: 20},
                 width = 400 - margin.left - margin.right,
                 height = 70 - margin.top - margin.bottom;
 
             // Parse the date / time
+            var localized = d3.locale({
+              "decimal": ",",
+              "thousands": ".",
+              "grouping": [3],
+              "currency": ["R$", ""],
+              "dateTime": "%d/%m/%Y %H:%M:%S",
+              "date": "%d/%m/%Y",
+              "time": "%H:%M:%S",
+              "periods": ["AM", "PM"],
+              "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+              "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+              "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+              "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+            });
             var parseDate = d3.time.format("%d/%m/%Y").parse;
 
             // Set the ranges
             var x1 = d3.time.scale().range([0, width/2]);
             var x2 = d3.time.scale().range([width/2, width]);
             var y = d3.scale.linear().range([height, 0]);
+            var x1Axis = d3.svg.axis().scale(x1).orient("bottom").tickFormat(localized.timeFormat("%d %b"));
+            var x2Axis = d3.svg.axis().scale(x2).orient("bottom").tickFormat(localized.timeFormat("%d %b"));
 
             // Define the line
             var valueline1 = d3.svg.line()
@@ -70,14 +86,16 @@
             var endCircle = gDetails.append('circle');
             var title1 = gTexts.append('text');
             var title2 = gTexts.append('text');
-            // var barRetirada = gTexts.append('rect');
-            // var barOutorga = gTexts.append('rect');
-            // var textRetirada = gTexts.append('text');
-            // var textOutorga = gTexts.append('text');
-            // var triangle = svg.append('polygon')
-            //   .attr("points", "0,0 10,0 5,5");
-            // var arrowG = svg.append("g");
-            // var arrow = arrowG.append("path").attr({"d": "m3.247127,2.97649c-0.249318,-0.353201 -0.151692,-0.457542 0.217089,-0.23364l3.316589,2.013644c0.221384,0.134411 0.220741,0.352727 0,0.486748l-3.316589,2.013644c-0.369213,0.224165 -0.465573,0.118379 -0.217089,-0.23364l0.164054,-0.232409c0.698206,-0.989125 0.697693,-2.593539 0,-3.581938l-0.164054,-0.232409z"});
+            var x1AxisSvg = gAxis.append("g")
+                            .attr("class", "x axis")
+                            .attr("transform", "translate(0," + height + ")");
+            var x2AxisSvg = gAxis.append("g")
+                            .attr("class", "x axis")
+                            .attr("transform", "translate(0," + height + ")");
+            var strokeRetirada = gTexts.append('line');
+            var circleRetirada = gTexts.append('circle');
+            var strokeOutorga = gTexts.append('line');
+            var circleOutorga = gTexts.append('circle');
 
             scope.$watchCollection(function(scope) { return [scope.monitoramento, scope.previsoes, scope.data]; }, function(newValue) {
               if ((typeof newValue[0] !== 'undefined') && (newValue[0].volumes.length !== 0) && (typeof newValue[1] !== 'undefined') && (typeof newValue[2] !== 'undefined')) {
@@ -87,6 +105,10 @@
 
             // Get the data
             var draw = function(monitoramento, previsoes, data) {
+              console.log(monitoramento.volumes.length);
+              console.log(previsoes.outorga.calculado);
+              console.log(previsoes.previsao.calculado);
+
               var
                 volumes = monitoramento.volumes,
                 regression = monitoramento.coeficiente_regressao,
@@ -126,6 +148,14 @@
               x1.domain(d3.extent(volumes, function(d) { return d.date; }));
               x2.domain([dataBase, d3.time.day.offset(dataBase, 180)]);
               y.domain([min, max]);
+              x1Axis.tickValues([
+                volumes[0].date,
+                volumes[volumes.length-1].date
+              ]);
+              x2Axis.tickValues([
+                previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date,
+                previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date
+              ]);
 
               // Add the valueline path.
               line1Svg
@@ -140,7 +170,7 @@
                 .style({
                   "fill": "none",
                   "stroke-width": "0.8",
-                  "stroke": "rgb(177, 177, 177)"
+                  "stroke": "rgb(88, 182, 235)"
                 })
                 .attr("class", "retirada")
                 .attr("d", valueline2(previsaoRetirada.volumesD));
@@ -148,7 +178,7 @@
                 .style({
                   "fill": "none",
                   "stroke-width": "0.8",
-                  "stroke": "rgb(195, 195, 195)"
+                  "stroke": "rgb(67, 107, 224)"
                 })
                 .attr("class", "outorga")
                 .attr("d", valueline2(previsaoOutorga.volumesD));
@@ -190,42 +220,44 @@
                 .attr('y', -10)
                 .attr('font-size', '8px')
                 .attr('text-anchor', 'middle')
-                .text("Se não chover");
-              // barRetirada
-              //   .attr('x', width * 0.5)
-              //   .attr('y', height + 7)
-              //   .attr('width', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date) - (width * 0.5))
-              //   .attr('height', 3)
-              //   .attr('fill', 'rgb(195, 195, 195)');
-              // barOutorga
-              //   .attr('x', width * 0.5)
-              //   .attr('y', height + 12)
-              //   .attr('width', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date) - (width * 0.5))
-              //   .attr('height', 3)
-              //   .attr('fill', 'rgb(195, 195, 195)');
-              // textRetirada
-              //   .attr('x', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
-              //   .attr('y', height + 10)
-              //   .attr('font-size', '8px')
-              //   .attr('text-anchor', 'end')
-              //   .attr('alignment-baseline', 'middle')
-              //   .text(previsaoRetirada.volumesD.length+" dias");
-              // textOutorga
-              //   .attr('x', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-              //   .attr('y', height + 15)
-              //   .attr('font-size', '8px')
-              //   .attr('text-anchor', 'end')
-              //   .attr('alignment-baseline', 'middle')
-              //   .text(previsaoOutorga.volumesD.length+" dias");
-              // triangle
-              //   .style({
-              //     "fill": color(regression),
-              //     "visibility": regression === 0 ? "hidden" : "visible"
-              //   })
-              //   .attr("transform", rotate(regression));
-
-              // arrowG.attr('transform', 'translate('+(x(volumes[volumes.length-1].date) - 5)+' '+(y(volumes[volumes.length-1].volume) - 5)+')');
-              // arrow.style('fill', color(regression));
+                .text("Previsão, se não chover");
+              // Axis
+              x1AxisSvg.call(x1Axis);
+              x2AxisSvg.call(x2Axis);
+              strokeRetirada
+                .attr('x1', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                .attr('y1', -margin.top)
+                .attr('x2', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                .attr('y2', height + (margin.bottom * 0.5))
+                .style({
+                  "stroke": "gray",
+                  "stroke-width": "0.5",
+                  "stroke-dasharray": "4,2"
+                });
+              circleRetirada
+                .attr('cx', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                .attr('cy',  y(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].volume))
+                .attr('r', 3)
+                .style({
+                  "fill": "rgb(88, 182, 235)"
+                });
+              strokeOutorga
+                .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('y1', -margin.top)
+                .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('y2', height + (margin.bottom * 0.5))
+                .style({
+                  "stroke": "gray",
+                  "stroke-width": "0.5",
+                  "stroke-dasharray": "4,2"
+                });
+              circleOutorga
+                .attr('cx', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('cy',  y(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].volume))
+                .attr('r', 3)
+                .style({
+                  "fill": "rgb(67, 107, 224)"
+                });
 
             function color(slope) {
               if (slope > 0) {
