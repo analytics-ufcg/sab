@@ -21,9 +21,9 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 20, right: 20, bottom: 20, left: 20},
+            var margin = {top: 20, right: 30, bottom: 20, left: 30},
                 width = 400 - margin.left - margin.right,
-                height = 70 - margin.top - margin.bottom;
+                height = 200 - margin.top - margin.bottom;
 
             // Parse the date / time
             var localized = d3.locale({
@@ -51,15 +51,15 @@
 
             // Define the line
             var valueline1 = d3.svg.line()
-                .interpolate("basis")
+                .interpolate("monotone")
                 .x(function(d) { return x1(d.date); })
                 .y(function(d) { return y(d.volume); });
             var valueline2 = d3.svg.line()
-                .interpolate("basis")
+                .interpolate("monotone")
                 .x(function(d) { return x2(d.date); })
                 .y(function(d) { return y(d.volume); });
             var valuearea = d3.svg.area()
-                .interpolate("basis")
+                .interpolate("monotone")
                 .x(function(d) { return x1(d.date); })
                 .y0(height)
                 .y1(function(d) { return y(d.volume); });
@@ -76,13 +76,27 @@
               gLines = svg.append("g").attr("class", "lines"),
               gAxis = svg.append("g").attr("class", "axis"),
               gDetails = svg.append("g").attr("class", "details"),
-              gTexts = svg.append("g").attr("class", "texts");
+              gTexts = svg.append("g").attr("class", "texts"),
+              clipPath = svg.append("clipPath")
+                .attr("id", "clip")
+                .append("rect")
+                  .attr("width", width)
+                  .attr("height", height),
+              curtain = svg.append('rect')
+                .attr('x', -1 * (width + margin.left))
+                .attr('y', -1 * (height + margin.top))
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .attr('class', 'curtain')
+                .attr('transform', 'rotate(180)')
+                .style('fill', '#ffffff');
 
             var
-              lineSvg = gLines.append("path"),
-              lineRetirada = gLines.append("path"),
-              lineOutorga = gLines.append("path"),
-              areaSvg = gLines.append("path"),
+              lineSvg = gLines.append("path").attr('clip-path', 'url(#clip)'),
+              lineRetirada = gLines.append("path").attr('clip-path', 'url(#clip)'),
+              lineOutorga = gLines.append("path").attr('clip-path', 'url(#clip)'),
+              lineVolumeMorto = gLines.append("line").attr('clip-path', 'url(#clip)'),
+              areaSvg = gLines.append("path").attr('clip-path', 'url(#clip)'),
               dayStroke = gDetails.append('line'),
               endCircle = gDetails.append('circle'),
               title1 = gTexts.append('text'),
@@ -111,6 +125,7 @@
               lineSvg.attr('display', 'none');
               lineRetirada.attr('display', 'none');
               lineOutorga.attr('display', 'none');
+              lineVolumeMorto.attr('display', 'none');
               areaSvg.attr('display', 'none');
               dayStroke.attr('display', 'none');
               endCircle.attr('display', 'none');
@@ -123,6 +138,7 @@
               strokeOutorga.attr('display', 'none');
               circleOutorga.attr('display', 'none');
               textPrevisao.attr('display', 'none');
+              curtain.attr('width', width + margin.left + margin.right);
 
               var
                 volumes = monitoramento.volumes,
@@ -131,6 +147,7 @@
                 previsaoRetirada = previsoes.previsao,
                 volumeMorto = +previsoes.volume_morto,
                 dataBase = parseDate(data);
+
               volumes.forEach(function(d) {
                 d.date = parseDate(d.DataInformacao);
                 d.volume = +d.Volume;
@@ -183,6 +200,17 @@
                   })
                   .attr("d", valuearea(volumes))
                   .attr('display', 'inline');
+                lineVolumeMorto
+                  .attr('x1', 0)
+                  .attr('y1', y(volumeMorto))
+                  .attr('x2', width)
+                  .attr('y2', y(volumeMorto))
+                  .attr('display', 'inline')
+                  .style({
+                    "stroke": "gray",
+                    "stroke-width": "0.5",
+                    "stroke-dasharray": "4,2"
+                  });
 
                 // Details
                 dayStroke
@@ -193,8 +221,7 @@
                   .attr('display', 'inline')
                   .style({
                     "stroke": "gray",
-                    "stroke-width": "0.5",
-                    "stroke-dasharray": "4,2"
+                    "stroke-width": "0.5"
                   });
                 endCircle
                   .attr('cx', width * 0.5)
@@ -218,13 +245,13 @@
                   .attr('y', -10)
                   .attr('font-size', '8px')
                   .attr('text-anchor', 'middle')
-                  .text("Previsão, se não chover")
+                  .text("Previsão")
                   .attr('display', 'inline');
 
                 x1AxisSvg.call(x1Axis).attr('display', 'inline');
               }
 
-              if (previsaoRetirada.volumesD.length) {
+            if (previsaoRetirada.volumesD.length) {
                 lineRetirada
                   .style({
                     "fill": "none",
@@ -255,7 +282,7 @@
                   });
                   x2Axis.tickValues([previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date]);
                   x2AxisSvg.call(x2Axis).attr('display', 'inline');
-              } else {
+            } else {
                 strokeRetirada
                   .attr('x1', width * 0.5)
                   .attr('y1', y(volumes[volumes.length-1].volume))
@@ -275,43 +302,53 @@
                   .attr('display', 'inline')
                   .attr('fill', 'gray')
                   .text("Dados insuficientes");
-              }
-
-              if (previsaoOutorga.volumesD.length) {
-                lineOutorga
-                  .style({
-                    "fill": "none",
-                    "stroke-width": "0.8",
-                    "stroke": "rgb(67, 107, 224)"
-                  })
-                  .attr("class", "outorga")
-                  .attr("d", valueline2(previsaoOutorga.volumesD))
-                  .attr('display', 'inline');
-                strokeOutorga
-                  .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                  .attr('y1', -margin.top)
-                  .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                  .attr('y2', height + (margin.bottom * 0.5))
-                  .attr('display', 'inline')
-                  .style({
-                    "stroke": "gray",
-                    "stroke-width": "0.5",
-                    "stroke-dasharray": "4,2"
-                  });
-                circleOutorga
-                  .attr('cx', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                  .attr('cy',  y(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].volume))
-                  .attr('r', 3)
-                  .attr('display', 'inline')
-                  .style({
-                    "fill": "rgb(67, 107, 224)"
-                  });
-                x2Axis.tickValues([
-                  previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date,
-                  previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date
-                ]);
-                x2AxisSvg.call(x2Axis).attr('display', 'inline');
             }
+
+            if (previsaoOutorga.volumesD.length) {
+              lineOutorga
+                .style({
+                  "fill": "none",
+                  "stroke-width": "0.8",
+                  "stroke": "rgb(67, 107, 224)"
+                })
+                .attr("class", "outorga")
+                .attr("d", valueline2(previsaoOutorga.volumesD))
+                .attr('display', 'inline');
+              strokeOutorga
+                .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('y1', -margin.top)
+                .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('y2', height + (margin.bottom * 0.5))
+                .attr('display', 'inline')
+                .style({
+                  "stroke": "gray",
+                  "stroke-width": "0.5",
+                  "stroke-dasharray": "4,2"
+                });
+              circleOutorga
+                .attr('cx', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+                .attr('cy',  y(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].volume))
+                .attr('r', 3)
+                .attr('display', 'inline')
+                .style({
+                  "fill": "rgb(67, 107, 224)"
+                });
+              x2Axis.tickValues([
+                previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date,
+                previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date
+              ]);
+              x2AxisSvg.call(x2Axis).attr('display', 'inline');
+            }
+
+            curtain.transition()
+              .duration(2000)
+              .ease('linear')
+              .attr('width', (width * 0.5) + margin.left)
+              .transition()
+                .delay(3000)
+                .duration(2000)
+                .attr('width', 0);
+
 
             function color(slope) {
               if (slope > 0) {

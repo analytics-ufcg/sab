@@ -67,47 +67,28 @@
               <div class="info-card-vertical-align" ng-show="ctrl.reservatorioSelecionado.volumes.length">
 
                 <div>
-
                   <div class="row">
-                    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 col-lg-7 col-lg-offset-2">
+                    <div class="col-xs-10 col-xs-offset-1">
                       <sab-volume-sm
                         capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                         volume="ctrl.reservatorioSelecionado.volume | sabVolume"
                         percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
                     </div>
-                    <div class="col-xs-6 col-xs-offset-1 col-md-6 col-md-offset-0 col-lg-12">
-                      <sab-volume-recente-sm
-                        monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
-                        previsoes="ctrl.reservatorioSelecionado.previsoes"
-                        data="ctrl.reservatorioSelecionado.data_informacao"></sab-volume-recente-sm>
-                    </div>
                   </div>
 
                 </div>
-                <div>
-                  <div class="row">
-
-                  </div>
-                </div>
-
               </div>
-              <!-- <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                  <sab-volume
-                    capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
-                    volume="ctrl.reservatorioSelecionado.volume | sabVolume"
-                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
-                </div>
-                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
-                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
-                  <hr class="info-card-divider">
-                  <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
-                </div>
-              </div> -->
 
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(2)">
+              <sab-volume-recente-sm
+                monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
+                previsoes="ctrl.reservatorioSelecionado.previsoes"
+                data="ctrl.reservatorioSelecionado.data_informacao"></sab-volume-recente-sm>
+            </div>
+
+            <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(3)">
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados históricos suficientes
@@ -120,7 +101,7 @@
               </div>
             </div>
 
-            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(3)">
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(4)">
               <div class="info-card-row text-center">
                 <p>Compartilhe as informações do <br><strong>{{ctrl.reservatorioSelecionado.reservat}}</strong></p>
                 <br>
@@ -174,8 +155,9 @@
             <ul class="nav nav-tabs nav-justified">
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(0)}"><a href="" ng-click="ctrl.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span><span class="hidden-xs"> Info</span></a></li>
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(1)}"><a href="" ng-click="ctrl.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span><span class="hidden-xs"> Volume</span></a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(3)}"><a href="" ng-click="ctrl.setSelectedTab(3)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-hourglass"></span><span class="hidden-xs"> Previsão</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(3)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(4)}"><a href="" ng-click="ctrl.setSelectedTab(3)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
             </ul>
           </div>
         </div>
