@@ -75,27 +75,28 @@
             var svg = svgFrame.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")"),
               gLines = svg.append("g").attr("class", "lines"),
               gAxis = svg.append("g").attr("class", "axis"),
-              gDetails = svg.append("g").attr("class", "details"),
               gTexts = svg.append("g").attr("class", "texts"),
               clipPath = svg.append("clipPath")
                 .attr("id", "clip")
                 .append("rect")
+                  .attr("y", -2)
                   .attr("width", width)
-                  .attr("height", height),
+                  .attr("height", (height + 2)),
               curtain = svg.append('rect')
-                .attr('x', -1 * (width + margin.left))
-                .attr('y', -1 * (height + margin.top))
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
+                .attr('x', -1 * width)
+                .attr('y', -1 * height)
+                .attr('width', width)
+                .attr('height', (height + 4))
                 .attr('class', 'curtain')
                 .attr('transform', 'rotate(180)')
-                .style('fill', '#ffffff');
+                .style('fill', '#ffffff'),
+              gDetails = svg.append("g").attr("class", "details");
 
             var
               lineSvg = gLines.append("path").attr('clip-path', 'url(#clip)'),
               lineRetirada = gLines.append("path").attr('clip-path', 'url(#clip)'),
               lineOutorga = gLines.append("path").attr('clip-path', 'url(#clip)'),
-              lineVolumeMorto = gLines.append("line").attr('clip-path', 'url(#clip)'),
+              lineVolumeMorto = gDetails.append("line"),
               areaSvg = gLines.append("path").attr('clip-path', 'url(#clip)'),
               dayStroke = gDetails.append('line'),
               endCircle = gDetails.append('circle'),
@@ -103,14 +104,14 @@
               title2 = gTexts.append('text'),
               x1AxisSvg = gAxis.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")"),
+                .attr("transform", "translate(0," + (height + 1) + ")"),
               x2AxisSvg = gAxis.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")"),
-              strokeRetirada = gTexts.append('line'),
-              circleRetirada = gTexts.append('circle'),
-              strokeOutorga = gTexts.append('line'),
-              circleOutorga = gTexts.append('circle'),
+                .attr("transform", "translate(0," + (height + 1) + ")"),
+              // strokeRetirada = gTexts.append('line'),
+              circleRetirada = gDetails.append('circle'),
+              // strokeOutorga = gTexts.append('line'),
+              circleOutorga = gDetails.append('circle'),
               textPrevisao = gTexts.append('text');
 
             scope.$watchCollection(function(scope) { return [scope.monitoramento, scope.previsoes, scope.data]; }, function(newValue) {
@@ -128,17 +129,17 @@
               lineVolumeMorto.attr('display', 'none');
               areaSvg.attr('display', 'none');
               dayStroke.attr('display', 'none');
-              endCircle.attr('display', 'none');
-              title1.attr('display', 'none');
-              title2.attr('display', 'none');
+              endCircle.attr('opacity', '0');
+              title1.attr('opacity', '0');
+              title2.attr('opacity', '0');
               x1AxisSvg.attr('display', 'none');
               x2AxisSvg.attr('display', 'none');
-              strokeRetirada.attr('display', 'none');
-              circleRetirada.attr('display', 'none');
-              strokeOutorga.attr('display', 'none');
-              circleOutorga.attr('display', 'none');
+              // strokeRetirada.attr('display', 'none');
+              circleRetirada.attr('opacity', '0');
+              // strokeOutorga.attr('display', 'none');
+              circleOutorga.attr('opacity', '0');
               textPrevisao.attr('display', 'none');
-              curtain.attr('width', width + margin.left + margin.right);
+              curtain.attr('width', width);
 
               var
                 volumes = monitoramento.volumes,
@@ -209,7 +210,7 @@
                   .style({
                     "stroke": "gray",
                     "stroke-width": "0.5",
-                    "stroke-dasharray": "4,2"
+                    "stroke-dasharray": "5,2"
                   });
 
                 // Details
@@ -221,7 +222,7 @@
                   .attr('display', 'inline')
                   .style({
                     "stroke": "gray",
-                    "stroke-width": "0.5"
+                    "stroke-width": "1"
                   });
                 endCircle
                   .attr('cx', width * 0.5)
@@ -238,15 +239,13 @@
                   .attr('y', -10)
                   .attr('font-size', '8px')
                   .attr('text-anchor', 'middle')
-                  .text("Últimos meses")
-                  .attr('display', 'inline');
+                  .text("Últimos meses");
                 title2
                   .attr('x', width * 0.75)
                   .attr('y', -10)
                   .attr('font-size', '8px')
                   .attr('text-anchor', 'middle')
-                  .text("Previsão")
-                  .attr('display', 'inline');
+                  .text("Previsão");
 
                 x1AxisSvg.call(x1Axis).attr('display', 'inline');
               }
@@ -259,41 +258,40 @@
                     "stroke": "rgb(88, 182, 235)"
                   })
                   .attr("class", "retirada")
-                  .attr("d", valueline2(previsaoRetirada.volumesD))
-                  .attr('display', 'inline');
-                strokeRetirada
-                  .attr('x1', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
-                  .attr('y1', -margin.top)
-                  .attr('x2', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
-                  .attr('y2', height + (margin.bottom * 0.5))
                   .attr('display', 'inline')
-                  .style({
-                    "stroke": "gray",
-                    "stroke-width": "0.5",
-                    "stroke-dasharray": "4,2"
-                  });
+                  .attr("d", valueline2(previsaoRetirada.volumesD));
+                // strokeRetirada
+                //   .attr('x1', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                //   .attr('y1', -margin.top)
+                //   .attr('x2', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                //   .attr('y2', height + (margin.bottom * 0.5))
+                //   .attr('display', 'inline')
+                //   .style({
+                //     "stroke": "gray",
+                //     "stroke-width": "0.5",
+                //     "stroke-dasharray": "4,2"
+                //   });
                 circleRetirada
                   .attr('cx', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
                   .attr('cy',  y(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].volume))
                   .attr('r', 3)
-                  .attr('display', 'inline')
                   .style({
                     "fill": "rgb(88, 182, 235)"
                   });
                   x2Axis.tickValues([previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date]);
                   x2AxisSvg.call(x2Axis).attr('display', 'inline');
             } else {
-                strokeRetirada
-                  .attr('x1', width * 0.5)
-                  .attr('y1', y(volumes[volumes.length-1].volume))
-                  .attr('x2', width)
-                  .attr('y2', height)
-                  .attr('display', 'inline')
-                  .style({
-                    "stroke": "gray",
-                    "stroke-width": "0.5",
-                    "stroke-dasharray": "4,2"
-                  });
+                // strokeRetirada
+                //   .attr('x1', width * 0.5)
+                //   .attr('y1', y(volumes[volumes.length-1].volume))
+                //   .attr('x2', width)
+                //   .attr('y2', height)
+                //   .attr('display', 'inline')
+                //   .style({
+                //     "stroke": "gray",
+                //     "stroke-width": "0.5",
+                //     "stroke-dasharray": "4,2"
+                //   });
                 textPrevisao
                   .attr('x', width * 0.75)
                   .attr('y', height * 0.5)
@@ -314,17 +312,17 @@
                 .attr("class", "outorga")
                 .attr("d", valueline2(previsaoOutorga.volumesD))
                 .attr('display', 'inline');
-              strokeOutorga
-                .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                .attr('y1', -margin.top)
-                .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                .attr('y2', height + (margin.bottom * 0.5))
-                .attr('display', 'inline')
-                .style({
-                  "stroke": "gray",
-                  "stroke-width": "0.5",
-                  "stroke-dasharray": "4,2"
-                });
+              // strokeOutorga
+              //   .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+              //   .attr('y1', -margin.top)
+              //   .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+              //   .attr('y2', height + (margin.bottom * 0.5))
+              //   .attr('display', 'inline')
+              //   .style({
+              //     "stroke": "gray",
+              //     "stroke-width": "0.5",
+              //     "stroke-dasharray": "4,2"
+              //   });
               circleOutorga
                 .attr('cx', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
                 .attr('cy',  y(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].volume))
@@ -340,15 +338,40 @@
               x2AxisSvg.call(x2Axis).attr('display', 'inline');
             }
 
+            // Animation
+            title1.transition()
+              .delay(500)
+              .duration(500)
+              .attr('opacity', '1');
             curtain.transition()
+              .delay(1000)
               .duration(2000)
               .ease('linear')
-              .attr('width', (width * 0.5) + margin.left)
+              .attr('width', (width * 0.5))
               .transition()
-                .delay(3000)
+                .delay(5000)
                 .duration(2000)
                 .attr('width', 0);
-
+            endCircle.transition()
+              .delay(3000)
+              .duration(200)
+              .attr('opacity', '1');
+            title2.transition()
+              .delay(4000)
+              .duration(500)
+              .attr('opacity', '1');
+            if (previsaoRetirada.volumesD.length) {
+              circleRetirada.transition()
+                .delay(7000)
+                .duration(200)
+                .attr('opacity', '1');
+            }
+            if (previsaoOutorga.volumesD.length) {
+              circleOutorga.transition()
+                .delay(7000)
+                .duration(200)
+                .attr('opacity', '1');
+            }
 
             function color(slope) {
               if (slope > 0) {
