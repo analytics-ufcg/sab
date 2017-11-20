@@ -43,7 +43,6 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(0)">
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong> {{ctrl.reservatorioSelecionado.nome}}</div>
               <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
               <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{ctrl.reservatorioSelecionado.bacia}}</div>
               <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{ctrl.reservatorioSelecionado.tipo}}</div>
