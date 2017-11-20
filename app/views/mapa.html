@@ -43,11 +43,18 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(0)">
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong> {{ctrl.reservatorioSelecionado.nome}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{ctrl.reservatorioSelecionado.bacia}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{ctrl.reservatorioSelecionado.tipo}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong> {{ctrl.reservatorioSelecionado.area | sabArea}}</div>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade:</strong><br>{{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade:</strong><br>{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume_morto > 0"><strong>Volume morto:</strong><br>{{ctrl.reservatorioSelecionado.volume_morto | sabVolume}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área:</strong><br>{{ctrl.reservatorioSelecionado.area | sabArea}}</div>
+                </div>
+              </div>
             </div>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(1)">
@@ -168,7 +175,7 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
             <div class="row">
               <div class="col-md-6">
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</div>
+                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) acompanhado(s)</div>
                 <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
               </div>
               <div class="col-md-6" style="padding-top: 10px;">
