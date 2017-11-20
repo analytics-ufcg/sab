@@ -345,30 +345,30 @@
               .attr('opacity', '1');
             curtain.transition()
               .delay(1000)
-              .duration(2000)
+              .duration(1000)
               .ease('linear')
               .attr('width', (width * 0.5))
               .transition()
-                .delay(5000)
-                .duration(2000)
+                .delay(3000)
+                .duration(1000)
                 .attr('width', 0);
             endCircle.transition()
-              .delay(3000)
+              .delay(2000)
               .duration(200)
               .attr('opacity', '1');
             title2.transition()
-              .delay(4000)
+              .delay(2200)
               .duration(500)
               .attr('opacity', '1');
             if (previsaoRetirada.volumesD.length) {
               circleRetirada.transition()
-                .delay(7000)
+                .delay(4000)
                 .duration(200)
                 .attr('opacity', '1');
             }
             if (previsaoOutorga.volumesD.length) {
               circleOutorga.transition()
-                .delay(7000)
+                .delay(4000)
                 .duration(200)
                 .attr('opacity', '1');
             }
