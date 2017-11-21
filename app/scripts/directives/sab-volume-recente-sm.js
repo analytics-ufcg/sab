@@ -122,6 +122,7 @@
 
             // Get the data
             var draw = function(monitoramento, previsoes, data) {
+              console.log(previsoes);
               // Reset drawing
               lineSvg.attr('display', 'none');
               lineRetirada.attr('display', 'none');
@@ -153,22 +154,16 @@
                 d.date = parseDate(d.DataInformacao);
                 d.volume = +d.Volume;
               });
-              previsaoRetirada.volumesD = [];
-              previsaoRetirada.volumes.forEach(function(d, i) {
-                previsaoRetirada.volumesD.push({
-                  date: d3.time.day.offset(dataBase, i+1),
-                  volume: +d
-                });
+              previsaoRetirada.volumes.forEach(function(d) {
+                d.date = parseDate(d.DataInformacao);
+                d.volume = +d.Volume;
               });
-              previsaoOutorga.volumesD = [];
-              previsaoOutorga.volumes.forEach(function(d, i) {
-                previsaoOutorga.volumesD.push({
-                  date: d3.time.day.offset(dataBase, i+1),
-                  volume: +d
-                });
+              previsaoOutorga.volumes.forEach(function(d) {
+                d.date = parseDate(d.DataInformacao);
+                d.volume = +d.Volume;
               });
 
-              var allVolumes = [volumes, previsaoRetirada.volumesD, previsaoOutorga.volumesD];
+              var allVolumes = [volumes, previsaoRetirada.volumes, previsaoOutorga.volumes];
               var min = d3.min(allVolumes.map(function(v) {
                 return d3.min(v, function(d) { return d.volume; });
               }));
@@ -250,7 +245,7 @@
                 x1AxisSvg.call(x1Axis).attr('display', 'inline');
               }
 
-            if (previsaoRetirada.volumesD.length) {
+            if (previsaoRetirada.volumes.length) {
                 lineRetirada
                   .style({
                     "fill": "none",
@@ -259,11 +254,11 @@
                   })
                   .attr("class", "retirada")
                   .attr('display', 'inline')
-                  .attr("d", valueline2(previsaoRetirada.volumesD));
+                  .attr("d", valueline2(previsaoRetirada.volumes));
                 // strokeRetirada
-                //   .attr('x1', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                //   .attr('x1', x2(previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].date))
                 //   .attr('y1', -margin.top)
-                //   .attr('x2', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
+                //   .attr('x2', x2(previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].date))
                 //   .attr('y2', height + (margin.bottom * 0.5))
                 //   .attr('display', 'inline')
                 //   .style({
@@ -272,13 +267,13 @@
                 //     "stroke-dasharray": "4,2"
                 //   });
                 circleRetirada
-                  .attr('cx', x2(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date))
-                  .attr('cy',  y(previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].volume))
+                  .attr('cx', x2(previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].date))
+                  .attr('cy',  y(previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].volume))
                   .attr('r', 3)
                   .style({
                     "fill": "rgb(88, 182, 235)"
                   });
-                  x2Axis.tickValues([previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date]);
+                  x2Axis.tickValues([previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].date]);
                   x2AxisSvg.call(x2Axis).attr('display', 'inline');
             } else {
                 // strokeRetirada
@@ -302,7 +297,7 @@
                   .text("Dados insuficientes");
             }
 
-            if (previsaoOutorga.volumesD.length) {
+            if (previsaoOutorga.volumes.length) {
               lineOutorga
                 .style({
                   "fill": "none",
@@ -310,12 +305,12 @@
                   "stroke": "rgb(67, 107, 224)"
                 })
                 .attr("class", "outorga")
-                .attr("d", valueline2(previsaoOutorga.volumesD))
+                .attr("d", valueline2(previsaoOutorga.volumes))
                 .attr('display', 'inline');
               // strokeOutorga
-              //   .attr('x1', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+              //   .attr('x1', x2(previsaoOutorga.volumes[previsaoOutorga.volumes.length-1].date))
               //   .attr('y1', -margin.top)
-              //   .attr('x2', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
+              //   .attr('x2', x2(previsaoOutorga.volumes[previsaoOutorga.volumes.length-1].date))
               //   .attr('y2', height + (margin.bottom * 0.5))
               //   .attr('display', 'inline')
               //   .style({
@@ -324,16 +319,16 @@
               //     "stroke-dasharray": "4,2"
               //   });
               circleOutorga
-                .attr('cx', x2(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date))
-                .attr('cy',  y(previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].volume))
+                .attr('cx', x2(previsaoOutorga.volumes[previsaoOutorga.volumes.length-1].date))
+                .attr('cy',  y(previsaoOutorga.volumes[previsaoOutorga.volumes.length-1].volume))
                 .attr('r', 3)
                 .attr('display', 'inline')
                 .style({
                   "fill": "rgb(67, 107, 224)"
                 });
               x2Axis.tickValues([
-                previsaoRetirada.volumesD[previsaoRetirada.volumesD.length-1].date,
-                previsaoOutorga.volumesD[previsaoOutorga.volumesD.length-1].date
+                previsaoRetirada.volumes[previsaoRetirada.volumes.length-1].date,
+                previsaoOutorga.volumes[previsaoOutorga.volumes.length-1].date
               ]);
               x2AxisSvg.call(x2Axis).attr('display', 'inline');
             }
@@ -360,13 +355,13 @@
               .delay(2200)
               .duration(500)
               .attr('opacity', '1');
-            if (previsaoRetirada.volumesD.length) {
+            if (previsaoRetirada.volumes.length) {
               circleRetirada.transition()
                 .delay(4000)
                 .duration(200)
                 .attr('opacity', '1');
             }
-            if (previsaoOutorga.volumesD.length) {
+            if (previsaoOutorga.volumes.length) {
               circleOutorga.transition()
                 .delay(4000)
                 .duration(200)
