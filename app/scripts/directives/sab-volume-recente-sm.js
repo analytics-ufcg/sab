@@ -122,7 +122,7 @@
 
             // Get the data
             var draw = function(monitoramento, previsoes, data) {
-              console.log(previsoes);
+
               // Reset drawing
               lineSvg.attr('display', 'none');
               lineRetirada.attr('display', 'none');
