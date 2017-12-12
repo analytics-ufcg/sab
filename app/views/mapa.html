@@ -68,7 +68,7 @@
 
                 <div>
                   <div class="row">
-                    <div class="col-xs-10 col-xs-offset-1">
+                    <div class="col-sm-8 col-sm-offset-2">
                       <sab-volume-sm
                         capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                         volume="ctrl.reservatorioSelecionado.volume | sabVolume"
@@ -85,7 +85,8 @@
               <sab-volume-recente-sm
                 monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
                 previsoes="ctrl.reservatorioSelecionado.previsoes"
-                data="ctrl.reservatorioSelecionado.data_informacao"></sab-volume-recente-sm>
+                data="ctrl.reservatorioSelecionado.data_informacao"
+                capacidade="ctrl.reservatorioSelecionado.capacidade"></sab-volume-recente-sm>
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(3)">

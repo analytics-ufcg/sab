@@ -486,6 +486,13 @@ footer {
   }
 }
 
+.axis-2,
+.axis-3 {
+    > path.domain {
+      visibility: hidden;
+    }
+}
+
 .time-graph-path {
 
   &.line {
