@@ -12,7 +12,8 @@
         template: '',
         restrict: 'E',
         scope: {
-          monitoramento: '='
+          monitoramento: '=',
+          volumemorto: '='
         },
         link: function postLink(scope, element) {
           var d3 = $window.d3;
@@ -100,8 +101,6 @@
                 'class': 'time-graph'});
 
           // Focus: Gráfico principal
-
-
           svg.append("defs").append("clipPath")
             .attr("id", "clip-grafico")
           .append("rect")
@@ -143,6 +142,16 @@
               .text("Volume armazenado (%)");
           var line100PercSVG = focus.append("line")
             .attr("class", "time-graph-path limit-line");
+          var lineVolumeMortoSVG = focus.append("line")
+            .attr("class", "time-graph-path limit-line2")
+            .attr("stroke", "#ff8f61")
+            .attr("display", "none");
+          var textVolumeMortoSVG = focus.append("text")
+            .attr("class", "tick2 fill-warning")
+            .attr("text-anchor", "end")
+            .attr("alignment-baseline", "after-edge")
+            .attr("display", "none")
+            .text("Volume morto");
           var selectedValue = focus.append("g")
               .style("display", "none");
           var selectedValueLine = selectedValue.append("line")
@@ -208,12 +217,12 @@
 
           scope.$watch(function(scope) { return scope.monitoramento; }, function(newValue) {
             if (typeof newValue !== 'undefined') {
-              draw(newValue);
+              draw(newValue, scope.volumemorto);
             }
           });
 
           // Get the data
-          var draw = function(data) {
+          var draw = function(data, volumemorto) {
             var dataValidos = [];
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
@@ -264,16 +273,23 @@
             xAxisAuxSvg.call(xAxisAux);
 
             xAxis2.tickFormat(localized.timeFormat('%Y'));
-            if(months < 60){
-                xAxis2.ticks(d3.time.year);
+            if (months < 60) {
+              xAxis2.ticks(d3.time.year);
             }
-
 
             xAxis2Svg.call(xAxis2);
             // Add the Y Axis
             yAxisSvg.call(yAxis);
             // Add 100% line
             line100PercSVG.attr({"x1": 0, "y1": y(100), "x2": width, "y2": y(100)});
+            // Add Volume Morto line
+            if (volumemorto > 0) {
+              lineVolumeMortoSVG.attr({"x1": 0, "y1": y(volumemorto), "x2": width, "y2": y(volumemorto)}).attr('display', 'inline');
+              textVolumeMortoSVG.attr({"x": width, "y": y(volumemorto)}).attr('display', 'inline');
+            } else {
+              lineVolumeMortoSVG.attr('display', 'none');
+              textVolumeMortoSVG.attr('display', 'none');
+            }
 
             // append the rectangle to capture mouse
             rectMouse

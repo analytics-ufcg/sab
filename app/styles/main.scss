@@ -476,6 +476,10 @@ footer {
   fill: $text-color;
 }
 
+.fill-warning {
+  fill: #ff8f61;
+}
+
 .axis-sm {
   > path.domain {
     visibility: hidden;
@@ -525,6 +529,12 @@ footer {
     stroke-width: 1;
     opacity: 0.5;
     stroke-dasharray: 10,5;
+  }
+  &.limit-line2 {
+    stroke: #ff8f61;
+    fill: none;
+    stroke-width: 1;
+    opacity: 0.8;
   }
   &.selected-value-line {
     stroke: #1ba2cc;
