@@ -15,6 +15,10 @@ module.exports = function (grunt) {
   } else {
     api = require('./bower.json').development;
   }
+  var
+    path = require('path'),
+    swPrecache = require('sw-precache'),
+    cacheConfig = require('./cache-config.js');
 
   grunt.loadNpmTasks('grunt-string-replace');
   // Time how long tasks take. Can help when optimizing build times
@@ -301,7 +305,7 @@ module.exports = function (grunt) {
         src: [
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
-          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.dist %>/images/*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/styles/fonts/*'
         ]
       }
@@ -453,7 +457,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'manifest.json'
           ]
         }, {
           expand: true,
@@ -465,6 +470,12 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>/images',
+          src: 'icons/*'
         }]
       },
       styles: {
@@ -498,7 +509,6 @@ module.exports = function (grunt) {
       }
     },
 
-
     'string-replace': {
       dist: {
         files: {
@@ -511,9 +521,29 @@ module.exports = function (grunt) {
           }]
         }
       }
+    },
+
+    // Service worker
+    swPrecache:{
+      build: {
+        handleFetch: true,
+        rootDir: '<%= yeoman.dist %>'
+      }
     }
   });
 
+  grunt.registerMultiTask('swPrecache', function() {
+    var done = this.async();
+    var rootDir = this.data.rootDir;
+    var handleFetch = this.data.handleFetch;
+
+    swPrecache.write(path.join(rootDir, 'service-worker.js'), cacheConfig, function(error) {
+      if (error) {
+        grunt.fail.warn(error);
+      }
+      done();
+    });
+  });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -560,7 +590,8 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'htmlmin',
-    'string-replace'
+    'string-replace',
+    'swPrecache'
   ]);
 
   grunt.registerTask('default', [
