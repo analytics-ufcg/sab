@@ -22,7 +22,7 @@
             d3 = $window.d3;
 
             // Set the dimensions of the canvas / graph
-            var margin = {top: 30, right: 30, bottom: 60, left: 30},
+            var margin = {top: 30, right: 30, bottom: 60, left: 40},
                 width = 400 - margin.left - margin.right,
                 height = 200 - margin.top - margin.bottom;
 
@@ -50,7 +50,7 @@
             var x1Axis = d3.svg.axis().scale(x1).orient("bottom").tickFormat(localized.timeFormat("%d %b")).tickSize(5);
             var x2Axis = d3.svg.axis().scale(x2).orient("bottom").tickFormat(localized.timeFormat("%d %b")).tickSize(15);
             var x3Axis = d3.svg.axis().scale(x2).orient("bottom").tickFormat(localized.timeFormat("%d %b")).tickSize(25);
-            var yAxis = d3.svg.axis().scale(y).orient("left").ticks(4);
+            var yAxis = d3.svg.axis().scale(y).orient("left").ticks(4).tickFormat(function(t) { return t+"%"});
 
             // Define the line
             var valueline1 = d3.svg.line()
