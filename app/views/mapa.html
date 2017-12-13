@@ -47,7 +47,9 @@
               <div class="row">
                 <div class="col-xs-6">
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade:</strong><br>{{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia hidrográfica:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.curso_barrado"><strong>Curso hídrico barrado:</strong><br>{{ctrl.reservatorioSelecionado.curso_barrado}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.localizacao"><strong>Coordenadas geográficas:</strong><br>{{ctrl.reservatorioSelecionado.localizacao}}</div>
                 </div>
                 <div class="col-xs-6">
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade:</strong><br>{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
