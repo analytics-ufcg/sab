@@ -122,15 +122,15 @@
               xAxisLineSvg = x1AxisSvg.append('line').attr("class", "axis-line"),
               gLegend = svg.append("g")
                 .attr("class", "legend")
-                .attr("transform", "translate(0," + (height+margin.top) + ")");
+                .attr("transform", "translate(0," + (height+margin.top+5) + ")");
               gLegend.append("text")
                 .attr('x', 15).attr('y', 10)
                 .attr('font-size', '8px')
-                .text("Previsão com base na retirada de água")
+                .text("Estimativa com base na retirada de água")
               gLegend.append("text")
                 .attr('x', 15).attr('y', 20)
                 .attr('font-size', '8px')
-                .text("Previsão com base na outorga");
+                .text("Estimativa com base na outorga");
               gLegend.append("circle")
                 .attr('cx', 10).attr('cy', 8).attr('r', 3)
                 .style({
@@ -283,7 +283,7 @@
                   .attr('y', -10)
                   .attr('font-size', '8px')
                   .attr('text-anchor', 'middle')
-                  .text("Previsão");
+                  .text("Estimativa");
 
                 x1AxisSvg.call(x1Axis).attr('display', null);
                 xAxisLineSvg.attr('display', null);

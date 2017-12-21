@@ -252,6 +252,25 @@ footer {
   }
 }
 
+.info-card-vertical-align-full {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: calc(100vh - 225px);
+
+  @media (min-width: $screen-sm-min) {
+    height: calc(100vh - 360px);
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: 222px;
+  }
+
+  @media (min-width: $screen-lg-min) {
+    height: 372px;
+  }
+}
+
 .search-bar {
   float: left;
   position: absolute;

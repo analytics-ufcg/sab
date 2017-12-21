@@ -89,11 +89,13 @@
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(2)">
-              <sab-volume-recente-sm
-                monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
-                previsoes="ctrl.reservatorioSelecionado.previsoes"
-                data="ctrl.reservatorioSelecionado.data_informacao"
-                capacidade="ctrl.reservatorioSelecionado.capacidade"></sab-volume-recente-sm>
+              <div class="info-card-vertical-align-full">
+                <sab-volume-recente-sm
+                  monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
+                  previsoes="ctrl.reservatorioSelecionado.previsoes"
+                  data="ctrl.reservatorioSelecionado.data_informacao"
+                  capacidade="ctrl.reservatorioSelecionado.capacidade"></sab-volume-recente-sm>
+              </div>
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(3)">
@@ -163,7 +165,7 @@
             <ul class="nav nav-tabs nav-justified">
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(0)}"><a href="" ng-click="ctrl.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span><span class="hidden-xs"> Info</span></a></li>
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(1)}"><a href="" ng-click="ctrl.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span><span class="hidden-xs"> Volume</span></a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-hourglass"></span><span class="hidden-xs"> Previsão</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-hourglass"></span><span class="hidden-xs"> Estimativa</span></a></li>
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(3)}"><a href="" ng-click="ctrl.setSelectedTab(3)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(4)}"><a href="" ng-click="ctrl.setSelectedTab(4)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
             </ul>
