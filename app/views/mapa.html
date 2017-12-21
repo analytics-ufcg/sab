@@ -43,11 +43,21 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(0)">
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.nome"><strong>Nome</strong> {{ctrl.reservatorioSelecionado.nome}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Localidade</strong> {{ctrl.reservatorioSelecionado.municipio + ' - ' + ctrl.reservatorioSelecionado.estado}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia</strong> {{ctrl.reservatorioSelecionado.bacia}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.tipo"><strong>Tipo</strong> {{ctrl.reservatorioSelecionado.tipo}}</div>
-              <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.area > 0"><strong>Área</strong> {{ctrl.reservatorioSelecionado.area | sabArea}}</div>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Município:</strong><br>{{ctrl.reservatorioSelecionado.municipio}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.estado"><strong>Estado:</strong><br>{{ctrl.reservatorioSelecionado.estado}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia hidrográfica:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.localizacao"><strong>Coordenadas geográficas:</strong><br>{{ctrl.reservatorioSelecionado.localizacao}}</div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade:</strong><br>{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume_morto > 0"><strong>Volume morto:</strong><br>{{ctrl.reservatorioSelecionado.volume_morto | sabVolume}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.curso_barrado"><strong>Curso hídrico barrado:</strong><br>{{ctrl.reservatorioSelecionado.curso_barrado}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.cota_soleira"><strong>Cota da soleira do vertedor:</strong><br>{{ctrl.reservatorioSelecionado.cota_soleira}}m</div>
+                </div>
+              </div>
             </div>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(1)">
@@ -56,30 +66,37 @@
                 Não possui dados sobre volume
               </div>
               <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
-                Última atualização: {{ctrl.reservatorioSelecionado.data_informacao}}
-                <a href="" class="btn-link" uib-tooltip="Fonte: {{ctrl.reservatorioSelecionado.fonte}}">
-                  <i class="glyphicon glyphicon-info-sign"></i>
-                </a>
+                Última atualização: {{ctrl.reservatorioSelecionado.data_informacao}} (Fonte: {{ctrl.reservatorioSelecionado.fonte}})
               </div>
 
               <hr class="info-card-divider">
 
-              <div class="row" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                  <sab-volume
-                    capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
-                    volume="ctrl.reservatorioSelecionado.volume | sabVolume"
-                    percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
-                </div>
-                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs" ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
-                  <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume"><strong>Tendência do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong></div>
-                  <hr class="info-card-divider">
-                  <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
-                </div>
+              <div class="info-card-vertical-align" ng-show="ctrl.reservatorioSelecionado.volumes.length">
+
+                  <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                      <sab-volume-sm
+                        capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
+                        volume="ctrl.reservatorioSelecionado.volume | sabVolume"
+                        percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
+                    </div>
+                  </div>
+
               </div>
+
             </div>
 
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(2)">
+              <div class="info-card-vertical-align-full">
+                <sab-volume-recente-sm
+                  monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"
+                  previsoes="ctrl.reservatorioSelecionado.previsoes"
+                  data="ctrl.reservatorioSelecionado.data_informacao"
+                  capacidade="ctrl.reservatorioSelecionado.capacidade"></sab-volume-recente-sm>
+              </div>
+            </div>
+
+            <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(3)">
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados históricos suficientes
@@ -88,11 +105,11 @@
                 <a ng-href="{{ ctrl.RESTAPI.url   }}/reservatorios/{{ctrl.reservatorioSelecionado.id}}/monitoramento/csv" target="_blank" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download"></span> Baixar dados</a>
               </div>
               <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length > 2">
-                <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes"></sab-reservatorio-historico>
+                <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes" volumemorto="ctrl.reservatorioSelecionado.volume_morto"></sab-reservatorio-historico>
               </div>
             </div>
 
-            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(3)">
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(4)">
               <div class="info-card-row text-center">
                 <p>Compartilhe as informações do <br><strong>{{ctrl.reservatorioSelecionado.reservat}}</strong></p>
                 <br>
@@ -146,8 +163,9 @@
             <ul class="nav nav-tabs nav-justified">
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(0)}"><a href="" ng-click="ctrl.setSelectedTab(0)"><span class="glyphicon glyphicon-info-sign"></span><span class="hidden-xs"> Info</span></a></li>
               <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(1)}"><a href="" ng-click="ctrl.setSelectedTab(1)"><span class="glyphicon glyphicon-tint"></span><span class="hidden-xs"> Volume</span></a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
-              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(3)}"><a href="" ng-click="ctrl.setSelectedTab(3)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(2)}"><a href="" ng-click="ctrl.setSelectedTab(2)"><span class="glyphicon glyphicon-hourglass"></span><span class="hidden-xs"> Estimativa</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(3)}"><a href="" ng-click="ctrl.setSelectedTab(3)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(4)}"><a href="" ng-click="ctrl.setSelectedTab(4)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
             </ul>
           </div>
         </div>
@@ -168,7 +186,7 @@
             <span us-spinner ng-show="ctrl.loadingInfo"></span>
             <div class="row">
               <div class="col-md-6">
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) monitorado(s)</div>
+                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) acompanhado(s)</div>
                 <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
               </div>
               <div class="col-md-6" style="padding-top: 10px;">
@@ -180,11 +198,13 @@
             </div>
             <hr class="info-card-divider">
             <div class="row">
-              <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3" ng-show="ctrl.estadoAtual.capacidade_equivalente">
-                <sab-volume
-                  capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
-                  volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
-                  percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume>
+              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-sm-offset-3 col-lg-10 col-lg-offset-1" ng-show="ctrl.estadoAtual.capacidade_equivalente">
+                <div class="info-card-vertical-align">
+                  <sab-volume-sm
+                    capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
+                    volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
+                    percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume-sm>
+                </div>
               </div>
             </div>
           </div>
