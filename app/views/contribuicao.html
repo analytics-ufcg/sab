@@ -1,0 +1,13 @@
+<div class="section section-inverse">
+  <div class="container">
+    <h1 class="section-title section-title-inverse">{{ctrl.contribuicao.description}}</h1>
+
+    <p>Criado por {{ctrl.contribuicao.owner.login}}</p>
+
+    <p>{{ctrl.contribuicao.id}}</p>
+
+    <iframe width="100%" ng-src="{{ctrl.gistUrl}}" marginwidth="0" marginheight="0" style="height:100vh;" scrolling="auto" frameborder="0"></iframe>
+
+  </div>
+</div>
+<ng-include src="'views/footer.html'"></ng-include>

@@ -1,6 +1,13 @@
 <div class="section section-inverse">
   <div class="container">
     <h1 class="section-title section-title-inverse">CONTRIBUIÇÕES</h1>
+
+    <div ng-repeat="contribuicao in ctrl.contribuicoes">
+      <h3>{{contribuicao.description}}</h3>
+      <p>Criado por {{contribuicao.owner.login}}</p>
+      <a ui-sref="contribuicao({id: contribuicao.id})" class="btn btn-primary">Ver</a>
+      <hr>
+    </div>
   </div>
 </div>
 <ng-include src="'views/footer.html'"></ng-include>
