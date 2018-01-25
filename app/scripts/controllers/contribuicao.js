@@ -12,11 +12,13 @@
     vm.gistId = $stateParams.id;
     vm.contribuicao = {};
     vm.gistUrl = '';
+    vm.loading = true;
 
     function init() {
       $http.get('https://api.github.com/gists/'+vm.gistId).then(function(response) {
         vm.contribuicao = response.data;
         vm.gistUrl = $sce.trustAsResourceUrl(RESTAPI.url+'/raw/'+vm.gistId);
+        vm.loading = false;
       });
     }
     init();

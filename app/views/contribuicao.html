@@ -1,12 +1,13 @@
-<div class="section section-inverse">
+<div class="section section">
   <div class="container">
-    <h1 class="section-title section-title-inverse">{{ctrl.contribuicao.description}}</h1>
 
-    <p>Criado por {{ctrl.contribuicao.owner.login}}</p>
-
-    <p>{{ctrl.contribuicao.id}}</p>
-
-    <iframe width="100%" ng-src="{{ctrl.gistUrl}}" marginwidth="0" marginheight="0" style="height:100vh;" scrolling="auto" frameborder="0"></iframe>
+    <span us-spinner ng-show="ctrl.loading"></span>
+    <div ng-hide="ctrl.loading">
+      <h1 class="section-title section-title">{{ctrl.contribuicao.description}}</h1>
+      <p>Criado por {{ctrl.contribuicao.owner.login}}</p>
+      <p>{{ctrl.contribuicao.id}}</p>
+      <iframe width="100%" ng-src="{{ctrl.gistUrl}}" marginwidth="0" marginheight="0" style="height:100vh;" scrolling="auto" frameborder="0"></iframe>
+    </div>
 
   </div>
 </div>

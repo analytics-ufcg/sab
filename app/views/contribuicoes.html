@@ -1,6 +1,8 @@
-<div class="section section-inverse">
+<div class="section section">
   <div class="container">
-    <h1 class="section-title section-title-inverse">CONTRIBUIÇÕES</h1>
+    <h1 class="section-title section-title">CONTRIBUIÇÕES</h1>
+
+    <span us-spinner ng-show="ctrl.loading"></span>
 
     <div ng-repeat="contribuicao in ctrl.contribuicoes">
       <h3>{{contribuicao.description}}</h3>
@@ -8,6 +10,7 @@
       <a ui-sref="contribuicao({id: contribuicao.id})" class="btn btn-primary">Ver</a>
       <hr>
     </div>
+
   </div>
 </div>
 <ng-include src="'views/footer.html'"></ng-include>
