@@ -937,3 +937,18 @@ footer {
   }
 
 }
+
+.img-galery-item {
+  background-color: #fff;
+  margin-bottom: $padding-large-vertical;
+}
+
+.img-galery-description {
+  padding: $padding-large-vertical $padding-large-horizontal;
+  color: $text-color;
+}
+
+.img-galery-title {
+  font-size: 1.2em;
+  text-transform: uppercase;
+}

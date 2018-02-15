@@ -1,13 +1,20 @@
-<div class="section section">
+<div class="section section-gray">
   <div class="container">
 
     <span us-spinner ng-show="ctrl.loading"></span>
     <div ng-hide="ctrl.loading">
       <h1 class="section-title section-title">{{ctrl.contribuicao.description}}</h1>
-      <p>Criado por {{ctrl.contribuicao.owner.login}}</p>
-      <p>{{ctrl.contribuicao.id}}</p>
+      <div class="row">
+        <div class="col-xs-10">
+          <p>Criado por <a ng-href="{{ctrl.contribuicao.owner.html_url}}" target="_blank">{{ctrl.contribuicao.owner.login}}</a></p>
+        </div>
+        <div class="col-xs-2 text-right">
+          <a ng-href="{{ctrl.contribuicao.html_url}}" target="_blank"><span class="glyphicon glyphicon-new-window"></span></a>
+        </div>
+      </div>
       <iframe width="100%" ng-src="{{ctrl.gistUrl}}" marginwidth="0" marginheight="0" style="height:100vh;" scrolling="auto" frameborder="0"></iframe>
     </div>
+
 
   </div>
 </div>

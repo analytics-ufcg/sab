@@ -1,14 +1,32 @@
-<div class="section section">
+<div class="section section-inverse">
   <div class="container">
-    <h1 class="section-title section-title">CONTRIBUIÇÕES</h1>
+    <h1 class="section-title section-title section-title-inverse">CONTRIBUIÇÕES</h1>
+
+    <p>Aqui você encontra visualizações de dados criadas pela comunidade.</p>
+    <br>
+    <a href="https://github.com/analytics-ufcg/sab" target="_blank" class="btn btn-primary">Saiba como contribuir</a>
+
+  </div>
+</div>
+<div class="section section-gray">
+  <div class="container">
 
     <span us-spinner ng-show="ctrl.loading"></span>
 
-    <div ng-repeat="contribuicao in ctrl.contribuicoes">
-      <h3>{{contribuicao.description}}</h3>
-      <p>Criado por {{contribuicao.owner.login}}</p>
-      <a ui-sref="contribuicao({id: contribuicao.id})" class="btn btn-primary">Ver</a>
-      <hr>
+    <div class="row">
+      <div class="col-sm-3" ng-repeat="contribuicao in ctrl.contribuicoes">
+
+        <div class="img-galery-item">
+          <a ui-sref="contribuicao({id: contribuicao.id})" ng-if="contribuicao.files['thumbnail.png']">
+            <img ng-src="{{contribuicao.files['thumbnail.png'].raw_url}}" alt="{{contribuicao.description}}" width="100%">
+          </a>
+          <div class="img-galery-description">
+            <strong class="img-galery-title">{{contribuicao.description}}</strong><br>
+            Criado por <a ng-href="{{contribuicao.owner.html_url}}" target="_blank">{{contribuicao.owner.login}}</a>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>
