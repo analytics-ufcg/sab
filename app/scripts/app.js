@@ -76,6 +76,18 @@
       url: "/informese",
       templateUrl: "views/informese.html"
     })
+    .state('contribuicoes', {
+      url: "/contribuicoes",
+      templateUrl: "views/contribuicoes.html",
+      controller: "ContribuicoesCtrl",
+      controllerAs: "ctrl"
+    })
+    .state('contribuicao', {
+      url: "/contribuicoes/{id}",
+      templateUrl: "views/contribuicao.html",
+      controller: "ContribuicaoCtrl",
+      controllerAs: "ctrl"
+    })
     .state('parceiros', {
       url: "/parceiros",
       templateUrl: "views/parceiros.html"
@@ -84,7 +96,7 @@
       url: "/login",
       templateUrl: "views/login.html",
       controller: "LoginCtrl",
-      controllerAs: "ctrl",
+      controllerAs: "ctrl"
     })
     .state('atualizar', {
       url: "/atualizar",
