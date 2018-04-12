@@ -220,7 +220,7 @@
         $location.search('id', vm.reservatorioSelecionado.id);
         $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
         vm.share.title = vm.reservatorioSelecionado.reservat;
-        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água";
+        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água: ";
         vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
         vm.share.url = $location.absUrl();
         // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
