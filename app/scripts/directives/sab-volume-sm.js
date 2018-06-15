@@ -21,7 +21,7 @@
             d3 = $window.d3,
             config = {
               width: 185,
-              height: 100,
+              height: 110,
               gaugeWidth: 80,
               gaugeHeight: 80,
               indicatorWidth: 90,

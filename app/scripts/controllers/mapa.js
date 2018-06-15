@@ -219,13 +219,7 @@
         }
         $location.search('id', vm.reservatorioSelecionado.id);
         $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
-        vm.share.title = vm.reservatorioSelecionado.reservat;
-        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água: ";
-        vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
-        vm.share.url = $location.absUrl();
-        // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
-        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
-        vm.resetCopyUrl();
+        updateShareData(vm.reservatorioSelecionado.reservat, vm.reservatorioSelecionado.id);
 
         efeitoZoom(vm.map.markers_reserv[0].lat, vm.map.markers_reserv[0].lon, 10);
         Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
@@ -271,7 +265,10 @@
     function setSelectedMapType(type) {
       vm.selectedMapType = type;
       if (type == 1) {
+        const uf = $location.search().uf;
         $location.search({});
+        $location.search("uf", uf);
+        setEstado(uf || "Semiarido");
         vm.map.markers_reserv.pop();
         vm.map.markers_municipio.pop();
         vm.reservatorioSelecionado = {};
@@ -283,6 +280,7 @@
         }
       }
       if (type == 0) {
+        $location.search({});
         if (previousFeature){
           previousFeature.setStyle(null);
           previousFeature = null;
@@ -290,7 +288,7 @@
         vm.map.layers[1].visible = true;
         vm.map.layers[2].visible = false;
         vm.map.layers[3].opacity = 1;
-        setEstado("Semiarido");
+
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
     }
@@ -389,6 +387,7 @@
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
           if(feature && isSelectedMapType(0) || isSelectedMapType(2)) {
+            $location.search({});
             vm.setReservatorio(feature.get('id'));
           }
       });
@@ -447,7 +446,11 @@
     Reservatorio.estadoEquivalente.query(function(response) {
       vm.loadingInfo = true;
       vm.estadoEquivalente = response;
-      setEstado("Semiarido");
+      if($location.search().uf){
+        setSelectedTab(5);
+        setSelectedMapType(1);
+        setEstado("uf");
+      }
       vm.loadingInfo = false;
     }, function(error) {
       vm.loadingInfo = false;
@@ -457,9 +460,24 @@
     function setEstado(uf) {
       for (var i = 0; i < vm.estadoEquivalente.length; i++) {
         if (vm.estadoEquivalente[i].uf === uf){
+          vm.loadingInfo = false;
+          vm.showInfo = true;
+          vm.showLegend = false;
           vm.estadoAtual = vm.estadoEquivalente[i];
+          $location.search('uf', uf);
+          updateShareData(vm.estadoEquivalente[i].semiarido, uf);
         }
       }
+    }
+
+    function updateShareData(title, id){
+      vm.share.title = title;
+      vm.share.longText = "Veja a situação do "+title+" no Olho n'água: ";
+      vm.share.shortText = title +" no Olho n'água";
+      vm.share.url = $location.absUrl();
+      // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
+      vm.share.media = RESTAPI.publicImagesPath+id+"-lg.png";
+      vm.resetCopyUrl();
     }
 
     $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
@@ -470,15 +488,17 @@
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
 
+
               if (previousFeature && feature !== previousFeature) {
                 previousFeature.setStyle(null);
               }
-
               previousFeature = feature;
+
           }
 
       });
     });
+
 
     $scope.$on('openlayers.map.click', function(event, feature) {
       $scope.$apply(function() {

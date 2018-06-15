@@ -4,8 +4,8 @@
 
     <div class="map-tabs">
       <ul class="nav nav-tabs">
-        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(0)"> Reservatórios</a></li>
-        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1)"> Resumo </a></li>
+        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(0); ctrl.setSelectedTab(1)"> Reservatórios</a></li>
+        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1); ctrl.setSelectedTab(5);"> Resumo </a></li>
       </ul>
     </div>
 
@@ -183,32 +183,103 @@
         <div  ng-if="ctrl.showInfo">
 
           <div class="info-card-body">
-            <span us-spinner ng-show="ctrl.loadingInfo"></span>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) acompanhado(s)</div>
-                <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
-              </div>
-              <div class="col-md-6" style="padding-top: 10px;">
-                <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
-                  <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(5)">
+              <span us-spinner ng-show="ctrl.loadingInfo"></span>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) acompanhado(s)</div>
+                  <div class="info-card-row info-card-row-small"><strong>{{ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
                 </div>
-                <sab-barra-equivalente info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
+                <div class="col-md-6" style="padding-top: 10px;">
+                  <div ng-hide="ctrl.estadoAtual.capacidade_equivalente">
+                    <p><strong> Não possuimos informações recentes acerca dos reservatórios desse estado.</strong></p>
+                  </div>
+                  <sab-barra-equivalente info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
+                </div>
+              </div>
+              <hr class="info-card-divider">
+                <div class="info-card-vertical-align" ng-show="ctrl.estadoAtual.capacidade_equivalente">
+                  <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                      <sab-volume-sm
+                        capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
+                        volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
+                        percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume-sm>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(6)">
+              <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
+                <br><br><br>
+                Não possui dados históricos suficientes
+              </div>
+              <div class="btn-info-card-download visible-lg-block text-right" ng-show="ctrl.reservatorioSelecionado.volumes.length > 2">
+                <a ng-href="" target="_blank" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download"></span> Baixar dados</a>
+              </div>
+              <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length > 2">
+                <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes" volumemorto="ctrl.reservatorioSelecionado.volume_morto"></sab-reservatorio-historico>
               </div>
             </div>
-            <hr class="info-card-divider">
-            <div class="row">
-              <div class="col-sm-8 col-sm-offset-2 col-md-6 col-sm-offset-3 col-lg-10 col-lg-offset-1" ng-show="ctrl.estadoAtual.capacidade_equivalente">
-                <div class="info-card-vertical-align">
-                  <sab-volume-sm
-                    capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
-                    volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
-                    percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume-sm>
+
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(7)">
+              <div class="info-card-row text-center">
+                <p>Compartilhe as informações do <br><strong>{{ctrl.estadoAtual.semiarido}}</strong></p>
+                <br>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-3 col-md-3 visible-xs">
+                  <a class="btn btn-default btn-block btn-share btn-whatsapp"
+                    socialshare
+                    socialshare-provider="whatsapp"
+                    socialshare-url="{{ctrl.share.url}}"
+                    socialshare-text="{{ctrl.share.longText}}"><span class="icon-whatsapp"></span> Whatsapp</a>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                  <button class="btn btn-default btn-block btn-share btn-facebook"
+                    socialshare
+                    socialshare-provider="facebook"
+                    socialshare-type="share"
+                    socialshare-via="{{ctrl.share.appID}}"
+                    socialshare-title="{{ctrl.share.title}}"
+                    socialshare-description="{{ctrl.share.longText}}"
+                    socialshare-url="{{ctrl.share.url}}"
+                    socialshare-media="{{ctrl.share.media}}"
+                    ><span class="icon-facebook2"></span> Facebook</button>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                  <button class="btn btn-default btn-block btn-share btn-twitter"
+                    socialshare
+                    socialshare-provider="twitter"
+                    socialshare-text="{{ctrl.share.shortText}}"
+                    socialshare-url="{{ctrl.share.url}}"><span class="icon-twitter"></span> Twitter</button>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                  <button class="btn btn-default btn-block btn-share btn-google"
+                    socialshare
+                    socialshare-provider="google"
+                    socialshare-url="{{ctrl.share.url}}"><span class="icon-google-plus"></span> Google+</button>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-3">
+                  <button class="btn btn-default btn-block btn-share btn-share-link"
+                    clipboard
+                    text="ctrl.share.url"
+                    supported="true"
+                    on-copied="ctrl.copyUrl()"
+                    uib-tooltip="{{ctrl.copyTooltipText}}" tooltip-popup-close-delay="500"><span class="icon-content_copy"></span> Copiar link</button>
                 </div>
               </div>
             </div>
           </div>
 
+        </div>
+          <div class="info-card-footer">
+            <ul class="nav nav-tabs nav-justified">
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(5)}"><a href="" ng-click="ctrl.setSelectedTab(5)"><span class="glyphicon glyphicon-tint"></span><span class="hidden-xs"> Volume</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(6)}"><a href="" ng-click="ctrl.setSelectedTab(6)"><span class="glyphicon glyphicon-stats"></span><span class="hidden-xs"> Histórico</span></a></li>
+              <li role="presentation" ng-class="{'active': ctrl.isSelectedTab(7)}"><a href="" ng-click="ctrl.setSelectedTab(7)"><span class="icon-share-alt"></span><span class="hidden-xs"> Compartilhar</span></a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
