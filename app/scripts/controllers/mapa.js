@@ -50,6 +50,24 @@
       vm.longitude = -44.231820;
     }
 
+    var semiaridoStyleEstado = function(feature) {
+        var style;
+        const uf = $location.search().uf;
+        style = new ol.style.Style({
+          fill: uf === feature.getId()?
+                  new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"}) :
+                  new ol.style.Fill({color: "rgba(12, 137, 193, 0.8)"}),
+          stroke: new ol.style.Stroke({color: "rgba(16, 84, 125, 1)"})
+        });
+        feature.setStyle(style);
+        if (previousFeature && feature !== previousFeature) {
+          previousFeature.setStyle(null);
+        }
+        previousFeature = feature;
+        return style;
+    };
+
+
     vm.map = {
       center: {
         lat: vm.latitude,
@@ -86,13 +104,13 @@
             type: 'TopoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
-          style: semiaridoStyleEstado()
+          style: semiaridoStyleEstado
         }
       ],
       defaults: {
           events: {
               map: ['pointermove', 'mousemove', 'click'],
-              layers: [ 'mousemove', 'click' ]
+              layers: [ 'mousemove', 'click']
           },
           controls: {
               zoom: false,
@@ -377,12 +395,6 @@
       });
     }
 
-    function semiaridoStyleEstado() {
-      return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(12, 137, 193, 0.8)"}),
-        stroke: new ol.style.Stroke({color: "rgba(16, 84, 125, 1)"}),
-      });
-    }
 
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
@@ -449,7 +461,7 @@
       if($location.search().uf){
         setSelectedTab(5);
         setSelectedMapType(1);
-        setEstado("uf");
+        setEstado($location.search().uf);
       }
       vm.loadingInfo = false;
     }, function(error) {
@@ -466,7 +478,9 @@
           vm.estadoAtual = vm.estadoEquivalente[i];
           $location.search('uf', uf);
           updateShareData(vm.estadoEquivalente[i].semiarido, uf);
+          break;
         }
+        if(i === vm.estadoEquivalente.length-1) setEstado("Semiarido");
       }
     }
 
@@ -487,15 +501,11 @@
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
-
-
               if (previousFeature && feature !== previousFeature) {
                 previousFeature.setStyle(null);
               }
               previousFeature = feature;
-
           }
-
       });
     });
 
