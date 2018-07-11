@@ -21,7 +21,7 @@
             d3 = $window.d3,
             config = {
               width: 185,
-              height: 110,
+              height: 120,
               gaugeWidth: 80,
               gaugeHeight: 80,
               indicatorWidth: 90,
@@ -59,7 +59,7 @@
                 'viewBox': '0 0 '+config.width+' '+config.height,
                 'width': '100%'});
             var radius = Math.min(parseInt(config.gaugeWidth), parseInt(config.gaugeHeight))/2;
-            var locationX = parseInt(config.width / 2) - radius;
+            var locationX = parseInt(config.width / 2);
             var textLocationX = locationX - radius - config.volumeTextPadding;
             var locationY = parseInt(config.height / 2) - radius;
             var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value))/config.maxValue;
@@ -182,7 +182,7 @@
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+
                         (gaugeDimensions.top.x - config.indicatorWidth)+', '+
-                        (gaugeDimensions.top.y - circleThickness)+')');
+                        (gaugeDimensions.top.y - (circleThickness*4))+')');
             var capacidadeTextValue = textGroup.append("text")
                 .text("Capacidade total")
                 .attr("class", "liquidFillGaugeText")
@@ -191,29 +191,29 @@
                 .style("fill", config.textColor)
                 .attr('transform','translate('+
                         (gaugeDimensions.top.x - config.indicatorWidth)+', '+
-                        (gaugeDimensions.top.y + (circleThickness * 4))+')');
+                        (gaugeDimensions.top.y - (circleThickness))+')');
             var volumeText = textGroup.append("text")
                 .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "end")
+                .attr("text-anchor", "left")
                 .attr("alignment-baseline", "baseline")
                 .attr("font-size", (textSmallPixels + 2) + "px")
                 .style("fill", config.circleColor)
                 .attr('transform','translate('+
-                      (gaugeDimensions.top.x + config.indicatorWidth)+','+
+                      (gaugeDimensions.top.x - config.indicatorWidth)+','+
                       (gaugeDimensions.top.y - circleThickness)+')');
             var volumeTextValue = textGroup.append("text")
                 .text("Volume atual")
                 .attr("class", "liquidFillGaugeText")
-                .attr("text-anchor", "end")
+                .attr("text-anchor", "left")
                 .attr("alignment-baseline", "baseline")
                 .attr("font-size", textSmallPixels + "px")
                 .style("fill", config.textColor)
                 .attr("dy", "2")
                 .attr('transform','translate('+
-                        (gaugeDimensions.top.x + config.indicatorWidth)+','+
+                        (gaugeDimensions.top.x - config.indicatorWidth)+','+
                         (gaugeDimensions.top.y + (circleThickness * 3))+')');
             var volumeLine = textGroup.append("line")
-                .attr("x1", gaugeDimensions.top.x + config.indicatorWidth)
+                .attr("x1", gaugeDimensions.top.x - config.indicatorWidth)
                 .attr("y1", gaugeDimensions.top.y)
                 .attr("x2", gaugeDimensions.top.x)
                 .attr("y2", gaugeDimensions.top.y)
@@ -373,8 +373,8 @@
                     .transition()
                     .duration(config.waveRiseTime)
                     .attr('transform','translate('+
-                            (gaugeDimensions.top.x + config.indicatorWidth)+','+
-                            (yScale(fillPercent))+')');
+                            (gaugeDimensions.top.x - config.indicatorWidth)+','+
+                            (yScale(fillPercent) + (circleThickness * 5))+')');
                 volumeLine
                     .transition()
                     .duration(config.waveRiseTime)
@@ -383,8 +383,8 @@
                     .transition()
                     .duration(config.waveRiseTime)
                     .attr('transform','translate('+
-                            (gaugeDimensions.top.x + config.indicatorWidth)+','+
-                            (yScale(fillPercent) + (circleThickness * 4))+')');
+                            (gaugeDimensions.top.x - config.indicatorWidth)+','+
+                            (yScale(fillPercent) + (circleThickness * 7))+')');
             }
 
           scope.$watchCollection(function(scope) { return [scope.capacidade, scope.volume, scope.percentual] ; }, function(newValue) {

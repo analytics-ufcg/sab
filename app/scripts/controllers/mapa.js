@@ -82,10 +82,10 @@
           active: true,
           visible: true,
           source: {
-            type: 'MapBoxStudio',
-            mapId: 'cjfbecmg95db22rqgi86aq4mt',
-            userId: 'diegocoelhocc',
-            accessToken: 'pk.eyJ1IjoiZGllZ29jb2VsaG9jYyIsImEiOiJjamZiZWJkcDkzcGZtMzNwZGpremx2Nm94In0.vIUJqZ2PCT0CQ8-XEsIJPA'
+            type:"MapBoxStudio",
+            mapId:"cjgz3yuzu000j2rs5opg4x7g2",
+            userId:"diegocoelhoinsa",
+            accessToken:"pk.eyJ1IjoiZGllZ29jb2VsaG9pbnNhIiwiYSI6ImNqZ3ozdTJnMDBpcmEyeG50YjEzY2l2dTQifQ.baZTq3TNsn9zqxzvDY1P8Q"
           }
         },
         {

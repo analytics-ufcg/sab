@@ -48,14 +48,13 @@
                 <div class="col-xs-6">
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.municipio"><strong>Município:</strong><br>{{ctrl.reservatorioSelecionado.municipio}}</div>
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.estado"><strong>Estado:</strong><br>{{ctrl.reservatorioSelecionado.estado}}</div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Bacia hidrográfica:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.localizacao"><strong>Coordenadas geográficas:</strong><br>{{ctrl.reservatorioSelecionado.localizacao}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.bacia"><strong>Região hidrográfica:</strong><br>{{ctrl.reservatorioSelecionado.bacia}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.localizacao"><strong>Coordenadas do barramento:</strong><br>{{ctrl.reservatorioSelecionado.localizacao}}</div>
                 </div>
                 <div class="col-xs-6">
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade:</strong><br>{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume_morto > 0"><strong>Volume morto:</strong><br>{{ctrl.reservatorioSelecionado.volume_morto | sabVolume}}</div>
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.curso_barrado"><strong>Curso hídrico barrado:</strong><br>{{ctrl.reservatorioSelecionado.curso_barrado}}</div>
-                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.cota_soleira"><strong>Cota da soleira do vertedor:</strong><br>{{ctrl.reservatorioSelecionado.cota_soleira}}m</div>
                 </div>
               </div>
             </div>
@@ -72,13 +71,22 @@
               <hr class="info-card-divider">
 
               <div class="info-card-vertical-align" ng-show="ctrl.reservatorioSelecionado.volumes.length">
-
                   <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
+
+                    <div class="col-xs-6 col-xs-offset-0 col-sm-6  col-lg-7 col-lg-offset-0"
+                          ng-show="ctrl.reservatorioSelecionado.volumes.length">
                       <sab-volume-sm
                         capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
                         volume="ctrl.reservatorioSelecionado.volume | sabVolume"
                         percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
+                    </div>
+                    <div class="col-sm-6 col-sm-offset-0 col-lg-5 col-lg-offset-0 hidden-xs"
+                          ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
+                      <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
+                        <strong>Comportamento do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong>
+                      </div>
+                      <hr class="info-card-divider">
+                      <sab-volume-recente monitoramento="ctrl.reservatorioSelecionado.volumes_recentes"></sab-volume-recente>
                     </div>
                   </div>
 
