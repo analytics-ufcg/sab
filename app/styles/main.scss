@@ -155,7 +155,7 @@ footer {
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
-  height: calc(100vh - 194px);
+  height: calc(100vh - 330px);
 
   @media (min-width: $screen-sm-min) {
     height: calc(100vh - 330px);
@@ -237,7 +237,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100vh - 260px);
+  height: calc(100vh - 385px);
 
   @media (min-width: $screen-sm-min) {
     height: calc(100vh - 385px);
