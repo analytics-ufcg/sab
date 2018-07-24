@@ -118,6 +118,8 @@
             </div>
 
             <div class="info-card-tab" ng-if="ctrl.isSelectedTab(4)">
+              <update-meta property="og:image" content="{{ctrl.share.media}}"></update-meta>
+              <update-meta property="og:url" content="{{ctrl.share.url}}"></update-meta>
               <div class="info-card-row text-center">
                 <p>Compartilhe as informações do <br><strong>{{ctrl.reservatorioSelecionado.reservat}}</strong></p>
                 <br>
@@ -139,7 +141,6 @@
                     socialshare-title="{{ctrl.share.title}}"
                     socialshare-description="{{ctrl.share.longText}}"
                     socialshare-url="{{ctrl.share.url}}"
-                    socialshare-media="{{ctrl.share.media}}"
                     ><span class="icon-facebook2"></span> Facebook</button>
                 </div>
                 <div class="col-xs-6 col-sm-3 col-md-3">

@@ -24,7 +24,8 @@
       'angular-ladda',
       'ngFileUpload',
       'satellizer',
-      'toastr'])
+      'toastr',
+      'updateMeta'])
     .constant('RESTAPI', {
       url: 'http://localhost:5003/api',
       facebookAppID: '543791825832138',
