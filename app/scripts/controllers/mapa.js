@@ -493,7 +493,6 @@
      Reservatorio.monitoramento_estado.query({uf:uf}, function(data) {
        vm.volumes_recentes_estado = data.volumes_recentes;
        vm.volume_estado = data.volumes;
-       console.log(data.volumes);
      });
    }
 
@@ -526,7 +525,8 @@
     $scope.$on('openlayers.map.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              setEstado("Semiarido");
+              console.log(vm.estadoAtual)
+              if(vm.estadoAtual.uf !== "Semiarido") setEstado("Semiarido");
               if (previousFeature){
                 previousFeature.setStyle(null);
                 previousFeature = null;

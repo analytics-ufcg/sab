@@ -229,15 +229,15 @@
             </div>
           </div>
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(6)">
-              <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
+              <div class="info-card-row text-center" ng-hide="ctrl.volume_estado.length > 2 || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados históricos suficientes
               </div>
               <div class="btn-info-card-download visible-lg-block text-right" ng-show="ctrl.reservatorioSelecionado.volumes.length > 2">
                 <a ng-href="" target="_blank" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download"></span> Baixar dados</a>
               </div>
-              <div class="map-graph" ng-if="ctrl.reservatorioSelecionado.volumes.length > 2">
-                <sab-reservatorio-historico monitoramento="ctrl.reservatorioSelecionado.volumes" volumemorto="ctrl.reservatorioSelecionado.volume_morto"></sab-reservatorio-historico>
+              <div class="map-graph" ng-if="ctrl.volume_estado">
+                <sab-estado-historico monitoramento="ctrl.volume_estado" volumemorto="0"></sab-estado-historico>
               </div>
             </div>
 
