@@ -55,6 +55,8 @@
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.capacidade"><strong>Capacidade:</strong><br>{{ctrl.reservatorioSelecionado.capacidade | sabVolume}}</div>
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.volume_morto > 0"><strong>Volume morto:</strong><br>{{ctrl.reservatorioSelecionado.volume_morto | sabVolume}}</div>
                   <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.curso_barrado"><strong>Curso hídrico barrado:</strong><br>{{ctrl.reservatorioSelecionado.curso_barrado}}</div>
+                  <div class="info-card-row" ng-show="ctrl.reservatorioSelecionado.unidade_planejamento"><strong>Unidade de planejamento:</strong><br>{{ctrl.reservatorioSelecionado.unidade_planejamento}}</div>
+
                 </div>
               </div>
             </div>
@@ -207,17 +209,25 @@
                 </div>
               </div>
               <hr class="info-card-divider">
-                <div class="info-card-vertical-align" ng-show="ctrl.estadoAtual.capacidade_equivalente">
-                  <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
-                      <sab-volume-sm
-                        capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
-                        volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
-                        percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume-sm>
-                    </div>
-                  </div>
+              <div class="info-card-vertical-align" ng-show="ctrl.estadoAtual.capacidade_equivalente">
+              <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0">
+                    <sab-volume
+                      capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
+                      volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
+                      percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume>
                 </div>
+                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs"
+                  ng-show="ctrl.volumes_recentes_estado.volumes.length">
+                  <div class="info-card-row info-card-row-small" ng-show="ctrl.volumes_recentes_estado.volumes.length">
+                    <strong>Comportamento do volume nos últimos 6 meses</strong>
+                  </div>
+                  <hr class="info-card-divider">
+                    <sab-volume-recente ng-if="ctrl.volumes_recentes_estado.volumes.length" monitoramento="ctrl.volumes_recentes_estado"></sab-volume-recente>
+                </div>
+              </div>
             </div>
+          </div>
             <div class="info-card-tab info-card-tab-sm" ng-if="ctrl.isSelectedTab(6)">
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length > 2 || ctrl.loadingInfo">
                 <br><br><br>

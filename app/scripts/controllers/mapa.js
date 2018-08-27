@@ -153,6 +153,9 @@
     vm.estadoAtual = {};
     var previousFeature;
 
+    vm.volumes_recentes_estado = {};
+    vm.volume_estado = []
+
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
     vm.setReservatorio = setReservatorio;
@@ -349,7 +352,8 @@
 
     function tamanhoReservatorio(feature, zoom) {
       // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
-      var tamanho = Math.abs(Math.log(feature.get("capacidade")))+(vm.zoomInicial+1.8) - Math.log(zoom);
+      const capacidade = feature.get("capacidade") || 1;
+      var tamanho = Math.abs(Math.log(capacidade))+(vm.zoomInicial+1.8) - Math.log(zoom);
       if (tamanho < 2){
         tamanho = 2;
       }
@@ -477,12 +481,21 @@
           vm.showLegend = false;
           vm.estadoAtual = vm.estadoEquivalente[i];
           $location.search('uf', uf);
+          setVolumesRecentesEstado(uf);
           updateShareData(vm.estadoEquivalente[i].semiarido, uf);
           break;
         }
         if(i === vm.estadoEquivalente.length-1) setEstado("Semiarido");
       }
     }
+
+    function setVolumesRecentesEstado(uf){
+     Reservatorio.monitoramento_estado.query({uf:uf}, function(data) {
+       vm.volumes_recentes_estado = data.volumes_recentes;
+       vm.volume_estado = data.volumes;
+       console.log(data.volumes);
+     });
+   }
 
     function updateShareData(title, id){
       vm.share.title = title;
