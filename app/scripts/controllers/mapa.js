@@ -509,7 +509,10 @@
     $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              setEstado(feature.getId());
+            setTimeout(()=>{
+                setEstado(feature.getId());
+              }, 20);
+
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
@@ -525,8 +528,7 @@
     $scope.$on('openlayers.map.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              console.log(vm.estadoAtual)
-              if(vm.estadoAtual.uf !== "Semiarido") setEstado("Semiarido");
+              setEstado("Semiarido");
               if (previousFeature){
                 previousFeature.setStyle(null);
                 previousFeature = null;
