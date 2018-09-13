@@ -13,7 +13,8 @@
         restrict: 'E',
         scope: {
           monitoramento: '=',
-          volumemorto: '='
+          volumemorto: '=',
+          reservs: "="
         },
         link: function postLink(scope, element) {
           var d3 = $window.d3;
@@ -44,7 +45,7 @@
             "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
           });
 
-          var formatTimeLiteral = localized.timeFormat("%d de %B  de %Y");
+          var formatTimeLiteral = localized.timeFormat("%B  de %Y");
 
           // Set the ranges
           var x = d3.time.scale().range([0, width]);
@@ -381,13 +382,25 @@
                     d1 =d0;
                   }
           		    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+
+                  scope.$apply(function() {
+                    if (typeof d !== 'undefined') {
+                      scope.reservs = d;
+                    }
+                  });
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³ (Monitorados: "+d.reservatorios+" reservatórios)");
+              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³ (Monitorados: "+d.quant_reservatorio_com_info+" reservatórios)");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
           	}
 
             function mouseout() {
+              scope.$apply(function() {
+
+                  scope.reservs = {};
+
+              });
               statusRect.style("visibility", "hidden");
               selectedValue.style("display", "none");
             }

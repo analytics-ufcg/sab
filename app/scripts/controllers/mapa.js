@@ -24,6 +24,7 @@
     vm.gotError = false;
     vm.RESTAPI = RESTAPI;
     vm.municipioReservatorio = [];
+    vm.reservs = {};
 
     // Variáveis para compartilhamento
     vm.share = {
@@ -511,7 +512,7 @@
           if (feature && isSelectedMapType(1)) {
             setTimeout(()=>{
                 setEstado(feature.getId());
-              }, 20);
+              }, 50);
 
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
