@@ -390,7 +390,7 @@
                     }
                   });
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³ ("+d.quant_reservatorio_com_info+" reservatórios com informações)");
+              statusVolume.html(Number(parseFloat(d.close).toFixed(2)) + "%"+" | "+d.Volume+" hm³ ("+d.quant_reservatorio_com_info+" reservatórios)");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
           	}
