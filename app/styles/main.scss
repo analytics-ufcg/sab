@@ -542,6 +542,24 @@ footer {
       fill-opacity: 0.2;
     }
   }
+
+  &.area-middle {
+    fill: #D9C2B6;
+    fill-opacity: 0.9;
+    &.area-middle-invalidos {
+      fill: opacify(#D9C2B6, 0.2);
+      fill-opacity: 0.2;
+    }
+  }
+  &.area-top {
+    fill: #F0EDF6;
+    fill-opacity: 0.9;
+    &.area-top-invalidos {
+      fill: #F0EDF6;
+      fill-opacity: 0.9;
+    }
+  }
+
   &.limit-line {
     stroke: $text-color;
     fill: none;
@@ -723,6 +741,21 @@ footer {
   pointer-events: none;
   color: #fff;
   margin-top: -90px;
+}
+
+.tooltip-area{
+  position: absolute;
+   text-align: center;
+   width: 60px;
+   height: 28px;
+   padding: 2px;
+   font: 12px sans-serif;
+   background: transparentize;
+   border: 0px;
+   border-radius: 8px;
+   pointer-events: none;
+   margin-top: -90px;
+
 }
 
 .icon-lg {

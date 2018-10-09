@@ -235,7 +235,7 @@
             Não possui dados históricos suficientes
           </div>
           <div ng-if="ctrl.volume_estado">
-            <div class="row" >
+            <!-- <div class="row" >
               <div class="col-md-6" >
                 <div class="info-card-row info-card-row-small"><strong>{{ctrl.reservs.total_reservatorios || ctrl.estadoAtual.total_reservatorios}}</strong> reservatório(s) acompanhado(s)</div>
                 <div class="info-card-row info-card-row-small"><strong>{{ctrl.reservs.quant_reservatorio_sem_info || ctrl.estadoAtual.quant_reservatorio_sem_info}}</strong> reservatório(s) sem informação</div>
@@ -244,7 +244,7 @@
                 <sab-barra-equivalente ng-if="ctrl.reservs.quant_reservatorio_com_info" info-estado="ctrl.reservs" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
                 <sab-barra-equivalente ng-hide="ctrl.reservs.quant_reservatorio_com_info" info-estado="ctrl.estadoAtual" cores="ctrl.coresReservatorios"></sab-barra-equivalente>
               </div>
-            </div>
+            </div> -->
             <div class="map-graph info-card-tab-sm" >
               <sab-estado-historico monitoramento="ctrl.volume_estado" reservs="ctrl.reservs" volumemorto="0"></sab-estado-historico>
             </div>

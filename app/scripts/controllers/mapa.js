@@ -510,7 +510,7 @@
     $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-            setTimeout(()=>{
+            setTimeout(function(){
                 setEstado(feature.getId());
               }, 50);
 
