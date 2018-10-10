@@ -152,17 +152,40 @@ footer {
   }
 }
 
+.info-card-body-resumo {
+  padding: $card-padding-vertical $card-padding-horizontal;
+  background-color: #fff;
+
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 260px);
+  }
+
+  @media (min-width: $screen-sm-min) {
+    height: calc(100vh - 300px);
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: 330px;
+  }
+  @media (min-width: $screen-lg-min) {
+    height: 410px;
+  }
+}
+
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
-  height: calc(100vh - 330px);
+
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 300px);
+  }
 
   @media (min-width: $screen-sm-min) {
     height: calc(100vh - 330px);
   }
 
   @media (min-width: $screen-md-min) {
-    height: 300px;
+    height: 330px;
   }
 
   @media (min-width: $screen-lg-min) {
@@ -170,17 +193,22 @@ footer {
   }
 }
 
+
 .info-card-tab-sm {
+
+  @media (min-width: $screen-xs-min) {
+    padding: 0px 0px 0px 0px;
+  }
   @media (min-width: $screen-sm-min) {
-    padding: 0;
+    padding: 0px 110px;
   }
 
   @media (min-width: $screen-md-min) {
-    padding: 0 80px;
+    padding: 0px 20px 20px 20px;
   }
 
   @media (min-width: $screen-lg-min) {
-    padding: 0;
+    padding: 20px 20px;
   }
 }
 
@@ -237,14 +265,16 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100vh - 385px);
 
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 380px);
+  }
   @media (min-width: $screen-sm-min) {
-    height: calc(100vh - 385px);
+    height: calc(100vh - 470px);
   }
 
   @media (min-width: $screen-md-min) {
-    height: 150px;
+    height: 250px;
   }
 
   @media (min-width: $screen-lg-min) {
@@ -544,18 +574,18 @@ footer {
   }
 
   &.area-middle {
-    fill: #D9C2B6;
+    fill: #F0EDF6;
     fill-opacity: 0.9;
     &.area-middle-invalidos {
-      fill: opacify(#D9C2B6, 0.2);
+      fill: opacify(#F0EDF6, 0.2);
       fill-opacity: 0.2;
     }
   }
   &.area-top {
-    fill: #F0EDF6;
+    fill: #D9C2B6 ;
     fill-opacity: 0.9;
     &.area-top-invalidos {
-      fill: #F0EDF6;
+      fill: #D9C2B6;
       fill-opacity: 0.9;
     }
   }
@@ -632,16 +662,65 @@ footer {
 
 .status-date {
   float: left;
+  font-size: 0.65em;
+  @media (min-width: $screen-xs-min) {
+    float: left;
+    font-size: 0.9em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: left;
+    font-size: 1em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: left;
+    font-size: 1em;
+  }
   @media (min-width: $screen-lg-min) {
-    float: none;
+    float: left;
     width: 190px;
+    font-size: 1em;
   }
 }
 
 .status-volume {
   float: right;
+  font-size: 0.65em;
+  @media (min-width: $screen-xs-min) {
+    float: right;
+    font-size: 0.9em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    font-size: 1em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: right;
+    font-size: 1em;
+  }
   @media (min-width: $screen-lg-min) {
-    float: none;
+    float: right;
+    font-size: 1em;
+  }
+}
+
+.legend {
+  float: left;
+  font-size: 0.8em;
+  @media (min-width: $screen-xs-min) {
+    float: right;
+    font-size: 0.6em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    font-size: 0.6em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: right;
+    font-size: 0.7em;
+  }
+  @media (min-width: $screen-lg-min) {
+    float: right;
+    font-size: 0.7em;
   }
 }
 

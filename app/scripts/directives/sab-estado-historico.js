@@ -54,7 +54,7 @@
         var x2 = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
         var y2 = d3.scale.linear().range([height2, 0]);
-        var z = d3.scale.ordinal().range(['#F0EDF6', '#D9C2B6', '#22cbff']);
+        var z = d3.scale.ordinal().range([ '#D9C2B6','#F0EDF6', '#22cbff']);
 
         // Define the axes
         var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -120,9 +120,9 @@
         var statusVolume = statusRect.append("div")
         .attr("class", "status-volume")
         .html("&nbsp;");
-        var statusDownload = statusRect.append("div")
-        .attr("class", "status-download")
-        .html("&nbsp;");
+        // var statusDownload = statusRect.append("div")
+        // .attr("class", "status-download")
+        // .html("&nbsp;");
 
         // Adds the svg canvas
         var svg = d3.select(element[0])
@@ -251,7 +251,6 @@
           //vertical legend
           var legend = focus.append("g")
           .attr("font-family", "sans-serif")
-          .attr("font-size", 10)
           .attr("fill","gray")
           .selectAll("g")
           .data(keys)
@@ -346,8 +345,8 @@
             data.forEach(function(d) {
               d.date = parseDate(d.DataInformacao);
               d.VolumePercentualTotal<100? d.close = d.VolumePercentualTotal: d.close = 100 ;
-              d.VolumePercentualSemAgua>0? d.valueMiddle = d.VolumePercentualSemAgua : d.valueMiddle = 0;
-              d.valueTop = (100 - (d.VolumePercentualTotal+d.VolumePercentualSemAgua));
+              d.VolumePercentualSemAgua>0? d.valueTop  = d.VolumePercentualSemAgua : d.valueTop  = 0;
+              d.valueMiddle = (100 - (d.VolumePercentualTotal+d.VolumePercentualSemAgua));
               if (d.VolumePercentualTotal){
                 dataValidos.push(d);
               }
@@ -517,19 +516,19 @@
               d = x0 - d0.date > d1.date - x0 ? d1 : d0;
               var volume_sem_agua;
               d.VolumeSemAgua<0? volume_sem_agua = 0 : volume_sem_agua = d.VolumeSemAgua;
-              keys = [Number((d.valueTop).toFixed(2)) + "% (" + d.CapacidadeSemInfo +" hm³) - "+d.quant_reservatorio_sem_info + " reservatórios sem informação",
-              Number((d.valueMiddle).toFixed(2)) + "% (" + volume_sem_agua +" hm³) - Capacidade equivalente sem água",
-              Number((d.close).toFixed(2)) + "% (" + d.Volume +" hm³) - Volume equivalnte armazenado"];
+              keys = [Number((d.valueTop).toFixed(1)) + "% (" + volume_sem_agua +" hm³) - capacidade equivalente sem volume",
+              Number((d.valueMiddle).toFixed(1)) + "% (" + d.CapacidadeSemInfo +" hm³) - "+d.quant_reservatorio_sem_info + " reservatórios sem informação",
+              Number((d.close).toFixed(1)) + "% (" + d.Volume +" hm³) - volume equivalnte armazenado"];
 
               legend.selectAll('*').remove();
 
 
               legend.append("rect")
               .attr("class", "category")
-              .attr("width", 10)
-              .attr("height", 10)
+              .attr("width", 12)
+              .attr("height", 12)
               .attr("x", 0)
-              .attr("y", -44)
+              .attr("y", -50)
               .attr("fill", z);
 
               //circular legend
@@ -541,9 +540,10 @@
               // .attr("fill", z);
 
               legend.append("text")
+              .attr("class", "legend")
               .data(keys)
-              .attr("x", 12)
-              .attr("y", -39.5)
+              .attr("x", 15)
+              .attr("y", -44.5)
               .attr("dy", "0.32em")
               .text(function(d) { return d; });
 
@@ -562,7 +562,7 @@
               selectedValueLine.style("visibility", "visible");
 
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html("Capacidade total de "+d.CapacidadeTotal+" hm³ - "+d.total_reservatorios+" reservatório(s)");
+              statusVolume.html(d.CapacidadeTotal+" hm³ - capacidade total ("+d.total_reservatorios+" reservatórios)");
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
 
