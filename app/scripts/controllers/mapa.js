@@ -25,6 +25,8 @@
     vm.RESTAPI = RESTAPI;
     vm.municipioReservatorio = [];
     vm.reservs = {};
+    vm.isUHE = isUHE;
+    vm.shareOverrideOGMeta = shareOverrideOGMeta;
 
     // Variáveis para compartilhamento
     vm.share = {
@@ -110,7 +112,7 @@
       ],
       defaults: {
           events: {
-              map: ['pointermove', 'mousemove', 'click'],
+              map: ['pointermove', 'mousemove', 'singleclick' ],
               layers: [ 'mousemove', 'click']
           },
           controls: {
@@ -121,10 +123,11 @@
           interactions: {
               mouseWheelZoom: true
           },
-          view: {
-              maxZoom: 16,
-              minZoom: 4
-          }
+          view: new ol.View({
+            center: ol.proj.fromLonLat([vm.latitude, vm.longitude]),
+            zoom: vm.zoomInicial,
+            duration: 2000
+          })
       }
     };
     vm.cityMarkerStyle = {
@@ -296,7 +299,7 @@
         vm.reservatorioSelecionado = {};
         vm.map.layers[1].visible = false;
         vm.map.layers[2].visible = true;
-        vm.map.layers[3].opacity = 0.4;
+        //vm.map.layers[3].opacity = 0.4;
         if (larguraTela <= 640) {
           vm.showInfo = false;
         }
@@ -313,6 +316,11 @@
 
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
+    }
+
+    function isUHE(id) {
+      const ids = ["19116","19117","19121","19122","19123","19124","19125","19126","795"];
+      return ids.indexOf(id+"") > -1;
     }
 
     function isSelectedTab(tab) {
@@ -363,7 +371,7 @@
     }
 
     function corReservatorio(feature) {
-      if(feature.get("volume_percentual") === null) {
+      if(feature.get("volume_percentual") === null || isUHE(feature.get("id"))) {
         return new ol.style.Fill({ color: vm.coresReservatorios[5].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
@@ -385,12 +393,23 @@
 
     function reservStyle() {
       return function(feature, zoom) {
+        if(isUHE(feature.get("id"))){
         return [new ol.style.Style({
-          image: new ol.style.Circle({
+          image: new ol.style.RegularShape({
+            points: 4,
             radius:tamanhoReservatorio(feature, zoom),
-            fill: corReservatorio(feature)
+            fill: corReservatorio(feature),
+            angle: Math.PI / 4
           })
-        })];
+        })];}
+        else{
+          return [new ol.style.Style({
+            image: new ol.style.Circle({
+              radius:tamanhoReservatorio(feature, zoom),
+              fill: corReservatorio(feature)
+            })
+          })];
+        }
       };
     }
 
@@ -445,18 +464,11 @@
 
       var reservatorio = ol.proj.fromLonLat([parseFloat(lon) + lonMais,parseFloat(lat) + latMais]);
       olData.getMap().then(function(map) {
-        var zoomAnim = ol.animation.zoom({
-            resolution: map.getView().getResolution(),
-            duration: 2000
-          });
-        var pan = ol.animation.pan({
-            duration: 2000,
-            source: map.getView().getCenter()
-          });
-        map.beforeRender(pan, zoomAnim);
-        map.getView().setCenter(reservatorio);
-        map.getView().setZoom(zoom);
-
+        map.getView().animate({
+          center: reservatorio,
+          zoom: zoom,
+          duration: 2000
+        });
       });
     }
 
@@ -505,15 +517,35 @@
       // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
       vm.share.media = RESTAPI.publicImagesPath+id+"-lg.png";
       vm.resetCopyUrl();
+
     }
 
+function shareOverrideOGMeta()
+{
+	FB.ui({
+		method: 'share_open_graph',
+		action_type: 'og.likes',
+		action_properties: JSON.stringify({
+			object: {
+				'og:url': vm.share.url,
+				'og:title': vm.share.title,
+				'og:description': vm.share.longText,
+				'og:image': vm.share.media,
+        'og:image:width': "1200",
+        'og:image:height': "630"
+      }
+		})
+	},
+	function (response) {
+	// Action after response
+	});
+}
+
+
+    var featureId;
     $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-            setTimeout(function(){
-                setEstado(feature.getId());
-              }, 50);
-
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
@@ -521,15 +553,22 @@
                 previousFeature.setStyle(null);
               }
               previousFeature = feature;
+              featureId = feature.getId();
+
           }
       });
     });
 
 
-    $scope.$on('openlayers.map.click', function(event, feature) {
+    $scope.$on('openlayers.map.singleclick', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              setEstado("Semiarido");
+              setTimeout(function(){
+                if(featureId) {
+                  setEstado(featureId);
+                  featureId = null;
+                }else setEstado("Semiarido");
+              }, 50);
               if (previousFeature){
                 previousFeature.setStyle(null);
                 previousFeature = null;

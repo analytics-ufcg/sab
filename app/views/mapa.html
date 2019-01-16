@@ -5,7 +5,7 @@
     <div class="map-tabs">
       <ul class="nav nav-tabs">
         <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(0) || ctrl.isSelectedMapType(2)}"><a href="" ng-click="ctrl.setSelectedMapType(0); ctrl.setSelectedTab(1)"> Reservatórios</a></li>
-        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1); ctrl.setSelectedTab(5);"> Resumo </a></li>
+        <li role="presentation" class="map-tabs-nav" ng-class="{'active': ctrl.isSelectedMapType(1)}"><a href="" ng-click="ctrl.setSelectedMapType(1); ctrl.setSelectedTab(5);"> Estados </a></li>
       </ul>
     </div>
 
@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <div class="info-card-tab-sm" ng-if="ctrl.isSelectedTab(1)">
+            <div class="info-card-tab" ng-if="ctrl.isSelectedTab(1)">
               <div class="info-card-row text-center" ng-hide="ctrl.reservatorioSelecionado.volumes.length || ctrl.loadingInfo">
                 <br><br><br>
                 Não possui dados sobre volume
@@ -75,14 +75,18 @@
               <div class="info-card-vertical-align" ng-show="ctrl.reservatorioSelecionado.volumes.length">
                 <div class="row">
 
-                  <div class="col-xs-8 col-xs-offset-1 col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0"
+                <div class="col-xs-8 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-6 col-lg-6 col-lg-offset-0"
                   ng-show="ctrl.reservatorioSelecionado.volumes.length">
-                  <sab-volume
-                  capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume"
-                  volume="ctrl.reservatorioSelecionado.volume | sabVolume"
+                  <sab-volume ng-if="!ctrl.isUHE(ctrl.reservatorioSelecionado.id)"
+                  capacidade="ctrl.reservatorioSelecionado.capacidade | sabVolume:0"
+                  volume="ctrl.reservatorioSelecionado.volume"
                   percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume>
+                  <sab-volume-sm ng-if="ctrl.isUHE(ctrl.reservatorioSelecionado.id)"
+                  capacidade="ctrl.reservatorioSelecionado.capacidade"
+                  volume="ctrl.reservatorioSelecionado.volume"
+                  percentual="ctrl.reservatorioSelecionado.volume_percentual"></sab-volume-sm>
                 </div>
-                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-0 hidden-xs"
+                <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-1 hidden-xs"
                 ng-show="ctrl.reservatorioSelecionado.volumes_recentes.volumes.length">
                 <div class="info-card-row info-card-row-small" ng-show="ctrl.reservatorioSelecionado.volume">
                   <strong>Comportamento do volume nos últimos 6 meses {{ctrl.reservatorioSelecionado.volumes_recentes.length}}</strong>
@@ -134,13 +138,7 @@
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3">
               <button class="btn btn-default btn-block btn-share btn-facebook"
-              socialshare
-              socialshare-provider="facebook"
-              socialshare-type="share"
-              socialshare-via="{{ctrl.share.appID}}"
-              socialshare-title="{{ctrl.share.title}}"
-              socialshare-description="{{ctrl.share.longText}}"
-              socialshare-url="{{ctrl.share.url}}"
+                  ng-click="ctrl.shareOverrideOGMeta()"
               ><span class="icon-facebook2"></span> Facebook</button>
             </div>
             <div class="col-xs-6 col-sm-3 col-md-3">
@@ -209,10 +207,10 @@
           <hr class="info-card-divider">
           <div class="info-card-vertical-align" ng-show="ctrl.estadoAtual.capacidade_equivalente">
             <div class="row">
-              <div class="col-xs-8 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-lg-6 col-lg-offset-0">
+              <div class="col-xs-8 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-6 col-lg-6 col-lg-offset-0">
                 <sab-volume
                 capacidade="ctrl.estadoAtual.capacidade_equivalente | sabVolume:0"
-                volume="ctrl.estadoAtual.volume_equivalente | sabVolume:0"
+                volume="ctrl.estadoAtual.volume_equivalente"
                 percentual="ctrl.estadoAtual.porcentagem_equivalente"></sab-volume>
               </div>
               <div class="col-sm-3 col-sm-offset-1 col-lg-5 col-lg-offset-1 hidden-xs"

@@ -274,7 +274,7 @@ footer {
   }
 
   @media (min-width: $screen-md-min) {
-    height: 250px;
+    height: 220px;
   }
 
   @media (min-width: $screen-lg-min) {
@@ -573,19 +573,29 @@ footer {
     }
   }
 
+  &.area-bottom {
+    fill: #ffffff;
+    fill-opacity: 0.9;
+
+    &.area-bottom-invalidos {
+      fill: opacify(#ffffff, 0.9);
+      fill-opacity: 0.9;
+    }
+  }
+
   &.area-middle {
-    fill: #F0EDF6;
+    fill: #22cbff;
     fill-opacity: 0.9;
     &.area-middle-invalidos {
-      fill: opacify(#F0EDF6, 0.2);
+      fill: opacify(#22cbff, 0.2);
       fill-opacity: 0.2;
     }
   }
   &.area-top {
-    fill: #D9C2B6 ;
+    fill: #ffffff ;
     fill-opacity: 0.9;
     &.area-top-invalidos {
-      fill: #D9C2B6;
+      fill: #ffffff;
       fill-opacity: 0.9;
     }
   }
@@ -603,6 +613,7 @@ footer {
     stroke-width: 1;
     opacity: 0.8;
   }
+
   &.selected-value-line {
     stroke: #1ba2cc;
     fill: none;
@@ -613,8 +624,8 @@ footer {
 .brush-handler {
   > path {
     fill: $gray-light;
-    stroke: $gray-light;
-    stroke-width: 1;
+    stroke: $gray;
+    stroke-width: 0.5;
   }
   > g > path {
     fill: $gray-light;
@@ -660,6 +671,12 @@ footer {
   }
 }
 
+.status1 {
+  @media (min-width: $screen-lg-min) {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
 .status-date {
   float: left;
   font-size: 0.65em;

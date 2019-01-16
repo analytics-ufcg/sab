@@ -20,17 +20,17 @@
         var d3 = $window.d3;
 
         // Set the dimensions of the canvas / graph
-        var margin = {top: 55, right: 5, bottom: 80, left: 35},
-        margin2 = {top: 220, right: 5, bottom: 20, left: 35},
+        var margin = {top: 35, right: 10, bottom: 80, left: 35},
+        margin2 = {top: 205, right: 10, bottom: 20, left: 35},
         width = 500 - margin.left - margin.right,
-        height = 270 - margin.top - margin.bottom,
-        height2 = 270 - margin2.top - margin2.bottom;
+        height = 255 - margin.top - margin.bottom,
+        height2 = 255 - margin2.top - margin2.bottom;
 
         // Parse the date / time
         var parseDate = d3.time.format("%d/%m/%Y").parse,
         bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-        var keys = ["Sem info","Volume","Sem Volume"];
+        var keys = ["Volume"];
 
         var localized = d3.locale({
           "decimal": ",",
@@ -54,7 +54,7 @@
         var x2 = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
         var y2 = d3.scale.linear().range([height2, 0]);
-        var z = d3.scale.ordinal().range([ '#D9C2B6','#F0EDF6', '#22cbff']);
+        var z = d3.scale.ordinal().range(['#22cbff']);
 
         // Define the axes
         var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -114,10 +114,15 @@
         // Status
         var statusRect = d3.select(element[0]).append("div")
         .attr("class", "status");
+        var statusRect1 = d3.select(element[0]).append("div")
+        .attr("class", "status1");
         var statusDate = statusRect.append("div")
         .attr("class", "status-date")
         .html("&nbsp;");
         var statusVolume = statusRect.append("div")
+        .attr("class", "status-volume")
+        .html("&nbsp;");
+        var statusSemInfo = statusRect1.append("div")
         .attr("class", "status-volume")
         .html("&nbsp;");
         // var statusDownload = statusRect.append("div")
@@ -143,16 +148,14 @@
           var focus = svg.append("g")
           .attr("class", "focus")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-          var lineSvg = focus.append("g")
-          .append("path")
-          .attr("class", "time-graph-path line").attr("clip-path", "url(#clip-grafico)");
+
           var lineInvalidosSvg = focus.append("g")
           .append("path")
           .attr("class", "time-graph-path line line-invalidos").attr("clip-path", "url(#clip-grafico)");
 
           var areaSvg = focus.append("g")
           .append("path")
-          .attr("class", "time-graph-path area").attr("clip-path", "url(#clip-grafico)");
+          .attr("class", "time-graph-path area-bottom").attr("clip-path", "url(#clip-grafico)");
 
           var areaMiddleSvg = focus.append("g")
           .append("path")
@@ -166,14 +169,16 @@
 
           var areaInvalidoSvg = focus.append("g")
           .append("path")
-          .attr("class", "time-graph-path area area-invalidos").attr("clip-path", "url(#clip-grafico)");
+          .attr("class", "time-graph-path area-bottom area-bottom-invalidos").attr("clip-path", "url(#clip-grafico)");
           var areaMiddleInvalidoSvg = focus.append("g")
           .append("path")
           .attr("class", "time-graph-path area-middle area-middle-invalidos").attr("clip-path", "url(#clip-grafico)");
           var areaTopInvalidoSvg = focus.append("g")
           .append("path")
           .attr("class", "time-graph-path area-top area-top-invalidos").attr("clip-path", "url(#clip-grafico)");
-
+          var lineSvg = focus.append("g")
+          .append("path")
+          .attr("class", "time-graph-path line").attr("clip-path", "url(#clip-grafico)");
           var xAxisSvg = focus.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")");
@@ -271,16 +276,14 @@
           .attr("class", "context")
           .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
-          var line2Svg = context.append("g")
-          .append("path")
-          .attr("class", "time-graph-path line line-sm");
+
           var line2InvalidosSvg = context.append("g")
           .append("path")
           .attr("class", "time-graph-path line line-sm line-invalidos");
 
           var area2Svg = context.append("g")
           .append("path")
-          .attr("class", "time-graph-path area");
+          .attr("class", "time-graph-path area-bottom");
           var areaMiddle2Svg = context.append("g")
           .append("path")
           .attr("class", "time-graph-path area-middle");
@@ -289,13 +292,16 @@
           .attr("class", "time-graph-path area-top");
           var area2InvalidoSvg = context.append("g")
           .append("path")
-          .attr("class", "time-graph-path area area-invalidos");
+          .attr("class", "time-graph-path area-bottom area-bottom-invalidos");
           var area2MiddleInvalidoSvg = context.append("g")
           .append("path")
           .attr("class", "time-graph-path area-middle area-middle-invalidos");
           var area2TopInvalidoSvg = context.append("g")
           .append("path")
           .attr("class", "time-graph-path area-top area-top-invalidos");
+          var line2Svg = context.append("g")
+          .append("path")
+          .attr("class", "time-graph-path line line-sm");
 
           var xAxis2Svg = context.append("g")
           .attr("class", "x axis")
@@ -447,6 +453,8 @@
             }
 
             function brushed() {
+              selectedValueCircle.style("visibility", "hidden");
+              selectedValueLine.style("visibility", "hidden");
               if (brush.empty()) {
                 x.domain(x2.domain());
                 brushHandlerLeft.style("display", "none");
@@ -464,7 +472,6 @@
               xAxisSvg.call(xAxis);
               xAxisAuxSvg.call(xAxisAux);
               lineInvalidosSvg.attr("d", valueline(dataValidos));
-              lineSvg.attr("d", valueline(data));
               areaSvg.attr("d", valuearea(data));
               areaMiddleSvg.attr("d", valueMiddleArea(data));
               areaMiddleInvalidoSvg.attr("d", valueMiddleArea(dataValidos));
@@ -472,16 +479,72 @@
               areaTopSvg.attr("d", valueTopArea(data));
               areaTopInvalidoSvg.attr("d", valueTopArea(dataValidos));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
+              lineSvg.attr("d", valueline(data));
 
               focus.selectAll(".points")
               .attr("cx", function(d) { return x(d.date); })
               .attr("cy", function(d) { return y(d.close); });
             }
 
+
             function mouseover() {
               statusRect.style("visibility", "visible");
               selectedValue.style("display", null);
             }
+
+            function setLegend(d){
+              var value1 = d.close;
+              var value2 = d.close + d.valueMiddle;
+              var textLegend;
+              value1 === value2? textLegend = ("Volume armazenado: " + Number((d.close).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³)" ).replace('.',','):
+                                 textLegend = ("Volume armazenado: entre " + Number((d.close).toFixed(1))  +"% e "+ Number((d.close+d.valueMiddle).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³ - " + Math.round(d.Volume+d.CapacidadeSemInfo)+" hm³)" ).replace('.',',');
+
+              keys = [textLegend];
+              legend.selectAll('*').remove();
+
+
+              legend.append("rect")
+              .attr("class", "category")
+              .attr("width", 12)
+              .attr("height", 12)
+              .attr("x", 0)
+              .attr("y", -20)
+              .attr("fill", z);
+
+              //circular legend
+              // legend.append("circle")
+              // .attr("class", "category")
+              // .attr("r", 6)
+              // .attr("cx", 0)
+              // .attr("cy", -39.5)
+              // .attr("fill", z);
+
+              legend.append("text")
+              .attr("class", "legend")
+              .data(keys)
+              .attr("x", 15)
+              .attr("y", -14.5)
+              .attr("dy", "0.32em")
+              .text(function(d) { return d; });
+
+              // //tooltip
+              // div.style("display", "inline");
+              // div.html(d.close)
+              //   .style("left",(d3.event.pageX - 10)+"px")
+              //   .style("top", (d3.event.pageY - height -(d.close/2))+"px");
+
+              selectedValueCircle.style("visibility", "visible");
+              selectedValueLine.style("visibility", "visible");
+
+              statusDate.html(formatTimeLiteral(d.date));
+              statusVolume.html(Math.round(d.CapacidadeTotal)+" hm³ - capacidade total ("+d.total_reservatorios+" reservatório(s))");
+              statusSemInfo.html(Math.round(d.CapacidadeSemInfo)+" hm³ | "+Number((d.valueMiddle).toFixed(1))+"% - sem informação ("+d.quant_reservatorio_sem_info+" reservatório(s))");
+              selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
+              selectedValueLine.attr({"x1": x(d.date), "y1": y(0), "x2": x(d.date), "y2": y(100)});
+
+            }
+
+            if(data[data.length-1]) setLegend(data[data.length-1]);
 
             function mousemove() {
               var x0 = x.invert(d3.mouse(this)[0]),
@@ -514,71 +577,13 @@
                 d1 =d0;
               }
               d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-              var volume_sem_agua;
-              d.VolumeSemAgua<0? volume_sem_agua = 0 : volume_sem_agua = d.VolumeSemAgua;
-              keys = [Number((d.valueTop).toFixed(1)) + "% (" + volume_sem_agua +" hm³) - capacidade equivalente sem volume",
-              Number((d.valueMiddle).toFixed(1)) + "% (" + d.CapacidadeSemInfo +" hm³) - "+d.quant_reservatorio_sem_info + " reservatórios sem informação",
-              Number((d.close).toFixed(1)) + "% (" + d.Volume +" hm³) - volume equivalnte armazenado"];
 
-              legend.selectAll('*').remove();
-
-
-              legend.append("rect")
-              .attr("class", "category")
-              .attr("width", 12)
-              .attr("height", 12)
-              .attr("x", 0)
-              .attr("y", -50)
-              .attr("fill", z);
-
-              //circular legend
-              // legend.append("circle")
-              // .attr("class", "category")
-              // .attr("r", 6)
-              // .attr("cx", 0)
-              // .attr("cy", -39.5)
-              // .attr("fill", z);
-
-              legend.append("text")
-              .attr("class", "legend")
-              .data(keys)
-              .attr("x", 15)
-              .attr("y", -44.5)
-              .attr("dy", "0.32em")
-              .text(function(d) { return d; });
-
-              // //tooltip
-              // div.style("display", "inline");
-              // div.html(d.close)
-              //   .style("left",(d3.event.pageX - 10)+"px")
-              //   .style("top", (d3.event.pageY - height -(d.close/2))+"px");
-
-              scope.$apply(function() {
-                if (typeof d !== 'undefined') {
-                  scope.reservs = d;
-                }
-              });
-              selectedValueCircle.style("visibility", "visible");
-              selectedValueLine.style("visibility", "visible");
-
-              statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(d.CapacidadeTotal+" hm³ - capacidade total ("+d.total_reservatorios+" reservatórios)");
-              selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
-              selectedValueLine.attr({"x1": x(d.date), "y1": y(max), "x2": x(d.date), "y2": y(0)});
+              setLegend(d);
 
             }
 
             function mouseout() {
-              scope.$apply(function() {
 
-                scope.reservs = {};
-
-              });
-              div.style("display", "none");
-
-              legend.selectAll('*').remove();
-              statusRect.style("visibility", "hidden");
-              selectedValue.style("display", "none");
             }
 
             function diffMouths(extent) {
