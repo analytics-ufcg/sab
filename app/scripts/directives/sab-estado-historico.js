@@ -30,7 +30,7 @@
         var parseDate = d3.time.format("%d/%m/%Y").parse,
         bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
-        var keys = ["Volume"];
+        var keys = ["Volume","Sem Info"];
 
         var localized = d3.locale({
           "decimal": ",",
@@ -54,7 +54,8 @@
         var x2 = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
         var y2 = d3.scale.linear().range([height2, 0]);
-        var z = d3.scale.ordinal().range(['#22cbff']);
+        var z = d3.scale.ordinal().range(['#22cbff','#22cbff']);
+        var legendOpacity = d3.scale.ordinal().range(['0.2','0.6']);
 
         // Define the axes
         var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -62,11 +63,13 @@
         var yAxis = d3.svg.axis().scale(y).orient("left").ticks(2);
         var xAxis2 = d3.svg.axis().scale(x2).orient("bottom");
 
-        // Define the line
+        // Define the lines and areas
+
         var valueline = d3.svg.line()
         .defined(function(d) { return d.close; })
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.close); });
+
         var valuearea = d3.svg.area()
         .defined(function(d) { return d.close; })
         .x(function(d) { return x(d.date); })
@@ -78,10 +81,12 @@
         .x(function(d) { return x(d.date); })
         .y0(function(d) { return y(d.close);})
         .y1(function(d) { return y(d.close+d.valueMiddle); });
+
         var valueMiddleline = d3.svg.line()
         .defined(function(d) { return d.close; })
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.close+d.valueMiddle); });
+
         var valueTopArea = d3.svg.area()
         .defined(function(d) { return d.close; })
         .x(function(d) { return x(d.date); })
@@ -92,6 +97,12 @@
         .defined(function(d) { return d.close; })
         .x(function(d) { return x2(d.date); })
         .y(function(d) { return y2(d.close); });
+
+        var valuelinemiddle2 = d3.svg.line()
+        .defined(function(d) { return d.close; })
+        .x(function(d) { return x2(d.date); })
+        .y(function(d) { return y2(d.close+d.valueMiddle); });
+
         var valuearea2 = d3.svg.area()
         .defined(function(d) { return d.close; })
         .x(function(d) { return x2(d.date); })
@@ -114,20 +125,18 @@
         // Status
         var statusRect = d3.select(element[0]).append("div")
         .attr("class", "status");
-        var statusRect1 = d3.select(element[0]).append("div")
-        .attr("class", "status1");
+
         var statusDate = statusRect.append("div")
         .attr("class", "status-date")
         .html("&nbsp;");
+
         var statusVolume = statusRect.append("div")
         .attr("class", "status-volume")
         .html("&nbsp;");
-        var statusSemInfo = statusRect1.append("div")
-        .attr("class", "status-volume")
-        .html("&nbsp;");
-        // var statusDownload = statusRect.append("div")
-        // .attr("class", "status-download")
-        // .html("&nbsp;");
+
+        var statusDownload = statusRect.append("div")
+          .attr("class", "status-download")
+          .html("&nbsp;");
 
         // Adds the svg canvas
         var svg = d3.select(element[0])
@@ -220,38 +229,6 @@
           .style("fill", "none")
           .style("pointer-events", "all");
 
-          //horizontal legend
-          // var dataL = 0;
-          // var offset = 100;
-          // var legend = focus.append("g")
-          //               .attr("font-family", "sans-serif")
-          //               .attr("font-size", 10)
-          //               .selectAll("g")
-          //               .data(keys.slice().reverse())
-          //               .enter().append("g")
-          //               .attr("transform", function (d, i) {
-          //                if (i === 0) {
-          //                   dataL = offset
-          //                   return "translate(0,0)"
-          //               } else {
-          //                var newdataL = dataL
-          //                dataL += offset
-          //                return "translate(" + (newdataL) + ",0)"
-          //               }
-          //           });
-          //           legend.append("circle")
-          //           .attr("class", "category")
-          //           .attr("r", 8)
-          //           .attr("cx", 0)
-          //           .attr("cy", -9.5)
-          //           .attr("fill", z);
-          //
-          //       legend.append("text")
-          //           .attr("x", 20)
-          //           .attr("y", -9.5)
-          //           .attr("dy", "0.32em")
-          //           .text(function(d) { return d; });
-
 
           //vertical legend
           var legend = focus.append("g")
@@ -263,10 +240,10 @@
           .attr("transform", function(d, i) { return "translate(0," + i * 15 + ")"; });
 
 
-          // Define the div for the tooltip
-          var div = focus.append("div")
-          .attr("class", "tooltip")
-          .style("opacity", 0);
+          // // Define the div for the tooltip
+          // var div = focus.append("div")
+          // .attr("class", "tooltip")
+          // .style("opacity", 0);
 
 
           // END Focus: Gráfico principal
@@ -302,6 +279,9 @@
           var line2Svg = context.append("g")
           .append("path")
           .attr("class", "time-graph-path line line-sm");
+          var line2MiddleSvg = context.append("g")
+          .append("path")
+          .attr("class", "time-graph-path line-middle line-middle-sm");
 
           var xAxis2Svg = context.append("g")
           .attr("class", "x axis")
@@ -389,11 +369,13 @@
             x2.domain(extent);
             y2.domain([0, max]);
             z.domain(keys);
+            legendOpacity.domain(keys);
 
             // Add the valueline path.
             // lineSvg.attr("d", valueline(data));
             //areaSvg.attr("d", valuearea(data));
             line2Svg.attr("d", valueline2(data));
+            line2MiddleSvg.attr("d", valuelinemiddle2(data));
             line2InvalidosSvg.attr("d", valueline2(dataValidos));
             area2Svg.attr("d", valuearea2(data));
             areaMiddle2Svg.attr("d", valueMiddleArea2(data));
@@ -475,7 +457,7 @@
               areaSvg.attr("d", valuearea(data));
               areaMiddleSvg.attr("d", valueMiddleArea(data));
               areaMiddleInvalidoSvg.attr("d", valueMiddleArea(dataValidos));
-              //  lineMiddleSvg.attr("d", valueMiddleline(data));
+             lineMiddleSvg.attr("d", valueMiddleline(data));
               areaTopSvg.attr("d", valueTopArea(data));
               areaTopInvalidoSvg.attr("d", valueTopArea(dataValidos));
               areaInvalidoSvg.attr("d", valuearea(dataValidos));
@@ -488,7 +470,6 @@
 
 
             function mouseover() {
-              statusRect.style("visibility", "visible");
               selectedValue.style("display", null);
             }
 
@@ -496,19 +477,21 @@
               var value1 = d.close;
               var value2 = d.close + d.valueMiddle;
               var textLegend;
-              value1 === value2? textLegend = ("Volume armazenado: " + Number((d.close).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³)" ).replace('.',','):
-                                 textLegend = ("Volume armazenado: entre " + Number((d.close).toFixed(1))  +"% e "+ Number((d.close+d.valueMiddle).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³ - " + Math.round(d.Volume+d.CapacidadeSemInfo)+" hm³)" ).replace('.',',');
+              // value1 === value2? textLegend = ("Volume armazenado: " + Number((d.close).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³)" ).replace('.',','):
+              //                    textLegend = ("Volume armazenado: entre " + Number((d.close).toFixed(1))  +"% e "+ Number((d.close+d.valueMiddle).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³ - " + Math.round(d.Volume+d.CapacidadeSemInfo)+" hm³)" ).replace('.',',');
 
-              keys = [textLegend];
+              textLegend = ("Volume armazenado: " + Number((d.close).toFixed(1)) +"% (" + Math.round(d.Volume) + " hm³)" ).replace('.',',');
+              keys = [(d.quant_reservatorio_sem_info + " reservatório(s) sem informação | "+Number((d.valueMiddle).toFixed(1)) + "% (" +Math.round(d.CapacidadeSemInfo)+" hm³)").replace('.',','), textLegend];
               legend.selectAll('*').remove();
 
 
               legend.append("rect")
               .attr("class", "category")
+              .style("opacity", legendOpacity)
               .attr("width", 12)
               .attr("height", 12)
               .attr("x", 0)
-              .attr("y", -20)
+              .attr("y", -30)
               .attr("fill", z);
 
               //circular legend
@@ -523,7 +506,7 @@
               .attr("class", "legend")
               .data(keys)
               .attr("x", 15)
-              .attr("y", -14.5)
+              .attr("y", -24.5)
               .attr("dy", "0.32em")
               .text(function(d) { return d; });
 
@@ -537,8 +520,8 @@
               selectedValueLine.style("visibility", "visible");
 
               statusDate.html(formatTimeLiteral(d.date));
-              statusVolume.html(Math.round(d.CapacidadeTotal)+" hm³ - capacidade total ("+d.total_reservatorios+" reservatório(s))");
-              statusSemInfo.html(Math.round(d.CapacidadeSemInfo)+" hm³ | "+Number((d.valueMiddle).toFixed(1))+"% - sem informação ("+d.quant_reservatorio_sem_info+" reservatório(s))");
+              statusVolume.html("Total: "+d.total_reservatorios+" reservatório(s)) | " + Math.round(d.CapacidadeTotal)+" hm³");
+              //statusSemInfo.html();
               selectedValueCircle.attr("transform", "translate(" + x(d.date) + "," + y(d.close) + ")");
               selectedValueLine.attr({"x1": x(d.date), "y1": y(0), "x2": x(d.date), "y2": y(100)});
 
