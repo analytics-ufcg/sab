@@ -152,35 +152,63 @@ footer {
   }
 }
 
+.info-card-body-resumo {
+  padding: $card-padding-vertical $card-padding-horizontal;
+  background-color: #fff;
+
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 260px);
+  }
+
+  @media (min-width: $screen-sm-min) {
+    height: calc(100vh - 300px);
+  }
+
+  @media (min-width: $screen-md-min) {
+    height: 330px;
+  }
+  @media (min-width: $screen-lg-min) {
+    height: 410px;
+  }
+}
+
 .info-card-body {
   padding: $card-padding-vertical $card-padding-horizontal;
   background-color: #fff;
-  height: calc(100vh - 194px);
+
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 300px);
+  }
 
   @media (min-width: $screen-sm-min) {
     height: calc(100vh - 330px);
   }
 
   @media (min-width: $screen-md-min) {
-    height: 250px;
+    height: 330px;
   }
 
   @media (min-width: $screen-lg-min) {
-    height: 400px;
+    height: 410px;
   }
 }
 
+
 .info-card-tab-sm {
+
+  @media (min-width: $screen-xs-min) {
+    padding: 0px 0px 0px 0px;
+  }
   @media (min-width: $screen-sm-min) {
-    padding: 0;
+    padding: 0px 110px;
   }
 
   @media (min-width: $screen-md-min) {
-    padding: 0 80px;
+    padding: 0px 20px 20px 20px;
   }
 
   @media (min-width: $screen-lg-min) {
-    padding: 0;
+    padding: 20px 20px;
   }
 }
 
@@ -237,14 +265,16 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: calc(100vh - 260px);
 
+  @media (min-width: $screen-xs-min) {
+    height: calc(100vh - 380px);
+  }
   @media (min-width: $screen-sm-min) {
-    height: calc(100vh - 385px);
+    height: calc(100vh - 470px);
   }
 
   @media (min-width: $screen-md-min) {
-    height: 150px;
+    height: 220px;
   }
 
   @media (min-width: $screen-lg-min) {
@@ -522,7 +552,7 @@ footer {
   &.line {
     stroke: #22cbff;
     fill: none;
-    stroke-width: 2;
+    stroke-width: 1;
 
     &.line-sm {
       stroke-width: 1;
@@ -531,6 +561,20 @@ footer {
       stroke-dasharray: 5,2;
       stroke-width: 1;
       stroke: opacify(#22cbff, 0.2);
+    }
+  }
+  &.line-middle {
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 2;
+
+    &.line-middle-sm {
+      stroke-width: 0.5;
+    }
+    &.line-middle-invalidos {
+      stroke-dasharray: 5,2;
+      stroke-width: 1;
+      stroke: opacify(#ffffff, 0.2);
     }
   }
   &.area {
@@ -542,6 +586,34 @@ footer {
       fill-opacity: 0.2;
     }
   }
+
+  &.area-bottom {
+    fill: #22cbff;
+    fill-opacity: 0.6;
+
+    &.area-bottom-invalidos {
+      fill: opacify(#22cbff, 0.2);
+      fill-opacity: 0.6;
+    }
+  }
+
+  &.area-middle {
+    fill: #22cbff;
+    fill-opacity: 0.2;
+    &.area-middle-invalidos {
+      fill: opacify(#22cbff, 0.2);
+      fill-opacity: 0.2;
+    }
+  }
+  &.area-top {
+    fill: #ffffff ;
+    fill-opacity: 0.2;
+    &.area-top-invalidos {
+      fill: #ffffff;
+      fill-opacity: 0.2;
+    }
+  }
+
   &.limit-line {
     stroke: $text-color;
     fill: none;
@@ -555,6 +627,7 @@ footer {
     stroke-width: 1;
     opacity: 0.8;
   }
+
   &.selected-value-line {
     stroke: #1ba2cc;
     fill: none;
@@ -564,9 +637,9 @@ footer {
 }
 .brush-handler {
   > path {
-    fill: $gray-lighter;
-    stroke: $gray-light;
-    stroke-width: 1;
+    fill: $gray-light;
+    stroke: $gray;
+    stroke-width: 0.5;
   }
   > g > path {
     fill: $gray-light;
@@ -612,18 +685,101 @@ footer {
   }
 }
 
+
 .status-date {
   float: left;
+  font-size: 0.65em;
+  @media (min-width: $screen-xs-min) {
+    float: left;
+    font-size: 0.9em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: left;
+    font-size: 1em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: left;
+    font-size: 1em;
+  }
   @media (min-width: $screen-lg-min) {
-    float: none;
+    float: left;
     width: 190px;
+    font-size: 1em;
   }
 }
 
 .status-volume {
   float: right;
+  font-size: 0.65em;
+  @media (min-width: $screen-xs-min) {
+    float: right;
+    font-size: 0.9em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    font-size: 1em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: right;
+    font-size: 1em;
+  }
   @media (min-width: $screen-lg-min) {
-    float: none;
+    float: right;
+    font-size: 1em;
+  }
+}
+
+.btn-downlod {
+  background-color: gray;
+  float: right;
+  border: none;
+  margin-left: 5px;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.5em;
+  @media (min-width: $screen-xs-min) {
+    float: right;
+    font-size: 0.7em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    font-size: 0.8em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: right;
+    font-size: 0.8em;
+  }
+  @media (min-width: $screen-lg-min) {
+    float: right;
+    font-size: 0.8em;
+  }
+}
+
+.btn-downlod:hover {
+  background-color: #696969;
+}
+
+.legend {
+  float: left;
+  font-size: 0.8em;
+  @media (min-width: $screen-xs-min) {
+    float: right;
+    font-size: 0.6em;
+  }
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    font-size: 0.6em;
+  }
+  @media (min-width: $screen-md-min) {
+    float: right;
+    font-size: 0.7em;
+  }
+  @media (min-width: $screen-lg-min) {
+    float: right;
+    font-size: 0.7em;
   }
 }
 
@@ -723,6 +879,21 @@ footer {
   pointer-events: none;
   color: #fff;
   margin-top: -90px;
+}
+
+.tooltip-area{
+  position: absolute;
+   text-align: center;
+   width: 60px;
+   height: 28px;
+   padding: 2px;
+   font: 12px sans-serif;
+   background: transparentize;
+   border: 0px;
+   border-radius: 8px;
+   pointer-events: none;
+   margin-top: -90px;
+
 }
 
 .icon-lg {

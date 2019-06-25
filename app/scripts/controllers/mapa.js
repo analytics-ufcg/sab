@@ -24,6 +24,9 @@
     vm.gotError = false;
     vm.RESTAPI = RESTAPI;
     vm.municipioReservatorio = [];
+    vm.reservs = {};
+    vm.isUHE = isUHE;
+    vm.shareOverrideOGMeta = shareOverrideOGMeta;
 
     // Variáveis para compartilhamento
     vm.share = {
@@ -50,6 +53,24 @@
       vm.longitude = -44.231820;
     }
 
+    var semiaridoStyleEstado = function(feature) {
+        var style;
+        const uf = $location.search().uf;
+        style = new ol.style.Style({
+          fill: uf === feature.getId()?
+                  new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"}) :
+                  new ol.style.Fill({color: "rgba(12, 137, 193, 0.8)"}),
+          stroke: new ol.style.Stroke({color: "rgba(16, 84, 125, 1)"})
+        });
+        feature.setStyle(style);
+        if (previousFeature && feature !== previousFeature) {
+          previousFeature.setStyle(null);
+        }
+        previousFeature = feature;
+        return style;
+    };
+
+
     vm.map = {
       center: {
         lat: vm.latitude,
@@ -64,10 +85,10 @@
           active: true,
           visible: true,
           source: {
-            type: 'MapBoxStudio',
-            mapId: 'cjfbecmg95db22rqgi86aq4mt',
-            userId: 'diegocoelhocc',
-            accessToken: 'pk.eyJ1IjoiZGllZ29jb2VsaG9jYyIsImEiOiJjamZiZWJkcDkzcGZtMzNwZGpremx2Nm94In0.vIUJqZ2PCT0CQ8-XEsIJPA'
+            type:"MapBoxStudio",
+            mapId:"cjgz3yuzu000j2rs5opg4x7g2",
+            userId:"diegocoelhoinsa",
+            accessToken:"pk.eyJ1IjoiZGllZ29jb2VsaG9pbnNhIiwiYSI6ImNqZ3ozdTJnMDBpcmEyeG50YjEzY2l2dTQifQ.baZTq3TNsn9zqxzvDY1P8Q"
           }
         },
         {
@@ -86,13 +107,13 @@
             type: 'TopoJSON',
             url: RESTAPI.url+'/estados/sab'
           },
-          style: semiaridoStyleEstado()
+          style: semiaridoStyleEstado
         }
       ],
       defaults: {
           events: {
-              map: ['pointermove', 'mousemove', 'click'],
-              layers: [ 'mousemove', 'click' ]
+              map: ['pointermove', 'mousemove', 'singleclick' ],
+              layers: [ 'mousemove', 'click']
           },
           controls: {
               zoom: false,
@@ -102,10 +123,11 @@
           interactions: {
               mouseWheelZoom: true
           },
-          view: {
-              maxZoom: 16,
-              minZoom: 4
-          }
+          view: new ol.View({
+            center: ol.proj.fromLonLat([vm.latitude, vm.longitude]),
+            zoom: vm.zoomInicial,
+            duration: 2000
+          })
       }
     };
     vm.cityMarkerStyle = {
@@ -134,6 +156,9 @@
     vm.estadoEquivalente = [];
     vm.estadoAtual = {};
     var previousFeature;
+
+    vm.volumes_recentes_estado = {};
+    vm.volume_estado = []
 
     vm.coresReservatorios = LEGENDCOLORS.reservoirsColors;
 
@@ -219,13 +244,7 @@
         }
         $location.search('id', vm.reservatorioSelecionado.id);
         $location.search('reservatorio', vm.reservatorioSelecionado.nome_sem_acento.replace(/ /g, "_").toLowerCase());
-        vm.share.title = vm.reservatorioSelecionado.reservat;
-        vm.share.longText = "Veja a situação do "+vm.reservatorioSelecionado.reservat+" no Olho n'água: ";
-        vm.share.shortText = vm.reservatorioSelecionado.reservat+" no Olho n'água";
-        vm.share.url = $location.absUrl();
-        // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
-        vm.share.media = RESTAPI.publicImagesPath+vm.reservatorioSelecionado.id+"-lg.png";
-        vm.resetCopyUrl();
+        updateShareData(vm.reservatorioSelecionado.reservat, vm.reservatorioSelecionado.id);
 
         efeitoZoom(vm.map.markers_reserv[0].lat, vm.map.markers_reserv[0].lon, 10);
         Reservatorio.monitoramento.query({id: vm.reservatorioSelecionado.id}, function(data) {
@@ -271,18 +290,22 @@
     function setSelectedMapType(type) {
       vm.selectedMapType = type;
       if (type == 1) {
+        const uf = $location.search().uf;
         $location.search({});
+        $location.search("uf", uf);
+        setEstado(uf || "Semiarido");
         vm.map.markers_reserv.pop();
         vm.map.markers_municipio.pop();
         vm.reservatorioSelecionado = {};
         vm.map.layers[1].visible = false;
         vm.map.layers[2].visible = true;
-        vm.map.layers[3].opacity = 0.4;
+        //vm.map.layers[3].opacity = 0.4;
         if (larguraTela <= 640) {
           vm.showInfo = false;
         }
       }
       if (type == 0) {
+        $location.search({});
         if (previousFeature){
           previousFeature.setStyle(null);
           previousFeature = null;
@@ -290,9 +313,14 @@
         vm.map.layers[1].visible = true;
         vm.map.layers[2].visible = false;
         vm.map.layers[3].opacity = 1;
-        setEstado("Semiarido");
+
       }
       efeitoZoom(vm.latitude, vm.longitude, vm.zoomInicial);
+    }
+
+    function isUHE(id) {
+      const ids = ["19116","19117","19121","19122","19123","19124","19125","19126","795"];
+      return ids.indexOf(id+"") > -1;
     }
 
     function isSelectedTab(tab) {
@@ -333,7 +361,8 @@
 
     function tamanhoReservatorio(feature, zoom) {
       // Esse 1.8 é para tirar a diferença do zoomInicial com o log(zoom);
-      var tamanho = Math.abs(Math.log(feature.get("capacidade")))+(vm.zoomInicial+1.8) - Math.log(zoom);
+      const capacidade = feature.get("capacidade") || 1;
+      var tamanho = Math.abs(Math.log(capacidade))+(vm.zoomInicial+1.8) - Math.log(zoom);
       if (tamanho < 2){
         tamanho = 2;
       }
@@ -342,7 +371,7 @@
     }
 
     function corReservatorio(feature) {
-      if(feature.get("volume_percentual") === null) {
+      if(feature.get("volume_percentual") === null || isUHE(feature.get("id"))) {
         return new ol.style.Fill({ color: vm.coresReservatorios[5].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
@@ -364,12 +393,23 @@
 
     function reservStyle() {
       return function(feature, zoom) {
+        if(isUHE(feature.get("id"))){
         return [new ol.style.Style({
-          image: new ol.style.Circle({
+          image: new ol.style.RegularShape({
+            points: 4,
             radius:tamanhoReservatorio(feature, zoom),
-            fill: corReservatorio(feature)
+            fill: corReservatorio(feature),
+            angle: Math.PI / 4
           })
-        })];
+        })];}
+        else{
+          return [new ol.style.Style({
+            image: new ol.style.Circle({
+              radius:tamanhoReservatorio(feature, zoom),
+              fill: corReservatorio(feature)
+            })
+          })];
+        }
       };
     }
 
@@ -379,16 +419,11 @@
       });
     }
 
-    function semiaridoStyleEstado() {
-      return new ol.style.Style({
-        fill: new ol.style.Fill({color: "rgba(12, 137, 193, 0.8)"}),
-        stroke: new ol.style.Stroke({color: "rgba(16, 84, 125, 1)"}),
-      });
-    }
 
     $scope.$on('openlayers.layers.reservatorios.click', function(event, feature) {
       $scope.$apply(function() {
           if(feature && isSelectedMapType(0) || isSelectedMapType(2)) {
+            $location.search({});
             vm.setReservatorio(feature.get('id'));
           }
       });
@@ -429,25 +464,22 @@
 
       var reservatorio = ol.proj.fromLonLat([parseFloat(lon) + lonMais,parseFloat(lat) + latMais]);
       olData.getMap().then(function(map) {
-        var zoomAnim = ol.animation.zoom({
-            resolution: map.getView().getResolution(),
-            duration: 2000
-          });
-        var pan = ol.animation.pan({
-            duration: 2000,
-            source: map.getView().getCenter()
-          });
-        map.beforeRender(pan, zoomAnim);
-        map.getView().setCenter(reservatorio);
-        map.getView().setZoom(zoom);
-
+        map.getView().animate({
+          center: reservatorio,
+          zoom: zoom,
+          duration: 2000
+        });
       });
     }
 
     Reservatorio.estadoEquivalente.query(function(response) {
       vm.loadingInfo = true;
       vm.estadoEquivalente = response;
-      setEstado("Semiarido");
+      if($location.search().uf){
+        setSelectedTab(5);
+        setSelectedMapType(1);
+        setEstado($location.search().uf);
+      }
       vm.loadingInfo = false;
     }, function(error) {
       vm.loadingInfo = false;
@@ -457,33 +489,86 @@
     function setEstado(uf) {
       for (var i = 0; i < vm.estadoEquivalente.length; i++) {
         if (vm.estadoEquivalente[i].uf === uf){
+          vm.loadingInfo = false;
+          vm.showInfo = true;
+          vm.showLegend = false;
           vm.estadoAtual = vm.estadoEquivalente[i];
+          $location.search('uf', uf);
+          setVolumesRecentesEstado(uf);
+          updateShareData(vm.estadoEquivalente[i].semiarido, uf);
+          break;
         }
+        if(i === vm.estadoEquivalente.length-1) setEstado("Semiarido");
       }
     }
 
+    function setVolumesRecentesEstado(uf){
+     Reservatorio.monitoramento_estado.query({uf:uf}, function(data) {
+       vm.volumes_recentes_estado = data.volumes_recentes;
+       vm.volume_estado = data.volumes;
+     });
+   }
+
+    function updateShareData(title, id){
+      vm.share.title = title;
+      vm.share.longText = "Veja a situação do "+title+" no Olho n'água: ";
+      vm.share.shortText = title +" no Olho n'água";
+      vm.share.url = $location.absUrl();
+      // vm.share.url = "http://insa.gov.br/olhonagua/#/mapa";
+      vm.share.media = RESTAPI.publicImagesPath+id+"-lg.png";
+      vm.resetCopyUrl();
+
+    }
+
+function shareOverrideOGMeta()
+{
+	FB.ui({
+		method: 'share_open_graph',
+		action_type: 'og.likes',
+		action_properties: JSON.stringify({
+			object: {
+				'og:url': vm.share.url,
+				'og:title': vm.share.title,
+				'og:description': vm.share.longText,
+				'og:image': vm.share.media,
+        'og:image:width': "1200",
+        'og:image:height': "630"
+      }
+		})
+	},
+	function (response) {
+	// Action after response
+	});
+}
+
+
+    var featureId;
     $scope.$on('openlayers.layers.SemiaridoDark.click', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              setEstado(feature.getId());
               feature.setStyle(new ol.style.Style({
                 fill: new ol.style.Fill({ color:"rgba(16, 84, 125, 1)"})
               }));
-
               if (previousFeature && feature !== previousFeature) {
                 previousFeature.setStyle(null);
               }
-
               previousFeature = feature;
-          }
+              featureId = feature.getId();
 
+          }
       });
     });
 
-    $scope.$on('openlayers.map.click', function(event, feature) {
+
+    $scope.$on('openlayers.map.singleclick', function(event, feature) {
       $scope.$apply(function() {
           if (feature && isSelectedMapType(1)) {
-              setEstado("Semiarido");
+              setTimeout(function(){
+                if(featureId) {
+                  setEstado(featureId);
+                  featureId = null;
+                }else setEstado("Semiarido");
+              }, 50);
               if (previousFeature){
                 previousFeature.setStyle(null);
                 previousFeature = null;

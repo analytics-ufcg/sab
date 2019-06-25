@@ -5,6 +5,7 @@
     <title>Olho n'água</title>
 
     <link rel="manifest" href="manifest.json">
+    <meta name="fragment" content="#!">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Olho n'água">
@@ -26,12 +27,22 @@
     <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://olhonagua.insa.gov.br/images/icons/152x152-apple.png">
     <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://olhonagua.insa.gov.br/images/icons/120x120-apple.png">
 
-    <meta name="description" content="Acompanhe os níveis dos reservatórios do semiárido brasileiro">
-    <meta name="viewport" content="width=device-width">
+    <meta property="og:description"        content="Acompanhe os níveis dos reservatórios do semiárido brasileiro">
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="Olho N'água" />
+    <meta property="fb:app_id"             content="543791825832138" />
+    <meta property="og:image:width" content="1200" >
+	  <meta property="og:image:height" content="630">
+    <meta property="og:url"                content="https://olhonagua.lsd.ufcg.edu.br/#!/" />
+    <meta property="og:image"              content="https://olhonagua.insa.gov.br/images/icons/192x192.png">
+    <meta name="description"               content="Acompanhe os níveis dos reservatórios do semiárido brasileiro">
+    <meta name="viewport"                  content="width=device-width">
+
+
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/ladda/dist/ladda.min.css" />
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -39,8 +50,31 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://openlayers.org/en/v3.18.2/css/ol.css" type="text/css">
-    <script src="https://openlayers.org/en/v3.18.2/build/ol.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+      // Initialize the Facebook JS SDK.
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId            : '543791825832138',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.10'
+          });
+          // Put additional init code here
+        };
+
+        // Load the Facebook JS SDK Asynchronously
+        (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
   </head>
   <body ng-app="sabApp">
     <!--[if lte IE 8]>
@@ -81,12 +115,12 @@
     <script src="bower_components/angulartics-google-analytics/lib/angulartics-ga.js"></script>
     <script src="bower_components/angular-socialshare/dist/angular-socialshare.min.js"></script>
     <script src="bower_components/angular-clipboard/angular-clipboard.js"></script>
-    <script src="bower_components/ladda/dist/ladda.min.js"></script>
     <script src="bower_components/angular-ladda/dist/angular-ladda.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
     <script src="bower_components/satellizer/dist/satellizer.js"></script>
     <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="bower_components/angular-update-meta/dist/update-meta.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -103,6 +137,7 @@
         <script src="scripts/services/serviceworker.js"></script>
         <script src="scripts/directives/sab-navbar.js"></script>
         <script src="scripts/directives/sab-reservatorio-historico.js"></script>
+        <script src="scripts/directives/sab-estado-historico.js"></script>
         <script src="scripts/directives/sab-volume.js"></script>
         <script src="scripts/directives/sab-volume-sm.js"></script>
         <script src="scripts/directives/sab-volume-recente.js"></script>

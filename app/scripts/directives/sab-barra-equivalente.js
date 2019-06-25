@@ -48,16 +48,16 @@
                legenda: scope.cores[2].textoAlternativo}],
               [{x:mapData.quant_reserv_intervalo_4, x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3),
                cor: scope.cores[3].cor, legenda: scope.cores[3].textoAlternativo}],
-              [{x:mapData.quant_reserv_intervalo_5, 
+              [{x:mapData.quant_reserv_intervalo_5,
                 x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3+mapData.quant_reserv_intervalo_4),
                  cor: scope.cores[4].cor, legenda: scope.cores[4].textoAlternativo}]];
 
           /*,
-              [{x:mapData.quant_reservatorio_sem_info, 
+              [{x:mapData.quant_reservatorio_sem_info,
                 x0:(mapData.quant_reserv_intervalo_1+mapData.quant_reserv_intervalo_2+mapData.quant_reserv_intervalo_3+
                 mapData.quant_reserv_intervalo_4+mapData.quant_reserv_intervalo_5),
                  cor: scope.cores[5].cor}]*/
-            
+
             var dataStackLayout = d3.layout.stack()(dataIntermediate);
 
             x.domain([0,mapData.quant_reservatorio_com_info]);
@@ -104,7 +104,7 @@
                     });
 
           };
-              
+
         }
       };
     }
