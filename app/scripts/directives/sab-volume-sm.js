@@ -80,7 +80,7 @@
             var textFinalValue = parseFloat(value);
             var percentText = config.displayPercent?"%":"";
             var circleThickness = config.circleThickness * radius;
-            var circleFillGap = config.circleFillGap * radius+3;
+            var circleFillGap = config.circleFillGap * radius+1;
             var fillCircleMargin = circleThickness + circleFillGap;
             var fillCircleRadius = radius - fillCircleMargin;
             var waveHeight = fillCircleRadius*waveHeightScale(fillPercent*100);

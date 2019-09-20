@@ -27,7 +27,7 @@
       'toastr',
       'updateMeta'])
     .constant('RESTAPI', {
-      url: 'https://olhonagua.lsd.ufcg.edu.br/api',
+      url: 'https://apiteste.insa.gov.br',
       facebookAppID: '543791825832138',
       publicImagesPath: 'https://olhonagua.lsd.ufcg.edu.br/public/'
     })

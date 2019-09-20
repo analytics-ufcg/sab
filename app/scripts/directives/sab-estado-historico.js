@@ -481,7 +481,7 @@
               //                    textLegend = ("Volume armazenado: entre " + Number((d.close).toFixed(1))  +"% e "+ Number((d.close+d.valueMiddle).toFixed(1)) +"% da capacidade (" + Math.round(d.Volume) + " hm³ - " + Math.round(d.Volume+d.CapacidadeSemInfo)+" hm³)" ).replace('.',',');
 
               textLegend = ("Volume armazenado: " + Number((d.close).toFixed(1)) +"% (" + Math.round(d.Volume) + " hm³)" ).replace('.',',');
-              keys = [(d.quant_reservatorio_sem_info + " reservatório(s) sem informação | "+Number((d.valueMiddle).toFixed(1)) + "% (" +Math.round(d.CapacidadeSemInfo)+" hm³)").replace('.',','), textLegend];
+              keys = [(d.quant_reservatorio_sem_info + " reservatório(s) sem informação de volume | "+Number((d.valueMiddle).toFixed(1)) + "% (" +Math.round(d.CapacidadeSemInfo)+" hm³)").replace('.',','), textLegend];
               legend.selectAll('*').remove();
 
 

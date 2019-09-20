@@ -19,8 +19,8 @@
           var d3 = $window.d3;
 
           // Set the dimensions of the canvas / graph
-          var margin = {top: 5, right: 5, bottom: 80, left: 35},
-              margin2 = {top: 200, right: 5, bottom: 20, left: 35},
+          var margin = {top: 5, right: 10, bottom: 80, left: 35},
+              margin2 = {top: 200, right: 10, bottom: 20, left: 35},
               width = 500 - margin.left - margin.right,
               height = 250 - margin.top - margin.bottom,
               height2 = 250 - margin2.top - margin2.bottom;

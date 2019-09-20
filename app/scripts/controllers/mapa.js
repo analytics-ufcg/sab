@@ -252,9 +252,9 @@
           vm.reservatorioSelecionado.volumes_recentes = data.volumes_recentes;
           vm.loadingInfo = false;
         });
-        Reservatorio.previsoes.query({id: vm.reservatorioSelecionado.id}, function(data) {
-          vm.reservatorioSelecionado.previsoes = data;
-        });
+        // Reservatorio.previsoes.query({id: vm.reservatorioSelecionado.id}, function(data) {
+        //   vm.reservatorioSelecionado.previsoes = data;
+        // });
       }
     }
 
@@ -371,7 +371,7 @@
     }
 
     function corReservatorio(feature) {
-      if(feature.get("volume_percentual") === null || isUHE(feature.get("id"))) {
+      if(feature.get("volume_percentual") === null) {
         return new ol.style.Fill({ color: vm.coresReservatorios[5].cor});
       } else{
         var volume_percentual = parseFloat(feature.get("volume_percentual"));
